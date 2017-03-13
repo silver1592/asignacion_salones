@@ -1,0 +1,15 @@
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\obj\Debug\Algoritmo02.csprojResolveAssemblyReference.cache
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\Algoritmo01.exe.config
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\Algoritmo01.exe
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\Algoritmo01.pdb
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\OrigenDatos.exe
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\Excel.dll
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\ClosedXML.dll
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\DocumentFormat.OpenXml.dll
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\OrigenDatos.pdb
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\Excel.pdb
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\ClosedXML.pdb
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\bin\Debug\ClosedXML.xml
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\obj\Debug\Algoritmo01.exe
+D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Algoritmo\obj\Debug\Algoritmo01.pdb

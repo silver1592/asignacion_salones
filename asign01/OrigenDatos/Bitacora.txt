@@ -1,0 +1,14 @@
+﻿27-01-2017
+Me quede haciendo la clase de ListaSalones, 
+faltan terminar los metodos y modificar el uso de las listas en el demas codigo
+-Metodos
+-Corregir uso
+
+*******
+Parece que termine lo de los salones ahora solo me falta lo de los grupos
+mismos puntos de los anteriores
+-Checar tambien Salones anteriones (Grupos) para decidir como manejar ese campo
+--En_Anteriores
+--CHecar asignaciones de otros semestres
+
+30-01-2017

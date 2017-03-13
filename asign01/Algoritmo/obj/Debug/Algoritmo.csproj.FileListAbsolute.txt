@@ -1,0 +1,7 @@
+C:\Users\Silver\Desktop\Asign02\asign01\Algoritmo\bin\Debug\Algoritmo.exe.config
+C:\Users\Silver\Desktop\Asign02\asign01\Algoritmo\bin\Debug\Algoritmo.exe
+C:\Users\Silver\Desktop\Asign02\asign01\Algoritmo\bin\Debug\Algoritmo.pdb
+C:\Users\Silver\Desktop\Asign02\asign01\Algoritmo\obj\Debug\Algoritmo.csprojResolveAssemblyReference.cache
+C:\Users\Silver\Desktop\Asign02\asign01\Algoritmo\obj\Debug\Algoritmo.exe
+C:\Users\Silver\Desktop\Asign02\asign01\Algoritmo\obj\Debug\Algoritmo.pdb
+C:\Users\Silver\Desktop\Asign02\asign01\Algoritmo\bin\Debug\Algoritmo01.exe.config

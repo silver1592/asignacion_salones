@@ -1,0 +1,9 @@
+﻿Direccion: 148.224.58.4\FINGENIERIA
+puerto: 2433
+user: asignacion
+password: Asigna#2016Ing
+
+
+LinqToExcel
+Excel Data Reader
+Closed XML
