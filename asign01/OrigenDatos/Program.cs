@@ -80,7 +80,7 @@ namespace OrigenDatos
 
         private static void inicializaConeccion()
         {
-            string excelDir = @"C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Referencias y Documentos\";
+            string excelDir = @"C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Referencias y Documentos\2016-2017_II\";
             string nombreArchivo = "SIAMMAT16172-FINAL.xlsx";
             string nombreHoja = "Query_1";
 
@@ -94,9 +94,6 @@ namespace OrigenDatos
                 Console.WriteLine("Error al conectar");
                 throw new Exception("Error al conectar con la base de datos");
             }
-
-            Grupo.Coneccion = c;
-            Salon.Coneccion = c;
         }
 
         private static void horarioSalon()
@@ -140,10 +137,10 @@ namespace OrigenDatos
 
         private static void salonesDisponibles(int ini, int fin, string dias)
         {
-            List<Salon> salones = Salon.Salones(c,0);
-            List<Salon> sDisponibles = c.GetExcel.salonesDisponibles(salones,ini,fin,dias);
+            ListaSalones salones = new ListaSalones(c, c.Salones(), ini);
+            ListaSalones sDisponibles = salones.SalonesDisponibles(ini, fin, dias);
 
-            foreach (Salon s in sDisponibles)
+            foreach (Salon s in sDisponibles.ToList())
                 Console.WriteLine(s.ToString());
         }
     }

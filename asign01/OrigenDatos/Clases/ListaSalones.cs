@@ -33,7 +33,21 @@ namespace OrigenDatos.Clases
         {
             salones = new List<Salon>();
         }
-    
+
+        public ListaSalones(DataTable dt)
+        {
+            List<Salon> temp = new List<Salon>();
+
+            var query = from Salon s in salones
+                        from DataRow r in dt.Rows
+                        where r["cve_espacio"].ToString() == s.Cve_espacio
+                        select s;
+
+            temp = query.ToList<Salon>();
+
+            salones = temp;
+        }
+
         /// <summary>
         /// Inicializa la coneccion y crea los salones a partir de una tabla
         /// </summary>
@@ -177,20 +191,7 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
-        public ListaSalones Salones(DataTable dt)
-        {
-            List<Salon> temp = new List<Salon>();
-
-            var query = from Salon s in salones
-                        from DataRow r in dt.Rows
-                        where r["cve_espacio"].ToString() == s.Cve_espacio
-                        select s;
-
-            temp = query.ToList<Salon>();
-
-            ListaSalones resultado = new ListaSalones(temp);
-            return resultado;
-        }
+        public List<Salon> ToList() { return salones; }
         #endregion
     }
 }

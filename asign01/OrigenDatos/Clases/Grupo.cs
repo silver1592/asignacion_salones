@@ -273,7 +273,7 @@ namespace OrigenDatos.Clases
         public void Set_SalonesPosibles(DataTable dt, ListaSalones salones)
         {
             //DataTable sPosibles = cn.salonesPosibles(cve_materia);
-            salones_Posibles = salones.Salones(dt);
+            salones_Posibles = new ListaSalones(dt);
         }
 
         /// <summary>
