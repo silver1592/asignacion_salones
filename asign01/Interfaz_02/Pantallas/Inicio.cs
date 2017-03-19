@@ -1,13 +1,5 @@
-﻿using OrigenDatos.Clases;
+﻿using Interfaz_02.Heredados;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Interfaz_02

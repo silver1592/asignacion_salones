@@ -1,4 +1,4 @@
-﻿using Algoritmo01.Clases;
+﻿using Interfaz_02.Heredados;
 using OrigenDatos.Clases;
 using System;
 using System.Collections.Generic;

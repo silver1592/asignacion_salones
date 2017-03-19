@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using OrigenDatos.Clases;
+using Algoritmo01.Heredados;
 
 namespace Algoritmo01.Clases
 {
