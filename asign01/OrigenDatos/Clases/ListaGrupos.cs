@@ -99,12 +99,15 @@ namespace OrigenDatos.Clases
 
         #endregion
 
+        //Agregar consulta para obtener grupos que requieran estar en planta baja
+        //Agregar consulta para obtener grupos con salon fijo
+
         public static List<Grupo> ToGrupos(DataTable dt, Conexion c, ListaSalones ls)
         {
             List<Grupo> res = new List<Grupo>();
 
             foreach (DataRow r in dt.Rows)
-                res.Add(Grupo.ToGrupo(r, c, ls));
+                res.Add(new Grupo(r, c, ls));
 
             return res;
         }

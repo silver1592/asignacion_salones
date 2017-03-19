@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Interfaz_02.Heredados
 {
-    class Conexion : Algoritmo01.Heredados.Conexion
+    public class Conexion : Algoritmo01.Heredados.Conexion
     {
         public Conexion(string Datos, string excelDireccion = null, string archivoEntrada = null, string hoja = "SIAMDIF", string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, archivoEntrada, hoja, ciclo, tipo) { }
 
