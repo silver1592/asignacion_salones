@@ -40,8 +40,8 @@ namespace OrigenDatos.Clases
                 return datosConexion;
             }
         }
-        private string datosConexion;
-        private LibroExcel Excel;
+        protected string datosConexion;
+        protected LibroExcel Excel;
         public LibroExcel GetExcel { get { return Excel; } }
         public bool excel { get { return Excel != null; } }
 
