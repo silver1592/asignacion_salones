@@ -65,6 +65,14 @@ namespace Algoritmo01.Heredados
             c.UpdateGrupo(this, observaciones);
         }
 
+        /// <summary>
+        /// Actualiza la tabla horario con los valores que tiene
+        /// </summary>
+        public void Update(string observaciones = "")
+        {
+            this.observaciones = observaciones;
+        }
+
         public float valorEquipo(Salon salon)
         {
             int res = 0;
@@ -96,5 +104,20 @@ namespace Algoritmo01.Heredados
 
             return false;
         }
-    }
+
+        public float AsignacionSemestreAnterior(int hora)
+        {
+            /*
+            DataTable ciclos = Consultas.asignacionesSemestresAnteriores(cve_materia, rpe, tipo, salon, hora, ciclo);
+            float res = -1;
+
+            foreach (DataRow r in ciclos.Rows)
+                if (res < cicloToFloat(r["ciclo"].ToString()))
+                    res = cicloToFloat(r["ciclo"].ToString());
+
+            return res;
+            */
+            return 0;
+        }
+   }
 }

@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Interfaz_02.Heredados
 {
-    public class ListaGrupo : Algoritmo01.Heredados.ListaGrupos
+    public class ListaGrupos : Algoritmo01.Heredados.ListaGrupos
     {
         public ListaGrupos() : base(){ }
 

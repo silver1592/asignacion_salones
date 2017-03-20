@@ -160,10 +160,10 @@ namespace Algoritmo01.Clases
 
                 foreach (Grupo g in gruposPreferencial)
                 {
-                    if (g.salonPreferencial(Salones))
+                    if (g.salonPreferencial(new ListaSalones(Salones)))
                     {
                         GruposSinAsignar.Remove(g);
-                        g.Update("Asignacion preferencial");
+                        //g.Update("Asignacion preferencial");
                     }
                 }
             }
@@ -224,7 +224,7 @@ namespace Algoritmo01.Clases
                     GruposSinAsignar.Add(g);
                 GruposAsignados.Remove(g);
 
-                g.Update(observaciones);
+                //g.Update(observaciones);
             }
         }
 

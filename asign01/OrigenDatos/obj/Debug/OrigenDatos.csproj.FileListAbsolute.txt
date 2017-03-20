@@ -30,3 +30,17 @@ C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Program
 C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02_V2.2017.01.26\Asign02\asign01\OrigenDatos\obj\Debug\OrigenDatos.csproj.ResolveComReference.cache
 C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02_V2.2017.01.26\Asign02\asign01\OrigenDatos\obj\Debug\OrigenDatos.exe
 C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02_V2.2017.01.26\Asign02\asign01\OrigenDatos\obj\Debug\OrigenDatos.pdb
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\OrigenDatos.exe.config
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\obj\Debug\OrigenDatos.csproj.ResolveComReference.cache
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\OrigenDatos.exe
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\OrigenDatos.pdb
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\ClosedXML.dll
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\Excel.dll
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\ClosedXML.pdb
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\ClosedXML.xml
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\bin\Debug\Excel.pdb
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\obj\Debug\OrigenDatos.csprojResolveAssemblyReference.cache
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\obj\Debug\OrigenDatos.exe
+C:\Users\Fernando\Desktop\asignacion\asign01\OrigenDatos\obj\Debug\OrigenDatos.pdb

@@ -47,6 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Heredados\Conexion.cs" />
+    <Compile Include="Heredados\Grupo.cs" />
+    <Compile Include="Heredados\ListaGrupos.cs" />
+    <Compile Include="Heredados\ListaSalones.cs" />
+    <Compile Include="Heredados\Salon.cs" />
     <Compile Include="Pantallas\Inicio.cs">
       <SubType>Form</SubType>
     </Compile>

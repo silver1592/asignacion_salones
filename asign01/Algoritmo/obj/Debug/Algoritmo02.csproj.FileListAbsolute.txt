@@ -16,3 +16,4 @@ D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\a
 C:\Users\Fernando\Desktop\asignacion\asign01\Algoritmo\bin\Debug\Algoritmo01.exe.config
 C:\Users\Fernando\Desktop\asignacion\asign01\Algoritmo\obj\Debug\Algoritmo01.exe
 C:\Users\Fernando\Desktop\asignacion\asign01\Algoritmo\obj\Debug\Algoritmo01.pdb
+C:\Users\Fernando\Desktop\asignacion\asign01\Algoritmo\obj\Debug\Algoritmo02.csprojResolveAssemblyReference.cache

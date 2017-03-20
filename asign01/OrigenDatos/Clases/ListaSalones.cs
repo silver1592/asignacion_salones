@@ -13,7 +13,8 @@ namespace OrigenDatos.Clases
     /// </summary>
     public class ListaSalones
     {
-        private List<Salon> salones;
+        protected List<Salon> salones;
+        public int Count { get { return salones.Count; } }
 
         #region Constructores e inicializadores
         /// <summary>

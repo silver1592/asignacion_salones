@@ -19,3 +19,10 @@ D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\a
 D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Interfaz_02\obj\Debug\Interfaz_02.exe
 D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Interfaz_02\obj\Debug\Interfaz_02.pdb
 D:\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Programa\Asign02\Asign02\asign01\Interfaz_02\obj\Debug\Interfaz_02.Inicio.resources
+C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.csprojResolveAssemblyReference.cache
+C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.Inicio.resources
+C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.Pantallas.Requerimientos_Materia.resources
+C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.Properties.Resources.resources
+C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.csproj.GenerateResource.Cache
+C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.exe
+C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.pdb
