@@ -9,7 +9,7 @@ namespace OrigenDatos.Clases
 {
     public class ListaGrupos
     {
-        private List<Grupo> grupos;
+        protected List<Grupo> grupos;
 
         #region Constructores e inicializadores
         public ListaGrupos()
@@ -19,7 +19,11 @@ namespace OrigenDatos.Clases
 
         public ListaGrupos(List<Grupo> grupos)
         {
-            this.grupos = grupos;
+            this.grupos = new List<Grupo>();
+            foreach(Grupo g in grupos)
+            {
+                this.grupos.Add(g);
+            }
         }
 
         public ListaGrupos(Conexion c, DataTable dtGrupos, ListaSalones salones)
@@ -27,13 +31,14 @@ namespace OrigenDatos.Clases
             grupos = new List<Grupo>();
 
             foreach (DataRow r in dtGrupos.Rows)
-                grupos.Add(Grupo.ToGrupo(r, c, salones));
+                grupos.Add(new Grupo(r, c, salones));
         }
 
         public void SetGrupos(List<Grupo> grupos)
         {
             this.grupos = grupos;
         }
+
         #endregion
 
         #region Consultas
@@ -101,15 +106,5 @@ namespace OrigenDatos.Clases
 
         //Agregar consulta para obtener grupos que requieran estar en planta baja
         //Agregar consulta para obtener grupos con salon fijo
-
-        public static List<Grupo> ToGrupos(DataTable dt, Conexion c, ListaSalones ls)
-        {
-            List<Grupo> res = new List<Grupo>();
-
-            foreach (DataRow r in dt.Rows)
-                res.Add(new Grupo(r, c, ls));
-
-            return res;
-        }
     }
 }
