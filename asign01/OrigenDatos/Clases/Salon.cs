@@ -7,22 +7,22 @@ namespace OrigenDatos.Clases
 {
     public class Salon
     {
-        #region atributos <private>
-        private string cve_espacio; //cve_espacio varchar(60) 
-        private string cve_edificio;//cve_edificio    varchar(20) 
-        private string cve_salon;//cve_salon   varchar(20) 
-        private string cve_sub_salon;//cve_sub_salon   varchar(20) 
-        private string cve_tipo_espacio;//cve_tipo_espacio    int 
-        private int cupo_max;//cupo_max int 
-        private string cve_ubicacion;//cve_ubicacion varchar(30) 
+        #region atributos <protected>
+        protected string cve_espacio; //cve_espacio varchar(60) 
+        protected string cve_edificio;//cve_edificio    varchar(20) 
+        protected string cve_salon;//cve_salon   varchar(20) 
+        protected string cve_sub_salon;//cve_sub_salon   varchar(20) 
+        protected string cve_tipo_espacio;//cve_tipo_espacio    int 
+        protected int cupo_max;//cupo_max int 
+        protected string cve_ubicacion;//cve_ubicacion varchar(30) 
 
-        private List<int> equipo_instalado;
-        private List<string> area;
-        private int[] val;
+        protected List<int> equipo_instalado;
+        protected List<string> area;
+        protected int[] val;
 
-        private bool asignable;
-        private bool empalmes;
-        private List<Grupo> gruposAsignados;
+        protected bool asignable;
+        protected bool empalmes;
+        protected List<Grupo> gruposAsignados;
 
         #endregion
 
@@ -243,20 +243,6 @@ namespace OrigenDatos.Clases
         #endregion
         #endregion
 
-        /// <summary>
-        /// Checa si hay horario para el grupo que que se le pasa por parametro.
-        /// </summary>
-        /// <param name="grupo"></param>
-        /// <returns></returns>
-        public bool Disponible_para_grupo(Grupo grupo)
-        {
-            for(int i=0; i<6;i++)
-                if (horario[i] && grupo.dias(hora)[i])
-                    return false;
-
-            return true;
-        }
-
         public bool Disponible(int hora_ini, int hora_fin, string dias)
         {
             var query = from g in gruposAsignados
@@ -285,26 +271,6 @@ namespace OrigenDatos.Clases
         }
 
         /// <summary>
-        /// Puntos que otorga al Grupo
-        /// -corregir-
-        /// que la salida sea una estructura de multiples puntos
-        /// </summary>
-        /// <param name="grupo"></param>
-        /// <returns></returns>
-        public float puntosCon(Grupo grupo)
-        {
-            float p = 0;
-
-            foreach (Grupo g in gruposAsignados)
-                if (!grupo.empalme(g))
-                    p += g.SalonValido(this);
-
-            p += grupo.SalonValido(this);
-
-            return p;
-        }
-
-        /// <summary>
         /// Obtiene el valor que tiene el salon para el area
         /// </summary>
         /// <param name="area">Numero del area a checar</param>
@@ -319,22 +285,6 @@ namespace OrigenDatos.Clases
 
             return -1;
 
-        }
-
-        /// <summary>
-        /// Busca los grupos dentro de una lista que esten asignados en el salon y los almacena 
-        /// para poder generar un horario de un salon
-        /// </summary>
-        /// <param name="hora">Solo se genera el horario por hora</param>
-        /// <param name="ciclo">Ciclo escolar a generar el horario</param>
-        public void ObtenHorario(List<Grupo> grupos)
-        {
-            var query = from Grupo g in grupos
-                        where g.Salon == Cve_espacio
-                        select g;
-
-            foreach (Grupo g in query.ToList<Grupo>())
-                gruposAsignados.Add(g);
         }
 
         /// <summary>
