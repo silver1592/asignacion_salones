@@ -1,10 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Algoritmo01.Heredados
 {
@@ -31,6 +28,13 @@ namespace Algoritmo01.Heredados
                 this.salones.Add(s);
         }
 
+        public ListaSalones(ListaSalones salones)
+        {
+            this.salones = new List<OrigenDatos.Clases.Salon>();
+            foreach (Salon s in salones.salones)
+                this.salones.Add(new Salon(s));
+        }
+
         public ListaSalones(DataTable dt):base(dt){}
 
         /// <summary>
@@ -41,8 +45,24 @@ namespace Algoritmo01.Heredados
         public ListaSalones(Conexion c, DataTable dtSalones, int hora=0) : base(c,dtSalones,hora){}
         #endregion
 
+        public List<Salon> GetList()
+        {
+            List<Salon> sal = new List<Salon>();
+            foreach(Salon s in salones)
+            {
+                sal.Add(new Salon(s));
+            }
+
+            return sal;
+        }
+
+        internal Salon GetSalon(int val)
+        {
+            return (Salon)(salones[val]);
+        }
+
         #region consultas
-        
+
         #endregion
     }
 }

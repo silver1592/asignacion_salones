@@ -11,57 +11,46 @@ namespace Algoritmo01.Clases
         private static Conexion Consultas;
         public static Conexion Coneccion { set { Consultas = value; } }
 
-        private List<Grupo> grupos;
-        private List<Salon> salones;
+        private ListaGrupos grupos;
+        private ListaSalones salones;
         private int hora;
 
-        private List<Grupo> Grupos
+        private ListaGrupos Grupos
         {
             get
             {
-                List<Grupo> res = new List<Grupo>();
-
-                foreach (Grupo g in grupos)
-                    res.Add(new Grupo(g));
-
-                return res;
+                return new ListaGrupos(grupos);
             }
         }
-        private List<Salon> Salones
+        private ListaSalones Salones
         {
             get
             {
-                List<Salon> res=new List<Salon>();
-
-                foreach(Salon s in salones)
-                    res.Add(new Salon(s));
-
-                return res;
+                return new ListaSalones(salones);
             }
         }
 
         private int tamPoblacion = 5;
         private int generaciones = 50;
 
-        private static int individuos_Viejos = 3;
         private int individuosCongelados = 1;
 
         private Individuo[] poblacion;
 
-        private List<Grupo> errores;
-        public List<Grupo> Errores { get { return errores; } }
+        private ListaGrupos errores;
+        public ListaGrupos Errores { get { return errores; } }
 
         /// <summary>
         /// Constructor de la iteracion del algoritmo
         /// </summary>
         /// <param name="grupos">Lista de grupos a asignar</param>
         /// <param name="salones">Lista de salones disponibles para asignar</param>
-        public Algoritmo(List<Grupo> grupos, List<Salon> salones, int hora, string cicloAnt = "2015-2016/I")
+        public Algoritmo(ListaGrupos grupos, ListaSalones salones, int hora)
         {
             this.grupos = grupos;
             this.salones = salones;
             this.hora = hora;
-            errores = new List<Grupo>();
+            errores = new ListaGrupos() ;
 
             poblacion = new Individuo[tamPoblacion];
 
@@ -189,7 +178,7 @@ namespace Algoritmo01.Clases
                 {
                     try
                     {
-                        temp = new Grupo(g[0].Cve_materia, g[0].num_Grupo, "T", ciclo);
+                        temp = new Grupo(g[0]);
                         res[salones.IndexOf(Salon.buscaSalon(temp.Salon, salones))] = grupos.IndexOf(g[0]);
                         g.Remove(g[0]);
                     }

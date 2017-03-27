@@ -122,26 +122,9 @@ namespace Algoritmo01.Clases
             return fRes;
         }
 
-        public bool salonAnterior(List<Salon> s)
+        public bool salonHoraAnterior(ListaSalones s)
         {
-            List<Grupo> gruposAnteriores = grupo.GruposAnteriores;
-            List<Salon> temp;
-
-            foreach (Grupo g in gruposAnteriores)
-            {
-                var query = from sal in s
-                            where sal.Cve_espacio == g.Salon
-                            select sal;
-
-                temp = query.ToList();
-                if (temp.Count != 0 && valido(temp[0]) && temp[0].Disponible_para_grupo(grupo))
-                {
-                    salon = query.ToList()[0];
-                    return true;
-                }
-            }
-
-            return false;
+            return ((ListaGrupos)grupo.GruposAnteriores).EnSalones(s,grupo);
         }
     }
 }

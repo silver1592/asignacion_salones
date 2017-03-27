@@ -26,3 +26,10 @@ C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.P
 C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.csproj.GenerateResource.Cache
 C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.exe
 C:\Users\Fernando\Desktop\asignacion\asign01\Interfaz_02\obj\Debug\Interfaz_02.pdb
+C:\Users\Fernando\Desktop\asigna\asign01\Interfaz_02\obj\Debug\Interfaz_02.csprojResolveAssemblyReference.cache
+C:\Users\Fernando\Desktop\asigna\asign01\Interfaz_02\obj\Debug\Interfaz_02.Inicio.resources
+C:\Users\Fernando\Desktop\asigna\asign01\Interfaz_02\obj\Debug\Interfaz_02.Pantallas.Requerimientos_Materia.resources
+C:\Users\Fernando\Desktop\asigna\asign01\Interfaz_02\obj\Debug\Interfaz_02.Properties.Resources.resources
+C:\Users\Fernando\Desktop\asigna\asign01\Interfaz_02\obj\Debug\Interfaz_02.csproj.GenerateResource.Cache
+C:\Users\Fernando\Desktop\asigna\asign01\Interfaz_02\obj\Debug\Interfaz_02.exe
+C:\Users\Fernando\Desktop\asigna\asign01\Interfaz_02\obj\Debug\Interfaz_02.pdb

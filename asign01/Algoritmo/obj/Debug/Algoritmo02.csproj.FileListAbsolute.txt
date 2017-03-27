@@ -17,3 +17,7 @@ C:\Users\Fernando\Desktop\asignacion\asign01\Algoritmo\bin\Debug\Algoritmo01.exe
 C:\Users\Fernando\Desktop\asignacion\asign01\Algoritmo\obj\Debug\Algoritmo01.exe
 C:\Users\Fernando\Desktop\asignacion\asign01\Algoritmo\obj\Debug\Algoritmo01.pdb
 C:\Users\Fernando\Desktop\asignacion\asign01\Algoritmo\obj\Debug\Algoritmo02.csprojResolveAssemblyReference.cache
+C:\Users\Fernando\Desktop\asigna\asign01\Algoritmo\bin\Debug\Algoritmo01.exe.config
+C:\Users\Fernando\Desktop\asigna\asign01\Algoritmo\obj\Debug\Algoritmo01.exe
+C:\Users\Fernando\Desktop\asigna\asign01\Algoritmo\obj\Debug\Algoritmo01.pdb
+C:\Users\Fernando\Desktop\asigna\asign01\Algoritmo\obj\Debug\Algoritmo02.csprojResolveAssemblyReference.cache
