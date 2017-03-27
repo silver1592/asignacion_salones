@@ -22,7 +22,7 @@ namespace OrigenDatos.Clases
 
         protected bool asignable;
         protected bool empalmes;
-        protected List<Grupo> gruposAsignados;
+        protected ListaGrupos gruposAsignados;
 
         #endregion
 
@@ -59,14 +59,7 @@ namespace OrigenDatos.Clases
         {
             get
             {
-                bool[] res = { false, false, false, false, false, false };
-
-                foreach (Grupo g in gruposAsignados)
-                    for (int i = 0; i < 6; i++)
-                        if (g.horario_ini[i]>=hora && hora+1>=g.horario_fin[i])
-                            res[i] = true;
-
-                return res;
+                return gruposAsignados.HorarioEnHora(hora);
             }
         }
         public string dias
@@ -114,8 +107,8 @@ namespace OrigenDatos.Clases
             {
                 float p = 0;
 
-                foreach(Grupo g in gruposAsignados)
-                    p += g.SalonValido(this);
+                for(int i = 0;i<gruposAsignados.Count();i++)
+                    p += gruposAsignados.GetGrupo(i).SalonValido(this);
 
                 return p;
             }
@@ -158,9 +151,7 @@ namespace OrigenDatos.Clases
 
             #region Horarios
             hora = s.hora;
-            gruposAsignados = new List<Grupo>();
-            foreach (Grupo g in s.gruposAsignados)
-                gruposAsignados.Add(g);
+            gruposAsignados = new ListaGrupos(s.gruposAsignados);
             #endregion
         }
 
@@ -189,7 +180,7 @@ namespace OrigenDatos.Clases
                 if(excep!=null)
                     SetExcepciones(excep);
 
-                gruposAsignados = new List<Grupo>();
+                gruposAsignados = new ListaGrupos();
             }
             else
                 throw new Exception("Datos del salon no validos");
@@ -245,20 +236,13 @@ namespace OrigenDatos.Clases
 
         public bool Disponible(int hora_ini, int hora_fin, string dias)
         {
-            var query = from g in gruposAsignados
-                        where g.empalme(hora_ini,hora_fin,dias)
-                        select g;
 
-            return query.ToList().Count==0 ? true : false;
+            return !gruposAsignados.HayEmpalme(hora_ini, hora_fin, dias);
         }
 
         public bool Disponible(int[] hora_ini, int[] hora_fin)
         {
-            var query = from g in gruposAsignados
-                        where g.empalme(hora_ini, hora_fin)
-                        select g;
-
-            return query.ToList().Count == 0 ? true : false;
+            return !gruposAsignados.HayEmpalme(hora_ini, hora_fin);
         }
 
         public bool ContieneEquipo(int idEquipo)
@@ -293,14 +277,10 @@ namespace OrigenDatos.Clases
         /// <param name="grupo">Grupo a agregar</param>
         public void agregaGrupo(Grupo grupo)
         {
-            var q = from g in gruposAsignados
-                    where g.empalme(grupo)
-                    select g;
+            var grupos = gruposAsignados.Grupos_Empalmados(grupo);
 
-            List<Grupo> grupos = q.ToList();
-
-            foreach (Grupo g in grupos)
-                remueveGrupo(g);
+            for(int i = 0; i<grupos.Count();i++)
+                remueveGrupo(grupos.GetGrupo(i));
 
             gruposAsignados.Add(grupo);
         }
@@ -313,6 +293,7 @@ namespace OrigenDatos.Clases
         public void remueveGrupo(Grupo grupo)
         {
             gruposAsignados.Remove(grupo);
+            grupo.Salon = "";
         }
 
         /// <summary>
@@ -320,13 +301,9 @@ namespace OrigenDatos.Clases
         /// </summary>
         /// <param name="grupo">Grupo a checar si hay empalme</param>
         /// <returns></returns>
-        public List<Grupo> EmpalmesCon(Grupo grupo)
+        public ListaGrupos EmpalmesCon(Grupo grupo)
         {
-            var query = from g in gruposAsignados
-                        where grupo.empalme(g)
-                        select g;
-
-            return query.ToList();
+            return gruposAsignados.Grupos_Empalmados(grupo);
         }
 
         public override string ToString()

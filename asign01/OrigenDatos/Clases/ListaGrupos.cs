@@ -34,6 +34,15 @@ namespace OrigenDatos.Clases
                 grupos.Add(new Grupo(r, c, salones));
         }
 
+        public ListaGrupos(ListaGrupos grp)
+        {
+            this.grupos = new List<Grupo>();
+            foreach (Grupo g in grp.grupos)
+            {
+                this.grupos.Add(new Grupo(g));
+            }
+        }
+
         public void SetGrupos(List<Grupo> grupos)
         {
             this.grupos = grupos;
@@ -60,6 +69,16 @@ namespace OrigenDatos.Clases
 
             res = new ListaGrupos(query.ToList<Grupo>());
             return res;
+        }
+
+        internal bool[] HorarioEnHora(int hora)
+        {
+            bool[] res = { false, false, false, false, false, false };
+
+            foreach (Grupo g in grupos)
+                for (int i = 0; i < 6; i++)
+                    if (g.horario_ini[i] >= hora && hora + 1 >= g.horario_fin[i])
+                        res[i] = true;
         }
 
         /// <summary>
@@ -93,13 +112,58 @@ namespace OrigenDatos.Clases
             return res;
         }
 
+        public Grupo GetGrupo(int i)
+        {
+            return grupos[i];
+        }
+
+        public int Count()
+        {
+            return grupos.Count;
+        }
+
         public ListaGrupos Grupos_Empalmados(int hora)
         {
             ListaGrupos aux = GruposAsignados("111111", hora);
 
-            
-
             return aux;
+        }
+
+        public ListaGrupos Grupos_Empalmados(Grupo g)
+        {
+            var query = from g in grupos
+                        where g.empalme(g)
+                        select g;
+
+            return new ListaGrupos(query.ToList());
+        }
+
+        internal bool HayEmpalme(int hora_ini, int hora_fin, string dias)
+        {
+            var query = from g in grupos
+                        where g.empalme(hora_ini, hora_fin, dias)
+                        select g;
+
+            return query.ToList().Count == 0 ? true : false;
+        }
+
+        internal bool HayEmpalme(int[] hora_ini, int[] hora_fin)
+        {
+            var query = from g in grupos
+                        where g.empalme(hora_ini, hora_fin)
+                        select g;
+
+            return query.ToList().Count == 0 ? true : false;
+        }
+
+        internal void Remove(Grupo grupo)
+        {
+            grupos.Remove(grupo);
+        }
+
+        internal void Add(Grupo grupo)
+        {
+            grupos.Add(grupo);
         }
 
         #endregion
