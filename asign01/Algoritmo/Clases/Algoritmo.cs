@@ -160,55 +160,15 @@ namespace Algoritmo01.Clases
                     catch { }
         }
 
-        private List<Grupo> individuo_OtrosSemestres(List<Grupo> g, string ciclo, out int[] res)
-        {
-            DataTable asignacionAnterior;
-            Grupo temp;
-            List<Grupo> grupos_temp = new List<Grupo>();
-            int count = salones.Count;
-
-            res = new int[count];
-            //res = inicializa(res.Length, -1);
-
-            while (g.Count != 0)
-            {
-                asignacionAnterior = Consultas.Grupo(g[0].Cve_materia, g[0].num_Grupo, "T", ciclo);
-
-                if (asignacionAnterior.Rows.Count != 0 && asignacionAnterior.Rows[0]["salon"].ToString() != "")
-                {
-                    try
-                    {
-                        temp = new Grupo(g[0]);
-                        res[salones.IndexOf(Salon.buscaSalon(temp.Salon, salones))] = grupos.IndexOf(g[0]);
-                        g.Remove(g[0]);
-                    }
-                    catch
-                    {
-                        grupos_temp.Add(g[0]);
-                        g.Remove(g[0]);
-                    }
-                }
-                else
-                {
-                    grupos_temp.Add(g[0]);
-                    g.Remove(g[0]);
-                }
-            }
-
-            return new List<Grupo>(grupos_temp);
-        }
-
         /// <summary>
         /// mensaje llamado cuando el evento Warning se activa y manda un grupo al que no se le pudo encontrar un salon al cual asignarsele
         /// </summary>
         /// <param name="grupo">Grupo con el uqe se tubo problemas</param>
         private void AddWarning(Grupo grupo)
         {
-            var query = from g in errores
-                        where g.Cve_materia == grupo.Cve_materia && g.num_Grupo == grupo.num_Grupo
-                        select g;
+            var query = errores.GetGrupo(grupo.Cve_materia, grupo.num_Grupo);
 
-            if(query.Count()==0)
+            if(query!=null)
                 errores.Add(grupo);
         }
     }

@@ -140,7 +140,7 @@ namespace OrigenDatos.Clases
             return new ListaGrupos(query.ToList());
         }
 
-        internal bool HayEmpalme(int hora_ini, int hora_fin, string dias)
+        public bool HayEmpalme(int hora_ini, int hora_fin, string dias)
         {
             var query = from g in grupos
                         where g.empalme(hora_ini, hora_fin, dias)
@@ -149,7 +149,7 @@ namespace OrigenDatos.Clases
             return query.ToList().Count == 0 ? true : false;
         }
 
-        internal bool HayEmpalme(int[] hora_ini, int[] hora_fin)
+        public bool HayEmpalme(int[] hora_ini, int[] hora_fin)
         {
             var query = from g in grupos
                         where g.empalme(hora_ini, hora_fin)
@@ -158,12 +158,12 @@ namespace OrigenDatos.Clases
             return query.ToList().Count == 0 ? true : false;
         }
 
-        internal void Remove(Grupo grupo)
+        public void Remove(Grupo grupo)
         {
             grupos.Remove(grupo);
         }
 
-        internal void Add(Grupo grupo)
+        public void Add(Grupo grupo)
         {
             grupos.Add(grupo);
         }
