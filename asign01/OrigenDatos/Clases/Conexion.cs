@@ -69,6 +69,7 @@ namespace OrigenDatos.Clases
             }
             catch (Exception ex)
             {
+                
                 return false;
             }
         }

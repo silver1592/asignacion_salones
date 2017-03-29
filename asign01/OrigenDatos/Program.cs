@@ -84,7 +84,7 @@ namespace OrigenDatos
             string nombreArchivo = "SIAMMAT16172-FINAL.xlsx";
             string nombreHoja = "Query_1";
 
-            c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja, tipo:"T");
+            c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja, tipo: "T");
 
 
             if (c.Autenticacion())
@@ -94,12 +94,6 @@ namespace OrigenDatos
                 Console.WriteLine("Error al conectar");
                 throw new Exception("Error al conectar con la base de datos");
             }
-        }
-
-        private static void horarioSalon()
-        {
-            string cad;
-            Console.WriteLine("Horario Salones");
         }
 
         private static void imprimeLista(List<Grupo> lista)

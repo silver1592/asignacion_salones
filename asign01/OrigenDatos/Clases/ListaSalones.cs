@@ -183,7 +183,7 @@ namespace OrigenDatos.Clases
             List<Salon> temp = new List<Salon>();
 
             var query = from Salon s in salones
-                        where s.EmpalmesCon(g).Count>0
+                        where s.EmpalmesCon(g).Count()>0
                         select s;
 
             temp = query.ToList<Salon>();

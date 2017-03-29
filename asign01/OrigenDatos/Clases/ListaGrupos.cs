@@ -79,6 +79,8 @@ namespace OrigenDatos.Clases
                 for (int i = 0; i < 6; i++)
                     if (g.horario_ini[i] >= hora && hora + 1 >= g.horario_fin[i])
                         res[i] = true;
+
+            return res;
         }
 
         /// <summary>
@@ -129,10 +131,10 @@ namespace OrigenDatos.Clases
             return aux;
         }
 
-        public ListaGrupos Grupos_Empalmados(Grupo g)
+        public ListaGrupos Grupos_Empalmados(Grupo grupo)
         {
             var query = from g in grupos
-                        where g.empalme(g)
+                        where g.empalme(grupo)
                         select g;
 
             return new ListaGrupos(query.ToList());
