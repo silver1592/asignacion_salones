@@ -124,11 +124,14 @@ namespace OrigenDatos.Clases
             return grupos.Count;
         }
 
-        public ListaGrupos Grupos_Empalmados(int hora)
+        public ListaGrupos Grupos_Empalmados()
         {
-            ListaGrupos aux = GruposAsignados("111111", hora);
+            var query = from g in grupos
+                        from g1 in grupos
+                        where g.empalme(g1)
+                        select g;
 
-            return aux;
+            return new ListaGrupos(query.Distinct().ToList());
         }
 
         public ListaGrupos Grupos_Empalmados(Grupo grupo)
