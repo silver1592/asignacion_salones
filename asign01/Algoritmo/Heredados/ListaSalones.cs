@@ -56,9 +56,25 @@ namespace Algoritmo01.Heredados
             return sal;
         }
 
-        internal Salon GetSalon(int val)
+        public Salon GetSalon(int val)
         {
             return (Salon)(salones[val]);
+        }
+
+        public List<ListaGrupos> Agrupa(ListaGrupos g)
+        {
+            ListaGrupos aux;
+            List<ListaGrupos> res = new List<ListaGrupos>();
+
+            foreach (Salon s in salones)
+            {
+                aux = new ListaGrupos((ListaGrupos)g.GruposEnSalon(s.Cve_espacio).Grupos_Empalmados());
+
+                if(aux.Count()!=0)
+                    res.Add(aux);
+            }
+
+            return res;
         }
 
         #region consultas

@@ -50,11 +50,30 @@ namespace Algoritmo01.Heredados
                             where sal.Cve_espacio == g.Salon && grupo.SalonValido(sal)>0 && sal.Disponible_para_grupo(grupo)
                             select sal;
 
-                if (query.Count<Salon>() != 0)
+                if (query.Count() != 0)
                     return true;
             }
 
             return false;
+        }
+
+        public ListaGrupos EnSalonesFijos()
+        {
+            var query = from g in grupos
+                        where g.Salon_fijo == g.Salon
+                        select (Grupo)g;
+
+            return new ListaGrupos(query.ToList());
+        }
+
+        public bool HayEmpalme()
+        {
+            var query = from g in grupos
+                        from g1 in grupos
+                        where g.empalme(g1)
+                        select g;
+
+            return query.Distinct().ToList().Count == 0 ? true : false;
         }
 
         public Grupo GetGrupo(string cve_materia, int num_Grupo)
@@ -68,6 +87,40 @@ namespace Algoritmo01.Heredados
 
             return null;
         }
+
+        public Grupo MejorPara(Salon salon)
+        {
+            ListaGrupos aux = this;
+
+            if (salon.plantaBaja)
+                aux = aux.QuierenPlantabaja();
+
+            //Salon de otros semestres
+            aux = aux.OtrosSemestres(salon.Cve_espacio);
+
+            //Mejor puntuacion de equipamiento
+
+            return aux.Count()!=0 ? (Grupo)aux.GetGrupo(0) : null;
+        }
+
+        public ListaGrupos QuierenPlantabaja()
+        {
+            var query = from g in grupos
+                        where g.PlantaBaja
+                        select (Grupo)g;
+
+            return new ListaGrupos(query.ToList());
+        }
+
+        public ListaGrupos OtrosSemestres(string salon)
+        {
+            var query = from g in grupos
+                        where g.AsignacionSemestresAnteriores(salon)
+                        select (Grupo)g;
+
+            return new ListaGrupos(query.ToList());
+        }
+
 
         public void Update(Grupo g)
         {
@@ -88,6 +141,15 @@ namespace Algoritmo01.Heredados
         {
             foreach(Grupo grupo in grupos)
                 Update(grupo);
+        }
+
+        public ListaGrupos Horario(int hora)
+        {
+            var query = from g in grupos
+                         where ((Grupo)g).horario(hora)
+                         select (Grupo)g;
+
+            return new ListaGrupos(query.ToList());
         }
     }
 }

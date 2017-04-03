@@ -47,6 +47,8 @@
     <Compile Include="Clases\Aleatorio.cs" />
     <Compile Include="Clases\Algoritmo.cs" />
     <Compile Include="Clases\Asignacion.cs" />
+    <Compile Include="Clases\AsignacionPreferencial.cs" />
+    <Compile Include="Clases\ChecaEmpalmes.cs" />
     <Compile Include="Clases\Individuo.cs" />
     <Compile Include="Clases\Variable.cs" />
     <Compile Include="Heredados\Conexion.cs" />
