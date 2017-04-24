@@ -22,13 +22,13 @@ namespace Algoritmo01
             for(int i=7;i<22;i++)
             {
                 avance = 0;
-                temp = new Asignacion(ciclo, i);
+                //temp = new Asignacion(G, i);
                 //Eventos
-                temp.Estado += new Asignacion.estado(Estado);
-                temp.Finalizado += new Asignacion.Finaliza(RecojeErrores);
+                //temp.Estado += new Asignacion.estado(Estado);
+                //temp.Finalizado += new Asignacion.Finaliza(RecojeErrores);
 
                 //algoritmo
-                temp.EjecutaAlgoritmo();
+                //temp.EjecutaAlgoritmo();
             }
             stop = new TimeSpan(DateTime.Now.Ticks);
             Console.Write("***Pulsa una tecla para continuar****\n");
@@ -69,10 +69,10 @@ namespace Algoritmo01
                 throw new Exception("Error al conectar con la base de datos");
             }
 
-            Grupo.Coneccion = c;
-            Salon.Coneccion = c;
-            Algoritmo.Coneccion = c;
-            Asignacion.Conexion = c;
+            //Grupo.Coneccion = c;
+            //Salon.Coneccion = c;
+            //Algoritmo.Coneccion = c;
+            //Asignacion.Conexion = c;
         }
     }
 }

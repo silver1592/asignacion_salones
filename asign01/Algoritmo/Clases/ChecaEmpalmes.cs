@@ -70,7 +70,12 @@ namespace Algoritmo01.Clases
                     else
                     {
                         g = empalme.MejorPara(s);
-
+                        empalme.Ejecuta((grupo) =>
+                        {
+                            grupo.Salon = "";
+                            return null;
+                        });
+                        g.Salon = s.Cve_espacio;
                     }
 
                     mensaje = extra=="" ? mensaje_plantilla + "_" + hora + "_" : extra;

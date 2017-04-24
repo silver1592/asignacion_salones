@@ -96,11 +96,24 @@ namespace Algoritmo01.Heredados
                 aux = aux.QuierenPlantabaja();
 
             //Salon de otros semestres
-            aux = aux.OtrosSemestres(salon.Cve_espacio);
+            if(aux.Count()>1)
+                aux = aux.OtrosSemestres(salon.Cve_espacio);
 
             //Mejor puntuacion de equipamiento
+            if (aux.Count() > 1)
+                aux = aux.MejorPuntuacion(salon);
 
             return aux.Count()!=0 ? (Grupo)aux.GetGrupo(0) : null;
+        }
+
+        public ListaGrupos MejorPuntuacion(Salon s, int limite = 1)
+        {
+            var query = from g in grupos
+                        where g.SalonValido(s) > 0
+                        orderby g.SalonValido(s)
+                        select (Grupo)g;
+
+            return new ListaGrupos(query.Take(limite).ToList());
         }
 
         public ListaGrupos QuierenPlantabaja()

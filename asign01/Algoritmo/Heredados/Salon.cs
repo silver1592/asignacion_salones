@@ -44,11 +44,10 @@ namespace Algoritmo01.Heredados
         {
             float p = 0;
 
-            foreach (Grupo g in gruposAsignados)
-                if (!grupo.empalme(g))
-                    p += g.SalonValido(this);
-
-            p += grupo.SalonValido(this);
+            if (gruposAsignados.Grupos_Empalmados(grupo).Count() == 0)
+                p += grupo.SalonValido(this);
+            else
+                p = -1;
 
             return p;
         }

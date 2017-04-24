@@ -48,35 +48,13 @@ namespace Algoritmo01.Clases
         /// </summary>
         public void EjecutaAlgoritmo()
         {
-            #region Pre Asignacion
-            /// No cambiar el orden del proceso, primero va asignacion preferencial y luego el chequeo de empalmes
-            /// De modificarlo pueden surgir empalmes en los salones
-            AsignacionPreferencial a = new AsignacionPreferencial(grupos, salones);
-            a.ejecuta();
-
-            Empalmes("e1");
-            #endregion
-
             #region Algoritmo
             iniciaAlgoritmoGenetico();
 
             #endregion
-
-            #region eliminacion de empalmes
-            Empalmes("e2");
-            #endregion
         }
 
-        #region Procesos de asignacion        
-
-        private List<Grupo> GruposDelSalon(string salon)
-        {
-            var query = from g in GruposAsignados
-                        where g.Salon == salon && g.horario(hora)
-                        select g;
-
-            return query.ToList<Grupo>();
-        }
+        #region Procesos de asignacion
 
         private void iniciaAlgoritmoGenetico()
         {

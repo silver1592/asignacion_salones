@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrigenDatos.Estructuras;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -95,7 +96,7 @@ namespace Algoritmo01.Heredados
             if (salon_fijo != null && salon_fijo != "")
             {
                 salon = salon_fijo;
-                _Salon = salones.buscaSalon(salon);
+                _Salon = (Salon)salones.buscaSalon(salon);
                 if (_Salon != null)
                     _Salon.agregaGrupo(this);
 
