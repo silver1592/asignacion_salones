@@ -1,4 +1,5 @@
 ﻿using Interfaz_02.Heredados;
+using OrigenDatos.Clases;
 using System;
 using System.Windows.Forms;
 
