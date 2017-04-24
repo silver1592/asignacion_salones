@@ -100,6 +100,14 @@ namespace OrigenDatos.Clases
         }        
         public string Area { get { return cve_materia.Substring(0, 1); } }
         public int Cupo { get { return cupo; } }
+
+        public bool AsignacionSemestresAnteriores(string salon)
+        {
+            Salon s = salonesAnteriores.buscaSalon(salon);
+
+            return s!=null ? true : false;
+        }
+
         public string Cve_materia { get { return cve_materia; } }
         public int num_Grupo { get { return grupo; } }
         public int RPE { get { return rpe; } }
