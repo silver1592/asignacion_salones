@@ -10,7 +10,7 @@ namespace OrigenDatos.Clases
         {
             get
             {
-                string dir = @"148.224.58.4\FINGENIERIA;";
+                string dir = @"148.224.93.146\FINGENIERIA,2433;";
                 string usuario = "asignacion";
                 string pass = "Asigna#2016Ing";
                 //Datos de la coneccion
