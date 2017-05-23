@@ -16,15 +16,14 @@ namespace InterfazWeb.Controllers
             return View();
         }
 
-        public ActionResult SeleccionExcel()
+        public ActionResult _SeleccionExcel()
         {
-            return View();
+            return PartialView();
         }
 
-        public ActionResult CargaExcel()
+        public ActionResult _CargaExcel()
         {
-            return View();
+            return PartialView();
         }
-
     }
 }
