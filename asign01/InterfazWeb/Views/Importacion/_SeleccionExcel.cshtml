@@ -1,6 +1,6 @@
 ﻿<form method="post" id="form_excel_sel">
 
-    <label>Archivo</label>
+    <label>Archivo: </label>
     <select id="archivos">
         <!--Carga una lita de archivos que existen en la base de datos
             cada vez que se selecciona uno se escribe en input archivo
@@ -8,16 +8,20 @@
     </select>
     <input type="text" name="archivo" class="input_hidde" />
 
-    <label>Hoja</label>
+    <br />
+    <label>Hoja: </label>
     <select id="hojas">
         <!--Carga las hojas de el archivo de excel utilizado-->
     </select>
     <input type="text" name="sheet" class="input_hidde" />
 
+    <br />
     <input type="radio" name="operacion" value="e" />Usar para el algoritmo
     <br />
     <input type="radio" name="operacion" value="b" />Usar para el algoritmo
     <br />
     <input type="radio" name="operacion" value="eb" />Cargar excel a Base de datos
 
+    <br />
+    <input type="submit" value="Aceptar" />
 </form>

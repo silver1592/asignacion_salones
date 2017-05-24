@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\EjecutaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportacionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -121,6 +122,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
+    <Content Include="JS\externos\jquery-3.2.1.min.js" />
+    <Content Include="JS\externos\jquery-ui.min.js" />
+    <Content Include="JS\index.js" />
+    <Content Include="Styles\externos\jquery-ui.min.css" />
+    <Content Include="Styles\externos\jquery-ui.structure.css" />
     <Content Include="Styles\index.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -133,7 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="JS\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -143,10 +148,16 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_SeleccionExcel.cshtml" />
+    <Content Include="Views\Importacion\_SeleccionExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_CargaExcel.cshtml" />
+    <Content Include="Views\Importacion\_CargaExcel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_ImportacionTabs_Dec.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Ejecuta\_Operaciones.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

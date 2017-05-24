@@ -5,3 +5,8 @@
 div{
     
 }
+
+.input_hidde{
+    visibility:hidden;
+    display:none;
+}

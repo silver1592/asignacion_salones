@@ -5,20 +5,40 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <link href="~/Styles/index.css" type="text/css" rel="stylesheet"/>
+    <link href="~/Styles/externos/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+    <script src="~/JS/externos/jquery-3.2.1.min.js"></script>
+    <script src="~/JS/externos/jquery-ui.min.js"></script>
+    <script src="~/JS/index.js"></script>
 </head>
 <body>
-    <div>
-        <div class="importacionOpcion">
-            @{
-                Html.RenderAction("_SeleccionExcel", "Importacion");
-            }
-        </div>
+    <table>
+        <tr>
+            <td>
+                <div id="importacionTabs">
+                    <ul>
+                        <li><a href="#tab1">Selecciona Origen de datos</a></li>
+                        <li><a href="#tab2">Carga Excel</a></li>
+                    </ul>
+                    <div id="tab1">
+                        @{ Html.RenderAction("_SeleccionExcel", "Importacion"); }
+                    </div>
 
-        <div class="importacionOpcion">
-            @{
-                Html.RenderAction("_CargaExcel", "Importacion");
-            }
-        </div>
-    </div>
+                    <div id="tab2">
+                        @{ Html.RenderAction("_CargaExcel", "Importacion"); }
+                    </div>
+                </div>
+            </td>
+            <td rowspan="2">
+                <!--Consultas-->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="ejecutaAsignacion">
+
+                </div>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
