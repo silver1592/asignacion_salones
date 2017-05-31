@@ -20,6 +20,9 @@ namespace Algoritmo01.Heredados
 
         public Grupo(Grupo g) :base(g){ }
 
+        //Para la vercion web
+        public Grupo(OrigenDatos.Clases.Grupo g) : base(g) { }
+
         public Grupo(DataRow r, Conexion c, ListaSalones salones):base(r, c, salones){ }
         #endregion
 

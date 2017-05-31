@@ -1,0 +1,18 @@
+﻿@model List<InterfazWeb_02.Models.Grupo>
+
+<table>
+    @foreach (InterfazWeb_02.Models.Grupo grupo in Model)
+    {
+        <tr>
+            <td>
+                @grupo.Cve_materia
+            </td>
+            <td>
+                @grupo.num_Grupo
+            </td>
+            <td>
+                @grupo.Salon
+            </td>
+        </tr>
+    }
+</table>
