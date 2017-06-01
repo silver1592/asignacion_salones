@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Algoritmo01.Clases
+namespace Algoritmo02.Clases
 {
     /// <summary>
     /// Clase creada para evitar chequeos repeetitivos en el algoritmo cuando se usa un random.

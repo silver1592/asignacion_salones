@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Algoritmo01.Heredados;
+using Algoritmo02.Heredados;
 
-namespace Algoritmo01.Clases
+namespace Algoritmo02.Clases
 {
     public class Asignacion
     {

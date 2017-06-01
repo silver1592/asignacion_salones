@@ -1,9 +1,9 @@
-﻿using Algoritmo01.Clases;
+﻿using Algoritmo02.Clases;
 using System;
 using System.Collections.Generic;
 using OrigenDatos.Clases;
 
-namespace Algoritmo01
+namespace Algoritmo02
 {
     class Program
     {

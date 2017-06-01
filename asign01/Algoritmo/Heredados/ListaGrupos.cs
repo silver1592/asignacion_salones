@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Algoritmo01.Heredados
+namespace Algoritmo02.Heredados
 {
     public class ListaGrupos : OrigenDatos.Clases.ListaGrupos
     {

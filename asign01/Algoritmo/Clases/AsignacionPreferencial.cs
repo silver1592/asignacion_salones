@@ -1,11 +1,11 @@
-﻿using Algoritmo01.Heredados;
+﻿using Algoritmo02.Heredados;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Algoritmo01.Clases
+namespace Algoritmo02.Clases
 {
     public class AsignacionPreferencial
     {

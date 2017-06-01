@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace Algoritmo01.Heredados
+namespace Algoritmo02.Heredados
 {
     public class Conexion : OrigenDatos.Clases.Conexion
     {

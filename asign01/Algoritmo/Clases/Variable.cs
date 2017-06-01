@@ -1,8 +1,8 @@
-﻿using Algoritmo01.Heredados;
+﻿using Algoritmo02.Heredados;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algoritmo01.Clases
+namespace Algoritmo02.Clases
 {
     public class Variable
     {

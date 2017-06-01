@@ -3,7 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algoritmo01.Heredados
+namespace Algoritmo02.Heredados
 {
     public class Salon : OrigenDatos.Clases.Salon
     {

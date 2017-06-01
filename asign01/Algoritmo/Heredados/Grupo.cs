@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Algoritmo01.Heredados
+namespace Algoritmo02.Heredados
 {
     public class Grupo:OrigenDatos.Clases.Grupo
     {
