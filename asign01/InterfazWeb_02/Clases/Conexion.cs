@@ -7,7 +7,7 @@ using System.Data;
 
 namespace InterfazWeb_02.Clases
 {
-    public class Conexion : Algoritmo01.Heredados.Conexion
+    public class Conexion : Algoritmo02.Heredados.Conexion
     {
         public Conexion(string Datos, string excelDireccion = null, string archivoEntrada = null, string hoja = "SIAMDIF", string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, archivoEntrada, hoja, ciclo, tipo) { }
 

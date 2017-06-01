@@ -6,7 +6,7 @@ using System.Web;
 
 namespace InterfazWeb_02.Clases
 {
-    public class ListaGrupos : Algoritmo01.Heredados.ListaGrupos
+    public class ListaGrupos : Algoritmo02.Heredados.ListaGrupos
     {
         public ListaGrupos() : base() { }
 
