@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using OrigenDatos;
-using Algoritmo02.Heredados;
+using Algoritmo02;
 
 namespace InterfazWeb_02.Models
 {

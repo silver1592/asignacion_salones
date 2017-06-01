@@ -157,6 +157,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Algoritmo\Algoritmo02.csproj">
+      <Project>{1aef36b2-2441-4e63-b135-7bdcae327a7f}</Project>
+      <Name>Algoritmo02</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OrigenDatos\OrigenDatos.csproj">
       <Project>{4dd4a1ad-eead-4a76-aac7-cb46a32e32e0}</Project>
       <Name>OrigenDatos</Name>

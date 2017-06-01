@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Algoritmo02;
 
 namespace InterfazWeb_02.Clases
 {
