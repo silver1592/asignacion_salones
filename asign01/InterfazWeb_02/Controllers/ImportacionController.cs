@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using InterfazWeb_02.Models;
 
-namespace InterfazWeb.Controllers
+namespace InterfazWeb_02.Controllers
 {
     public class ImportacionController : Controller
     {
@@ -18,7 +19,18 @@ namespace InterfazWeb.Controllers
 
         public ActionResult _SeleccionExcel()
         {
-            return PartialView();
+            List<LibroExcel> libros = new List<LibroExcel>();
+            string[] pathElements;
+            string fileName;
+
+            foreach (string s in System.IO.Directory.GetFiles(Server.MapPath("~/Archivos/")))
+            {
+                pathElements = s.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
+                fileName = pathElements[pathElements.Length - 1];
+                libros.Add(new LibroExcel(Server.MapPath("~/Archivos/"), fileName));
+            }
+
+            return PartialView(libros);
         }
 
         public ActionResult _CargaExcel()

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace InterfazWeb.Controllers
+namespace InterfazWeb_02.Controllers
 {
     public class EjecutaController : Controller
     {

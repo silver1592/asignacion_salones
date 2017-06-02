@@ -1,10 +1,15 @@
-﻿<form method="post" id="form_excel_sel">
+﻿@model List <InterfazWeb_02.Models.LibroExcel> 
+<form method="post" id="form_excel_sel">
 
     <label>Archivo: </label>
     <select id="archivos">
-        <!--Carga una lita de archivos que existen en la base de datos
+        <!--Carga una lista de archivos que existen en la base de datos
             cada vez que se selecciona uno se escribe en input archivo
             cada vez que se selecciona uno se solicita el nombre de sus hojas-->
+        @foreach(InterfazWeb_02.Models.LibroExcel exc in Model)
+        {
+            <option>@exc.Nombre</option>
+        }
     </select>
     <input type="text" name="archivo" class="input_hidde" />
 
