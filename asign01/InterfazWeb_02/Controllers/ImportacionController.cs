@@ -25,5 +25,17 @@ namespace InterfazWeb.Controllers
         {
             return PartialView();
         }
+
+        [HttpPost]
+        public void SubirExcel(HttpPostedFileBase file)
+        {
+            if (file != null)
+            {
+                string archivo = file.FileName;
+                string dir = Server.MapPath("~/Archivos/") + archivo;
+
+                file.SaveAs(dir);
+            }
+        }
     }
 }

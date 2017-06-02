@@ -1,7 +1,7 @@
-﻿<form method="post">
+﻿@using (Html.BeginForm("SubirExcel", "Importacion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     <label>Cargar Excel:</label>
     <br />
-    <input type="file" name="file" />
-    <br /> 
-    <input type="submit" value="Subir" />
-</form>
+    <input type="file" name="file" accept=".xlsx, .xls"/> 
+    <button type="submit">Subir archivo</button>
+}

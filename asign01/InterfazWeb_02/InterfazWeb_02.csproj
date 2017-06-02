@@ -146,6 +146,7 @@
     <Content Include="Views\Importacion\_CargaExcel.cshtml" />
     <Content Include="Views\Importacion\_SeleccionExcel.cshtml" />
     <Content Include="Views\Shared\_ImportacionTabs_Dec.cshtml" />
+    <Content Include="Archivos\SIAMMAT16172-FINAL.xlsx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

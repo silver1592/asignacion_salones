@@ -28,22 +28,22 @@ namespace OrigenDatos.Clases
 
         public string cve = "CLAVEMAT";
 
-        public string cverpe = "rpe";
+        public string cverpe = "CVERPE";
         public string tipo = "TIPO";
-        public string salon = "salon";
-        public string lunes = "lunes_ini";
-        public string lunesf = "lunes_fin";
-        public string martes = "martes_ini";
-        public string martesf = "martes_fin";
-        public string miercoles = "miercoles_ini";
-        public string miercolesf = "miercoles_fin";
-        public string jueves = "jueves_ini";
-        public string juevesf = "jueves_fin";
-        public string viernes = "viernes_ini";
-        public string viernesf = "viernes_fin";
-        public string sabado = "sabado_ini";
-        public string sabadof = "sabado_fin";
-        public string cupo = "cupo";
+        public string salon = "SALON";
+        public string lunes = "LUNES";
+        public string lunesf = "LUNESF";
+        public string martes = "MARTES";
+        public string martesf = "MARTESF";
+        public string miercoles = "MIERCOLES";
+        public string miercolesf = "MIERCOLESF";
+        public string jueves = "JUEVES";
+        public string juevesf = "JUEVESF";
+        public string viernes = "VIERNES";
+        public string viernesf = "VIERNESF";
+        public string sabado = "SABADO";
+        public string sabadof = "SABADOF";
+        public string cupo = "CUPO";
 
         private string cicloDefault= "";
         public string CicloDefault { set { cicloDefault = value; } }
