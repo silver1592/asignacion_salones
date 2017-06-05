@@ -15,5 +15,10 @@ namespace InterfazWeb_02.Controllers
         {
             return View();
         }
+
+        public ActionResult _Menu()
+        {
+            return View();
+        }
     }
 }

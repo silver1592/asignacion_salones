@@ -30,9 +30,8 @@ namespace InterfazWeb_02.Controllers
             string excelDir = Server.MapPath("~/Archivos/");
             Conexion c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja);
             ListaGrupos grupos = c.GetGrupos(semestre);
-            List<Grupo> gs = grupos.List();
 
-            return PartialView(gs);
+            return PartialView(grupos);
         }
     }
 }
