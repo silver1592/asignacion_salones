@@ -1,4 +1,11 @@
-﻿<ul>
-    <li>@Html.ActionLink("Inicio","_Menu","Home")</li>
-    <li>@Html.ActionLink("Grupos", "_Grupos", "Consultas")</li>
-</ul>
+﻿<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <span class="navbar-brand" style="border-right:1px dashed #bebdbd">Asignacion de salones</span>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">        
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Inicio", "_Menu", "Home")</li>
+            <li>@Html.ActionLink("Grupos", "_Grupos", "Consultas")</li>
+        </ul>
+    </div>
+</nav>

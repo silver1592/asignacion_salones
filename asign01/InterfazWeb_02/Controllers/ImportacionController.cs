@@ -39,7 +39,7 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public void SubirExcel(HttpPostedFileBase file)
+        public ActionResult SubirExcel(HttpPostedFileBase file)
         {
             if (file != null)
             {
@@ -48,6 +48,8 @@ namespace InterfazWeb_02.Controllers
 
                 file.SaveAs(dir);
             }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

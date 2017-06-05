@@ -6,15 +6,16 @@
     <title>Index</title>
     <link href="~/Styles/index.css" type="text/css" rel="stylesheet"/>
     <link href="~/Styles/externos/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Styles/externos/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <script src="~/JS/externos/jquery-3.2.1.min.js"></script>
     <script src="~/JS/externos/jquery-ui.min.js"></script>
     <script src="~/JS/index.js"></script>
 </head>
 <body>
-    @{ Html.RenderAction("_Menu", "Home"); }
-    <table>
-        <tr>
-            <td>
+    <div class="container">
+        @{ Html.RenderAction("_Menu", "Home"); }
+        <div class="container-fluid">
+            <div class="row">
                 <div id="importacionTabs">
                     <ul>
                         <li><a href="#tab1">Selecciona Origen de datos</a></li>
@@ -28,19 +29,13 @@
                         @{ Html.RenderAction("_CargaExcel", "Importacion"); }
                     </div>
                 </div>
-            </td>
-            <td rowspan="2">
-                <!--Consultas-->
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+            <div class="row">
                 <div id="ejecutaAsignacion">
-
                 </div>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </div>
     <br />
 </body>
 </html>
