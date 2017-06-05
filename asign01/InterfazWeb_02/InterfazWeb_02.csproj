@@ -143,6 +143,8 @@
     </Compile>
     <Compile Include="Models\Grupo.cs" />
     <Compile Include="Models\LibroExcel.cs" />
+    <Compile Include="Models\Materia.cs" />
+    <Compile Include="Models\Profesor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,11 +16,13 @@ namespace OrigenDatos.Clases
         private List<Grupo> grupos;
         private DataTable rawGrupos;
         private string[,] posicionesHorarios;
+        private string[] sheets;
 
         public List<Grupo> Grupos { get { return grupos; } }
         public DataTable RawGrupos { get { return rawGrupos; } }
         public string[,] PosicionesHorarios{ get { return posicionesHorarios; } }
         public string Direccion { get { return dir; } }
+        public string[] Sheets { get { return sheets; } }
 
         #region Atributos a buscar
         public string cve_mat = "CVE_MAT";
@@ -102,6 +104,13 @@ namespace OrigenDatos.Clases
 
             posicionesHorarios = pos;
         }
+
+        private void SetHojas(DataTableCollection tables)
+        {
+            sheets = new string[tables.Count];
+            for (int i = 0; i < tables.Count; i++)
+                sheets[i] = tables[i].ToString();
+        }
         #endregion
 
         #region Consultas
@@ -143,6 +152,8 @@ namespace OrigenDatos.Clases
 
             DataSet result = excelReader.AsDataSet();
             excelReader.Close();
+
+            SetHojas(result.Tables);
 
             return result.Tables[hoja];
         }

@@ -114,7 +114,7 @@ namespace OrigenDatos.Clases
             return res;
         }
 
-        public Grupo GetGrupo(int i)
+        public virtual Grupo GetGrupo(int i)
         {
             return grupos[i];
         }

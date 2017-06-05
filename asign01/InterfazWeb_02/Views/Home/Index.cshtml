@@ -14,25 +14,21 @@
 <body>
     <div class="container">
         @{ Html.RenderAction("_Menu", "Home"); }
-        <div class="container-fluid">
-            <div class="row">
-                <div id="importacionTabs">
-                    <ul>
-                        <li><a href="#tab1">Selecciona Origen de datos</a></li>
-                        <li><a href="#tab2">Carga Excel</a></li>
-                    </ul>
-                    <div id="tab1">
-                        @{ Html.RenderAction("_SeleccionExcel", "Importacion"); }
-                    </div>
+        <div class="container">
+            <div id="importacionTabs" class="row">
+                <ul>
+                    <li><a href="#tab1">Selecciona Origen de datos</a></li>
+                    <li><a href="#tab2">Carga Excel</a></li>
+                </ul>
+                <div id="tab1">
+                    @{ Html.RenderAction("_SeleccionExcel", "Importacion"); }
+                </div>
 
-                    <div id="tab2">
-                        @{ Html.RenderAction("_CargaExcel", "Importacion"); }
-                    </div>
+                <div id="tab2">
+                    @{ Html.RenderAction("_CargaExcel", "Importacion"); }
                 </div>
             </div>
-            <div class="row">
-                <div id="ejecutaAsignacion">
-                </div>
+            <div id="ejecutaAsignacion" class="container">
             </div>
         </div>
     </div>
