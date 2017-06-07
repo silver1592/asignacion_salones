@@ -10,9 +10,6 @@ namespace InterfazWeb_02.Controllers
 {
     public class ConsultasController : Controller
     {
-        string nombreArchivo = "SIAMMAT16172-FINAL.xlsx";
-        string nombreHoja = "E_2017_01_12";
-        string semestre = "2016-2017/II";
         //
         // GET: /Consultas/
 
@@ -28,8 +25,8 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Grupos()
         {
             string excelDir = Server.MapPath("~/Archivos/");
-            Conexion c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja);
-            ListaGrupos grupos = c.GetGrupos(semestre);
+            Conexion c = new Conexion(Conexion.datosConexionPrueba, excelDir, Session["excel"].ToString(), Session["sheet"].ToString());
+            ListaGrupos grupos = c.GetGrupos(Session["semestre"].ToString());
 
             return PartialView(grupos);
         }
@@ -38,10 +35,31 @@ namespace InterfazWeb_02.Controllers
         public JsonResult PaginasExcel(string file)
         {
             string excelDir = Server.MapPath("~/Archivos/");
-            Conexion c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja);
+            Conexion c = new Conexion(Conexion.datosConexionPrueba, excelDir, Session["excel"].ToString(), Session["sheet"].ToString());
             string[] sheets = c.GetExcel.Sheets;
 
             return new JsonResult() { Data = sheets, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        
+        public JsonResult ExcelSelected()
+        {
+            string excel = Session["excel"].ToString();
+            string sheet = Session["sheet"].ToString();
+            bool db = Convert.ToBoolean(Session["usaExcel"].ToString());
+
+            return new JsonResult() { Data = db ? new string[] {excel,sheet} : new string[] { "SQL Server" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult ExcelValid()
+        {
+            string excel = Session["excel"].ToString();
+            string sheet = Session["sheet"].ToString();
+            bool db = Convert.ToBoolean(Session["usaExcel"].ToString());
+
+            //TODO: Hacer un metodo que cheque si se puede leer el excel o si tiene un formato invlido que regrese el error
+
+            return new JsonResult() { Data = false, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }
