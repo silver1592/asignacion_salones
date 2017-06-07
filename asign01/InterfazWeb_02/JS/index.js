@@ -1,8 +1,18 @@
 ﻿$().ready(function () {
+    //UX
+    initialize();
+
+    //Eventos
+    $("#archivos").change(changeExcel);
+    $("#SeleccionExcel #setSession").click(seleccionaOrigenDatos);
+    $("#SeleccionExcel #uploadExcel").click(uploadExcelToDB);
+});
+
+function initialize()
+{
     $("#importacionTabs").tabs({ collapsible: true });
     $("#tabs").tabs({ collapsible: true });
-    $("#archivos").change(changeExcel);
-});
+}
 
 function changeExcel() {
     var excelName = $("#archivos option:selected").text();
@@ -20,25 +30,74 @@ function changeExcel() {
                     $("#hojas").append($("<option>" + item + "</option>"))
                 });
             },
-            error: function (jqXHR, exception) {
-                var msg = '';
-                if (jqXHR.status === 0) {
-                    msg = 'Not connect.\n Verify Network.';
-                } else if (jqXHR.status == 404) {
-                    msg = 'Requested page not found. [404]';
-                } else if (jqXHR.status == 500) {
-                    msg = 'Internal Server Error [500].';
-                } else if (exception === 'parsererror') {
-                    msg = 'Requested JSON parse failed.';
-                } else if (exception === 'timeout') {
-                    msg = 'Time out error.';
-                } else if (exception === 'abort') {
-                    msg = 'Ajax request aborted.';
-                } else {
-                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                }
-                alert(msg);
-            }
+            error: ErrorFunction
         });
     }
+}
+
+function seleccionaOrigenDatos()
+{
+    var excelName = $("#SeleccionExcel #archivos option:selected").text();
+    var sheet = $("#SeleccionExcel #hojas option:selected").text();
+    var operation = $("#SeleccionExcel input:checked").val();
+
+    if(operation == "e")
+        var data = { excel: excelName, sheet: sheet, bd: false }
+    else
+        var data = { excel: excelName, sheet: sheet, bd: true }
+
+    data = JSON.stringify(data);
+    $.ajax({
+        type: "POST",
+        url: '/Importacion/SetSession_OrigenDatos',
+        contentType: "application/json; charset=utf-8",
+        data: data,
+        dataType: "json",
+        success: function (resultado) {
+            alert("Operacion realizada");
+        },
+        error: ErrorFunction
+    });
+}
+
+function uploadExcelToDB()
+{
+    var excelName = $("#SeleccionExcel #archivos option:selected").text();
+    var sheet = $("#SeleccionExcel #hojas option:selected").text();
+    var semestre = $("#SeleccionExcel input[name='semestre']").val();
+
+    var data = { excel: excelName, sheet: sheet, semestre: semestre }
+
+    data = JSON.stringify(data);
+    $.ajax({
+        type: "POST",
+        url: '/Importacion/CargaExcel_BD',
+        contentType: "application/json; charset=utf-8",
+        data: data,
+        dataType: "json",
+        success: function (resultado) {
+            if (resultado != true) alert(resultado);
+        },
+        error: ErrorFunction
+    });
+}
+
+function ErrorFunction (jqXHR, exception) {
+    var msg = '';
+    if (jqXHR.status === 0) {
+        msg = 'Not connect.\n Verify Network.';
+    } else if (jqXHR.status == 404) {
+        msg = 'Requested page not found. [404]';
+    } else if (jqXHR.status == 500) {
+        msg = 'Internal Server Error [500].';
+    } else if (exception === 'parsererror') {
+        msg = 'Requested JSON parse failed.';
+    } else if (exception === 'timeout') {
+        msg = 'Time out error.';
+    } else if (exception === 'abort') {
+        msg = 'Ajax request aborted.';
+    } else {
+        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+    }
+    alert(msg);
 }

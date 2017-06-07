@@ -51,5 +51,35 @@ namespace InterfazWeb_02.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        public JsonResult SetSession_OrigenDatos(string excel, string sheet, string bd)
+        {
+            if(!Convert.ToBoolean(bd))
+            {
+                Session.Add("excel", excel);
+                Session.Add("sheet", excel);
+            }
+
+            Session.Add("usaExcel", !Convert.ToBoolean(bd));
+
+            return new JsonResult() { Data = true, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        [HttpPost]
+        public JsonResult CargaExcel_BD(string excel, string sheet, string semestre)
+        {
+            //TODO: Metodo para leer los grupos del excel dado
+
+            //foreach(Grupo g in grupos)
+            {
+                //TODO: Metodo para checar si existe el grupo en la base de datos
+                //TODO: Si existe hacer update
+                //TODO: Si no existe hacer insert
+            }
+
+            //TODO: Resultado negativo
+            return new JsonResult() { Data = false, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
     }
 }

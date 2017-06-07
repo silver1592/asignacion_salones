@@ -1,33 +1,30 @@
 ﻿@model List <InterfazWeb_02.Models.LibroExcel> 
-<form method="post" id="form_excel_sel">
-
+<div id="SeleccionExcel">
     <label>Archivo: </label>
     <select id="archivos">
         <!--Carga una lista de archivos que existen en la base de datos
             cada vez que se selecciona uno se escribe en input archivo
             cada vez que se selecciona uno se solicita el nombre de sus hojas-->
         <option>---------</option>
-        @foreach(InterfazWeb_02.Models.LibroExcel exc in Model)
+        @foreach (InterfazWeb_02.Models.LibroExcel exc in Model)
         {
             <option>@exc.Nombre</option>
         }
     </select>
-    <input type="text" name="archivo" class="input_hidde" />
 
     <br />
     <label>Hoja: </label>
     <select id="hojas">
-        <!--Carga las hojas de el archivo de excel utilizado-->
     </select>
-    <input type="text" name="sheet" class="input_hidde" />
 
     <br />
-    <input type="radio" name="operacion" value="e" />Usar para el algoritmo
+    <input type="radio" name="operacion" value="e" />Usar excel
     <br />
-    <input type="radio" name="operacion" value="b" />Usar para el algoritmo
+    <input type="radio" name="operacion" value="b" />Usar base de datos
     <br />
-    <input type="radio" name="operacion" value="eb" />Cargar excel a Base de datos
-
+    <button id="setSession">Aceptar</button>
     <br />
-    <input type="submit" value="Aceptar" />
-</form>
+    <br />
+    <input type="text" name="semestre" />Semestre<br />
+    <button id="uploadExcel">Cargar excel en base de datos</button>
+</div>
