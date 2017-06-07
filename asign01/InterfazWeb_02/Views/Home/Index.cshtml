@@ -4,14 +4,15 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-    <link href="~/Styles/index.css" type="text/css" rel="stylesheet"/>
     <link href="~/Styles/externos/jquery-ui.min.css" type="text/css" rel="stylesheet" />
-    <link href="~/Styles/externos/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <script src="~/JS/externos/jquery-3.2.1.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Styles/index.css" type="text/css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/JS/externos/jquery-ui.min.js"></script>
     <script src="~/JS/index.js"></script>
 </head>
 <body>
+    @Url.Action("")
     <div class="container">
         @{ Html.RenderAction("_Menu", "Home"); }
         <div class="container">

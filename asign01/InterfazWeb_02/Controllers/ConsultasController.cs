@@ -33,5 +33,15 @@ namespace InterfazWeb_02.Controllers
 
             return PartialView(grupos);
         }
+
+        [HttpPost]
+        public JsonResult PaginasExcel(string file)
+        {
+            string excelDir = Server.MapPath("~/Archivos/");
+            Conexion c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja);
+            string[] sheets = c.GetExcel.Sheets;
+
+            return new JsonResult() { Data = sheets, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
     }
 }

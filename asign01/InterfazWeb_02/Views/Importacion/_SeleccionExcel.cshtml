@@ -6,6 +6,7 @@
         <!--Carga una lista de archivos que existen en la base de datos
             cada vez que se selecciona uno se escribe en input archivo
             cada vez que se selecciona uno se solicita el nombre de sus hojas-->
+        <option>---------</option>
         @foreach(InterfazWeb_02.Models.LibroExcel exc in Model)
         {
             <option>@exc.Nombre</option>
