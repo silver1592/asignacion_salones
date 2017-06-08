@@ -103,7 +103,7 @@ namespace Algoritmo02.Heredados
             if (aux.Count() > 1)
                 aux = aux.MejorPuntuacion(salon);
 
-            return aux.Count()!=0 ? (Grupo)aux.Get(0) : null;
+            return aux.Count()!=0 ? (Grupo)aux.[0] : null;
         }
 
         public ListaGrupos MejorPuntuacion(Salon s, int limite = 1)

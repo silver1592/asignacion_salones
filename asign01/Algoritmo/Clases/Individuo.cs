@@ -63,7 +63,7 @@ namespace Algoritmo02.Clases
             Errores = new List<Variable>();
 
             for(int i=0; i<gruposPorAsignar.Count();i++)
-                cromosomas.Add(new Variable((Grupo)gruposPorAsignar.Get(i),hora));
+                cromosomas.Add(new Variable((Grupo)gruposPorAsignar[i],hora));
         }
 
         #region Asignacion de Salones

@@ -49,15 +49,14 @@ namespace OrigenDatos
                         aux = Console.ReadLine();
                         Console.WriteLine("Obteniendo horario del salon");
                         Console.WriteLine("*****************************");
-                        imprimeHorario(c.GetExcel.Grupos.EnSalon(aux).Grupos);
+                        imprimeHorario(c.GetExcel.Grupos.EnSalon(aux));
                     break;
                     case "5":
                         Console.Write("RPE:");
                         aux = Console.ReadLine();
                         Console.WriteLine("Obteniendo horario del profesor");
-                        Console.WriteLine("*******************************");
-                        foreach (Grupo g in c.GetExcel.Grupos.ConProfesor(aux).Grupos)
-                            Console.WriteLine(g.ToString());
+                        imprimeLista(c.GetExcel.Grupos.ConProfesor(aux));
+                        
                     break;
                     case "6":
                         Console.Write("Hora inicial:");
@@ -102,7 +101,7 @@ namespace OrigenDatos
             Console.WriteLine(lista.ToString());
         }
 
-        private static void imprimeHorario(List<Grupo> g)
+        private static void imprimeHorario(IList<Grupo> g)
         {
             int[,] horario = new int[6,14];
 

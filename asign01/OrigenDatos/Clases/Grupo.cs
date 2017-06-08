@@ -433,7 +433,7 @@ namespace OrigenDatos.Clases
             }
             catch
             {
-                throw new Exception("Formato no valido\n Cheque que los encabezados coinsidan");
+                throw new Exception("Formato no valido\n Cheque que los encabezados coincidan");
             }
         }
         #endregion

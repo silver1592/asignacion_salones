@@ -108,7 +108,7 @@ namespace OrigenDatos.Clases
                 float p = 0;
 
                 for(int i = 0;i<gruposAsignados.Count();i++)
-                    p += gruposAsignados.Get(i).SalonValido(this);
+                    p += gruposAsignados[i].SalonValido(this);
 
                 return p;
             }
@@ -279,8 +279,8 @@ namespace OrigenDatos.Clases
         {
             var grupos = gruposAsignados.Empalmados(grupo);
 
-            for(int i = 0; i<grupos.Count();i++)
-                remueveGrupo(grupos.Get(i));
+            foreach(Grupo g in grupos)
+                remueveGrupo(g);
 
             gruposAsignados.Add(grupo);
         }
@@ -292,7 +292,7 @@ namespace OrigenDatos.Clases
         /// <param name="grupo">Grupo a eliminar</param>
         public void remueveGrupo(Grupo grupo)
         {
-            gruposAsignados.Remove(grupo);
+            ((IList<Grupo>)gruposAsignados).Remove(grupo);
             grupo.Salon = "";
         }
 

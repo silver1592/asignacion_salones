@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -7,15 +8,90 @@ using System.Threading.Tasks;
 
 namespace OrigenDatos.Clases
 {
-    //TODO: Implements IList<Grupo> y tambien para salones
-    public class ListaGrupos
+    public class ListaGrupos : IList<Grupo>
     {
         protected List<Grupo> grupos;
 
-        /// <summary>
-        /// ToDo: Eliminar este metodo
-        /// </summary>
-        public List<Grupo> Grupos { get { return grupos; } }
+        #region IList
+        int ICollection<Grupo>.Count
+        {
+            get
+            {
+                return ((IList<Grupo>)grupos).Count;
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return ((IList<Grupo>)grupos).IsReadOnly;
+            }
+        }
+
+        public Grupo this[int index]
+        {
+            get
+            {
+                return ((IList<Grupo>)grupos)[index];
+            }
+
+            set
+            {
+                ((IList<Grupo>)grupos)[index] = value;
+            }
+        }
+
+        public int IndexOf(Grupo item)
+        {
+            return ((IList<Grupo>)grupos).IndexOf(item);
+        }
+
+        public void Insert(int index, Grupo item)
+        {
+            ((IList<Grupo>)grupos).Insert(index, item);
+        }
+
+        public void RemoveAt(int index)
+        {
+            ((IList<Grupo>)grupos).RemoveAt(index);
+        }
+
+        public void Clear()
+        {
+            ((IList<Grupo>)grupos).Clear();
+        }
+
+        public bool Contains(Grupo item)
+        {
+            return ((IList<Grupo>)grupos).Contains(item);
+        }
+
+        public void CopyTo(Grupo[] array, int arrayIndex)
+        {
+            ((IList<Grupo>)grupos).CopyTo(array, arrayIndex);
+        }
+
+        bool ICollection<Grupo>.Remove(Grupo item)
+        {
+            return ((IList<Grupo>)grupos).Remove(item);
+        }
+
+        public IEnumerator<Grupo> GetEnumerator()
+        {
+            return ((IList<Grupo>)grupos).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IList<Grupo>)grupos).GetEnumerator();
+        }
+
+        public void Add(Grupo grupo)
+        {
+            grupos.Add(grupo);
+        }
+        #endregion
 
         #region Constructores e inicializadores
         public ListaGrupos()
@@ -57,16 +133,6 @@ namespace OrigenDatos.Clases
         #endregion
 
         #region Basicos
-        public virtual Grupo Get(int i)
-        {
-            return grupos[i];
-        }
-
-        public int Count()
-        {
-            return grupos.Count;
-        }
-
         /// <summary>
         /// Checa si los grupos estan asignados a cierta hora
         /// </summary>
@@ -84,21 +150,11 @@ namespace OrigenDatos.Clases
             return res;
         }
 
-        public void Remove(Grupo grupo)
-        {
-            grupos.Remove(grupo);
-        }
-
-        public void Add(Grupo grupo)
-        {
-            grupos.Add(grupo);
-        }
-
         public override string ToString()
         {
             string cad = "";
-            for (int i = 0; i < Count(); i++)
-                cad+=Get(i).ToString()+"\n";
+            foreach(Grupo g in this)
+                cad+=g.ToString()+"\n";
             return base.ToString();
         }
         #endregion

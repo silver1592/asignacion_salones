@@ -28,6 +28,7 @@ namespace OrigenDatos.Clases
         public Dictionary<string, string> headers;
         private void SetHeaders()
         {
+            headers = new Dictionary<string, string>();
             headers.Add("cve_mat","CVE_MAT");
             headers.Add("cve_gpo","CVE_GPO");
 
@@ -62,11 +63,11 @@ namespace OrigenDatos.Clases
         {
             if (File.Exists(direccion + archivo))
             {
+                SetHeaders();
                 this.archivo += direccion + archivo;
                 this.dir = direccion;
                 headers["cicloDefault"] = ciclo;
                 headers["tipoDefault"] = tipo;
-                SetHeaders();
             }
             else
                 throw new Exception("No se encontro archivo", null);

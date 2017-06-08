@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,11 +12,85 @@ namespace OrigenDatos.Clases
     /// <summary>
     /// Esta clase se hiso para no estar manejando tantas listas y para que la hisiera de filtro o buscador para siertas situaciones
     /// </summary>
-    public class ListaSalones
+    public class ListaSalones : IList<Salon>
     {
         protected List<Salon> salones;
-        public List<Salon> Salones { get { return salones; } }
+
+        #region IList
         public int Count { get { return salones.Count; } }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return ((IList<Salon>)salones).IsReadOnly;
+            }
+        }
+
+        public Salon this[int index]
+        {
+            get
+            {
+                return ((IList<Salon>)salones)[index];
+            }
+
+            set
+            {
+                ((IList<Salon>)salones)[index] = value;
+            }
+        }
+
+        public int IndexOf(Salon item)
+        {
+            return ((IList<Salon>)salones).IndexOf(item);
+        }
+
+        public void Insert(int index, Salon item)
+        {
+            ((IList<Salon>)salones).Insert(index, item);
+        }
+
+        public void RemoveAt(int index)
+        {
+            ((IList<Salon>)salones).RemoveAt(index);
+        }
+
+        public void Add(Salon item)
+        {
+            ((IList<Salon>)salones).Add(item);
+        }
+
+        public void Clear()
+        {
+            ((IList<Salon>)salones).Clear();
+        }
+
+        public bool Contains(Salon item)
+        {
+            return ((IList<Salon>)salones).Contains(item);
+        }
+
+        public void CopyTo(Salon[] array, int arrayIndex)
+        {
+            ((IList<Salon>)salones).CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(Salon item)
+        {
+            return ((IList<Salon>)salones).Remove(item);
+        }
+
+        public IEnumerator<Salon> GetEnumerator()
+        {
+            return ((IList<Salon>)salones).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IList<Salon>)salones).GetEnumerator();
+        }
+
+        #endregion
 
         #region Constructores e inicializadores
         /// <summary>
@@ -88,7 +163,6 @@ namespace OrigenDatos.Clases
         #endregion
 
         #region consultas
-
         public ListaSalones Disponibles(int hora_ini, int hora_fin, string dias)
         {
             List<Salon> temp = new List<Salon>();

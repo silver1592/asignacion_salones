@@ -67,9 +67,8 @@ namespace OrigenDatos.Clases
                 con.Close();
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                
                 return false;
             }
         }
