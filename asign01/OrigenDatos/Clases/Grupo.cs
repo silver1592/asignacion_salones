@@ -103,7 +103,7 @@ namespace OrigenDatos.Clases
 
         public bool AsignacionSemestresAnteriores(string salon)
         {
-            Salon s = salonesAnteriores.buscaSalon(salon);
+            Salon s = salonesAnteriores.busca(salon);
 
             return s!=null ? true : false;
         }
@@ -303,7 +303,7 @@ namespace OrigenDatos.Clases
         /// <param name=""></param>
         public Grupo(string cve_materia,string grupo, string rpe, string tipo, string salon, string li, string lf,string mi, string mf, string Mii,string Mif, string ji, string jf, string vi, string vf, string si, string sf, string cupo, string ciclo)
         {
-            //| cn = new Conexion(Conexion.datosConexionPrueba);
+            //cn = new Conexion(Conexion.datosConexionPrueba);
 
             this.cve_materia = cve_materia;
             this.grupo = Convert.ToInt32(grupo);
@@ -395,6 +395,47 @@ namespace OrigenDatos.Clases
             Set_RequerimientosProfesor(c.Necesidades_prof(RPE.ToString()));
             Set_SalonesPosibles(c.salonesPosibles(cve_materia), salones);
         }
+
+        public Grupo(DataRow r, IDictionary<string, string> h)
+        {
+            try
+            {
+                try
+                {
+                    ///Se usan estos si se tiene el grupo y la materia por separado
+                    cve_materia = Convert.ToString(r.Field<double>(h["cve_mat"]));
+                    grupo = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cve_gpo"])));
+                }
+                catch
+                {
+                    ///Se usa este si el grupo y la materia estan juntos
+                    cve_materia = Convert.ToString(r.Field<double>(h["cve"])).Substring(0, 4);
+                    grupo = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cve"])).Substring(4, 2));
+                }
+
+                rpe = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cverpe"])));
+                tipo = h["tipoDefault"] == "" ? r.Field<string>(h["tipo"]) : h["tipoDefault"];
+                salon = r.Field<string>(h["salon"]);
+                lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["lunes"])));
+                lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["lunesf"])));
+                martes_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["martes"])));
+                martes_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["martesf"])));
+                miercoles_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["miercoles"])));
+                miercoles_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["miercolesf"])));
+                jueves_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["jueves"])));
+                jueves_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["juevesf"])));
+                viernes_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["viernes"])));
+                viernes_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["viernesf"])));
+                sabado_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["sabado"])));
+                sabado_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["sabadof"])));
+                cupo = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cupo"])));
+                ciclo = h["cicloDefault"];
+            }
+            catch
+            {
+                throw new Exception("Formato no valido\n Cheque que los encabezados coinsidan");
+            }
+        }
         #endregion
 
         /// <summary>
@@ -408,7 +449,7 @@ namespace OrigenDatos.Clases
             float peso = -1;
 
             //Checa si esta en la lista de posibles salones o si esta en uno de los salones anteriores
-            if (salones_Posibles.buscaSalon(salon.Cve_espacio)!=null)
+            if (salones_Posibles.busca(salon.Cve_espacio)!=null)
                 peso = 10;
             ///Checa si ya habia sido asignado en ese salon un horario anterior
             else if (en_Anteriores(salon))
@@ -460,6 +501,9 @@ namespace OrigenDatos.Clases
         /// <returns>Regresa true si hay un empalme entre los grupos.</returns>
         public bool empalme(Grupo grupo)
         {
+            if (this == grupo)
+                return false;
+
             if ((lunes_ini >= grupo.lunes_ini && lunes_ini < grupo.lunes_fin) ||
                 (lunes_fin <= grupo.lunes_fin && lunes_fin > grupo.lunes_ini))
                 return true;
@@ -554,10 +598,10 @@ namespace OrigenDatos.Clases
         public bool EligeSalon(ListaSalones salones, Salon _Salon)
         {
             //Checa si hay salones que esten especialmente relacionados con el
-            ListaSalones preferentes = salones.SalonesPreferenciales(this);
-            ListaSalones posibes = salones.SalonesValidos(this);
+            ListaSalones preferentes = salones.Preferenciales(this);
+            ListaSalones posibes = salones.Validos(this);
 
-            if (preferentes.buscaSalon(_Salon.Cve_espacio) != null)
+            if (preferentes.busca(_Salon.Cve_espacio) != null)
             {
                 salon = _Salon.Cve_espacio;
                 _Salon.agregaGrupo(this);
@@ -567,7 +611,7 @@ namespace OrigenDatos.Clases
             else
             {
 
-                if (posibes.buscaSalon(_Salon.Cve_espacio) != null)
+                if (posibes.busca(_Salon.Cve_espacio) != null)
                 {
                     salon = _Salon.Cve_espacio;
                     return true;

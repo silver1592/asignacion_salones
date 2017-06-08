@@ -44,7 +44,7 @@ namespace Algoritmo02.Clases
                 //Chequeo de empalme
                 if (empalme.HayEmpalme())
                 {
-                    s = (Salon)salones.buscaSalon(empalme.GetGrupo(0).Salon);
+                    s = (Salon)salones.busca(empalme.Get(0).Salon);
                     #region solucion de empalmes
 
                     //Solucion de empalme

@@ -38,7 +38,7 @@ namespace OrigenDatos
                     break;
                     case "2":
                         Console.WriteLine("Ejecutando chequeo de empalmes");
-                        foreach (List<Grupo> empalme in c.GetExcel.GetEmpalmes())
+                        foreach (ListaGrupos empalme in c.GetExcel.Grupos.Empalmes())
                             imprimeLista(empalme);
                     break;
                     case "3":
@@ -49,14 +49,14 @@ namespace OrigenDatos
                         aux = Console.ReadLine();
                         Console.WriteLine("Obteniendo horario del salon");
                         Console.WriteLine("*****************************");
-                        imprimeHorario(c.GetExcel.HorarioSalon(aux));
+                        imprimeHorario(c.GetExcel.Grupos.EnSalon(aux).Grupos);
                     break;
                     case "5":
                         Console.Write("RPE:");
                         aux = Console.ReadLine();
                         Console.WriteLine("Obteniendo horario del profesor");
                         Console.WriteLine("*******************************");
-                        foreach (Grupo g in c.GetExcel.HorarioProfesor(aux))
+                        foreach (Grupo g in c.GetExcel.Grupos.ConProfesor(aux).Grupos)
                             Console.WriteLine(g.ToString());
                     break;
                     case "6":
@@ -96,11 +96,10 @@ namespace OrigenDatos
             }
         }
 
-        private static void imprimeLista(List<Grupo> lista)
+        private static void imprimeLista(ListaGrupos lista)
         {
             Console.WriteLine("****************************************");
-            foreach (Grupo g in lista)
-                Console.WriteLine(g.ToString());
+            Console.WriteLine(lista.ToString());
         }
 
         private static void imprimeHorario(List<Grupo> g)
@@ -132,9 +131,9 @@ namespace OrigenDatos
         private static void salonesDisponibles(int ini, int fin, string dias)
         {
             ListaSalones salones = new ListaSalones(c, c.Salones(), ini);
-            ListaSalones sDisponibles = salones.SalonesDisponibles(ini, fin, dias);
+            ListaSalones sDisponibles = salones.Disponibles(ini, fin, dias);
 
-            foreach (Salon s in sDisponibles.ToList())
+            foreach (Salon s in sDisponibles.Salones)
                 Console.WriteLine(s.ToString());
         }
     }

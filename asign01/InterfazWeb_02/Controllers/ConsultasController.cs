@@ -57,7 +57,7 @@ namespace InterfazWeb_02.Controllers
             string sheet = Session["sheet"].ToString();
             bool db = Convert.ToBoolean(Session["usaExcel"].ToString());
 
-            //TODO: Hacer un metodo que cheque si se puede leer el excel o si tiene un formato invlido que regrese el error
+            //TODO: Hacer un metodo que cheque si se puede leer el excel o si tiene un formato invalido que regrese el error
 
             return new JsonResult() { Data = false, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

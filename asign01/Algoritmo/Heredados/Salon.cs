@@ -44,7 +44,7 @@ namespace Algoritmo02.Heredados
         {
             float p = 0;
 
-            if (gruposAsignados.Grupos_Empalmados(grupo).Count() == 0)
+            if (gruposAsignados.Empalmados(grupo).Count() == 0)
                 p += grupo.SalonValido(this);
             else
                 p = -1;

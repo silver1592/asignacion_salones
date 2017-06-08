@@ -18,39 +18,42 @@ namespace OrigenDatos.Clases
         private string[,] posicionesHorarios;
         private string[] sheets;
 
-        public List<Grupo> Grupos { get { return grupos; } }
+        public ListaGrupos Grupos { get { return new ListaGrupos(grupos); } }
         public DataTable RawGrupos { get { return rawGrupos; } }
         public string[,] PosicionesHorarios{ get { return posicionesHorarios; } }
         public string Direccion { get { return dir; } }
         public string[] Sheets { get { return sheets; } }
 
         #region Atributos a buscar
-        public string cve_mat = "CVE_MAT";
-        public string cve_gpo = "CVE_GPO";
+        public Dictionary<string, string> headers;
+        private void SetHeaders()
+        {
+            headers.Add("cve_mat","CVE_MAT");
+            headers.Add("cve_gpo","CVE_GPO");
 
-        public string cve = "CLAVEMAT";
+            headers.Add("cve", "CLAVEMAT");
 
-        public string cverpe = "CVERPE";
-        public string tipo = "TIPO";
-        public string salon = "SALON";
-        public string lunes = "LUNES";
-        public string lunesf = "LUNESF";
-        public string martes = "MARTES";
-        public string martesf = "MARTESF";
-        public string miercoles = "MIERCOLES";
-        public string miercolesf = "MIERCOLESF";
-        public string jueves = "JUEVES";
-        public string juevesf = "JUEVESF";
-        public string viernes = "VIERNES";
-        public string viernesf = "VIERNESF";
-        public string sabado = "SABADO";
-        public string sabadof = "SABADOF";
-        public string cupo = "CUPO";
+            headers.Add("cverpe","CVERPE");
+            headers.Add("tipo","TIPO");
+            headers.Add("salon","SALON");
+            headers.Add("lunes","LUNES");
+            headers.Add("lunesf","LUNESF");
+            headers.Add("martes ", "MARTES");
+            headers.Add("martesf ", "MARTESF");
+            headers.Add("miercoles ", "MIERCOLES");
+            headers.Add("miercolesf ", "MIERCOLESF");
+            headers.Add("jueves ", "JUEVES");
+            headers.Add("juevesf ", "JUEVESF");
+            headers.Add("viernes ", "VIERNES");
+            headers.Add("viernesf ", "VIERNESF");
+            headers.Add("sabado ", "SABADO");
+            headers.Add("sabadof ", "SABADOF");
+            headers.Add("cupo ", "CUPO");
 
-        private string cicloDefault= "";
-        public string CicloDefault { set { cicloDefault = value; } }
-        private string tipoDefault = "";
-        public string TipoDefault { set { tipoDefault = value; } }
+            //Valores default
+            headers.Add("cicloDefault ", "");
+            headers.Add("tipoDefault ", "");
+        }
 
         #endregion
 
@@ -61,11 +64,42 @@ namespace OrigenDatos.Clases
             {
                 this.archivo += direccion + archivo;
                 this.dir = direccion;
-                this.cicloDefault = ciclo;
-                this.tipoDefault = tipo;
+                headers["cicloDefault"] = ciclo;
+                headers["tipoDefault"] = tipo;
+                SetHeaders();
             }
             else
                 throw new Exception("No se encontro archivo", null);
+        }
+
+        /// <summary>
+        /// Lee el excel y regresa las hojas en una coleccion de tablas
+        /// </summary>
+        /// <returns></returns>
+        public DataTableCollection GetSheets()
+        {
+            string filePath = archivo;
+            //Es necesaria para que se inicialize ContCoumn
+
+            FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
+
+            IExcelDataReader excelReader;
+            if (filePath.Contains(".xlsx"))
+                // De lo contrario descomentaremos esta (2007 format; *.xlsx)
+                excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+            else if (filePath.Contains(".xls"))
+                // Si es un archivo de excel anterior a 2009, debemos usar esta línea
+                excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+            else
+                throw new Exception("No es un archivo valido");
+
+            // Cada grupo de elementos en el DataSet tomará el nombre de la primera celda en cada columna
+            excelReader.IsFirstRowAsColumnNames = true;
+
+            DataSet result = excelReader.AsDataSet();
+            excelReader.Close();
+
+            return result.Tables;
         }
 
         /// <summary>
@@ -105,8 +139,13 @@ namespace OrigenDatos.Clases
             posicionesHorarios = pos;
         }
 
-        private void SetHojas(DataTableCollection tables)
+        /// <summary>
+        /// Obtiene el nombre de las hojas del excel y lo asigna a la variable Sheets
+        /// </summary>
+        private void SetHojas()
         {
+            DataTableCollection tables = GetSheets();
+
             sheets = new string[tables.Count];
             for (int i = 0; i < tables.Count; i++)
                 sheets[i] = tables[i].ToString();
@@ -132,72 +171,15 @@ namespace OrigenDatos.Clases
 
         public DataTable GetHojaHorarios(string hoja)
         {
-            string filePath = archivo;
-            //Es necesaria para que se inicialize ContCoumn
+            DataTableCollection tables = GetSheets();
 
-            FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
-
-            IExcelDataReader excelReader;
-            if (filePath.Contains(".xlsx"))
-                // De lo contrario descomentaremos esta (2007 format; *.xlsx)
-                excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-            else if (filePath.Contains(".xls"))
-                // Si es un archivo de excel anterior a 2009, debemos usar esta línea
-                excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
-            else
-                throw new Exception("No es un archivo valido");
-
-            // Cada grupo de elementos en el DataSet tomará el nombre de la primera celda en cada columna
-            excelReader.IsFirstRowAsColumnNames = true;
-
-            DataSet result = excelReader.AsDataSet();
-            excelReader.Close();
-
-            SetHojas(result.Tables);
-
-            return result.Tables[hoja];
-        }
-
-        public DataTable RGrupos_IniHora(int hora_ini, string salon)
-        {
-            var query = from Grupo g in this.grupos
-                        from DataRow r in rawGrupos.Rows
-                        where g.Cve_materia == r[cve_mat].ToString()
-                              && g.num_Grupo == Convert.ToInt32(r[cve_gpo])
-                              && g.hora_ini==hora_ini
-                              && g.Salon == salon
-                        select r;
-
-            return AsDataTable(query.ToList<DataRow>());
-        }
-
-        public DataTable GetGruposAsignados(int hora)
-        {
-            
-            var query = from Grupo g in this.grupos
-                        from DataRow r in rawGrupos.Rows
-                        where g.num_Grupo == Convert.ToInt32(r[cve_gpo])
-                              && g.Cve_materia == r[cve_mat].ToString()
-                              && g.empalme(hora, hora + 1, "1111111")
-                              && salon != ""
-                        select r;
-
-            return AsDataTable(query.ToList<DataRow>());
+            return tables[hoja];
         }
 
         public DataTable GetGrupo(DataTable datos,string materia, string grupo)
         {
             var query = from DataRow r in datos.Rows
-                        where r[cve_mat].ToString() == materia && r[cve_gpo].ToString() == grupo
-                        select r;
-
-            return AsDataTable(query.ToList<DataRow>());
-        }
-
-        public DataTable GetGrupos(DataTable datos, string materia, string grupo, string tipo, string ciclo)
-        {
-            var query = from DataRow r in datos.Rows
-                        where r[cve_mat].ToString() == materia && r[cve_gpo].ToString() == grupo
+                        where r[headers["cve_mat"]].ToString() == materia && r[headers["cve_gpo"]].ToString() == grupo
                         select r;
 
             return AsDataTable(query.ToList<DataRow>());
@@ -242,161 +224,17 @@ namespace OrigenDatos.Clases
         #endregion
 
         #region List<Grupo>
-        public List<Grupo> Grupos_EnHora(int hora_ini,int hora_fin,string salon, string dias)
-        {
-            var query = from Grupo g in this.grupos
-                        where g.empalme(hora_ini, hora_fin, dias) && g.Salon == salon
-                        select g;
-
-            return query.ToList<Grupo>();
-        }
-
-        public List<Grupo> Grupos_NoEn(List<Grupo> grupos)
-        {
-            var query = from Grupo g in this.grupos
-                        where !grupos.Contains(g)
-                        select g;
-
-            return query.ToList<Grupo>();
-        }
 
         public List<Grupo> AsList(DataTable dtGrupos)
         {
-            Grupo aux;
             List<Grupo> res = new List<Grupo>();
-            string[] datos = new string[19];
 
-            foreach(DataRow r in dtGrupos.Rows)
-            {
-                ///Se usan estos si se tiene el grupo y la materia por separado
-                ///datos[0] = Convert.ToString(r.Field<double>(cve_mat));
-                ///datos[1] = Convert.ToString(r.Field<double>(cve_gpo));
-
-                ///Se usa este si el grupo y la materia estan juntos
-                datos[0] = Convert.ToString(r.Field<double>(cve)).Substring(0,4);
-                datos[1] = Convert.ToString(r.Field<double>(cve)).Substring(4, 2);
-
-                datos[2] = Convert.ToString(r.Field<double>(cverpe));
-                datos[3] = tipoDefault == "" ? r.Field<string>(tipo) : tipoDefault;
-                datos[4] = r.Field<string>(salon);
-                datos[5] = Convert.ToString(r.Field<double>(lunes));
-                datos[6] = Convert.ToString(r.Field<double>(lunesf));
-                datos[7] = Convert.ToString(r.Field<double>(martes));
-                datos[8] = Convert.ToString(r.Field<double>(martesf));
-                datos[9] = Convert.ToString(r.Field<double>(miercoles));
-                datos[10] = Convert.ToString(r.Field<double>(miercolesf));
-                datos[11] = Convert.ToString(r.Field<double>(jueves));
-                datos[12] = Convert.ToString(r.Field<double>(juevesf));
-                datos[13] = Convert.ToString(r.Field<double>(viernes));
-                datos[14] = Convert.ToString(r.Field<double>(viernesf));
-                datos[15] = Convert.ToString(r.Field<double>(sabado));
-                datos[16] = Convert.ToString(r.Field<double>(sabadof));
-                datos[17] = Convert.ToString(r.Field<double>(cupo));
-                datos[18] = cicloDefault;
-
-                aux = new Grupo(datos[0],
-                                  datos[1],
-                                  datos[2],
-                                  datos[3],
-                                  datos[4],
-                                  datos[5],
-                                  datos[6],
-                                  datos[7],
-                                  datos[8],
-                                  datos[9],
-                                  datos[10],
-                                  datos[11],
-                                  datos[12],
-                                  datos[13],
-                                  datos[14],
-                                  datos[15],
-                                  datos[16],
-                                  datos[17],
-                                  datos[18]);
-
-                res.Add(aux);
-            }
+            foreach (DataRow r in dtGrupos.Rows)
+                res.Add(new Grupo(r, headers));
 
             return res;
         }
 
-        public List<List<Grupo>> GetEmpalmes()
-        {
-            List<List<Grupo>> res = new List<List<Grupo>>();
-
-            foreach (List<Grupo> lg in HorarioGrupos())
-            {
-                var query = from Grupo g1 in lg
-                            from Grupo g2 in lg
-                            where g2 != g1 && g1.empalme(g2)
-                            select g1;
-
-
-
-                if(query.Count()>0)
-                    res.Add(query.Distinct<Grupo>().ToList<Grupo>());
-            }
-
-            return res;
-        }
-
-        public List<List<Grupo>> HorarioGrupos()
-        {
-            List<List<Grupo>> res = new List<List<Grupo>>();
-
-            var query = from Grupo g in grupos
-                        group g by g.Salon into horarioSalon
-                        select horarioSalon;
-
-            foreach(var lg in query)
-                res.Add(lg.ToList<Grupo>());
-
-            return res;
-        }
-
-        public List<Grupo> HorarioSalon(string salon)
-        {
-            var query = from Grupo g in grupos
-                        where g.Salon == salon
-                        select g;
-
-            return query.ToList<Grupo>();
-        }
-
-        public List<Grupo> HorarioProfesor(string rpe)
-        {
-            var query = from Grupo g in grupos
-                        where g.RPE==Convert.ToInt32(rpe)
-                        select g;
-
-            return query.ToList<Grupo>();
-        }
-
-        #endregion
-
-        #region List<Salon>
-        /// <summary>
-        /// busca salon a salon los que esten ocupados entre las horas designadas y los dias
-        /// </summary>
-        /// <param name="salones">Grupo de salones validos para checar</param>
-        /// <param name="ini">hora inicial para el rango de horas</param>
-        /// <param name="fin">hora final para el rango de horas</param>
-        /// <param name="dias">dias que se van a buscar. L-M-Mi-J-V-S Marcar con un 1 los dias que quieres obtener</param>
-        /// <returns></returns>
-        public List<Salon> salonesDisponibles(List<Salon> salones, int ini, int fin, string dias="111111")
-        {
-            List<Salon> res = new List<Salon>();
-            List<Grupo> auxG;
-
-            foreach(Salon s in salones)
-            {
-                auxG = Grupos_EnHora(ini, fin, s.Cve_espacio,dias);
-                if (auxG.Count == 0)
-                    res.Add(s);
-            }
-
-            return res;
-        }
         #endregion
 
         #region index
@@ -405,7 +243,7 @@ namespace OrigenDatos.Clases
             int i = 0;
             foreach (DataRow r in rawGrupos.Rows)
             {
-                if (r[cve_mat].ToString() == materia && r[cve_gpo].ToString() == grupo.ToString())
+                if (r[headers["cve_mat"]].ToString() == materia && r[headers["cve_gpo"]].ToString() == grupo.ToString())
                     return i;
                 i++;
             }
@@ -472,7 +310,7 @@ namespace OrigenDatos.Clases
                     rawIndex = GetGrupoRawIndex(item.Cve_materia, item.num_Grupo);
 
                     if (i < ContColumn)
-                        if (posicionesHorarios[i, 1] == salon)
+                        if (posicionesHorarios[i, 1] == headers["salon"])
                             worksheet.Cell(posicionesHorarios[i, 0] + counter).Value = item.Salon;
                         else
                             worksheet.Cell(posicionesHorarios[i, 0] + counter).Value = rawGrupos.Rows[rawIndex][posicionesHorarios[i, 1]];
@@ -505,7 +343,7 @@ namespace OrigenDatos.Clases
             }
 
             ///Modifica el grupo en el dataRow
-            rawGrupos.Rows[rawIndex][salon] = g.Salon;
+            rawGrupos.Rows[rawIndex][headers["salon"]] = g.Salon;
             grupos[grupoIndex].Salon = g.Salon;
         }
         #endregion

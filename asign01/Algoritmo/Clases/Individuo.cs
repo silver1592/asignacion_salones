@@ -63,7 +63,7 @@ namespace Algoritmo02.Clases
             Errores = new List<Variable>();
 
             for(int i=0; i<gruposPorAsignar.Count();i++)
-                cromosomas.Add(new Variable((Grupo)gruposPorAsignar.GetGrupo(i),hora));
+                cromosomas.Add(new Variable((Grupo)gruposPorAsignar.Get(i),hora));
         }
 
         #region Asignacion de Salones
@@ -139,7 +139,7 @@ namespace Algoritmo02.Clases
 
             if (asignando.Count != 0)
             {
-                s = (ListaSalones)salones.SalonesArea(i);
+                s = (ListaSalones)salones.EnArea(i);
 
                 asignandoXArea(asignando, s);
             }
@@ -261,7 +261,7 @@ namespace Algoritmo02.Clases
 
         public ListaSalones SalonesXArea(string area)
         {
-            return (ListaSalones)salones.SalonesArea(Convert.ToInt32(area));
+            return (ListaSalones)salones.EnArea(Convert.ToInt32(area));
         }
 
         private float promedio(List<Variable> lista)

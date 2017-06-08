@@ -59,7 +59,7 @@ namespace OrigenDatos.Clases
         {
             get
             {
-                return gruposAsignados.HorarioEnHora(hora);
+                return gruposAsignados.EnHora_Bool(hora);
             }
         }
         public string dias
@@ -108,7 +108,7 @@ namespace OrigenDatos.Clases
                 float p = 0;
 
                 for(int i = 0;i<gruposAsignados.Count();i++)
-                    p += gruposAsignados.GetGrupo(i).SalonValido(this);
+                    p += gruposAsignados.Get(i).SalonValido(this);
 
                 return p;
             }
@@ -277,10 +277,10 @@ namespace OrigenDatos.Clases
         /// <param name="grupo">Grupo a agregar</param>
         public void agregaGrupo(Grupo grupo)
         {
-            var grupos = gruposAsignados.Grupos_Empalmados(grupo);
+            var grupos = gruposAsignados.Empalmados(grupo);
 
             for(int i = 0; i<grupos.Count();i++)
-                remueveGrupo(grupos.GetGrupo(i));
+                remueveGrupo(grupos.Get(i));
 
             gruposAsignados.Add(grupo);
         }
@@ -303,7 +303,7 @@ namespace OrigenDatos.Clases
         /// <returns></returns>
         public ListaGrupos EmpalmesCon(Grupo grupo)
         {
-            return gruposAsignados.Grupos_Empalmados(grupo);
+            return gruposAsignados.Empalmados(grupo);
         }
 
         public override string ToString()

@@ -68,7 +68,7 @@ namespace Algoritmo02.Heredados
 
             foreach (Salon s in salones)
             {
-                aux = new ListaGrupos((ListaGrupos)g.GruposEnSalon(s.Cve_espacio).Grupos_Empalmados());
+                aux = new ListaGrupos((ListaGrupos)g.EnSalon(s.Cve_espacio).Empalmados());
 
                 if(aux.Count()!=0)
                     res.Add(aux);

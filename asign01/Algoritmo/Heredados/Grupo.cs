@@ -99,7 +99,7 @@ namespace Algoritmo02.Heredados
             if (salon_fijo != null && salon_fijo != "")
             {
                 salon = salon_fijo;
-                _Salon = (Salon)salones.buscaSalon(salon);
+                _Salon = (Salon)salones.busca(salon);
                 if (_Salon != null)
                     _Salon.agregaGrupo(this);
 

@@ -14,6 +14,7 @@ namespace OrigenDatos.Clases
     public class ListaSalones
     {
         protected List<Salon> salones;
+        public List<Salon> Salones { get { return salones; } }
         public int Count { get { return salones.Count; } }
 
         #region Constructores e inicializadores
@@ -32,7 +33,7 @@ namespace OrigenDatos.Clases
         /// <param name="salones">Lista de salones a utilizar</param>
         public ListaSalones(List<Salon> salones)
         {
-            salones = new List<Salon>();
+            SetSalones(salones);
         }
 
         public ListaSalones(DataTable dt)
@@ -46,7 +47,7 @@ namespace OrigenDatos.Clases
 
             temp = query.ToList<Salon>();
 
-            salones = temp;
+            SetSalones(temp);
         }
 
         /// <summary>
@@ -68,8 +69,13 @@ namespace OrigenDatos.Clases
         }
         #endregion
 
-        #region consultas
-        public Salon buscaSalon(string id_salon)
+        #region basico
+        public Salon Get(int index)
+        {
+            return salones[index];
+        }
+
+        public Salon busca(string id_salon)
         {
             Salon res = null;
 
@@ -79,8 +85,11 @@ namespace OrigenDatos.Clases
 
             return res;
         }
+        #endregion
 
-        public ListaSalones SalonesDisponibles(int hora_ini, int hora_fin, string dias)
+        #region consultas
+
+        public ListaSalones Disponibles(int hora_ini, int hora_fin, string dias)
         {
             List<Salon> temp = new List<Salon>();
 
@@ -94,7 +103,7 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
-        public ListaSalones SalonesDisponibles(int[] hora_ini, int[] hora_fin)
+        public ListaSalones Disponibles(int[] hora_ini, int[] hora_fin)
         {
             List<Salon> temp = new List<Salon>();
 
@@ -108,7 +117,7 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
-        public ListaSalones SalonesConEquipo(int idEquipo)
+        public ListaSalones ConEquipo(int idEquipo)
         {
             List<Salon> temp = new List<Salon>();
 
@@ -122,7 +131,7 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
-        public ListaSalones SalonesArea(int area)
+        public ListaSalones EnArea(int area)
         {
             List<Salon> temp = new List<Salon>();
 
@@ -136,7 +145,7 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
-        public ListaSalones SalonesEdifico(string edificio)
+        public ListaSalones EnEdifico(string edificio)
         {
             List<Salon> temp = new List<Salon>();
 
@@ -150,7 +159,7 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
-        public ListaSalones SalonesValidos(Grupo g)
+        public ListaSalones Validos(Grupo g)
         {
             List<Salon> temp = new List<Salon>();
 
@@ -164,12 +173,12 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
-        public ListaSalones SalonesPreferenciales(Grupo g)
+        public ListaSalones Preferenciales(Grupo g)
         {
             List<Salon> temp = new List<Salon>();
 
             var query = from Salon s in salones
-                        where g.Salones_posibles.buscaSalon(s.Cve_espacio)!=null
+                        where g.Salones_posibles.busca(s.Cve_espacio)!=null
                         select s;
 
             temp = query.ToList<Salon>();
@@ -178,7 +187,7 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
-        public ListaSalones SalonesSinEmpalmeCon(Grupo g)
+        public ListaSalones SinEmpalmeCon(Grupo g)
         {
             List<Salon> temp = new List<Salon>();
 
@@ -191,8 +200,6 @@ namespace OrigenDatos.Clases
             ListaSalones resultado = new ListaSalones(temp);
             return resultado;
         }
-
-        public List<Salon> ToList() { return salones; }
         #endregion
     }
 }

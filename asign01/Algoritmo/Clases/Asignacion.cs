@@ -60,7 +60,7 @@ namespace Algoritmo02.Clases
         {
             List<Grupo> gruposAsignados;
             Algoritmo inst_algoritmo;
-            ListaGrupos GruposSinAsignar = (ListaGrupos)grupos.GruposSinAsignar("111111",hora);
+            ListaGrupos GruposSinAsignar = (ListaGrupos)grupos.SinAsignar("111111",hora);
 
             if (GruposSinAsignar.Count() != 0)
             {
