@@ -20,14 +20,14 @@ namespace Algoritmo02.Heredados
         #endregion
 
         /// <summary>
-        /// Checa si hay horario para el grupo que que se le pasa por parametro.
+        /// Checa si hay horario y si cabe para el grupo que se le pasa por parametro.
         /// </summary>
         /// <param name="grupo"></param>
         /// <returns></returns>
         public bool Disponible_para_grupo(Grupo grupo)
         {
             for(int i=0; i<6;i++)
-                if (horario[i] && grupo.dias(hora)[i])
+                if (horario[i] && grupo.dias(hora)[i] || grupo.Cupo>Cupo)
                     return false;
 
             return true;

@@ -45,23 +45,13 @@ namespace Algoritmo02.Heredados
         public ListaSalones(Conexion c, DataTable dtSalones, int hora=0) : base(c,dtSalones,hora){}
         #endregion
 
-        public List<Salon> GetList()
-        {
-            List<Salon> sal = new List<Salon>();
-            foreach(Salon s in salones)
-            {
-                sal.Add(new Salon(s));
-            }
-
-            return sal;
-        }
-
-        public Salon GetSalon(int val)
-        {
-            return (Salon)(salones[val]);
-        }
-
-        public List<ListaGrupos> Agrupa(ListaGrupos g)
+        #region consultas
+        /// <summary>
+        /// Checa cada salon y obtiene los grupos que esten empalmados y los mete en una lista
+        /// </summary>
+        /// <param name="g">Lista de grupos</param>
+        /// <returns>Lista de grupos empalmados por salon</returns>
+        public List<ListaGrupos> AgrupaGruposEmpalmados(ListaGrupos g)
         {
             ListaGrupos aux;
             List<ListaGrupos> res = new List<ListaGrupos>();
@@ -76,9 +66,6 @@ namespace Algoritmo02.Heredados
 
             return res;
         }
-
-        #region consultas
-
         #endregion
     }
 }

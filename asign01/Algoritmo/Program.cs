@@ -14,8 +14,6 @@ namespace Algoritmo02
         {
             TimeSpan stop;
             TimeSpan start = new TimeSpan(DateTime.Now.Ticks);
-            Asignacion temp;
-            string ciclo = "2016-2017/I";
 
             inicializaConeccion();
 

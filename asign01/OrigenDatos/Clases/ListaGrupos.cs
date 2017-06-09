@@ -351,6 +351,16 @@ namespace OrigenDatos.Clases
 
             return query.ToList().Count == 0 ? true : false;
         }
+
+        public bool HayEmpalme()
+        {
+            var query = from g in grupos
+                        from g1 in grupos
+                        where g.empalme(g1)
+                        select g;
+
+            return query.Distinct().ToList().Count == 0 ? true : false;
+        }
         #endregion
     }
 }

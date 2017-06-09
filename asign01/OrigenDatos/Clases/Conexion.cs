@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -6,6 +7,7 @@ namespace OrigenDatos.Clases
 {
     public class Conexion
     {
+        #region estaticos
         public static string datosConexionPrueba
         {
             get
@@ -40,8 +42,47 @@ namespace OrigenDatos.Clases
                 return datosConexion;
             }
         }
+        public static Dictionary<string, string> DiccionarioBD
+        {
+            get
+            {
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("cve_mat", "cve_materia");
+                headers.Add("cve_gpo", "grupo");
+
+                headers.Add("cve", "cve");
+
+                headers.Add("cverpe", "rpe");
+                headers.Add("tipo", "tipo");        //*
+                headers.Add("salon", "salon");      //*
+                headers.Add("lunes", "lunes_ini");
+                headers.Add("lunesf", "lunes_fin");
+                headers.Add("martes", "martes_ini");
+                headers.Add("martesf", "martes_fin");
+                headers.Add("miercoles", "miercoles_ini");
+                headers.Add("miercolesf", "miercoles_fin");
+                headers.Add("jueves", "jueves_ini");
+                headers.Add("juevesf", "jueves_fin");
+                headers.Add("viernes", "viernes_ini");
+                headers.Add("viernesf", "viernes_fin");
+                headers.Add("sabado", "sabado_ini");
+                headers.Add("sabadof", "sabado_fin");
+                headers.Add("cupo", "cupo");
+                headers.Add("ciclo", "ciclo");      //*
+
+                //Valores default
+                headers.Add("cicloDefault", "");
+                headers.Add("tipoDefault", "T");
+                headers.Add("salonDefault", "");
+
+                return headers;
+            }
+        }
+        #endregion
+
         protected string datosConexion;
         protected LibroExcel Excel;
+        public Dictionary<string, string> DiccionarioExcel { get { return Excel.headers; } }
         public LibroExcel GetExcel { get { return Excel; } }
         public bool excel { get { return Excel != null; } }
 
@@ -73,6 +114,8 @@ namespace OrigenDatos.Clases
             }
         }
 
+
+        #region Consultas
         /// <summary>
         /// Obtiene la informacion de las excepciones en la base de datos
         /// </summary>
@@ -179,6 +222,46 @@ namespace OrigenDatos.Clases
         }
 
         /// <summary>
+        /// Hace una consulta a la base de datos para obtener los grupos que se impartieron una hora antes por el profesor
+        /// </summary>
+        /// <param name="rpe">Clave unica del profesor</param>
+        /// <param name="hora">Hora de la cual se quiere obtener la informacion</param>
+        /// <returns>DataTable con los datos de los grupos impartidos</returns>
+        public DataTable GruposAnteriores(int rpe, int hora, string ciclo)
+        {
+            string textoCmd = "select * "
+                               + "from ae_Grupos_a_las(" + (hora - 1) + ") "
+                               + "where rpe = " + rpe + " and ciclo = '" + ciclo + "';";
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+
+        /// <summary>
+        /// Consulta para obtener los salones asignados en las materias
+        /// </summary>
+        /// <param name="cve_materia"></param>
+        /// <returns></returns>
+        public DataTable salonesPosibles(string cve_materia)
+        {
+            string textoCmd = "SELECT [cve_mat],[cve_espacio] FROM[asignacion].[asignacion].[ae_PosiblesSalones] where cve_mat = " + cve_materia;
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+
+        public DataTable SemestresAnteriores(string cve_materia,string ciclo,string rpe)
+        {
+            string query = "select * from ae_horario where not(ciclo = '" + ciclo + "') and rpe = '"+rpe+"' and cve_materia = '"+cve_materia+"'";
+            DataTable dt = Querry(query);
+
+            return dt;
+        }
+        #endregion
+
+        /// <summary>
         /// Ejecuta una consulta en SQL utilizando el comando enviado como parametro
         /// Usado principalmente para consultas DLL (Data Definition Language)
         /// </summary>
@@ -204,37 +287,6 @@ namespace OrigenDatos.Clases
                 //MessageBox.Show("Error al Ejecutar la consulta: \r\n\n" + textoCmd + "\n\t" + ex.Message);
                 throw ex;
             }
-        }
-
-        /// <summary>
-        /// Hace una consulta a la base de datos para obtener los grupos que se impartieron una hora antes por el profesor
-        /// </summary>
-        /// <param name="rpe">Clave unica del profesor</param>
-        /// <param name="hora">Hora de la cual se quiere obtener la informacion</param>
-        /// <returns>DataTable con los datos de los grupos impartidos</returns>
-        public DataTable GruposAnteriores(int rpe, int hora,string ciclo)
-        {
-            string textoCmd = "select * "
-                               +"from ae_Grupos_a_las("+(hora-1)+") "
-                               + "where rpe = "+rpe+" and ciclo = '"+ciclo+"';";
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
-        }
-
-        /// <summary>
-        /// Consulta para obtener los salones asignados en las materias
-        /// </summary>
-        /// <param name="cve_materia"></param>
-        /// <returns></returns>
-        public DataTable salonesPosibles(string cve_materia)
-        {
-            string textoCmd = "SELECT [cve_mat],[cve_espacio] FROM[asignacion].[asignacion].[ae_PosiblesSalones] where cve_mat = " + cve_materia;
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
         }
 
         public DataTable Querry(string textoCmd)

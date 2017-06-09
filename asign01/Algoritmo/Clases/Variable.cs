@@ -35,18 +35,6 @@ namespace Algoritmo02.Clases
         public Grupo Grupo { get { return grupo; } }
 
         /// <summary>
-        /// Constructor de una variable (cromosoma) del individuo
-        /// --No es necesario asignarle un salon
-        /// </summary>
-        /// <param name="salon">Salon que va a representar</param>
-        public Variable(Grupo grupo, int hora)
-        {
-            this.grupo = grupo;
-            Hora = hora;
-            salon = null;
-        }
-
-        /// <summary>
         /// Retorna cuantos son los puntos que tiene esta asignacion para el algoritmo
         /// </summary>
         public float puntos
@@ -78,6 +66,27 @@ namespace Algoritmo02.Clases
                 return pE / pT;
             }
         }
+
+        #region Constuctores
+        /// <summary>
+        /// Constructor de una variable (cromosoma) del individuo
+        /// --No es necesario asignarle un salon
+        /// </summary>
+        /// <param name="salon">Salon que va a representar</param>
+        public Variable(Grupo grupo, int hora)
+        {
+            this.grupo = grupo;
+            Hora = hora;
+            salon = null;
+        }
+
+        public Variable(Variable v)
+        {
+            salon = new Salon(v.salon);
+            grupo = new Grupo(v.grupo);
+            Hora = v.Hora;
+        }
+        #endregion
 
         /// <summary>
         /// checa si un grupo es compatible con el salon

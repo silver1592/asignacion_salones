@@ -16,7 +16,6 @@ namespace Algoritmo02.Heredados
         /// </summary>
         /// <param name=""></param>
         public Grupo(string cve_materia, string grupo, string rpe, string tipo, string salon, string li, string lf, string mi, string mf, string Mii, string Mif, string ji, string jf, string vi, string vf, string si, string sf, string cupo, string ciclo):base(cve_materia, grupo, rpe, tipo, salon, li, lf, mi, mf, Mii, Mif, ji, jf, vi, vf, si, sf, cupo, ciclo) { }
-        public Grupo(DataRow grupo, DataTable necesidadesGrupo = null, DataTable necesidadesProfesor = null, DataTable salonesPosibles = null, ListaSalones salones = null) : base(grupo, necesidadesGrupo, necesidadesProfesor, salonesPosibles, salones) { }
 
         public Grupo(Grupo g) :base(g){ }
 
@@ -24,6 +23,8 @@ namespace Algoritmo02.Heredados
         public Grupo(OrigenDatos.Clases.Grupo g) : base(g) { }
 
         public Grupo(DataRow r, Conexion c, ListaSalones salones):base(r, c, salones){ }
+
+        public Grupo(DataRow r, IDictionary<string, string> h) : base(r, h) { }
         #endregion
 
         #region Atributos
@@ -58,6 +59,17 @@ namespace Algoritmo02.Heredados
                 return true;
 
             return false;
+        }
+
+        public string salonAnioPasado()
+        {
+            Grupo sel =null;
+            foreach (Grupo g in otrosSemestres)
+                if (g.fCiclo % 2 == this.fCiclo % 2)
+                    if (sel == null || sel.fCiclo < g.fCiclo)
+                        sel = g;
+
+            return sel != null ? sel.ciclo : "";
         }
 
         /// <summary>

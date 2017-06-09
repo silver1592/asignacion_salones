@@ -39,6 +39,7 @@ namespace OrigenDatos.Clases
 
         protected ListaSalones salones_Posibles;
         protected ListaSalones salonesAnteriores;
+        protected ListaGrupos otrosSemestres;
         #endregion
 
         #region gets y sets
@@ -50,7 +51,7 @@ namespace OrigenDatos.Clases
         public bool PlantaBaja { get { return plantaBaja; } }
         public string Salon_fijo { get { return salon_fijo; } }
         public ListaSalones Salones_posibles { get { return salones_Posibles; } }
-        public float Ciclo
+        public float fCiclo
         {
             get
             {
@@ -71,7 +72,7 @@ namespace OrigenDatos.Clases
                 yFin = Convert.ToInt32(aux.Split('-')[1]);
 
                 if (yIni >= 2014)
-                    return (yIni - 2014 + semPar);
+                    return ((yIni - 2014)*10 + semPar);
                 else
                     return -1;
             }
@@ -284,14 +285,18 @@ namespace OrigenDatos.Clases
         /// </summary>
         protected void Set_GruposAnteriores(DataTable dt)
         {
-            ListaGrupos Grupos = new ListaGrupos();
-            //DataTable dGrupos = Consultas.GruposAnteriores(rpe, hora, ciclo);
-            /*
-            foreach (DataRow r in dt.Rows)
-                Grupos.Add(new Grupo(r["cve_materia"].ToString(), Convert.ToInt32(r["grupo"].ToString()), r["tipo"].ToString(), r["ciclo"].ToString()));
-                */
-            GruposAnteriores = Grupos;
+            GruposAnteriores = new ListaGrupos();
+            foreach(DataRow r in dt.Rows)
+                GruposAnteriores.Add(new Grupo(r,Conexion.DiccionarioBD));
         }
+
+        protected void Set_GruposOtrosSemestres(DataTable dt)
+        {
+            otrosSemestres = new ListaGrupos();
+            foreach (DataRow r in dt.Rows)
+                otrosSemestres.Add(new Grupo(r, Conexion.DiccionarioBD));
+        }
+
         #endregion
 
         //Construcctor base para los heredados
@@ -330,15 +335,6 @@ namespace OrigenDatos.Clases
 
             requerimientos_Salon = new List<Requerimiento_Valor>();
             salones_Posibles = new ListaSalones();
-
-            GruposAnteriores = new ListaGrupos();
-        }
-
-        public Grupo(DataRow grupo, DataTable necesidadesGrupo=null, DataTable necesidadesProfesor=null, DataTable salonesPosibles=null, ListaSalones salones=null)
-        {
-            Set_NecesidadesGrupo(necesidadesGrupo);
-            Set_RequerimientosProfesor(necesidadesProfesor);
-            Set_SalonesPosibles(salonesPosibles, salones);
 
             GruposAnteriores = new ListaGrupos();
         }
@@ -394,6 +390,7 @@ namespace OrigenDatos.Clases
             Set_NecesidadesGrupo(c.Necesidades_Grupo(Cve_materia, tipo, rpe.ToString()));
             Set_RequerimientosProfesor(c.Necesidades_prof(RPE.ToString()));
             Set_SalonesPosibles(c.salonesPosibles(cve_materia), salones);
+            Set_GruposOtrosSemestres(c.SemestresAnteriores(cve_materia,ciclo,rpe.ToString()));
         }
 
         public Grupo(DataRow r, IDictionary<string, string> h)

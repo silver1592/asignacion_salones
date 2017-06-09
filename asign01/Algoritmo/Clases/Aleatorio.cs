@@ -46,8 +46,6 @@ namespace Algoritmo02.Clases
                 res = temp;
                 mostrados.Add(temp);
             }
-            else
-            { }
 
             return res;
         }

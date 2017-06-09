@@ -53,8 +53,8 @@ namespace OrigenDatos.Clases
             headers.Add("cve", "CLAVEMAT");
 
             headers.Add("cverpe", "CVERPE");
-            headers.Add("tipo", "TIPO");
-            headers.Add("salon", "SALON");
+            headers.Add("tipo", "TIPO");    //*
+            headers.Add("salon", "SALON");  //*
             headers.Add("lunes", "LUNES");
             headers.Add("lunesf", "LUNESF");
             headers.Add("martes", "MARTES");
@@ -68,10 +68,12 @@ namespace OrigenDatos.Clases
             headers.Add("sabado", "SABADO");
             headers.Add("sabadof", "SABADOF");
             headers.Add("cupo", "CUPO");
+            headers.Add("ciclo", "CICLO");  //*
 
             //Valores default
             headers.Add("cicloDefault", "");
-            headers.Add("tipoDefault", "");
+            headers.Add("tipoDefault", "T");
+            headers.Add("salonDefault", "");
         }
 
         /// <summary>

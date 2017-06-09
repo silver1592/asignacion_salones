@@ -15,14 +15,6 @@ namespace Algoritmo02.Clases
         #endregion
 
         #region Eventos
-        /// <summary>
-        /// Usado para informar a otros procesos en que parte del algoritmo va.
-        /// </summary>
-        /// <param name="procesoActual">Descripcion de lo que se esta haciendo en ese momento</param>
-        /// <param name="porcentajeAdd">Porcentaje de avance que lleva el algoritmo para concluir su ejecucion (</param>
-        public delegate void estado(string procesoActual, float porcentajeAdd=0);
-        public event estado Estado;
-
         public delegate void Finaliza(ListaGrupos Errores);
         public event Finaliza Finalizado;
         #endregion
@@ -58,7 +50,7 @@ namespace Algoritmo02.Clases
 
         private void iniciaAlgoritmoGenetico()
         {
-            List<Grupo> gruposAsignados;
+            ListaGrupos gruposAsignados;
             Algoritmo inst_algoritmo;
             ListaGrupos GruposSinAsignar = (ListaGrupos)grupos.SinAsignar("111111",hora);
 
