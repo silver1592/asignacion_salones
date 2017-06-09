@@ -81,7 +81,7 @@ namespace OrigenDatos
         {
             string excelDir = @"C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Referencias y Documentos\2016-2017_II\";
             string nombreArchivo = "SIAMMAT16172-FINAL.xlsx";
-            string nombreHoja = "Query_1";
+            string nombreHoja = "E4_2017_01_12";
 
             c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja, tipo: "T");
 
@@ -132,7 +132,7 @@ namespace OrigenDatos
             ListaSalones salones = new ListaSalones(c, c.Salones(), ini);
             ListaSalones sDisponibles = salones.Disponibles(ini, fin, dias);
 
-            foreach (Salon s in sDisponibles.Salones)
+            foreach (Salon s in sDisponibles)
                 Console.WriteLine(s.ToString());
         }
     }

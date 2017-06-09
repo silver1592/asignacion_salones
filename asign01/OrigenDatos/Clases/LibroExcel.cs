@@ -26,35 +26,6 @@ namespace OrigenDatos.Clases
 
         #region Atributos a buscar
         public Dictionary<string, string> headers;
-        private void SetHeaders()
-        {
-            headers = new Dictionary<string, string>();
-            headers.Add("cve_mat","CVE_MAT");
-            headers.Add("cve_gpo","CVE_GPO");
-
-            headers.Add("cve", "CLAVEMAT");
-
-            headers.Add("cverpe","CVERPE");
-            headers.Add("tipo","TIPO");
-            headers.Add("salon","SALON");
-            headers.Add("lunes","LUNES");
-            headers.Add("lunesf","LUNESF");
-            headers.Add("martes ", "MARTES");
-            headers.Add("martesf ", "MARTESF");
-            headers.Add("miercoles ", "MIERCOLES");
-            headers.Add("miercolesf ", "MIERCOLESF");
-            headers.Add("jueves ", "JUEVES");
-            headers.Add("juevesf ", "JUEVESF");
-            headers.Add("viernes ", "VIERNES");
-            headers.Add("viernesf ", "VIERNESF");
-            headers.Add("sabado ", "SABADO");
-            headers.Add("sabadof ", "SABADOF");
-            headers.Add("cupo ", "CUPO");
-
-            //Valores default
-            headers.Add("cicloDefault ", "");
-            headers.Add("tipoDefault ", "");
-        }
 
         #endregion
 
@@ -71,6 +42,36 @@ namespace OrigenDatos.Clases
             }
             else
                 throw new Exception("No se encontro archivo", null);
+        }
+
+        private void SetHeaders()
+        {
+            headers = new Dictionary<string, string>();
+            headers.Add("cve_mat", "CVE_MAT");
+            headers.Add("cve_gpo", "CVE_GPO");
+
+            headers.Add("cve", "CLAVEMAT");
+
+            headers.Add("cverpe", "CVERPE");
+            headers.Add("tipo", "TIPO");
+            headers.Add("salon", "SALON");
+            headers.Add("lunes", "LUNES");
+            headers.Add("lunesf", "LUNESF");
+            headers.Add("martes", "MARTES");
+            headers.Add("martesf", "MARTESF");
+            headers.Add("miercoles", "MIERCOLES");
+            headers.Add("miercolesf", "MIERCOLESF");
+            headers.Add("jueves", "JUEVES");
+            headers.Add("juevesf", "JUEVESF");
+            headers.Add("viernes", "VIERNES");
+            headers.Add("viernesf", "VIERNESF");
+            headers.Add("sabado", "SABADO");
+            headers.Add("sabadof", "SABADOF");
+            headers.Add("cupo", "CUPO");
+
+            //Valores default
+            headers.Add("cicloDefault", "");
+            headers.Add("tipoDefault", "");
         }
 
         /// <summary>

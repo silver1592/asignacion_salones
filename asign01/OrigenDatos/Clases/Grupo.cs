@@ -431,9 +431,9 @@ namespace OrigenDatos.Clases
                 cupo = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cupo"])));
                 ciclo = h["cicloDefault"];
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exception("Formato no valido\n Cheque que los encabezados coincidan");
+                throw new Exception(ex.Message+"\nFormato no valido\n Cheque que los encabezados coincidan");
             }
         }
         #endregion
