@@ -58,7 +58,7 @@ namespace InterfazWeb_02.Clases
         /// <returns></returns>
         public Materia buscaMateria(int index)
         {
-            Grupo g = this[index];
+            Grupo g = (Grupo)this[index];
 
             return buscaMateria(g.Cve_materia);
         }
@@ -82,7 +82,7 @@ namespace InterfazWeb_02.Clases
         /// <returns></returns>
         public Profesor buscaProfesor(int index)
         {
-            Grupo g = this[index];
+            Grupo g = (Grupo)this[index];
 
             return buscaProfesor(g.RPE.ToString());
         }
