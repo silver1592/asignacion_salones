@@ -86,6 +86,10 @@ namespace OrigenDatos.Clases
         public LibroExcel GetExcel { get { return Excel; } }
         public bool excel { get { return Excel != null; } }
 
+        public Conexion()
+        {
+            datosConexion = Conexion.datosConexionPrueba;
+        }
         public Conexion(string Datos, string excelDireccion=null, string archivoEntrada=null, string hoja = "SIAMDIF", string ciclo= "2016-2017/II", string tipo ="")
         {
             datosConexion = Datos;
@@ -113,7 +117,6 @@ namespace OrigenDatos.Clases
                 return false;
             }
         }
-
 
         #region Consultas
         /// <summary>
@@ -313,9 +316,9 @@ namespace OrigenDatos.Clases
 
         ///En esta region intente agrupar todas las consultas que requieren de la tabla grupos y por lo tanto
         ///son las que pudiese tener otro origen de datos (excel)
-        public void UpdateGrupo(Grupo g, string observaciones="")
+        public void UpdateGrupo(Grupo g, string observaciones="", bool bd=false)
         {
-            if (excel)
+            if (excel && !bd)
             {
                 Excel.Update(g, observaciones);
             }

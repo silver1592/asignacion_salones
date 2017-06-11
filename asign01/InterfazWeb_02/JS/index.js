@@ -40,11 +40,12 @@ function seleccionaOrigenDatos()
     var excelName = $("#SeleccionExcel #archivos option:selected").text();
     var sheet = $("#SeleccionExcel #hojas option:selected").text();
     var operation = $("#SeleccionExcel input:checked").val();
+    var semestre = $("#SeleccionExcel input[name='semestre']").val();
 
     if(operation == "e")
-        var data = { excel: excelName, sheet: sheet, bd: false }
+        var data = { excel: excelName, sheet: sheet, ciclo:semestre , bd: false }
     else
-        var data = { excel: excelName, sheet: sheet, bd: true }
+        var data = { excel: excelName, sheet: sheet, ciclo:semestre, bd: true }
 
     data = JSON.stringify(data);
     $.ajax({
@@ -54,6 +55,7 @@ function seleccionaOrigenDatos()
         data: data,
         dataType: "json",
         success: function (resultado) {
+            validaConexion();
             alert("Operacion realizada");
         },
         error: ErrorFunction
@@ -62,21 +64,14 @@ function seleccionaOrigenDatos()
 
 function uploadExcelToDB()
 {
-    var excelName = $("#SeleccionExcel #archivos option:selected").text();
-    var sheet = $("#SeleccionExcel #hojas option:selected").text();
-    var semestre = $("#SeleccionExcel input[name='semestre']").val();
-
-    var data = { excel: excelName, sheet: sheet, semestre: semestre }
-
     data = JSON.stringify(data);
     $.ajax({
         type: "POST",
         url: '/Importacion/CargaExcel_BD',
         contentType: "application/json; charset=utf-8",
-        data: data,
         dataType: "json",
         success: function (resultado) {
-            if (resultado != true) alert(resultado);
+            if (resultado[0] != true) alert(resultado[1]);
         },
         error: ErrorFunction
     });

@@ -1,16 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using OrigenDatos;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using InterfazWeb_02.Models;
+using System;
+using System.Web;
 
 namespace InterfazWeb_02.Clases
 {
     public class Conexion : Algoritmo02.Heredados.Conexion
     {
+        public Conexion(string datos, System.Web.Mvc.Controller controller) : base()
+        {
+            datosConexion = datos;
+            string dir = controller.Server.MapPath("~/Archivos/");
+            string file = controller.Session["excel"].ToString();
+            string sheet = controller.Session["sheet"].ToString();
+            string ciclo = controller.Session["ciclo"].ToString();
+            bool bd = Convert.ToBoolean(controller.Session["usaExcel"].ToString());
+
+            if (!bd)
+            {
+                Excel = new LibroExcel(dir, file, ciclo, "T");
+                Excel.setHojaHorarios(sheet);
+            }
+        }
+
         public Conexion(string Datos, string excelDireccion = null, string archivoEntrada = null, string hoja = "SIAMDIF", string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, archivoEntrada, hoja, ciclo, tipo) { }
 
         public ListaGrupos GetGrupos(string semestre)
@@ -52,6 +65,23 @@ namespace InterfazWeb_02.Clases
                 profesores.Add(new Profesor(r));
 
             return profesores;
+        }
+
+        public bool ExisteBD(Grupo g)
+        {
+            //TODO: Checar quuery
+            string query = "select * from ae_horario where cve_materia="+g.Cve_materia+ " and grupo="+g.num_Grupo+" and ciclo='"+ g.Ciclo+"'";
+
+            DataTable dt = Querry(query);
+
+            return dt.Rows.Count != 0;
+        }
+
+        internal void Insert(Grupo g)
+        {
+            string query = "insert into ae_horario (" + ") values (" + ")";
+
+            Comando(query);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace InterfazWeb_02.Clases
             this.profesores = profesores;
         }
 
-        public ListaGrupos(List<OrigenDatos.Clases.Grupo> grupos, List<Materia> materias, List<Profesor> profesores)
+        public ListaGrupos(IList<OrigenDatos.Clases.Grupo> grupos, List<Materia> materias, List<Profesor> profesores)
         {
             this.materias = materias;
             this.profesores = profesores;

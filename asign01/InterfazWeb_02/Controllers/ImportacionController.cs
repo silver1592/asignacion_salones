@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InterfazWeb_02.Models;
+using InterfazWeb_02.Clases;
 
 namespace InterfazWeb_02.Controllers
 {
@@ -67,19 +68,32 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public JsonResult CargaExcel_BD(string excel, string sheet, string semestre)
+        public JsonResult CargaExcel_BD()
         {
-            //TODO: Metodo para leer los grupos del excel dado
+            object[] res = new object[] { true, "" };
+            Conexion c;
+            string excel = Session["excel"].ToString();
+            string sheet = Session["sheet"].ToString();
+            string ciclo = Session["ciclo"].ToString();
+            bool db = Convert.ToBoolean(Session["usaExcel"].ToString());
 
-            //foreach(Grupo g in grupos)
+            try
             {
-                //TODO: Metodo para checar si existe el grupo en la base de datos
-                //TODO: Si existe hacer update
-                //TODO: Si no existe hacer insert
-            }
+                c = new Conexion(Conexion.datosConexionPrueba, this);
+                ListaGrupos grupos = c.GetGrupos(Session["ciclo"].ToString());
 
-            //TODO: Resultado negativo
-            return new JsonResult() { Data = false, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                foreach (Grupo g in grupos)
+                    if (c.ExisteBD(g))
+                        c.UpdateGrupo(g,bd:true);
+                    else
+                        c.Insert(g);
+            }
+            catch (Exception ex)
+            {
+                res[0] = false;
+                res[1] = ex.Message;
+            }
+            return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }

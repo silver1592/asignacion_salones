@@ -13,10 +13,6 @@ namespace InterfazWeb_02.Controllers
         //
         // GET: /Consultas/
 
-        public ConsultasController():base()
-        {
-        }
-
         public ActionResult Index()
         {
             return View();
@@ -25,7 +21,7 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Grupos()
         {
             string excelDir = Server.MapPath("~/Archivos/");
-            Conexion c = new Conexion(Conexion.datosConexionPrueba, excelDir, Session["excel"].ToString(), Session["sheet"].ToString());
+            Conexion c = new Conexion(Conexion.datosConexionPrueba, this);
             ListaGrupos grupos = c.GetGrupos(Session["semestre"].ToString());
 
             return PartialView(grupos);
@@ -35,7 +31,7 @@ namespace InterfazWeb_02.Controllers
         public JsonResult PaginasExcel(string file)
         {
             string excelDir = Server.MapPath("~/Archivos/");
-            Conexion c = new Conexion(Conexion.datosConexionPrueba, excelDir, Session["excel"].ToString(), Session["sheet"].ToString());
+            Conexion c = new Conexion(Conexion.datosConexionPrueba,this);
             string[] sheets = c.GetExcel.Sheets;
 
             return new JsonResult() { Data = sheets, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -53,13 +49,23 @@ namespace InterfazWeb_02.Controllers
 
         public JsonResult ExcelValid()
         {
+            Conexion c;
+            object[] res = new object[] { true, "" };
             string excel = Session["excel"].ToString();
             string sheet = Session["sheet"].ToString();
+            string ciclo = Session["ciclo"].ToString();
             bool db = Convert.ToBoolean(Session["usaExcel"].ToString());
 
-            //TODO: Hacer un metodo que cheque si se puede leer el excel o si tiene un formato invalido que regrese el error
+            try
+            {
+                c = new Conexion(Conexion.datosConexionPrueba, this);
+            }catch(Exception ex)
+            {
+                res[0] = false;
+                res[1] = ex.Message;
+            }
 
-            return new JsonResult() { Data = false, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }
