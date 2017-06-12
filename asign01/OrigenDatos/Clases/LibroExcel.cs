@@ -146,7 +146,7 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Obtiene el nombre de las hojas del excel y lo asigna a la variable Sheets
         /// </summary>
-        private void SetHojas()
+        public void SetHojas()
         {
             DataTableCollection tables = GetSheets();
 
@@ -187,43 +187,6 @@ namespace OrigenDatos.Clases
                         select r;
 
             return AsDataTable(query.ToList<DataRow>());
-        }
-
-        public string[] getHojas()
-        {
-            string filePath = archivo;
-            //Es necesaria para que se inicialize ContCoumn
-
-            FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
-
-            IExcelDataReader excelReader;
-            if (filePath.Contains(".xlsx"))
-                // De lo contrario descomentaremos esta (2007 format; *.xlsx)
-                excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-            else if (filePath.Contains(".xls"))
-                // Si es un archivo de excel anterior a 2009, debemos usar esta línea
-                excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
-            else
-                throw new Exception("No es un archivo valido");
-
-            // Cada grupo de elementos en el DataSet tomará el nombre de la primera celda en cada columna
-            excelReader.IsFirstRowAsColumnNames = true;
-
-            DataSet result = excelReader.AsDataSet();
-
-            excelReader.Close();
-
-            return GetNombres(result);
-        }
-
-        private string[] GetNombres(DataSet ds)
-        {
-            string[] res = new string[ds.Tables.Count];
-
-            for(int i =0; i<ds.Tables.Count;i++)
-                res[i] = ds.Tables[i].TableName;
-
-            return res;
         }
         #endregion
 

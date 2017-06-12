@@ -15,8 +15,8 @@ namespace Algoritmo02.Clases
         private ListaGrupos Grupos { get { return new ListaGrupos(grupos); } }
         private ListaSalones Salones { get { return new ListaSalones(salones); } }
 
-        private int tamPoblacion = 5;
-        private int generaciones = 50;
+        private int tamPoblacion;
+        private int generaciones;
 
         private Individuo[] poblacion;
         private Individuo[] mejorPoblacion;
@@ -29,11 +29,13 @@ namespace Algoritmo02.Clases
         /// </summary>
         /// <param name="grupos">Lista de grupos a asignar</param>
         /// <param name="salones">Lista de salones disponibles para asignar</param>
-        public Algoritmo(ListaGrupos grupos, ListaSalones salones, int hora)
+        public Algoritmo(ListaGrupos grupos, ListaSalones salones, int hora,int _tamPoblacion = 5, int _generaciones =50)
         {
             this.grupos = grupos;
             this.salones = salones;
             this.hora = hora;
+            tamPoblacion = _tamPoblacion;
+            generaciones = _generaciones;
             errores = new ListaGrupos() ;
 
             poblacion = new Individuo[tamPoblacion];

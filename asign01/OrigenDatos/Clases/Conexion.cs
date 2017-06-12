@@ -90,14 +90,16 @@ namespace OrigenDatos.Clases
         {
             datosConexion = Conexion.datosConexionPrueba;
         }
-        public Conexion(string Datos, string excelDireccion=null, string archivoEntrada=null, string hoja = "SIAMDIF", string ciclo= "2016-2017/II", string tipo ="")
+        public Conexion(string Datos, string excelDireccion=null, string archivoEntrada=null, string hoja = null, string ciclo= "2016-2017/II", string tipo ="")
         {
             datosConexion = Datos;
 
             if(excelDireccion != null)
             {
                 Excel = new LibroExcel(excelDireccion,archivoEntrada, ciclo, tipo);
-                Excel.setHojaHorarios(hoja);
+
+                if(hoja!=null)
+                    Excel.setHojaHorarios(hoja);
             }
         }
 

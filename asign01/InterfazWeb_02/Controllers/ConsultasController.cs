@@ -31,8 +31,9 @@ namespace InterfazWeb_02.Controllers
         public JsonResult PaginasExcel(string file)
         {
             string excelDir = Server.MapPath("~/Archivos/");
-            Conexion c = new Conexion(Conexion.datosConexionPrueba,this);
-            string[] sheets = c.GetExcel.Sheets;
+            Conexion c = new Conexion(Conexion.datosConexionPrueba,excelDir,file);
+
+            string[] sheets = c.Sheets();
 
             return new JsonResult() { Data = sheets, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

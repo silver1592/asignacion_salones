@@ -24,7 +24,14 @@ namespace InterfazWeb_02.Clases
             }
         }
 
-        public Conexion(string Datos, string excelDireccion = null, string archivoEntrada = null, string hoja = "SIAMDIF", string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, archivoEntrada, hoja, ciclo, tipo) { }
+        public Conexion(string Datos, string excelDireccion = null, string archivoEntrada = null, string hoja = null, string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, archivoEntrada, hoja, ciclo, tipo) { }
+
+        internal string[] Sheets()
+        {
+            Excel.SetHojas();
+
+            return Excel.Sheets;
+        }
 
         public ListaGrupos GetGrupos(string semestre)
         {
