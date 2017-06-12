@@ -1,7 +1,7 @@
 ﻿using Algoritmo02.Clases;
+using Algoritmo02.Heredados;
 using System;
 using System.Collections.Generic;
-using OrigenDatos.Clases;
 
 namespace Algoritmo02
 {
@@ -12,21 +12,31 @@ namespace Algoritmo02
 
         static void Main(string[] args)
         {
+            inicializaConeccion();
             TimeSpan stop;
             TimeSpan start = new TimeSpan(DateTime.Now.Ticks);
+            Asignacion alg;
+            ChecaEmpalmes emp;
+            PreAsignacion pre;
+            ListaGrupos grupos = c.GetGrupos("2016-2017/II");
+            ListaSalones salones = new ListaSalones(c,c.Salones());
+            ListaGrupos gruposActuales;
 
-            inicializaConeccion();
-
-            for(int i=7;i<22;i++)
+            for (int i=7;i<22;i++)
             {
-                avance = 0;
-                //temp = new Asignacion(G, i);
-                //Eventos
-                //temp.Estado += new Asignacion.estado(Estado);
-                //temp.Finalizado += new Asignacion.Finaliza(RecojeErrores);
+                gruposActuales = grupos.EnHora(i, i + 1);
 
-                //algoritmo
-                //temp.EjecutaAlgoritmo();
+                emp = new ChecaEmpalmes(grupos, salones);
+                emp.ejecuta();
+                grupos.Actualiza(emp.Grupos);
+
+                pre = new PreAsignacion(grupos, salones);
+                pre.preferencial();
+                pre.semestres_anteriores();
+                grupos.Actualiza(pre.Grupos);
+
+                alg = new Asignacion(grupos,salones, i);
+                alg.EjecutaAlgoritmo();
             }
             stop = new TimeSpan(DateTime.Now.Ticks);
             Console.Write("***Pulsa una tecla para continuar****\n");
@@ -52,12 +62,11 @@ namespace Algoritmo02
 
         private static void inicializaConeccion()
         {
-            string excelDir = @"C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Referencias y Documentos\";
+            string excelDir = @"C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Referencias y Documentos\2016-2017_II\";
             string nombreArchivo = "SIAMMAT16172-FINAL.xlsx";
-            string nombreHoja = "Query_1";
+            string nombreHoja = "E_2017_01_12";
 
             c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja);
-
 
             if (c.Autenticacion())
                 Console.WriteLine("Coneccion realizada");
@@ -66,11 +75,6 @@ namespace Algoritmo02
                 Console.WriteLine("Error al conectar");
                 throw new Exception("Error al conectar con la base de datos");
             }
-
-            //Grupo.Coneccion = c;
-            //Salon.Coneccion = c;
-            //Algoritmo.Coneccion = c;
-            //Asignacion.Conexion = c;
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Algoritmo02.Clases
             {
                 if (salon != null)
                 {
-                    salon.remueveGrupo(grupo);
                     grupo.Salon = "";
                 }
 
@@ -27,7 +26,6 @@ namespace Algoritmo02.Clases
 
                 if (salon != null)
                 {
-                    salon.agregaGrupo(grupo);
                     grupo.Salon = salon.Cve_espacio;
                 }
             }
@@ -133,7 +131,9 @@ namespace Algoritmo02.Clases
 
         public bool salonHoraAnterior(ListaSalones s)
         {
-            return ((ListaGrupos)grupo.GruposAnteriores).EnSalones(s,grupo);
+            //TODO: Grupo anterior
+            //return ((ListaGrupos)grupo.GruposAnteriores).EnSalones(s,grupo);
+            return false;
         }
     }
 }

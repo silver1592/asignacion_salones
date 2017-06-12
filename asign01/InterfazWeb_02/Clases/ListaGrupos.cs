@@ -9,24 +9,10 @@ namespace InterfazWeb_02.Clases
 {
     public class ListaGrupos : Algoritmo02.Heredados.ListaGrupos
     {
-        private List<Profesor> profesores;
-        private List<Materia> materias;
-
         public ListaGrupos(List<Materia> materias, List<Profesor> profesores) : base()
         {
             this.materias = materias;
             this.profesores = profesores;
-        }
-
-        public ListaGrupos(IList<OrigenDatos.Clases.Grupo> grupos, List<Materia> materias, List<Profesor> profesores)
-        {
-            this.materias = materias;
-            this.profesores = profesores;
-
-            this.grupos = new List<OrigenDatos.Clases.Grupo>();
-
-            foreach (OrigenDatos.Clases.Grupo g in grupos)
-                this.grupos.Add(new Grupo(g));
         }
 
         public ListaGrupos(ListaGrupos grupos)

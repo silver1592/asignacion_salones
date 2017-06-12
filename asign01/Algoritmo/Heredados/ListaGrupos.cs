@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Algoritmo02.Clases;
 
 namespace Algoritmo02.Heredados
 {
     public class ListaGrupos : OrigenDatos.Clases.ListaGrupos
     {
+        protected List<Profesor> profesores;
+        protected List<Materia> materias;
+
         #region Constuctores
         public ListaGrupos() : base(){}
 
@@ -31,7 +35,24 @@ namespace Algoritmo02.Heredados
                 this.grupos.Add(new Grupo(g));
         }
 
+        internal void Actualiza(ListaGrupos grupos)
+        {
+            //TODO: Busca cada uno de los grupos y cambia sus valores por los de la lista
+            throw new NotImplementedException();
+        }
+
         public ListaGrupos(Conexion c, DataTable dtGrupos, ListaSalones salones) : base(c, dtGrupos, salones) { }
+
+        public ListaGrupos(IList<OrigenDatos.Clases.Grupo> grupos, List<Materia> materias, List<Profesor> profesores):base()
+        {
+            this.materias = materias;
+            this.profesores = profesores;
+
+            this.grupos = new List<OrigenDatos.Clases.Grupo>();
+
+            foreach (OrigenDatos.Clases.Grupo g in grupos)
+                this.grupos.Add(new Grupo(g));
+        }
         #endregion
 
         #region consultas
@@ -76,6 +97,15 @@ namespace Algoritmo02.Heredados
         {
             var query = from g in grupos
                         where ((Grupo)g).horario(hora)
+                        select (Grupo)g;
+
+            return new ListaGrupos(query.ToList());
+        }
+
+        public ListaGrupos EnHora(int ini, int fin)
+        {
+            var query = from g in grupos
+                        where g.EnHora(ini, fin)
                         select (Grupo)g;
 
             return new ListaGrupos(query.ToList());

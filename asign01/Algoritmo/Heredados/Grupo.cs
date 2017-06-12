@@ -112,8 +112,10 @@ namespace Algoritmo02.Heredados
             {
                 salon = salon_fijo;
                 _Salon = (Salon)salones.busca(salon);
+                /*
                 if (_Salon != null)
                     _Salon.agregaGrupo(this);
+                */
 
                 return true;
             }

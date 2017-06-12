@@ -51,6 +51,7 @@ namespace OrigenDatos.Clases
         public string Edificio { get { return cve_edificio; } }
         public List<string> Area { get { return area; } }
         public int Cupo { get { return cupo_max; } }
+
         /// <summary>
         /// Marca con True cuando ya ahy una materia que lo ocupa
         /// Este solo es en base al horario marcado por la hora
@@ -160,6 +161,32 @@ namespace OrigenDatos.Clases
             ///Tabla Horario
             this.hora = hora;
 
+            SetValues(salon);
+
+            if (Equipo != null)
+                SetEquipo(Equipo);
+
+            if (AreaEdif != null)
+                SetAreaEdificio(AreaEdif);
+
+            if (excep != null)
+                SetExcepciones(excep);
+        }
+
+        public Salon(DataRow datos, int hora, Conexion c)
+        {
+
+            ///Tabla Horario
+            this.hora = hora;
+            SetValues(datos);
+
+            SetEquipo(c.Salon_equipo(cve_espacio));
+            SetAreaEdificio(c.Edificio_Area(cve_edificio));
+            SetExcepciones(c.Exepciones(cve_espacio));
+        }
+
+        private void SetValues(DataRow salon)
+        {
             if (salon != null)
             {
                 //DataTable salon = Consultas.Salon(cve_espacio);
@@ -170,15 +197,6 @@ namespace OrigenDatos.Clases
                 cve_tipo_espacio = salon["cve_tipo_espacio"].ToString();
                 cupo_max = Convert.ToInt32(salon["cupo_max"].ToString());
                 cve_ubicacion = salon["cve_ubicacion"].ToString();
-
-                if (Equipo != null)
-                    SetEquipo(Equipo);
-                
-                if(AreaEdif != null)
-                    SetAreaEdificio(AreaEdif);
-
-                if(excep!=null)
-                    SetExcepciones(excep);
 
                 gruposAsignados = new ListaGrupos();
             }
@@ -234,17 +252,6 @@ namespace OrigenDatos.Clases
         #endregion
         #endregion
 
-        public bool Disponible(int hora_ini, int hora_fin, string dias)
-        {
-
-            return !gruposAsignados.HayEmpalme(hora_ini, hora_fin, dias);
-        }
-
-        public bool Disponible(int[] hora_ini, int[] hora_fin)
-        {
-            return !gruposAsignados.HayEmpalme(hora_ini, hora_fin);
-        }
-
         public bool ContieneEquipo(int idEquipo)
         {
             foreach (int i in Equipo)
@@ -271,58 +278,9 @@ namespace OrigenDatos.Clases
 
         }
 
-        /// <summary>
-        /// Agrega un grupo al salon para seguir su horario y elimina todos los grupos con los que queda empalmado
-        /// </summary>
-        /// <param name="grupo">Grupo a agregar</param>
-        public void agregaGrupo(Grupo grupo)
-        {
-            var grupos = gruposAsignados.Empalmados(grupo);
-
-            foreach(Grupo g in grupos)
-                remueveGrupo(g);
-
-            gruposAsignados.Add(grupo);
-        }
-
-        /// <summary>
-        /// Elimina un grupo de la lista de grupos
-        /// (Nota: tiene que ser el mismo objeto)
-        /// </summary>
-        /// <param name="grupo">Grupo a eliminar</param>
-        public void remueveGrupo(Grupo grupo)
-        {
-            ((IList<Grupo>)gruposAsignados).Remove(grupo);
-            grupo.Salon = "";
-        }
-
-        /// <summary>
-        /// Checa y obtiene una lista con los grupos con los que tiene conflicto de empalmes el grupo pasado por parametro
-        /// </summary>
-        /// <param name="grupo">Grupo a checar si hay empalme</param>
-        /// <returns></returns>
-        public ListaGrupos EmpalmesCon(Grupo grupo)
-        {
-            return gruposAsignados.Empalmados(grupo);
-        }
-
         public override string ToString()
         {
             return cve_espacio;
         }
-
-        #region Static
-        public static Salon ToSalon(DataRow datos,int hora,Conexion c)
-        {
-            Salon aux;
-
-            aux = new Salon(datos, hora);
-            aux.SetEquipo(c.Salon_equipo(aux.cve_espacio));
-            aux.SetAreaEdificio(c.Edificio_Area(aux.cve_edificio));
-            aux.SetExcepciones(c.Exepciones(aux.cve_espacio));
-
-            return aux;
-        }
-        #endregion
     }
 }

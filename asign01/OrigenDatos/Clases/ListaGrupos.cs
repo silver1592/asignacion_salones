@@ -96,7 +96,7 @@ namespace OrigenDatos.Clases
         #region Constructores e inicializadores
         public ListaGrupos()
         {
-
+            grupos = new List<Grupo>();
         }
 
         public ListaGrupos(List<Grupo> grupos)
@@ -173,7 +173,7 @@ namespace OrigenDatos.Clases
             ListaGrupos res;
 
             var query = from Grupo g in grupos
-                        where g.empalme(hora, hora + 1, dias) && (g.Salon=="" || g.Salon==null || g.Salon == " ")
+                        where g.EnHora(hora, hora + 1, dias) && (g.Salon=="" || g.Salon==null || g.Salon == " ")
                         select g;
 
             res = new ListaGrupos(query.ToList<Grupo>());
@@ -192,7 +192,7 @@ namespace OrigenDatos.Clases
             ListaGrupos res;
 
             var query = from Grupo g in grupos
-                        where g.empalme(hora, hora + 1, dias) && (g.Salon != "" || g.Salon != null || g.Salon != " ")
+                        where g.EnHora(hora, hora + 1, dias) && (g.Salon != "" || g.Salon != null || g.Salon != " ")
                         select g;
 
             res = new ListaGrupos(query.ToList<Grupo>());
@@ -233,7 +233,16 @@ namespace OrigenDatos.Clases
         public ListaGrupos EnHora(int hora_ini, int hora_fin, string salon, string dias)
         {
             var query = from Grupo g in this.grupos
-                        where g.empalme(hora_ini, hora_fin, dias) && g.Salon == salon
+                        where g.EnHora(hora_ini, hora_fin, dias) && g.Salon == salon
+                        select g;
+
+            return new ListaGrupos(query.ToList());
+        }
+
+        public ListaGrupos EnHora(int hora_ini, int hora_fin)
+        {
+            var query = from Grupo g in this.grupos
+                        where g.EnHora(hora_ini, hora_fin)
                         select g;
 
             return new ListaGrupos(query.ToList());
@@ -315,7 +324,7 @@ namespace OrigenDatos.Clases
         /// <param name="fin">hora final para el rango de horas</param>
         /// <param name="dias">dias que se van a buscar. L-M-Mi-J-V-S Marcar con un 1 los dias que quieres obtener</param>
         /// <returns></returns>
-        public ListaSalones Disponibles(ListaSalones salones, int ini, int fin, string dias = "111111")
+        public ListaSalones Ocupados(ListaSalones salones, int ini, int fin, string dias = "111111")
         {
             List<Salon> res = new List<Salon>();
             ListaGrupos auxG;
@@ -346,7 +355,7 @@ namespace OrigenDatos.Clases
         public bool HayEmpalme(int hora_ini, int hora_fin, string dias)
         {
             var query = from g in grupos
-                        where g.empalme(hora_ini, hora_fin, dias)
+                        where g.EnHora(hora_ini, hora_fin, dias)
                         select g;
 
             return query.ToList().Count == 0 ? true : false;
@@ -359,7 +368,7 @@ namespace OrigenDatos.Clases
                         where g.empalme(g1)
                         select g;
 
-            return query.Distinct().ToList().Count == 0 ? true : false;
+            return query.Distinct().ToList().Count == 0 ? false : true;
         }
         #endregion
     }

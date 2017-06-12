@@ -66,7 +66,7 @@ namespace OrigenDatos
                         Console.Write("Dias:");
                         aux3 = Console.ReadLine();
 
-                        salonesDisponibles(Convert.ToInt32(aux), Convert.ToInt32(aux2), aux3);
+                        Console.Write("No Implementado\n Se mudo esta opcion Algoritmo02");
                     break;
                     case "-":
                         Console.Write("Escribe busqueda:");
@@ -125,15 +125,6 @@ namespace OrigenDatos
                 Console.WriteLine();
             }
                 
-        }
-
-        private static void salonesDisponibles(int ini, int fin, string dias)
-        {
-            ListaSalones salones = new ListaSalones(c, c.Salones(), ini);
-            ListaSalones sDisponibles = salones.Disponibles(ini, fin, dias);
-
-            foreach (Salon s in sDisponibles)
-                Console.WriteLine(s.ToString());
         }
     }
 }

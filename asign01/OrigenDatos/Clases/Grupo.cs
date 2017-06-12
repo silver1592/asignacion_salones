@@ -38,7 +38,7 @@ namespace OrigenDatos.Clases
         protected string salon_fijo;
 
         protected ListaSalones salones_Posibles;
-        protected ListaSalones salonesAnteriores;
+        protected ListaGrupos GruposAnteriores;
         protected ListaGrupos otrosSemestres;
         #endregion
 
@@ -49,7 +49,7 @@ namespace OrigenDatos.Clases
         /// </summary>
         public List<Requerimiento_Valor> Requerimientos { get { return requerimientos_Salon; } }
         public bool PlantaBaja { get { return plantaBaja; } }
-        public string Salon_fijo { get { return salon_fijo; } }
+        public string Salon_fijo { get { return salon_fijo!=null ? salon_fijo : ""; } }
         public ListaSalones Salones_posibles { get { return salones_Posibles; } }
         public float fCiclo
         {
@@ -104,9 +104,10 @@ namespace OrigenDatos.Clases
 
         public bool AsignacionSemestresAnteriores(string salon)
         {
-            Salon s = salonesAnteriores.busca(salon);
 
-            return s!=null ? true : false;
+            ListaGrupos g = GruposAnteriores.EnSalon(salon);
+
+            return g!=null ? true : false;
         }
 
         public string Cve_materia { get { return cve_materia; } }
@@ -206,7 +207,6 @@ namespace OrigenDatos.Clases
                 return res;
             }
         }
-        public ListaGrupos GruposAnteriores;
 
         /// <summary>
         /// Cadena para el query de update.
@@ -218,6 +218,15 @@ namespace OrigenDatos.Clases
                 return "UPDATE [asignacion].[ae_horario] "
                               + "SET[salon] = '" + salon + "'"
                               + " WHERE[cve_materia] = '" + cve_materia + "' and [grupo] = " + grupo.ToString() + " and [tipo] = '" + tipo + "' and [ciclo] = '" + ciclo + "';";
+            }
+        }
+
+        public string insert
+        {
+            get
+            {
+                //TODO:Hacer cadena para insertar
+                return "Insert into ";
             }
         }
         #endregion
@@ -276,8 +285,7 @@ namespace OrigenDatos.Clases
 
         public void Set_SalonesPosibles(DataTable dt, ListaSalones salones)
         {
-            //DataTable sPosibles = cn.salonesPosibles(cve_materia);
-            salones_Posibles = new ListaSalones(dt);
+            salones_Posibles = salones.EnTabla(dt);
         }
 
         /// <summary>
@@ -337,6 +345,8 @@ namespace OrigenDatos.Clases
             salones_Posibles = new ListaSalones();
 
             GruposAnteriores = new ListaGrupos();
+
+            otrosSemestres = new ListaGrupos();
         }
 
         public Grupo(Grupo g)
@@ -378,8 +388,8 @@ namespace OrigenDatos.Clases
             salon_fijo = g.salon_fijo;
 
             salones_Posibles = g.Salones_posibles;
-
             GruposAnteriores = g.GruposAnteriores;
+            otrosSemestres = g.otrosSemestres;
         }
 
         public Grupo (DataRow r, Conexion c, ListaSalones salones)
@@ -432,8 +442,15 @@ namespace OrigenDatos.Clases
             {
                 throw new Exception(ex.Message+"\nFormato no valido\n Cheque que los encabezados coincidan");
             }
-        }
+
+            requerimientos_Salon = new List<Requerimiento_Valor>();
+            salones_Posibles = new ListaSalones();
+            GruposAnteriores = new ListaGrupos();
+            otrosSemestres = new ListaGrupos();
+    }
         #endregion
+
+        #region Metodos
 
         /// <summary>
         /// Regresa cual es el valor que tiene un salon para el area del grupo.
@@ -528,7 +545,7 @@ namespace OrigenDatos.Clases
             return false;
         }
 
-        public bool empalme(int ini, int fin, string dias)
+        public bool EnHora(int ini, int fin, string dias = "111111")
         {
             if (dias[0] == '1')
                 if ((lunes_ini >= ini && lunes_ini < fin) ||
@@ -592,30 +609,27 @@ namespace OrigenDatos.Clases
             return false;
         }
 
-        public bool EligeSalon(ListaSalones salones, Salon _Salon)
+        public bool ChecaSalon(ListaSalones salones, Salon _Salon)
         {
             //Checa si hay salones que esten especialmente relacionados con el
             ListaSalones preferentes = salones.Preferenciales(this);
             ListaSalones posibes = salones.Validos(this);
 
+            //Checa si el salon es preferencial
             if (preferentes.busca(_Salon.Cve_espacio) != null)
-            {
+            { 
                 salon = _Salon.Cve_espacio;
-                _Salon.agregaGrupo(this);
 
                 return true;
             }
-            else
+            //Checa si esta en sus posibilidades
+            else if (posibes.busca(_Salon.Cve_espacio) != null)
             {
-
-                if (posibes.busca(_Salon.Cve_espacio) != null)
-                {
-                    salon = _Salon.Cve_espacio;
-                    return true;
-                }
-
-                return false;
+                salon = _Salon.Cve_espacio;
+                return true;
             }
+            else
+                return false;
         }
 
         public override string ToString()
@@ -646,5 +660,6 @@ namespace OrigenDatos.Clases
             else
                 return -1;
         }
+        #endregion
     }
 }

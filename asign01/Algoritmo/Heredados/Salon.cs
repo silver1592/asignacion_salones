@@ -15,6 +15,8 @@ namespace Algoritmo02.Heredados
         /// <param name="s">Salon a copiar</param>
         public Salon(Salon s):base(s){}
 
+        public Salon(OrigenDatos.Clases.Salon s) : base(s) { }
+
         public Salon(DataRow salon, int hora, DataTable excep=null, DataTable Equipo=null, DataTable AreaEdif=null):base(salon,hora,excep,Equipo){}
 
         #endregion

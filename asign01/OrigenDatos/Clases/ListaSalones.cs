@@ -111,20 +111,6 @@ namespace OrigenDatos.Clases
             SetSalones(salones);
         }
 
-        public ListaSalones(DataTable dt)
-        {
-            List<Salon> temp = new List<Salon>();
-
-            var query = from Salon s in salones
-                        from DataRow r in dt.Rows
-                        where r["cve_espacio"].ToString() == s.Cve_espacio
-                        select s;
-
-            temp = query.ToList<Salon>();
-
-            SetSalones(temp);
-        }
-
         /// <summary>
         /// Inicializa la coneccion y crea los salones a partir de una tabla
         /// </summary>
@@ -135,7 +121,7 @@ namespace OrigenDatos.Clases
             salones = new List<Salon>();
 
             foreach(DataRow rSalon in dtSalones.Rows)
-                salones.Add(Salon.ToSalon(rSalon, hora, c));
+                salones.Add(new Salon(rSalon, hora, c));
         }
 
         public void SetSalones(List<Salon> salones)
@@ -163,32 +149,14 @@ namespace OrigenDatos.Clases
         #endregion
 
         #region consultas
-        public ListaSalones Disponibles(int hora_ini, int hora_fin, string dias)
+        public ListaSalones EnTabla(DataTable dt)
         {
-            List<Salon> temp = new List<Salon>();
-
             var query = from Salon s in salones
-                        where s.Disponible(hora_ini, hora_fin, dias)
+                        from DataRow r in dt.Rows
+                        where r["cve_espacio"].ToString() == s.Cve_espacio
                         select s;
 
-            temp = query.ToList<Salon>();
-
-            ListaSalones resultado = new ListaSalones(temp);
-            return resultado;
-        }
-
-        public ListaSalones Disponibles(int[] hora_ini, int[] hora_fin)
-        {
-            List<Salon> temp = new List<Salon>();
-
-            var query = from Salon s in salones
-                        where s.Disponible(hora_ini, hora_fin)
-                        select s;
-
-            temp = query.ToList<Salon>();
-
-            ListaSalones resultado = new ListaSalones(temp);
-            return resultado;
+            return new ListaSalones(query.ToList());
         }
 
         public ListaSalones ConEquipo(int idEquipo)
@@ -253,20 +221,6 @@ namespace OrigenDatos.Clases
 
             var query = from Salon s in salones
                         where g.Salones_posibles.busca(s.Cve_espacio)!=null
-                        select s;
-
-            temp = query.ToList<Salon>();
-
-            ListaSalones resultado = new ListaSalones(temp);
-            return resultado;
-        }
-
-        public ListaSalones SinEmpalmeCon(Grupo g)
-        {
-            List<Salon> temp = new List<Salon>();
-
-            var query = from Salon s in salones
-                        where s.EmpalmesCon(g).Count()>0
                         select s;
 
             temp = query.ToList<Salon>();

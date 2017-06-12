@@ -31,8 +31,6 @@ namespace Algoritmo02.Clases
             if (gruposPreferencial.Count() != 0)
                 foreach(Grupo g in gruposPreferencial)
                     g.salonPreferencial(new ListaSalones(salones));
-
-            grupos.Update(gruposPreferencial);
         }
 
         /// <summary>

@@ -237,14 +237,15 @@ namespace Algoritmo02.Clases
 
         private void asignandoXArea(List<Variable> asignando, ListaSalones s)
         {
-            string salon; 
+            string salon=null; 
 
             foreach (Variable v in asignando)
                 if (!v.salonHoraAnterior(s))
                     asignacionAleatoria(v, s);
                 else
                 {
-                    salon = v.Grupo.GruposAnteriores[0].Salon;
+                    //TODO: Agregar el salon del grupo del horario anterior
+                    //salon = v.Grupo.GruposAnteriores[0].Salon;
                     if (((Salon)s.busca(salon)).Disponible_para_grupo(v.Grupo))
                         v.Salon = (Salon)s.busca(salon);
                     else

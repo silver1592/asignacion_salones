@@ -1,9 +1,6 @@
 ﻿using Algoritmo02.Heredados;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Algoritmo02.Clases
 {
@@ -13,11 +10,12 @@ namespace Algoritmo02.Clases
         private ListaSalones salones;
         private int hora;
 
-        public ChecaEmpalmes(ListaGrupos _grupos, ListaSalones _salones, int hora)
+        public ListaGrupos Grupos { get { return grupos; } }
+
+        public ChecaEmpalmes(ListaGrupos _grupos, ListaSalones _salones)
         {
             grupos = _grupos;
             salones = _salones;
-            this.hora = hora;
         }
 
         /// <summary>
@@ -40,7 +38,7 @@ namespace Algoritmo02.Clases
                 //Chequeo de empalme
                 if (empalme.HayEmpalme())
                 {
-                    s = (Salon)salones.busca(empalme[0].Salon);
+                    s = new  Salon(salones.busca(empalme[0].Salon));
                     #region solucion de empalmes
 
                     ///Solucion de empalme
@@ -49,17 +47,22 @@ namespace Algoritmo02.Clases
 
 
                     if (Temp.Count() > 1) { }  ///Si hay conflicto en el preferencial
-                    else if (Temp.Count() == 1) ///Solo uno tiene preferencia, y a ese se le va a dar
+                    else if (Temp.Count() == 1)///Solo uno tiene preferencia, y a ese se le va a dar
+                    {
                         foreach (Grupo grupo in empalme)
                             if (grupo.Salon_fijo == grupo.Salon)
                                 grupo.Salon = "";
-                            else    /// Si no hay preferencial entonces se elegira por otro medio
-                            {
-                                g = empalme.MejorPara(s);
-                                foreach (Grupo a in empalme)
-                                    a.Salon = "";
-                                g.Salon = s.Cve_espacio;
-                            }
+                    }
+                    else    /// Si no hay preferencial entonces se elegira por otro medio
+                    {
+                        g = empalme.MejorPara(s);
+                        if (g != null)
+                        {
+                            foreach (Grupo a in empalme)
+                                a.Salon = "";
+                            g.Salon = s.Cve_espacio;
+                        }
+                    }
                     #endregion
                 }
             }

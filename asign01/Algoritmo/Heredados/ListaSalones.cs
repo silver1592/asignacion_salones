@@ -35,8 +35,6 @@ namespace Algoritmo02.Heredados
                 this.salones.Add(new Salon(s));
         }
 
-        public ListaSalones(DataTable dt):base(dt){}
-
         /// <summary>
         /// Inicializa la coneccion y crea los salones a partir de una tabla
         /// </summary>
@@ -56,9 +54,9 @@ namespace Algoritmo02.Heredados
             ListaGrupos aux;
             List<ListaGrupos> res = new List<ListaGrupos>();
 
-            foreach (Salon s in salones)
+            foreach (OrigenDatos.Clases.Salon s in salones)
             {
-                aux = new ListaGrupos((ListaGrupos)g.EnSalon(s.Cve_espacio).Empalmados());
+                aux = new ListaGrupos(g.EnSalon(s.Cve_espacio).Empalmados());
 
                 if(aux.Count()!=0)
                     res.Add(aux);
