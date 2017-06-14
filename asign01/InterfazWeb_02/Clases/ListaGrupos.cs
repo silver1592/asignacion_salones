@@ -11,17 +11,22 @@ namespace InterfazWeb_02.Clases
     {
         public ListaGrupos(List<Materia> materias, List<Profesor> profesores) : base()
         {
-            this.materias = materias;
-            this.profesores = profesores;
+            this.materias = new List<Algoritmo02.Clases.Materia>();
+            foreach (Materia m in materias)
+                this.materias.Add(m);
+
+            this.profesores= new List<Algoritmo02.Clases.Profesor>();
+            foreach (Profesor m in profesores)
+                this.profesores.Add(m);
         }
 
-        public ListaGrupos(ListaGrupos grupos)
+        public ListaGrupos(Algoritmo02.Heredados.ListaGrupos grupos)
         {
-            materias = grupos.materias;
-            profesores = grupos.profesores;
+            materias = ((ListaGrupos)grupos).materias;
+            profesores = ((ListaGrupos)grupos).profesores;
             this.grupos = new List<OrigenDatos.Clases.Grupo>();
 
-            foreach (Grupo g in grupos.grupos)
+            foreach (Grupo g in grupos)
                 this.grupos.Add(new Grupo(g));
         }
 
@@ -32,7 +37,7 @@ namespace InterfazWeb_02.Clases
                         select m;
 
             if (query.Count() > 0)
-                return query.ToList()[0];
+                return (Materia)query.ToList()[0];
             else
                 throw new Exception("No se encontro la materia");
         }
@@ -55,10 +60,10 @@ namespace InterfazWeb_02.Clases
                         where p.RPE == Convert.ToInt32(RPE)
                         select p;
 
-            if (query.Count() > 0)
-                return query.ToList()[0];
+            if(query.Count() > 0)
+                return (Profesor)query.ToList()[0];
             else
-                return new Profesor(Convert.ToInt32(RPE));
+                throw new Exception("No se encontro el RPE");
         }
 
         /// <summary>

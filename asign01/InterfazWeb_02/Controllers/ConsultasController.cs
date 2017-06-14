@@ -22,7 +22,7 @@ namespace InterfazWeb_02.Controllers
         {
             string excelDir = Server.MapPath("~/Archivos/");
             Conexion c = new Conexion(Conexion.datosConexionPrueba, this);
-            ListaGrupos grupos = c.GetGrupos(Session["semestre"].ToString());
+            ListaGrupos grupos = new ListaGrupos(c.GetGrupos(Session["semestre"].ToString()));
 
             return PartialView(grupos);
         }

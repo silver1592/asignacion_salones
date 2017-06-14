@@ -80,7 +80,7 @@ namespace InterfazWeb_02.Controllers
             try
             {
                 c = new Conexion(Conexion.datosConexionPrueba, this);
-                ListaGrupos grupos = c.GetGrupos(Session["ciclo"].ToString());
+                ListaGrupos grupos = new ListaGrupos(c.GetGrupos(Session["ciclo"].ToString()));
 
                 foreach (Grupo g in grupos)
                     if (c.ExisteBD(g))
