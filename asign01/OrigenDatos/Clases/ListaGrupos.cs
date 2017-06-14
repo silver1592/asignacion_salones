@@ -113,7 +113,7 @@ namespace OrigenDatos.Clases
             grupos = new List<Grupo>();
 
             foreach (DataRow r in dtGrupos.Rows)
-                grupos.Add(new Grupo(r, c, salones));
+                grupos.Add(new Grupo(r, c.DGrupos,c,salones));
         }
 
         public ListaGrupos(ListaGrupos grp)

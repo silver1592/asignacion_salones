@@ -11,22 +11,23 @@ namespace Algoritmo02.Heredados
 
         public Conexion(string Datos, string excelDireccion = null, string archivoEntrada = null, string hoja = null, string ciclo = "2016-2017/II", string tipo = ""): base(Datos, excelDireccion, archivoEntrada,hoja, ciclo,tipo){}
 
-        public ListaGrupos GetGrupos(string semestre)
+        public ListaGrupos GetGrupos(string semestre, bool bExcel=true)
         {
             ListaGrupos res = null;
+            List<OrigenDatos.Clases.Grupo> grupos;
             List<Materia> materias = GetMaterias();
             List<Profesor> profesores = GetProfesores();
 
-            if (!excel)
+            if (Excel==null || !bExcel)
             {
                 DataTable dt = Querry("SELECT * FROM[asignacion].[ae_horario] where ciclo = '" + semestre + "'");
 
-                res = new ListaGrupos(Excel.AsList(dt), materias, profesores);
-                res = new ListaGrupos(Excel.AsList(dt), materias, profesores);
+                grupos = Excel.AsList(dt);
+                res = new ListaGrupos(grupos, materias, profesores,this);
             }
             else
             {
-                res = new ListaGrupos(Excel.Grupos, materias, profesores);
+                res = new ListaGrupos(Excel.Grupos, materias, profesores,this);
             }
 
             return res;

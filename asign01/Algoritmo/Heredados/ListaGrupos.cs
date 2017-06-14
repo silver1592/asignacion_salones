@@ -35,15 +35,30 @@ namespace Algoritmo02.Heredados
                 this.grupos.Add(new Grupo(g));
         }
 
-        internal void Actualiza(ListaGrupos grupos)
+        internal void Actualiza(ListaGrupos _grupos)
         {
-            //TODO: Busca cada uno de los grupos y cambia sus valores por los de la lista
+            if (this == _grupos)
+                return;
+
+            Grupo temp;
+            int index=0;
+
+            foreach(Grupo g in _grupos)
+            {
+                temp = Busca(g.Cve_materia, g.num_Grupo);
+                index = IndexOf(temp);
+                grupos[index] = g;
+            }
+        }
+
+        internal void Actualiza(object grupos)
+        {
             throw new NotImplementedException();
         }
 
         public ListaGrupos(Conexion c, DataTable dtGrupos, ListaSalones salones) : base(c, dtGrupos, salones) { }
 
-        public ListaGrupos(IList<OrigenDatos.Clases.Grupo> grupos, List<Materia> materias, List<Profesor> profesores):base()
+        public ListaGrupos(IList<OrigenDatos.Clases.Grupo> grupos, List<Materia> materias, List<Profesor> profesores, Conexion c=null, ListaSalones salones=null):base()
         {
             this.materias = materias;
             this.profesores = profesores;
@@ -51,7 +66,7 @@ namespace Algoritmo02.Heredados
             this.grupos = new List<OrigenDatos.Clases.Grupo>();
 
             foreach (OrigenDatos.Clases.Grupo g in grupos)
-                this.grupos.Add(new Grupo(g));
+                this.grupos.Add(new Grupo(g,c,salones));
         }
         #endregion
 
@@ -84,10 +99,10 @@ namespace Algoritmo02.Heredados
             return new ListaGrupos(query.ToList());
         }
 
-        public ListaGrupos OtrosSemestres(string salon)
+        public ListaGrupos AsignacionOtrosSemestres(string salon)
         {
             var query = from g in grupos
-                        where g.AsignacionSemestresAnteriores(salon)
+                        where g.AsignacionSemestresAnteriores(salon)!=null
                         select (Grupo)g;
 
             return new ListaGrupos(query.ToList());
@@ -97,15 +112,6 @@ namespace Algoritmo02.Heredados
         {
             var query = from g in grupos
                         where ((Grupo)g).horario(hora)
-                        select (Grupo)g;
-
-            return new ListaGrupos(query.ToList());
-        }
-
-        public ListaGrupos EnHora(int ini, int fin)
-        {
-            var query = from g in grupos
-                        where g.EnHora(ini, fin)
                         select (Grupo)g;
 
             return new ListaGrupos(query.ToList());
@@ -132,7 +138,7 @@ namespace Algoritmo02.Heredados
 
             //Salon de otros semestres
             if (aux.Count() > 1)
-                aux = aux.OtrosSemestres(salon.Cve_espacio);
+                aux = aux.AsignacionOtrosSemestres(salon.Cve_espacio);
 
             //Mejor puntuacion de equipamiento
             if (aux.Count() > 1)

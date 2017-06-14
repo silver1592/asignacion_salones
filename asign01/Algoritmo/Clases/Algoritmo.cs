@@ -103,10 +103,14 @@ namespace Algoritmo02.Clases
         /// <returns>Respuesta mejor evaluada.</returns>
         private ListaGrupos mejorRespuesta()
         {
-            Individuo seleccionado = poblacion[0];
+            Individuo seleccionado = mejorPoblacion[0];
+
+            foreach(Individuo i in mejorPoblacion)
+                if(i.valor > seleccionado.valor)
+                    seleccionado = i;
 
             foreach(Individuo i in poblacion)
-                if(i.valor > seleccionado.valor)
+                if (i.valor > seleccionado.valor)
                     seleccionado = i;
 
             return seleccionado.Grupos;

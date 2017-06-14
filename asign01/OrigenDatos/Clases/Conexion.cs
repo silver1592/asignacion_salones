@@ -42,7 +42,15 @@ namespace OrigenDatos.Clases
                 return datosConexion;
             }
         }
-        public static Dictionary<string, string> DiccionarioBD
+        #endregion
+
+        protected string datosConexion;
+        protected LibroExcel Excel;
+
+        #region Diccionarios
+        public Dictionary<string, string> DGruposExcel { get { return Excel.headers; } }
+
+        public static Dictionary<string, string> DGruposBD
         {
             get
             {
@@ -78,13 +86,9 @@ namespace OrigenDatos.Clases
                 return headers;
             }
         }
-        #endregion
 
-        protected string datosConexion;
-        protected LibroExcel Excel;
-        public Dictionary<string, string> DiccionarioExcel { get { return Excel.headers; } }
-        public LibroExcel GetExcel { get { return Excel; } }
-        public bool excel { get { return Excel != null; } }
+        public Dictionary<string,string> DGrupos { get { return Excel != null ? Excel.headers : DGruposBD; } }
+        #endregion
 
         public Conexion()
         {
@@ -100,23 +104,6 @@ namespace OrigenDatos.Clases
 
                 if(hoja!=null)
                     Excel.setHojaHorarios(hoja);
-            }
-        }
-
-        public bool Autenticacion()
-        {
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = datosConexion;
-
-            try
-            {
-                con.Open();
-                con.Close();
-                return true;
-            }
-            catch
-            {
-                return false;
             }
         }
 
@@ -266,6 +253,24 @@ namespace OrigenDatos.Clases
         }
         #endregion
 
+        #region Base
+        public bool Autenticacion()
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = datosConexion;
+
+            try
+            {
+                con.Open();
+                con.Close();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Ejecuta una consulta en SQL utilizando el comando enviado como parametro
         /// Usado principalmente para consultas DLL (Data Definition Language)
@@ -318,14 +323,15 @@ namespace OrigenDatos.Clases
 
         ///En esta region intente agrupar todas las consultas que requieren de la tabla grupos y por lo tanto
         ///son las que pudiese tener otro origen de datos (excel)
-        public void UpdateGrupo(Grupo g, string observaciones="", bool bd=false)
+        public void UpdateGrupoExcel(Grupo g, string observaciones="", bool bd=false)
         {
-            if (excel && !bd)
+            if (Excel!=null && !bd)
             {
                 Excel.Update(g, observaciones);
             }
             else
-                Comando(g.modificacion);
+                Comando(g.Modificacion);
         }
+        #endregion
     }
 }

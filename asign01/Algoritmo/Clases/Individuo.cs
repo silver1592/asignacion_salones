@@ -229,7 +229,7 @@ namespace Algoritmo02.Clases
 
             if (asignando.Count != 0)
             {
-                s = (ListaSalones)salones.EnArea(i);
+                s = new ListaSalones(salones.EnArea(i));
 
                 asignandoXArea(asignando, s);
             }
@@ -237,20 +237,24 @@ namespace Algoritmo02.Clases
 
         private void asignandoXArea(List<Variable> asignando, ListaSalones s)
         {
-            string salon=null; 
+            Grupo gAnterior;
+            Salon sAnterior;
 
             foreach (Variable v in asignando)
-                if (!v.salonHoraAnterior(s))
+            {
+                gAnterior = v.HoraAnterior();
+                if (gAnterior== null)
                     asignacionAleatoria(v, s);
                 else
                 {
-                    //TODO: Agregar el salon del grupo del horario anterior
-                    //salon = v.Grupo.GruposAnteriores[0].Salon;
-                    if (((Salon)s.busca(salon)).Disponible_para_grupo(v.Grupo))
-                        v.Salon = (Salon)s.busca(salon);
-                    else
-                        asignacionAleatoria(v, s);
+                    sAnterior = (Salon)s.busca(gAnterior.Salon);
+                    //TODO: Encontrar otra solucion mas diplomatica (baja importacia)
+                    //if ((sAnterior).Disponible_para_grupo(v.Grupo))
+                        v.Salon = sAnterior;
+                    //else
+                        //asignacionAleatoria(v, s);
                 }
+            }
         }
 
         private void asignacionAleatoria(Variable v,ListaSalones s)

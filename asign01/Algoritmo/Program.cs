@@ -24,7 +24,7 @@ namespace Algoritmo02
 
             for (int i=7;i<22;i++)
             {
-                gruposActuales = grupos.EnHora(i, i + 1);
+                gruposActuales = new ListaGrupos(grupos.EnHora(i, i + 1));
 
                 emp = new ChecaEmpalmes(grupos, salones);
                 emp.ejecuta();
@@ -37,6 +37,7 @@ namespace Algoritmo02
 
                 alg = new Asignacion(grupos,salones, i);
                 alg.EjecutaAlgoritmo();
+                grupos.Actualiza(alg.Grupos);
             }
             stop = new TimeSpan(DateTime.Now.Ticks);
             Console.Write("***Pulsa una tecla para continuar****\n");

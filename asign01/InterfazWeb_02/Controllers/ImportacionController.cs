@@ -84,7 +84,7 @@ namespace InterfazWeb_02.Controllers
 
                 foreach (Grupo g in grupos)
                     if (c.ExisteBD(g))
-                        c.UpdateGrupo(g,bd:true);
+                        c.UpdateGrupoExcel(g,bd:true);
                     else
                         c.Insert(g);
             }

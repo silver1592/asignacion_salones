@@ -28,10 +28,10 @@ namespace Algoritmo02.Heredados
                 this.salones.Add(s);
         }
 
-        public ListaSalones(ListaSalones salones)
+        public ListaSalones(OrigenDatos.Clases.ListaSalones salones)
         {
             this.salones = new List<OrigenDatos.Clases.Salon>();
-            foreach (Salon s in salones.salones)
+            foreach (OrigenDatos.Clases.Salon s in salones)
                 this.salones.Add(new Salon(s));
         }
 

@@ -8,7 +8,6 @@ namespace Algoritmo02.Clases
     {
         private ListaGrupos grupos;
         private ListaSalones salones;
-        private int hora;
 
         public ListaGrupos Grupos { get { return grupos; } }
 

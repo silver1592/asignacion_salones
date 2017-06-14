@@ -129,11 +129,9 @@ namespace Algoritmo02.Clases
             return fRes;
         }
 
-        public bool salonHoraAnterior(ListaSalones s)
+        public Grupo HoraAnterior()
         {
-            //TODO: Grupo anterior
-            //return ((ListaGrupos)grupo.GruposAnteriores).EnSalones(s,grupo);
-            return false;
+            return grupo.GHoraAnterior as Grupo;
         }
     }
 }

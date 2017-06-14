@@ -11,20 +11,9 @@ namespace Algoritmo02.Heredados
     public class Grupo:OrigenDatos.Clases.Grupo
     {
         #region Constructores
-        /// <summary>
-        /// Constructor usado cuando se crea a partir de un excel
-        /// </summary>
-        /// <param name=""></param>
-        public Grupo(string cve_materia, string grupo, string rpe, string tipo, string salon, string li, string lf, string mi, string mf, string Mii, string Mif, string ji, string jf, string vi, string vf, string si, string sf, string cupo, string ciclo):base(cve_materia, grupo, rpe, tipo, salon, li, lf, mi, mf, Mii, Mif, ji, jf, vi, vf, si, sf, cupo, ciclo) { }
+        public Grupo(OrigenDatos.Clases.Grupo g,Conexion c=null, ListaSalones salones=null) :base(g,c,salones){ }
 
-        public Grupo(Grupo g) :base(g){ }
-
-        //Para la vercion web
-        public Grupo(OrigenDatos.Clases.Grupo g) : base(g) { }
-
-        public Grupo(DataRow r, Conexion c, ListaSalones salones):base(r, c, salones){ }
-
-        public Grupo(DataRow r, IDictionary<string, string> h) : base(r, h) { }
+        public Grupo(DataRow r, IDictionary<string, string> h, Conexion c=null, ListaSalones salones=null) : base(r, h,c,salones) { }
         #endregion
 
         #region Atributos
@@ -64,10 +53,14 @@ namespace Algoritmo02.Heredados
         public string salonAnioPasado()
         {
             Grupo sel =null;
-            foreach (Grupo g in otrosSemestres)
-                if (g.fCiclo % 2 == this.fCiclo % 2)
-                    if (sel == null || sel.fCiclo < g.fCiclo)
-                        sel = g;
+            Grupo gAux;
+            foreach (OrigenDatos.Clases.Grupo g in otrosSemestres)
+            {
+                gAux = new Grupo(g);
+                if (gAux.fCiclo % 2 == this.fCiclo % 2)
+                    if (sel == null || sel.fCiclo < gAux.fCiclo)
+                        sel = gAux;
+            }
 
             return sel != null ? sel.ciclo : "";
         }
@@ -78,7 +71,7 @@ namespace Algoritmo02.Heredados
         public void Update(Conexion c, string observaciones = "")
         {
             this.observaciones = observaciones;
-            c.UpdateGrupo(this, observaciones);
+            c.UpdateGrupoExcel(this, observaciones);
         }
 
         /// <summary>
@@ -104,38 +97,16 @@ namespace Algoritmo02.Heredados
         /// Checa si tiene un grupo con salon fijo, y de ser asi lo asigna, sino regresa false
         /// </summary>
         /// <returns></returns>
-        public bool salonPreferencial(ListaSalones salones)
+        public bool salonPreferencial()
         {
-            Salon _Salon;
-            //Checa si tiene salon fijo
             if (salon_fijo != null && salon_fijo != "")
             {
                 salon = salon_fijo;
-                _Salon = (Salon)salones.busca(salon);
-                /*
-                if (_Salon != null)
-                    _Salon.agregaGrupo(this);
-                */
 
                 return true;
             }
 
             return false;
-        }
-
-        public float AsignacionSemestreAnterior(int hora)
-        {
-            /*
-            DataTable ciclos = Consultas.asignacionesSemestresAnteriores(cve_materia, rpe, tipo, salon, hora, ciclo);
-            float res = -1;
-
-            foreach (DataRow r in ciclos.Rows)
-                if (res < cicloToFloat(r["ciclo"].ToString()))
-                    res = cicloToFloat(r["ciclo"].ToString());
-
-            return res;
-            */
-            return 0;
         }
    }
 }

@@ -12,11 +12,9 @@ namespace Algoritmo02.Clases
         private ListaGrupos grupos;
         private ListaSalones salones;
         private int hora;
-        #endregion
 
-        #region Eventos
-        public delegate void Finaliza(ListaGrupos Errores);
-        public event Finaliza Finalizado;
+        public ListaGrupos gruposAsignados;
+        public ListaGrupos Grupos { get { return gruposAsignados; } }
         #endregion
 
         #region constructor
@@ -50,7 +48,6 @@ namespace Algoritmo02.Clases
 
         private void iniciaAlgoritmoGenetico()
         {
-            ListaGrupos gruposAsignados;
             Algoritmo inst_algoritmo;
             ListaGrupos GruposSinAsignar = new ListaGrupos(grupos.SinAsignar("111111",hora));
 
@@ -60,7 +57,7 @@ namespace Algoritmo02.Clases
                 {
                     inst_algoritmo = new Algoritmo(GruposSinAsignar, salones, hora);
                     gruposAsignados = inst_algoritmo.AsignaSalones();
-
+                    /*
                     foreach (Grupo g in gruposAsignados)
                     {
                         g.Update("Algoritmo");
@@ -68,6 +65,7 @@ namespace Algoritmo02.Clases
                     }
 
                     Finalizado(inst_algoritmo.Errores);
+                    */
                     //return gruposAsignados;
                 }
                 catch (Exception ex)

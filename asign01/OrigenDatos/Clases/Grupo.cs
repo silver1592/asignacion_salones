@@ -38,7 +38,7 @@ namespace OrigenDatos.Clases
         protected string salon_fijo;
 
         protected ListaSalones salones_Posibles;
-        protected ListaGrupos GruposAnteriores;
+        protected Grupo HoraAnterior;
         protected ListaGrupos otrosSemestres;
         #endregion
 
@@ -80,6 +80,7 @@ namespace OrigenDatos.Clases
         public string Salon { get { return salon; } set { salon = value; } }
         public string SalonBD { get { return salonBD; } }
         public string observaciones;
+        public Grupo GHoraAnterior { get { return HoraAnterior; } }
 
         public int hora_ini
         {
@@ -101,14 +102,6 @@ namespace OrigenDatos.Clases
         }        
         public string Area { get { return cve_materia.Substring(0, 1); } }
         public int Cupo { get { return cupo; } }
-
-        public bool AsignacionSemestresAnteriores(string salon)
-        {
-
-            ListaGrupos g = GruposAnteriores.EnSalon(salon);
-
-            return g!=null ? true : false;
-        }
 
         public string Cve_materia { get { return cve_materia; } }
         public int num_Grupo { get { return grupo; } }
@@ -211,7 +204,7 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Cadena para el query de update.
         /// </summary>
-        public string modificacion
+        public string Modificacion
         {
             get
             {
@@ -221,41 +214,164 @@ namespace OrigenDatos.Clases
             }
         }
 
-        public string insert
+        public string Insert
         {
             get
             {
-                //TODO:Hacer cadena para insertar
-                return "Insert into ";
+                return "INSERT INTO [asignacion].[ae_horario] ([cve_materia],[grupo],[tipo],[lunes_ini],[lunes_fin],[martes_ini],[martes_fin],[miercoles_ini],[miercoles_fin],[jueves_ini],[jueves_fin],[viernes_ini],[viernes_fin],[sabado_ini],[sabado_fin],[cupo],[inscritos],[salon],[rpe],[lab_obl],[ciclo],[checador]) VALUES("
+                    +"'"+cve_materia+"',"
+                    +num_Grupo+","
+                    +"'"+tipo+"',"
+                    +lunes_ini+","
+                    +lunes_fin +","
+                    +martes_ini+","
+                    +martes_fin+","
+                    +miercoles_ini +","
+                    +miercoles_fin +","
+                    +jueves_ini+","
+                    +jueves_fin +","
+                    +viernes_ini +","
+                    +viernes_fin+","
+                    +sabado_ini+","
+                    +sabado_fin +","
+                    +cupo+","
+                    +"0,"
+                    +"'"+salon +"',"
+                    +rpe+","
+                    +"0,"
+                    +"'"+ciclo+"',"
+                    +"0)";
             }
         }
         #endregion
 
         #region Constructores
-        #region Inicializadores
-        public void Set_From_Row(DataRow grupo)
+
+        //Construcctor base para los heredados
+        public Grupo(Grupo g,Conexion c=null, ListaSalones salones=null)
         {
-            this.cve_materia = grupo["cve_materia"].ToString();
-            this.grupo = Convert.ToInt32(grupo["grupo"].ToString());
-            this.tipo = grupo["tipo"].ToString();
-            lunes_ini = Convert.ToInt32(grupo["lunes_ini"].ToString());
-            lunes_fin = Convert.ToInt32(grupo["lunes_fin"].ToString());
-            martes_ini = Convert.ToInt32(grupo["martes_ini"].ToString());
-            martes_fin = Convert.ToInt32(grupo["martes_fin"].ToString());
-            miercoles_ini = Convert.ToInt32(grupo["miercoles_ini"].ToString());
-            miercoles_fin = Convert.ToInt32(grupo["miercoles_fin"].ToString());
-            jueves_ini = Convert.ToInt32(grupo["jueves_ini"].ToString());
-            jueves_fin = Convert.ToInt32(grupo["jueves_fin"].ToString());
-            viernes_ini = Convert.ToInt32(grupo["viernes_ini"].ToString());
-            viernes_fin = Convert.ToInt32(grupo["viernes_fin"].ToString());
-            sabado_ini = Convert.ToInt32(grupo["sabado_ini"].ToString());
-            sabado_fin = Convert.ToInt32(grupo["sabado_fin"].ToString());
-            cupo = Convert.ToInt32(grupo["cupo"].ToString());
-            inscritos = Convert.ToInt32(grupo["inscritos"].ToString());
-            salon = grupo["salon"].ToString();
-            salonBD = salon;
-            rpe = Convert.ToInt32(grupo["rpe"].ToString());
-            this.ciclo = grupo["ciclo"].ToString();
+            cve_materia = g.cve_materia;
+            grupo = g.grupo;
+            tipo = g.tipo;
+            lunes_ini = g.lunes_ini;
+            lunes_fin = g.lunes_fin;
+            martes_ini = g.martes_ini;
+            martes_fin = g.martes_fin;
+            miercoles_ini = g.miercoles_ini;
+            miercoles_fin = g.miercoles_fin;
+            jueves_ini = g.jueves_ini;
+            jueves_fin = g.jueves_fin;
+            viernes_ini = g.viernes_ini;
+            viernes_fin = g.viernes_fin;
+            sabado_ini = g.sabado_ini;
+            sabado_fin = g.sabado_fin;
+            cupo = g.cupo;
+            inscritos = g.inscritos;
+            salon = g.salon;
+            salonBD = g.salonBD;
+            rpe = g.rpe;
+            ciclo = g.ciclo;
+
+            if (c == null)
+            {
+                requerimientos_Salon = new List<Requerimiento_Valor>();
+                Requerimiento_Valor req;
+                if(g.requerimientos_Salon!=null)
+                    foreach (Requerimiento_Valor ngR in g.requerimientos_Salon)
+                    {
+                        req = new Requerimiento_Valor();
+                        req.requerimiento = ngR.requerimiento;
+                        req.valor = ngR.valor;
+                        requerimientos_Salon.Add(req);
+                    }
+
+
+                plantaBaja = g.plantaBaja;
+                salon_fijo = g.salon_fijo;
+
+                salones_Posibles = g.Salones_posibles;
+                HoraAnterior = g.HoraAnterior;
+                otrosSemestres = g.otrosSemestres;
+            }
+            else
+            {
+                Set_GruposHorasAnteriores(c.GruposAnteriores(RPE, hora_ini, ciclo), Conexion.DGruposBD);
+                Set_NecesidadesGrupo(c.Necesidades_Grupo(Cve_materia, tipo, rpe.ToString()));
+                Set_RequerimientosProfesor(c.Necesidades_prof(RPE.ToString()));
+                Set_GruposOtrosSemestres(c.SemestresAnteriores(cve_materia, ciclo, rpe.ToString()), Conexion.DGruposBD);
+
+                if (salones != null)
+                    Set_SalonesPosibles(c.salonesPosibles(cve_materia), salones);
+                else
+                    salones_Posibles = new ListaSalones();
+            }
+        }
+
+        public Grupo(DataRow r, IDictionary<string, string> h, Conexion c=null, ListaSalones salones=null)
+        {
+            Set_From_Row(r, h);
+
+            if (c != null)
+            {
+                Set_GruposHorasAnteriores(c.GruposAnteriores(RPE, hora_ini, ciclo), Conexion.DGruposBD);
+                Set_NecesidadesGrupo(c.Necesidades_Grupo(Cve_materia, tipo, rpe.ToString()));
+                Set_RequerimientosProfesor(c.Necesidades_prof(RPE.ToString()));
+                Set_GruposOtrosSemestres(c.SemestresAnteriores(cve_materia, ciclo, rpe.ToString()), Conexion.DGruposBD);
+
+                if(salones!=null)
+                    Set_SalonesPosibles(c.salonesPosibles(cve_materia), salones);
+                else
+                    salones_Posibles = new ListaSalones();
+            }
+        }
+
+        #region Inicializadores
+        public void Set_From_Row(DataRow r,IDictionary<string,string> h)
+        {
+            try
+            {
+                try
+                {
+                    ///Se usan estos si se tiene el grupo y la materia por separado
+                    cve_materia = Convert.ToString(r.Field<object>(h["cve_mat"]));
+                    grupo = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cve_gpo"])));
+                }
+                catch
+                {
+                    ///Se usa este si el grupo y la materia estan juntos
+                    cve_materia = Convert.ToString(r.Field<double>(h["cve"])).Substring(0, 4);
+                    grupo = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cve"])).Substring(4, 2));
+                }
+
+                rpe = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cverpe"])));
+                tipo = h["tipoDefault"] == "" ? r.Field<string>(h["tipo"]) : h["tipoDefault"];
+                salon = r.Field<string>(h["salon"]);
+                lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunes"])));
+                lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunesf"])));
+                martes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martes"])));
+                martes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martesf"])));
+                miercoles_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercoles"])));
+                miercoles_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercolesf"])));
+                jueves_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["jueves"])));
+                jueves_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["juevesf"])));
+                viernes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernes"])));
+                viernes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernesf"])));
+                sabado_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabado"])));
+                sabado_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabadof"])));
+                cupo = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cupo"])));
+                try
+                {
+                    ciclo = Convert.ToString(r.Field<object>(h["ciclo"]));
+                }
+                catch
+                {
+                    ciclo = h["cicloDefault"];
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + "\nFormato no valido\n Cheque que los encabezados coincidan");
+            }
         }
 
         public void Set_NecesidadesGrupo(DataTable dt)
@@ -291,163 +407,25 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Busca los grupos en los que dio clases el profesor anteriormente
         /// </summary>
-        protected void Set_GruposAnteriores(DataTable dt)
+        protected void Set_GruposHorasAnteriores(DataTable dt,IDictionary<string,string> dicctionary)
         {
-            GruposAnteriores = new ListaGrupos();
-            foreach(DataRow r in dt.Rows)
-                GruposAnteriores.Add(new Grupo(r,Conexion.DiccionarioBD));
+            ListaGrupos GruposHorasAnteriores = new ListaGrupos();
+            ListaGrupos aux;
+            foreach (DataRow r in dt.Rows)
+                GruposHorasAnteriores.Add(new Grupo(r, dicctionary));
+
+            aux = GruposHorasAnteriores.EnHora(hora_ini - 1, hora_ini, salon, Dias);
+            HoraAnterior = aux.Count() != 0 ? aux[0] : null;
         }
 
-        protected void Set_GruposOtrosSemestres(DataTable dt)
+        protected void Set_GruposOtrosSemestres(DataTable dt,IDictionary<string,string> dictionary)
         {
             otrosSemestres = new ListaGrupos();
             foreach (DataRow r in dt.Rows)
-                otrosSemestres.Add(new Grupo(r, Conexion.DiccionarioBD));
+                otrosSemestres.Add(new Grupo(r, dictionary));
         }
 
         #endregion
-
-        //Construcctor base para los heredados
-        public Grupo() { }
-
-        /// <summary>
-        /// Constructor usado cuando se crea a partir de un excel
-        /// </summary>
-        /// <param name=""></param>
-        public Grupo(string cve_materia,string grupo, string rpe, string tipo, string salon, string li, string lf,string mi, string mf, string Mii,string Mif, string ji, string jf, string vi, string vf, string si, string sf, string cupo, string ciclo)
-        {
-            //cn = new Conexion(Conexion.datosConexionPrueba);
-
-            this.cve_materia = cve_materia;
-            this.grupo = Convert.ToInt32(grupo);
-            this.tipo = tipo;
-            lunes_ini = Convert.ToInt32(li);
-            lunes_fin = Convert.ToInt32(lf);
-            martes_ini = Convert.ToInt32(mi);
-            martes_fin = Convert.ToInt32(mf);
-            miercoles_ini = Convert.ToInt32(Mii);
-            miercoles_fin = Convert.ToInt32(Mif);
-            jueves_ini = Convert.ToInt32(ji);
-            jueves_fin = Convert.ToInt32(jf);
-            viernes_ini = Convert.ToInt32(vi);
-            viernes_fin = Convert.ToInt32(vf);
-            sabado_ini = Convert.ToInt32(si);
-            sabado_fin = Convert.ToInt32(sf);
-
-            this.cupo = Convert.ToInt32(cupo);
-            inscritos = 0;
-            this.salon = salon!=null ? salon : "";
-            salonBD = salon;
-            this.rpe = Convert.ToInt32(rpe);
-            this.ciclo = ciclo;
-
-            requerimientos_Salon = new List<Requerimiento_Valor>();
-            salones_Posibles = new ListaSalones();
-
-            GruposAnteriores = new ListaGrupos();
-
-            otrosSemestres = new ListaGrupos();
-        }
-
-        public Grupo(Grupo g)
-        {
-            cve_materia = g.cve_materia;
-            grupo = g.grupo;
-            tipo = g.tipo;
-            lunes_ini = g.lunes_ini;
-            lunes_fin = g.lunes_fin;
-            martes_ini = g.martes_ini;
-            martes_fin = g.martes_fin;
-            miercoles_ini = g.miercoles_ini;
-            miercoles_fin = g.miercoles_fin;
-            jueves_ini = g.jueves_ini;
-            jueves_fin = g.jueves_fin;
-            viernes_ini = g.viernes_ini;
-            viernes_fin = g.viernes_fin;
-            sabado_ini = g.sabado_ini;
-            sabado_fin = g.sabado_fin;
-            cupo = g.cupo;
-            inscritos = g.inscritos;
-            salon = g.salon;
-            salonBD = g.salonBD;
-            rpe = g.rpe;
-            ciclo = g.ciclo;
-
-            requerimientos_Salon = new List<Requerimiento_Valor>();
-            Requerimiento_Valor req;
-            foreach (Requerimiento_Valor ngR in g.requerimientos_Salon)
-            {
-                req = new Requerimiento_Valor();
-                req.requerimiento = ngR.requerimiento;
-                req.valor = ngR.valor;
-                requerimientos_Salon.Add(req);
-            }
-
-
-            plantaBaja = g.plantaBaja;
-            salon_fijo = g.salon_fijo;
-
-            salones_Posibles = g.Salones_posibles;
-            GruposAnteriores = g.GruposAnteriores;
-            otrosSemestres = g.otrosSemestres;
-        }
-
-        public Grupo (DataRow r, Conexion c, ListaSalones salones)
-        {
-            Set_From_Row(r);
-
-            Set_GruposAnteriores(c.GruposAnteriores(RPE, hora_ini, ciclo));
-            Set_NecesidadesGrupo(c.Necesidades_Grupo(Cve_materia, tipo, rpe.ToString()));
-            Set_RequerimientosProfesor(c.Necesidades_prof(RPE.ToString()));
-            Set_SalonesPosibles(c.salonesPosibles(cve_materia), salones);
-            Set_GruposOtrosSemestres(c.SemestresAnteriores(cve_materia,ciclo,rpe.ToString()));
-        }
-
-        public Grupo(DataRow r, IDictionary<string, string> h)
-        {
-            try
-            {
-                try
-                {
-                    ///Se usan estos si se tiene el grupo y la materia por separado
-                    cve_materia = Convert.ToString(r.Field<double>(h["cve_mat"]));
-                    grupo = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cve_gpo"])));
-                }
-                catch
-                {
-                    ///Se usa este si el grupo y la materia estan juntos
-                    cve_materia = Convert.ToString(r.Field<double>(h["cve"])).Substring(0, 4);
-                    grupo = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cve"])).Substring(4, 2));
-                }
-
-                rpe = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cverpe"])));
-                tipo = h["tipoDefault"] == "" ? r.Field<string>(h["tipo"]) : h["tipoDefault"];
-                salon = r.Field<string>(h["salon"]);
-                lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["lunes"])));
-                lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["lunesf"])));
-                martes_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["martes"])));
-                martes_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["martesf"])));
-                miercoles_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["miercoles"])));
-                miercoles_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["miercolesf"])));
-                jueves_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["jueves"])));
-                jueves_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["juevesf"])));
-                viernes_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["viernes"])));
-                viernes_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["viernesf"])));
-                sabado_ini = Convert.ToInt32(Convert.ToString(r.Field<double>(h["sabado"])));
-                sabado_fin = Convert.ToInt32(Convert.ToString(r.Field<double>(h["sabadof"])));
-                cupo = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cupo"])));
-                ciclo = h["cicloDefault"];
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message+"\nFormato no valido\n Cheque que los encabezados coincidan");
-            }
-
-            requerimientos_Salon = new List<Requerimiento_Valor>();
-            salones_Posibles = new ListaSalones();
-            GruposAnteriores = new ListaGrupos();
-            otrosSemestres = new ListaGrupos();
-    }
         #endregion
 
         #region Metodos
@@ -465,8 +443,8 @@ namespace OrigenDatos.Clases
             //Checa si esta en la lista de posibles salones o si esta en uno de los salones anteriores
             if (salones_Posibles.busca(salon.Cve_espacio)!=null)
                 peso = 10;
-            ///Checa si ya habia sido asignado en ese salon un horario anterior
-            else if (en_Anteriores(salon))
+            //Checa si ya habia sido asignado en ese salon un horario anterior
+            else if (GHoraAnterior!=null && GHoraAnterior.salon==salon.Cve_espacio)
                 peso = 10;
             //Y si no esta....
             //Checa si corresponden las areas
@@ -478,34 +456,6 @@ namespace OrigenDatos.Clases
                 peso = salon.PrioridadArea(Area);
 
             return peso;
-        }
-
-        /// <summary>
-        /// Checa si el salon esta dentro de los salones anteriores del grupo
-        /// </summary>
-        /// <param name="salon"></param>
-        /// <returns></returns>
-        public bool en_Anteriores(Salon salon)
-        {
-            /*
-            var query = from g in GruposAnteriores
-                        where g.salon == salon.Cve_espacio
-                        select g;
-
-            if (query.Count() != 0)
-                return true;
-            else*/
-                return false;
-                
-        }
-
-        public bool EnDias(string dias)
-        {
-            for (int i = 0; i < 6; i++)
-                if (Dias[i] != dias[i] && dias[i] == '1')
-                    return false;
-
-            return true;
         }
 
         /// <summary>
@@ -609,56 +559,17 @@ namespace OrigenDatos.Clases
             return false;
         }
 
-        public bool ChecaSalon(ListaSalones salones, Salon _Salon)
-        {
-            //Checa si hay salones que esten especialmente relacionados con el
-            ListaSalones preferentes = salones.Preferenciales(this);
-            ListaSalones posibes = salones.Validos(this);
-
-            //Checa si el salon es preferencial
-            if (preferentes.busca(_Salon.Cve_espacio) != null)
-            { 
-                salon = _Salon.Cve_espacio;
-
-                return true;
-            }
-            //Checa si esta en sus posibilidades
-            else if (posibes.busca(_Salon.Cve_espacio) != null)
-            {
-                salon = _Salon.Cve_espacio;
-                return true;
-            }
-            else
-                return false;
-        }
-
         public override string ToString()
         {
-            return (Convert.ToInt32(cve_materia) * 100 + grupo) + "\t" + salon;
+            return (Convert.ToInt32(cve_materia) * 100 + grupo) + "\t" + salon+"_"+ciclo;
         }
 
-        public static float cicloToFloat(string ciclo)
+        public Grupo AsignacionSemestresAnteriores(string salon)
         {
-            string aux;
-            int yIni;
-            int yFin;
-            float semPar = .5f;
 
-            if (ciclo.Contains("/II"))
-            {
-                aux = ciclo.Replace("/II", "");
-                semPar = 2;
-            }
-            else
-                aux = ciclo.Replace("/I", "");
+            ListaGrupos g = otrosSemestres.EnSalon(salon);
 
-            yIni = Convert.ToInt32(aux.Split('-')[0]);
-            yFin = Convert.ToInt32(aux.Split('-')[1]);
-
-            if (yIni >= 2014)
-                return (yIni - 2014 + semPar);
-            else
-                return -1;
+            return g.Count() != 0 ? g[0] : null;
         }
         #endregion
     }

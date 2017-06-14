@@ -37,9 +37,10 @@ namespace OrigenDatos
                         Console.WriteLine("Funcion no implementada");
                     break;
                     case "2":
+
                         Console.WriteLine("Ejecutando chequeo de empalmes");
-                        foreach (ListaGrupos empalme in c.GetExcel.Grupos.Empalmes())
-                            imprimeLista(empalme);
+                        //foreach (ListaGrupos empalme in c.GetExcel.Grupos.Empalmes())
+                            //imprimeLista(empalme);
                     break;
                     case "3":
                         Console.WriteLine("Funcion no implementada");
@@ -49,15 +50,14 @@ namespace OrigenDatos
                         aux = Console.ReadLine();
                         Console.WriteLine("Obteniendo horario del salon");
                         Console.WriteLine("*****************************");
-                        imprimeHorario(c.GetExcel.Grupos.EnSalon(aux));
-                    break;
+                        //imprimeHorario(c.Grupos.EnSalon(aux));
+                        break;
                     case "5":
                         Console.Write("RPE:");
                         aux = Console.ReadLine();
                         Console.WriteLine("Obteniendo horario del profesor");
-                        imprimeLista(c.GetExcel.Grupos.ConProfesor(aux));
-                        
-                    break;
+                        //imprimeLista(c.GetExcel.Grupos.ConProfesor(aux));
+                        break;
                     case "6":
                         Console.Write("Hora inicial:");
                         aux = Console.ReadLine();

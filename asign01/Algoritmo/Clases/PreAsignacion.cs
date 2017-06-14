@@ -24,13 +24,13 @@ namespace Algoritmo02.Clases
         /// </summary>
         /// <param name="forzado">Si quiere que se cambie al salon preferencial sin importar si ya tiene salon asignado</param>
         /// <returns></returns>
-        public void preferencial(bool forzado = false)
+        public void preferencial()
         {
             ListaGrupos gruposPreferencial = new ListaGrupos(grupos.SalonFijo());
 
             if (gruposPreferencial.Count() != 0)
                 foreach(Grupo g in gruposPreferencial)
-                    g.salonPreferencial(new ListaSalones(salones));
+                    g.salonPreferencial();
         }
 
         /// <summary>
