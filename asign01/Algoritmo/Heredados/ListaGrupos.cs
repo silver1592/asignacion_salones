@@ -11,6 +11,9 @@ namespace Algoritmo02.Heredados
         protected List<Profesor> profesores;
         protected List<Materia> materias;
 
+        public List<Profesor> Profesores { get { return profesores; } }
+        public List<Materia> Materias { get { return materias; } }
+
         #region Constuctores
         public ListaGrupos() : base(){}
 

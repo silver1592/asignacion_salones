@@ -12,26 +12,24 @@
         </div>
         <div class="col-md-6 text-center">
             <label>Hora de Limite</label>&nbsp;
-            <input type="number" name="hora_ini" value="22" />
+            <input type="number" name="hora_fin" value="22" />
         </div>
     </div>
     <br />
     <table>
         <tr>
             <td valign="top" class="separador">
-                <input type="checkbox" name="operacion" value="e" /><label><u>Empalmes</u></label>
+                <input type="checkbox" name="emp" value="e" /><label><u>Empalmes</u></label>
             </td>
 
             <td valign="top" class="separador">
-                <input type="checkbox" name="operacion" value="p" /><label><u>Preasignacion</u></label>
-                <br />
-                <label>Ignorar empalmes</label><input type="checkbox" name="pre_preferencial" value="f" />
+                <input type="checkbox" name="pre" value="p" /><label><u>Preasignacion</u></label>
                 <br />
                 <label>Otros semestres</label><input type="checkbox" name="pre_otros_sem" value="f" />
                 <br />
             </td>
             <td valign="top">
-                <input type="checkbox" name="operacion" value="a" /><label><u>Algoritmo</u></label>
+                <input type="checkbox" name="asig" value="a" /><label><u>Algoritmo</u></label>
                 <br />
                 <label>Individuos</label>&nbsp;<input type="number" name="alg_individuos" value="5" />
                 <br />
@@ -41,7 +39,8 @@
     </table>
     <div class="row">
         <div class="col-md-12 text-center">
-            <button>Ejecutar</button>
+            <button id="EjecutaOperaciones">Ejecutar</button>
         </div>
     </div>
 </div>
+<script src="~/JS/_Ejecuta.js"></script>

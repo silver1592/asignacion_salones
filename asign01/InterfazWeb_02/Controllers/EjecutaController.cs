@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InterfazWeb_02.Clases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,5 +22,27 @@ namespace InterfazWeb_02.Controllers
             return PartialView();
         }
 
+        [HttpPost]
+        public JsonResult EjecutaOperaciones(string hora,string empalmes, string preasignacion, string otrosSemestres, string algoritmo, string individuos, string generacion)
+        {
+            string res = "asignacion fallida";
+
+            try
+            {
+                string ciclo = Session["ciclo"].ToString();
+
+                Conexion c = new Conexion(Conexion.datosConexionPrueba,this);
+                //ListaGrupos grupos = new ListaGrupos(c.GetGrupos(ciclo));
+
+
+                res = "Asignacion de " + hora + " completada";
+            }
+            catch (Exception ex)
+            {
+                res += "\n" + ex.Message;
+            }
+
+            return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
     }
 }

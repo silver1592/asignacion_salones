@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Styles/externos/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Styles/index.css" type="text/css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/JS/externos/jquery-ui.min.js"></script>
+    <script src="~/JS/index.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            @{ Html.RenderAction("_Menu", "Home"); }
+        </header>
+    </div>
+    <main class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Origen de datos</h3>
+                <div id="importacionTabs">
+                    <ul>
+                        <li><a href="#tab1">Selecciona Origen de datos</a></li>
+                        <li><a href="#tab2">Carga Excel</a></li>
+                    </ul>
+                    <div id="tab1">
+                        @{ Html.RenderAction("_SeleccionExcel", "Importacion"); }
+                    </div>
+
+                    <div id="tab2">
+                        @{ Html.RenderAction("_CargaExcel", "Importacion"); }
+                    </div>
+                </div>
+            </div>
+            <div id="ejecutaAsignacion" class="col-md-6">
+                <!--//TODO: Javascript para simulacion de la ejecucion del algoritmo (utilizara ajax para realizar todas cada una de las iteraciones por separado y asi informar del avance al usuario)-->
+                @{ Html.RenderAction("_Operaciones", "Ejecuta");}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Resultado</h3>
+                <div id="resConsola"></div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

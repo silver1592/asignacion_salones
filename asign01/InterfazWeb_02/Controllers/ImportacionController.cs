@@ -54,14 +54,15 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public JsonResult SetSession_OrigenDatos(string excel, string sheet, string bd)
+        public JsonResult SetSession_OrigenDatos(string excel, string sheet, string ciclo,string bd)
         {
             if(!Convert.ToBoolean(bd))
             {
                 Session.Add("excel", excel);
-                Session.Add("sheet", excel);
+                Session.Add("sheet", sheet);
             }
 
+            Session.Add("ciclo", ciclo);
             Session.Add("usaExcel", !Convert.ToBoolean(bd));
 
             return new JsonResult() { Data = true, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -84,9 +85,9 @@ namespace InterfazWeb_02.Controllers
 
                 foreach (Grupo g in grupos)
                     if (c.ExisteBD(g))
-                        c.UpdateGrupoExcel(g,bd:true);
+                        c.Comando(g.qUpdate);
                     else
-                        c.Insert(g);
+                        c.Comando(g.qInsert);
             }
             catch (Exception ex)
             {

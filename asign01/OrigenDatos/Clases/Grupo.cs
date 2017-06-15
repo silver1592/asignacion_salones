@@ -204,7 +204,7 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Cadena para el query de update.
         /// </summary>
-        public string Modificacion
+        public string qUpdate
         {
             get
             {
@@ -214,7 +214,7 @@ namespace OrigenDatos.Clases
             }
         }
 
-        public string Insert
+        public string qInsert
         {
             get
             {

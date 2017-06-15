@@ -330,7 +330,7 @@ namespace OrigenDatos.Clases
                 Excel.Update(g, observaciones);
             }
             else
-                Comando(g.Modificacion);
+                Comando(g.qUpdate);
         }
         #endregion
     }

@@ -38,7 +38,7 @@ namespace InterfazWeb_02.Controllers
             return new JsonResult() { Data = sheets, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        
+        [HttpPost]
         public JsonResult ExcelSelected()
         {
             string excel = Session["excel"].ToString();
@@ -48,18 +48,26 @@ namespace InterfazWeb_02.Controllers
             return new JsonResult() { Data = db ? new string[] {excel,sheet} : new string[] { "SQL Server" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        [HttpPost]
         public JsonResult ExcelValid()
         {
             Conexion c;
-            object[] res = new object[] { true, "" };
-            string excel = Session["excel"].ToString();
-            string sheet = Session["sheet"].ToString();
-            string ciclo = Session["ciclo"].ToString();
-            bool db = Convert.ToBoolean(Session["usaExcel"].ToString());
+
+            object[] res = new object[] { false, "No conectado" };
+            string excel = Session["excel"] != null ? Session["excel"].ToString() : "";
+            string sheet = Session["sheet"] != null ? Session["sheet"].ToString() : "";
+            string ciclo = Session["ciclo"] != null ? Session["ciclo"].ToString() : "";
+            bool db = Session["usaExcel"]!=null ? !Convert.ToBoolean(Session["usaExcel"].ToString()):true;
+
+            if(ciclo=="")
+                return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
             try
             {
                 c = new Conexion(Conexion.datosConexionPrueba, this);
+                res[1] = db ? "Base de datos" : excel+"-"+sheet;
+                res[0] = true;
+
             }catch(Exception ex)
             {
                 res[0] = false;

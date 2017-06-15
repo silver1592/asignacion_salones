@@ -1,0 +1,18 @@
+﻿<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <a href="@Url.Action("Index","Home")" class="navbar-brand">Asignacion de salones</a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">        
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+            <li>@Html.ActionLink("Grupos", "_Grupos", "Consultas")</li>
+            <li><a href="#">Salones</a></li>
+            <li><a href="#">Profesores</a></li>
+        </ul>
+        <p class="navbar-right" style="margin-bottom:0px">
+            <span class="navbar-text" id="dataBaseName"></span>
+            <span class="navbar-text" id="dataBaseStatus"></span>
+        </p>
+    </div>
+    <script src="~/JS/_Menu.js"></script>
+</nav>

@@ -11,8 +11,6 @@ namespace InterfazWeb_02.Models
     {
         public Grupo (OrigenDatos.Clases.Grupo copia) : base(copia) { }
 
-        public Grupo(Algoritmo02.Heredados.Grupo copia,Materia materia) : base(copia) { }
-
         public string Ciclo { get { return ciclo; } }
     }
 }

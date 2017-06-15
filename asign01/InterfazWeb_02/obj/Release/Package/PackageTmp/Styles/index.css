@@ -1,0 +1,30 @@
+﻿.contenedor{
+    border:1px solid #c5c5c5;
+    padding: 10px 15px 8px 15px;
+}
+
+input[type="number"] 
+{ 
+    width:60px;
+}
+
+h3{
+    padding:10px 10px 5px 10px;
+    background-color:#EAEDED;
+    border-radius:3px;
+}
+
+table{
+    width:100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing:10px;
+}
+
+.separador{
+    border-right:1px solid #c5c5c5;
+}
+
+.full{
+    width:100%;
+}
