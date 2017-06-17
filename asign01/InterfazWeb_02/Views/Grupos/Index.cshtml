@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Grupos</title>
+    <link href="~/Styles/externos/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Styles/index.css" type="text/css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/JS/externos/jquery-ui.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            @{ Html.RenderAction("_Menu", "Home");}
+        </header>
+    </div>
+    <main class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @{Html.RenderAction("_Busqueda", "Grupos");}
+            </div>
+        </div>
+    </main>
+</body>
+</html>

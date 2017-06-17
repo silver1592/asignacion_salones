@@ -5,4 +5,9 @@
     <input type="file" name="file" accept=".xlsx, .xls"/> 
     <button type="submit">Subir archivo</button>
 }
+<div class="direccion">
+    <p id="uploadExcelToDB">
+        @Url.Action("CargaExcel_BD","Importacion", null, Request.Url.Scheme)
+    </p>
+</div>
 <script src="~/JS/_CargaArchivo.js"></script>

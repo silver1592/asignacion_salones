@@ -31,10 +31,10 @@ function Continue()
 function ErrorFunction(jqXHR, exception) {
     Continue();
     
-    alert(ErrorToString(jqXHR));
+    alert(ErrorToString(jqXHR, exception));
 }
 
-function ErrorToString(jqXHR)
+function ErrorToString(jqXHR, exception)
 {
     var msg = '';
     if (jqXHR.status === 0) {

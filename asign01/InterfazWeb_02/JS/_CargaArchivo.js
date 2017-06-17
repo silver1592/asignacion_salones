@@ -1,8 +1,8 @@
 ﻿function uploadExcelToDB() {
-    Wait();
+    var _url = $(".direccion #uploadExcelToDB").text();
     $.ajax({
         type: "POST",
-        url: '/Importacion/CargaExcel_BD',
+        url: _url,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (resultado) {

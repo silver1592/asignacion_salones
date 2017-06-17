@@ -28,3 +28,8 @@ table{
 .full{
     width:100%;
 }
+
+.direccion{
+    display:none;
+    visibility:hidden;
+}

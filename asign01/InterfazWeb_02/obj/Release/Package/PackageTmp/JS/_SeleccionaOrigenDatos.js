@@ -1,11 +1,12 @@
 ﻿function changeExcel() {
     var excelName = $("#archivos option:selected").text();
+    var _url = $(".direccion #changeExcel").text();
 
     $("#hojas option").remove();
     if (excelName != "---------") {
         $.ajax({
             type: "POST",
-            url: '@Url.Action("PaginasExcel","Consultas")',
+            url: _url,
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ file: excelName }),
             dataType: "json",
@@ -24,6 +25,7 @@ function seleccionaOrigenDatos() {
     var sheet = $("#SeleccionExcel #hojas option:selected").text();
     var operation = $("#SeleccionExcel input:checked").val();
     var semestre = $("#SeleccionExcel input[name='semestre']").val();
+    var _url = $(".direccion #seleccionaOrigenDatos").text();
 
     if (operation == "e")
         var data = { excel: excelName, sheet: sheet, ciclo: semestre, bd: false }
@@ -34,7 +36,7 @@ function seleccionaOrigenDatos() {
     Wait();
     $.ajax({
         type: "POST",
-        url: '@Url.Action("SetSession_OrigenDatos","Importacion")',
+        url: _url,
         contentType: "application/json; charset=utf-8",
         data: data,
         dataType: "json",

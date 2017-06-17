@@ -31,5 +31,13 @@
             <button id="uploadExcel">Cargar excel en base de datos</button>
         </div>
     </div>
+    <div class="direccion">
+        <p id="changeExcel">
+            @Url.Action("PaginasExcel", "Consultas", null, Request.Url.Scheme)
+        </p>
+        <p id="seleccionaOrigenDatos">
+            @Url.Action("SetSession_OrigenDatos", "Importacion",null, Request.Url.Scheme)
+        </p>
+    </div>
     <script src="~/JS/_SeleccionaOrigenDatos.js"></script>
 </div>

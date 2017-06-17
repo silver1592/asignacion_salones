@@ -166,6 +166,7 @@
     <Compile Include="Clases\ListaGrupos.cs" />
     <Compile Include="Controllers\ConsultasController.cs" />
     <Compile Include="Controllers\EjecutaController.cs" />
+    <Compile Include="Controllers\GruposController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportacionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -196,6 +197,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Grupos\Index.cshtml" />
+    <Content Include="Views\Grupos\_Busqueda.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

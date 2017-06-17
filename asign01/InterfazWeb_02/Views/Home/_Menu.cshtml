@@ -5,7 +5,7 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">        
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-            <li>@Html.ActionLink("Grupos", "_Grupos", "Consultas")</li>
+            <li>@Html.ActionLink("Grupos", "Index", "Grupos")</li>
             <li><a href="#">Salones</a></li>
             <li><a href="#">Profesores</a></li>
         </ul>
@@ -16,3 +16,8 @@
     </div>
     <script src="~/JS/_Menu.js"></script>
 </nav>
+<div class="direccion">
+    <p id="ActualizaOrigen">
+        @Url.Action("ExcelValid", "Consultas", null, Request.Url.Scheme)
+    </p>
+</div>
