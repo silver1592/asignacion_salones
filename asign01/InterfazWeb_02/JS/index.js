@@ -13,7 +13,7 @@
 
 function initialize()
 {
-    $("#importacionTabs").tabs({ collapsible: true });
+    $("#optionsTabs").tabs({ collapsible: true });
     $("#tabs").tabs({ collapsible: true });
     
 }
