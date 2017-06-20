@@ -1,5 +1,5 @@
 ﻿function uploadExcelToDB() {
-    var _url = $(".direccion #uploadExcelToDB").text();
+    var _url = $(".direccion #uploadExcelToDB").text().trim();
     $.ajax({
         type: "POST",
         url: _url,

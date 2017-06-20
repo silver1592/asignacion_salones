@@ -15,7 +15,7 @@ function EjecutaHora()
     //siguiente = false;
     var datos = GetDatosEjecuta();
     var dt = JSON.stringify(datos);
-    var _url = $(".direccion #Ejecuta").text();
+    var _url = $(".direccion #Ejecuta").text().trim();
 
     $.ajax({
         type: "POST",

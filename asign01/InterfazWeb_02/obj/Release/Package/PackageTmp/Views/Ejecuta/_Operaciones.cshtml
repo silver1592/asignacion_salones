@@ -1,45 +1,53 @@
-﻿<div class="row">
-    <div class="col-md-12">
-        <h3>Ejecuta Asignacion</h3>
-    </div>
-</div>
-<div class="contenedor">
+﻿<div class="contenedor">
     <div class="row">
-        <div class="col-md-6 text-center">
-            <label>Hora de inicio</label>&nbsp;
-            <input type="number" name="hora_ini" value="7" />
-
+        <div class="col-md-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Hora de inicio</label>
+                        <input type="number" name="hora_ini" value="7" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Hora de Limite</label>
+                        <input type="number" name="hora_fin" value="22" class="form-control" />
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 text-center">
-            <label>Hora de Limite</label>&nbsp;
-            <input type="number" name="hora_fin" value="22" />
+        <div class="col-md-9">
+            <table>
+                <tr>
+                    <td valign="top" class="separador">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="emp" value="e" /><u>Empalmes</u></label>
+                        </div>
+                    </td>
+
+                    <td valign="top" class="separador">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="pre" value="p" /><u>Preasignacion</u></label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="pre_otros_sem" value="f" />Otros semestres</label>
+                        </div>
+                    </td>
+
+                    <td valign="top">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="asig" value="a" /><u>Algoritmo</u></label>
+                        </div>
+                        <label>Individuos&nbsp;<input type="number" name="alg_individuos" value="5" class="form-control" /></label><br />
+                        <label>Generaciones&nbsp;<input type="number" name="alg_generaciones" value="50" class="form-control" /></label>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-    <br />
-    <table>
-        <tr>
-            <td valign="top" class="separador">
-                <input type="checkbox" name="emp" value="e" /><label><u>Empalmes</u></label>
-            </td>
-
-            <td valign="top" class="separador">
-                <input type="checkbox" name="pre" value="p" /><label><u>Preasignacion</u></label>
-                <br />
-                <label>Otros semestres</label><input type="checkbox" name="pre_otros_sem" value="f" />
-                <br />
-            </td>
-            <td valign="top">
-                <input type="checkbox" name="asig" value="a" /><label><u>Algoritmo</u></label>
-                <br />
-                <label>Individuos</label>&nbsp;<input type="number" name="alg_individuos" value="5" />
-                <br />
-                <label>Generaciones</label>&nbsp;<input type="number" name="alg_generaciones" value="50" />
-            </td>
-        </tr>
-    </table>
     <div class="row">
         <div class="col-md-12 text-center">
-            <button id="EjecutaOperaciones">Ejecutar</button>
+            <button id="EjecutaOperaciones" class="btn-block">Ejecutar</button>
         </div>
     </div>
 </div>

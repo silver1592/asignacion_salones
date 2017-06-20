@@ -135,6 +135,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="JS\Error.js" />
+    <Content Include="JS\Grupos\Busqueda.js" />
     <Content Include="JS\Grupos\index.js" />
     <Content Include="JS\_Ejecuta.js" />
     <Content Include="JS\_CargaArchivo.js" />
@@ -159,6 +161,7 @@
     <Content Include="Styles\index.css" />
     <Content Include="Styles\externos\jquery-ui.min.css" />
     <Content Include="Styles\externos\jquery-ui.structure.css" />
+    <Content Include="Styles\TablaGrupos.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +203,7 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Grupos\Index.cshtml" />
     <Content Include="Views\Grupos\_Busqueda.cshtml" />
+    <Content Include="Views\Grupos\_Grupos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

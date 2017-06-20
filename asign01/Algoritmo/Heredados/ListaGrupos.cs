@@ -17,7 +17,7 @@ namespace Algoritmo02.Heredados
         #region Constuctores
         public ListaGrupos() : base(){}
 
-        public ListaGrupos(List<Grupo> grupos)
+        public ListaGrupos(List<OrigenDatos.Clases.Grupo> grupos)
         {
             this.grupos = new List<OrigenDatos.Clases.Grupo>();
             foreach (Grupo g in grupos)
@@ -38,7 +38,7 @@ namespace Algoritmo02.Heredados
                 this.grupos.Add(new Grupo(g));
         }
 
-        internal void Actualiza(ListaGrupos _grupos)
+        public void Actualiza(ListaGrupos _grupos)
         {
             if (this == _grupos)
                 return;
@@ -52,11 +52,6 @@ namespace Algoritmo02.Heredados
                 index = IndexOf(temp);
                 grupos[index] = g;
             }
-        }
-
-        internal void Actualiza(object grupos)
-        {
-            throw new NotImplementedException();
         }
 
         public ListaGrupos(Conexion c, DataTable dtGrupos, ListaSalones salones) : base(c, dtGrupos, salones) { }
@@ -78,7 +73,7 @@ namespace Algoritmo02.Heredados
         {
             var query = from g in grupos
                         where g.Salon_fijo == g.Salon
-                        select (Grupo)g;
+                        select (OrigenDatos.Clases.Grupo)g;
 
             return new ListaGrupos(query.ToList());
         }
@@ -88,7 +83,7 @@ namespace Algoritmo02.Heredados
             var query = from g in grupos
                         where g.SalonValido(s) > 0
                         orderby g.SalonValido(s)
-                        select (Grupo)g;
+                        select (OrigenDatos.Clases.Grupo)g;
 
             return new ListaGrupos(query.Take(limite).ToList());
         }
@@ -97,7 +92,7 @@ namespace Algoritmo02.Heredados
         {
             var query = from g in grupos
                         where g.PlantaBaja
-                        select (Grupo)g;
+                        select (OrigenDatos.Clases.Grupo)g;
 
             return new ListaGrupos(query.ToList());
         }
@@ -106,7 +101,7 @@ namespace Algoritmo02.Heredados
         {
             var query = from g in grupos
                         where g.AsignacionSemestresAnteriores(salon)!=null
-                        select (Grupo)g;
+                        select (OrigenDatos.Clases.Grupo)g;
 
             return new ListaGrupos(query.ToList());
         }
@@ -115,7 +110,7 @@ namespace Algoritmo02.Heredados
         {
             var query = from g in grupos
                         where ((Grupo)g).horario(hora)
-                        select (Grupo)g;
+                        select (OrigenDatos.Clases.Grupo)g;
 
             return new ListaGrupos(query.ToList());
         }

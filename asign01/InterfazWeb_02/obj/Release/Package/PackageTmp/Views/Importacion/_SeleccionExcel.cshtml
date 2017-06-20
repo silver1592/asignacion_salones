@@ -3,37 +3,48 @@
     <div class="row">
         <div class="col-md-7">
             <label>Archivo: </label>
-            <select id="archivos">
+            <select id="archivos" class="form-control">
                 <option>---------</option>
                 @foreach (InterfazWeb_02.Models.LibroExcel exc in Model)
-            {
+                {
                     <option>@exc.Nombre</option>
                 }
             </select>
 
             <br />
             <label>Hoja: </label>
-            <select id="hojas"></select>
+            <select id="hojas" class="form-control"></select>
             <br />
             <label>*Semestre:</label>
-            <input type="text" name="semestre" />
+            <input type="text" name="semestre" class="form-control"/>
         </div>
         <div class="col-md-5">
-            <input type="radio" name="operacion" value="e" />Usar excel
-            <br />
-            <input type="radio" name="operacion" value="b" />Usar base de datos
+            <div class="radio">
+                <label><input type="radio" name="operacion" value="e" />Usar excel</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="operacion" value="b"/>Usar base de datos</label>
+            </div>
         </div>
     </div>
     <br />
     <div class="row">
         <div class="col-md-12">
-            <button id="setSession">Aceptar</button>&nbsp;&nbsp;
-            <button id="uploadExcel">Cargar excel en base de datos</button>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-7">
+                        <button id="setSession" class="btn-block">Aceptar</button>
+                    </div>
+                    <div class="col-md-5">
+                        <button id="uploadExcel" class="btn-block">Cargar excel en base de datos</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="direccion">
         <p id="changeExcel">
-            @Url.Action("PaginasExcel", "Consultas", null, Request.Url.Scheme)
+            @Url.Action("PaginasExcel", "Importacion", null, Request.Url.Scheme)
         </p>
         <p id="seleccionaOrigenDatos">
             @Url.Action("SetSession_OrigenDatos", "Importacion",null, Request.Url.Scheme)

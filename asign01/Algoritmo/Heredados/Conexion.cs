@@ -33,6 +33,28 @@ namespace Algoritmo02.Heredados
             return res;
         }
 
+        public ListaGrupos GetLightGrupos(string semestre, int ini=7, int fin=22,bool bExcel = true)
+        {
+            ListaGrupos res = null;
+            List<OrigenDatos.Clases.Grupo> grupos;
+            List<Materia> materias = GetMaterias();
+            List<Profesor> profesores = GetProfesores();
+
+            if (Excel == null || !bExcel)
+            {
+                DataTable dt = Querry("SELECT * FROM  [asignacion].[Grupos_a_las] (" + ini + "," + fin + ") where ciclo = '" + semestre + "'");
+
+                grupos = AsList(dt);
+                res = new ListaGrupos(grupos, materias, profesores);
+            }
+            else
+            {
+                res = new ListaGrupos(Excel.Grupos, materias, profesores);
+            }
+
+            return res;
+        }
+
         public List<Materia> GetMaterias()
         {
             List<Materia> materias = new List<Materia>();

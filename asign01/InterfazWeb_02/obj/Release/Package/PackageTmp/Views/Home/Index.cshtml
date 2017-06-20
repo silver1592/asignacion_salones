@@ -10,31 +10,27 @@
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/JS/externos/jquery-ui.min.js"></script>
     <script src="~/JS/index.js"></script>
+    <script src="~/JS/Error.js"></script>
 </head>
 <body>
     <header class="container">
         @{ Html.RenderAction("_Menu", "Home");}
     </header>
     <main class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Origen de datos</h3>
-                <div id="importacionTabs">
-                    <ul>
-                        <li><a href="#tab1">Selecciona Origen de datos</a></li>
-                        <li><a href="#tab2">Carga Excel</a></li>
-                    </ul>
-                    <div id="tab1">
-                        @{ Html.RenderAction("_SeleccionExcel", "Importacion"); }
-                    </div>
-
-                    <div id="tab2">
-                        @{ Html.RenderAction("_CargaExcel", "Importacion"); }
-                    </div>
-                </div>
+        <div id="optionsTabs" class="row">
+            <ul>
+                <li><a href="#tab_0">Carga Excel</a></li>
+                <li><a href="#tab_1">Origen de datos</a></li>
+                <li><a href="#ejecutaAsignacion">Ejecucion</a></li>
+            </ul>
+            <div id="tab_1"  class="container-fluid">
+                @{ Html.RenderAction("_SeleccionExcel", "Importacion"); }
             </div>
-            <div id="ejecutaAsignacion" class="col-md-6">
-                <!--//TODO: Javascript para simulacion de la ejecucion del algoritmo (utilizara ajax para realizar todas cada una de las iteraciones por separado y asi informar del avance al usuario)-->
+
+            <div id="tab_0"  class="container-fluid">
+                @{ Html.RenderAction("_CargaExcel", "Importacion"); }
+            </div>
+            <div id="ejecutaAsignacion" class="container-fluid">
                 @{ Html.RenderAction("_Operaciones", "Ejecuta");}
             </div>
         </div>

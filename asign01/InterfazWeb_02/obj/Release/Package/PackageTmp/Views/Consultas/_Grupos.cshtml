@@ -1,26 +1,24 @@
 ﻿@model InterfazWeb_02.Clases.ListaGrupos
 
 <table>
-    @for( int i = 0; i<Model.Count();i++)
+    @foreach(var g in Model)
     {
         <tr>
             <td>
-                @Model.GetGrupo(i).Cve_materia
+                @g.Cve_materia
             </td>
             <td>
-                @Model.GetGrupo(i).num_Grupo
+                @g.num_Grupo
             </td>
             <td>
-                @Model.buscaMateria(i).Nombre
+                @Model.buscaMateria(g.Cve_materia).Nombre
             </td>
             <td>
-                @Model.buscaProfesor(i).Nombre
+                @Model.buscaProfesor(g.RPE).Nombre
             </td>
             <td>
-                @Model.GetGrupo(i).Salon
+                @g.Salon
             </td>
         </tr>
     }
-    
-    
 </table>

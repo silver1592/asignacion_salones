@@ -1,4 +1,5 @@
-﻿<div class="container">
+﻿@model List<InterfazWeb_02.Models.Materia>
+<div class="container">
     <div class="row">
         <div class="col-md-6 form-group" id="buscaGrupo">
             <div class="container-fluid">
@@ -6,7 +7,10 @@
                     <div class="col-md-10">
                         <label>Materia</label>
                         <select class="form-control">
-                            <!--//TODO: Hacer una consulta que ponga todas las materias-->
+                            @foreach(var m in Model)
+                            { 
+                                <option value="@m.CVE">@m.Nombre</option>
+                            }
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -62,8 +66,9 @@
             </div>
         </div>
         <div class="col-md-2">
-            <button class="ui-button">Buscar</button>
+            <button class="ui-button" id="buscar_grupos">Buscar</button>
             <button class="ui-button">Exportar</button>
         </div>
     </div>
 </div>
+<script src="~/JS/Grupos/Busqueda.js"></script>

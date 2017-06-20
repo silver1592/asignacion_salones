@@ -7,8 +7,11 @@
     <link href="~/Styles/externos/jquery-ui.min.css" type="text/css" rel="stylesheet" />
     <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <link href="~/Styles/index.css" type="text/css" rel="stylesheet" />
+    <link href="~/Styles/TablaGrupos.css" type="text/css" rel="stylesheet"/>
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/JS/externos/jquery-ui.min.js"></script>
+    <script src="~/JS/Grupos/index.js"></script>
+    <script src="~/JS/Error.js"></script>
 </head>
 <body>
     <div class="container">
@@ -20,6 +23,11 @@
         <div class="row">
             <div class="col-md-12">
                 @{Html.RenderAction("_Busqueda", "Grupos");}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @{Html.RenderAction("_Grupos", "Grupos");}
             </div>
         </div>
     </main>

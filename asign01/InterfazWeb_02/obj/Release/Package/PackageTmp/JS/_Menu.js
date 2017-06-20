@@ -1,6 +1,6 @@
 ﻿function ActualizaOrigen()
 {
-    var _url = $(".direccion #ActualizaOrigen").text();
+    var _url = $(".direccion #ActualizaOrigen").text().trim();
     $.ajax({
         type: "POST",
         url: _url,

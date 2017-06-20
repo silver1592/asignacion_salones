@@ -19,6 +19,8 @@ namespace InterfazWeb_02.Clases
                 this.grupos.Add(new Grupo(g));
         }
 
+        public ListaGrupos(List<OrigenDatos.Clases.Grupo> grupos) : base(grupos) { }
+
         public Materia buscaMateria(string cve_materia)
         {
             var query = from m in materias
@@ -26,9 +28,27 @@ namespace InterfazWeb_02.Clases
                         select m;
 
             if (query.Count() > 0)
-                return (Materia)query.ToList()[0];
+                return new Materia(query.ToList()[0]);
             else
                 throw new Exception("No se encontro la materia");
+        }
+
+        internal ListaGrupos ImpartenMateria(string cve)
+        {
+            var query = from g in this
+                        where g.Cve_materia == cve
+                        select g;
+
+            return new ListaGrupos(query.ToList());
+        }
+
+        internal ListaGrupos NoGrupo(int noGrupo)
+        {
+            var query = from g in this
+                        where g.num_Grupo == noGrupo
+                        select g;
+
+            return new ListaGrupos(query.ToList());
         }
 
         /// <summary>
@@ -45,14 +65,16 @@ namespace InterfazWeb_02.Clases
 
         public Profesor buscaProfesor(string RPE)
         {
+            int rpe = Convert.ToInt32(RPE);
             var query = from p in profesores
-                        where p.RPE == Convert.ToInt32(RPE)
+                        where p.RPE == rpe
                         select p;
 
-            if(query.Count() > 0)
-                return (Profesor)query.ToList()[0];
+            if (query.Count() > 0)
+                return new Profesor(query.ToList()[0]);
             else
-                throw new Exception("No se encontro el RPE");
+                return new Profesor(rpe);
+                //throw new Exception("No se encontro el RPE");
         }
 
         /// <summary>
@@ -65,6 +87,20 @@ namespace InterfazWeb_02.Clases
             Grupo g = (Grupo)this[index];
 
             return buscaProfesor(g.RPE.ToString());
+        }
+
+        /// <summary>
+        /// Obtiene los grupos que esten asignados a tales dias
+        /// </summary>
+        /// <param name="dias">Cadena de boleanos que indican los dias (LMmiJVS)</param>
+        /// <returns></returns>
+        public ListaGrupos EnDias(string dias="111111")
+        {
+            var query = from g in this
+                        where g.EnDias(dias)
+                        select (OrigenDatos.Clases.Grupo)g;
+
+            return new ListaGrupos(query.ToList());
         }
     }
 }

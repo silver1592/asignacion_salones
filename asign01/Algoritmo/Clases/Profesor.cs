@@ -30,5 +30,12 @@ namespace Algoritmo02.Clases
             titulo = "";
             nombre = "--------------------";
         }
+
+        public Profesor(Profesor p)
+        {
+            rpe = p.rpe;
+            titulo = p.titulo;
+            nombre = p.nombre;
+        }
     }
 }

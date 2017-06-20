@@ -1,6 +1,6 @@
 ﻿function changeExcel() {
     var excelName = $("#archivos option:selected").text();
-    var _url = $(".direccion #changeExcel").text();
+    var _url = $(".direccion #changeExcel").text().trim();
 
     $("#hojas option").remove();
     if (excelName != "---------") {
@@ -25,7 +25,7 @@ function seleccionaOrigenDatos() {
     var sheet = $("#SeleccionExcel #hojas option:selected").text();
     var operation = $("#SeleccionExcel input:checked").val();
     var semestre = $("#SeleccionExcel input[name='semestre']").val();
-    var _url = $(".direccion #seleccionaOrigenDatos").text();
+    var _url = $(".direccion #seleccionaOrigenDatos").text().trim();
 
     if (operation == "e")
         var data = { excel: excelName, sheet: sheet, ciclo: semestre, bd: false }

@@ -77,6 +77,16 @@ namespace OrigenDatos.Clases
                     return -1;
             }
         }
+
+        public bool EnDias(string dias)
+        {
+            for (int i = 0; i < 6; i++)
+                if (dias[i]=='1' && Dias[i]=='0')
+                    return false;
+
+            return true;
+        }
+
         public string Salon { get { return salon; } set { salon = value; } }
         public string SalonBD { get { return salonBD; } }
         public string observaciones;

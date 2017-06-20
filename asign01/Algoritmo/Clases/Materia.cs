@@ -9,9 +9,9 @@ namespace Algoritmo02.Clases
 {
     public class Materia
     {
-        private string nombre;
-        private string cve;
-        private int area;
+        protected string nombre;
+        protected string cve;
+        protected int area;
 
         public string Nombre { get { return nombre; } }
         public string CVE { get { return cve; } }

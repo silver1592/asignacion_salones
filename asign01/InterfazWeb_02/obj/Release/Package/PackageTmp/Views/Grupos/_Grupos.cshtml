@@ -4,20 +4,23 @@
     @foreach(var g in Model)
     {
         <tr>
-            <td>
+            <td width="5%">
                 @g.Cve_materia
             </td>
-            <td>
+            <td width="5%">
                 @g.num_Grupo
             </td>
             <td>
                 @Model.buscaMateria(g.Cve_materia).Nombre
             </td>
             <td>
-                @Model.buscaProfesor(g.RPE).Nombre
+                @Model.buscaProfesor(g.RPE.ToString()).Nombre
             </td>
             <td>
-                @g.Salon
+                <input type="text" value="@g.Salon" />
+            </td>
+            <td>
+                <!--//TODO: Botones para actualizacion y deshacer cambios-->
             </td>
         </tr>
     }

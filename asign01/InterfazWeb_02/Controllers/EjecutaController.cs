@@ -34,6 +34,7 @@ namespace InterfazWeb_02.Controllers
                 Conexion c = new Conexion(Conexion.datosConexionPrueba,this);
                 ListaGrupos grupos = new ListaGrupos(c.GetGrupos(ciclo,Convert.ToInt32(hora),Convert.ToInt32(hora)+1));
 
+                //TODO: Hacer metodo que guarde en un excel el resultado
 
                 res = "Asignacion de " + hora + " completada";
             }
