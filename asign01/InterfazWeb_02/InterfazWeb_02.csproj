@@ -135,6 +135,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="JS\Grupos\index.js" />
     <Content Include="JS\_Ejecuta.js" />
     <Content Include="JS\_CargaArchivo.js" />
     <Content Include="JS\_Menu.js" />

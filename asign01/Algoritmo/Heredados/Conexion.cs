@@ -22,7 +22,7 @@ namespace Algoritmo02.Heredados
             {
                 DataTable dt = Querry("SELECT * FROM  [asignacion].[Grupos_a_las] ("+ini+","+fin+") where ciclo = '" + semestre + "'");
 
-                grupos = Excel.AsList(dt);
+                grupos = AsList(dt);
                 res = new ListaGrupos(grupos, materias, profesores,this);
             }
             else
@@ -53,6 +53,15 @@ namespace Algoritmo02.Heredados
                 profesores.Add(new Profesor(r));
 
             return profesores;
+        }
+
+        public List<OrigenDatos.Clases.Grupo> AsList(DataTable dt)
+        {
+            List<OrigenDatos.Clases.Grupo> g = new List<OrigenDatos.Clases.Grupo>();
+            foreach (DataRow r in dt.Rows)
+                g.Add(new Grupo(r, DGruposBD));
+
+            return g;
         }
     }
 }
