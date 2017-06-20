@@ -222,7 +222,7 @@ namespace OrigenDatos.Clases
         public DataTable GruposAnteriores(int rpe, int hora, string ciclo)
         {
             string textoCmd = "select * "
-                               + "from ae_Grupos_a_las(" + (hora - 1) + ") "
+                               + "from ae_Grupos_ini(" + (hora - 1) + ") "
                                + "where rpe = " + rpe + " and ciclo = '" + ciclo + "';";
 
             DataTable datos = Querry(textoCmd);

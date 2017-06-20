@@ -18,5 +18,11 @@ namespace InterfazWeb_02.Controllers
         {
             return PartialView();
         }
+
+        [HttpPost]
+        public ActionResult _Grupos(string ini="7", string fin="22",string cve = "", string grp="0", string dias="111111")
+        {
+            return PartialView();
+        }
     }
 }
