@@ -80,7 +80,7 @@ namespace InterfazWeb_02.Controllers
 
             try
             {
-                c = new Conexion(Conexion.datosConexionPrueba, this);
+                c = new Conexion(Conexion.datosConexion, this);
                 ListaGrupos grupos = new ListaGrupos(c.GetGrupos(Session["ciclo"].ToString()));
 
                 foreach (Grupo g in grupos)
@@ -113,7 +113,7 @@ namespace InterfazWeb_02.Controllers
 
             try
             {
-                c = new Conexion(Conexion.datosConexionPrueba, this);
+                c = new Conexion(Conexion.datosConexion, this);
                 res[1] = db ? "Base de datos" : excel + "-" + sheet;
                 res[0] = true;
 
@@ -131,7 +131,7 @@ namespace InterfazWeb_02.Controllers
         public JsonResult PaginasExcel(string file)
         {
             string excelDir = Server.MapPath("~/Archivos/");
-            Conexion c = new Conexion(Conexion.datosConexionPrueba, excelDir, file);
+            Conexion c = new Conexion(Conexion.datosConexion, excelDir, file);
 
             string[] sheets = c.Sheets();
 

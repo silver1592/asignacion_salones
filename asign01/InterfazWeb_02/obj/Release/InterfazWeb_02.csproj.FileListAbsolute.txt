@@ -61,3 +61,4 @@ C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\bin\es\
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\bin\es\System.Web.Mvc.resources.dll
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\obj\Release\InterfazWeb_02.dll
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\obj\Release\InterfazWeb_02.pdb
+C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\bin\OrigenDatos.xml

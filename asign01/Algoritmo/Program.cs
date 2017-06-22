@@ -67,7 +67,7 @@ namespace Algoritmo02
             string nombreArchivo = "SIAMMAT16172-FINAL.xlsx";
             string nombreHoja = "E_2017_01_12";
 
-            c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja);
+            c = new Conexion(Conexion.datosConexion, excelDir, nombreArchivo, nombreHoja);
 
             if (c.Autenticacion())
                 Console.WriteLine("Coneccion realizada");

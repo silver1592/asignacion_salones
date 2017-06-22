@@ -31,7 +31,7 @@ namespace InterfazWeb_02.Controllers
             {
                 string ciclo = Session["ciclo"].ToString();
 
-                Conexion c = new Conexion(Conexion.datosConexionPrueba,this);
+                Conexion c = new Conexion(Conexion.datosConexion,this);
                 ListaGrupos grupos = new ListaGrupos(c.GetGrupos(ciclo,Convert.ToInt32(hora),Convert.ToInt32(hora)+1));
 
                 //TODO: Hacer metodo que guarde en un excel el resultado

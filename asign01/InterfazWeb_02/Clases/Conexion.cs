@@ -10,7 +10,7 @@ namespace InterfazWeb_02.Clases
     {
         public Conexion(string datos, System.Web.Mvc.Controller controller) : base()
         {
-            datosConexion = datos;
+            DatosConexion = datos;
             string dir = controller.Server.MapPath("~/Archivos/");
             string file = controller.Session["excel"] != null ? controller.Session["excel"].ToString() : "";
             string sheet = controller.Session["sheet"] != null ? controller.Session["sheet"].ToString() : "";

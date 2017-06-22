@@ -5,10 +5,24 @@ using System.Data.SqlClient;
 
 namespace OrigenDatos.Clases
 {
+    /// <summary>
+    /// Clase encargada de la conexion con la base de datos
+    /// </summary>
+    /// <remarks>
+    /// Esta clase esta echa administrar todas las conexiones a 
+    /// las bases de datos, ya sean en distiontos manejadores o 
+    /// los excel o lo que fuere.
+    /// Aqui van todas las consultas SQL.
+    /// Tambien si se quieren manejar bases de datos distribuidas
+    /// tiene que hacerse desde aqui.
+    /// </remarks>
     public class Conexion
     {
         #region estaticos
-        public static string datosConexionPrueba
+        /// <summary>
+        /// Contiene la informacion para la conexion con la base de datos sql
+        /// </summary>
+        public static string datosConexion
         {
             get
             {
@@ -25,31 +39,26 @@ namespace OrigenDatos.Clases
                 return datosConexion;
             }
         }
-        public static string datosConexionCasa
-        {
-            get
-            {
-                string dir = @"SILVER1592-PC\SQLEXPRESS;";
-                string usuario = "sa";
-                string pass = "1111";
-                //Datos de la coneccion
-                string datosConexion = "Data Source=" + dir
-                                        + "Initial Catalog=asignacion;"
-                                        + "Integrated Security =false;"
-                                        + "Uid = " + usuario + ";"
-                                        + "Pwd= " + pass + ";";
-
-                return datosConexion;
-            }
-        }
         #endregion
 
-        protected string datosConexion;
+        /// <summary>
+        /// Informacion de la conexion del objeto
+        /// </summary>
+        protected string DatosConexion;
+        /// <summary>
+        /// Excel utlizado
+        /// </summary>
         protected LibroExcel Excel;
 
         #region Diccionarios
+        /// <summary>
+        /// Diccionario para leer la informacion del excel
+        /// </summary>
         public Dictionary<string, string> DGruposExcel { get { return Excel.headers; } }
 
+        /// <summary>
+        /// Diccionario para leer la informacion de la base de datos
+        /// </summary>
         public static Dictionary<string, string> DGruposBD
         {
             get
@@ -87,16 +96,38 @@ namespace OrigenDatos.Clases
             }
         }
 
+        /// <summary>
+        /// Diccionario utilizado por la conexion actual
+        /// </summary>
         public Dictionary<string,string> DGrupos { get { return Excel != null ? Excel.headers : DGruposBD; } }
         #endregion
 
+        /// <summary>
+        /// Conexion por default
+        /// </summary>
+        /// <remarks>
+        /// Utiliza la informacion basica para la base de datos
+        /// </remarks>
         public Conexion()
         {
-            datosConexion = Conexion.datosConexionPrueba;
+            DatosConexion = datosConexion;
         }
+
+        /// <summary>
+        /// Constructor completo
+        /// </summary>
+        /// <remarks>
+        /// Permite administrar mas la conexion, permitiendo que se agregue un excel a la conexion
+        /// </remarks>
+        /// <param name="Datos">Cadena de conexion a la base de datos</param>
+        /// <param name="excelDireccion"></param>
+        /// <param name="archivoEntrada"></param>
+        /// <param name="hoja"></param>
+        /// <param name="ciclo"></param>
+        /// <param name="tipo">Tipo de grupo por default(solo si usa Excel)</param>
         public Conexion(string Datos, string excelDireccion=null, string archivoEntrada=null, string hoja = null, string ciclo= "2016-2017/II", string tipo ="")
         {
-            datosConexion = Datos;
+            DatosConexion = Datos;
 
             if(excelDireccion != null)
             {
@@ -257,7 +288,7 @@ namespace OrigenDatos.Clases
         public bool Autenticacion()
         {
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = datosConexion;
+            con.ConnectionString = DatosConexion;
 
             try
             {
@@ -280,7 +311,7 @@ namespace OrigenDatos.Clases
         {
             SqlCommand cmd;
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = datosConexion;
+            con.ConnectionString = DatosConexion;
             cmd = new SqlCommand(textoCmd, con);
 
             try
@@ -303,7 +334,7 @@ namespace OrigenDatos.Clases
         {
             SqlCommand cmd;
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = datosConexion;
+            con.ConnectionString = DatosConexion;
             cmd = new SqlCommand(textoCmd, con);
             DataTable datos = null;
 

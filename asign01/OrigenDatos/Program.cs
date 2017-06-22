@@ -83,7 +83,7 @@ namespace OrigenDatos
             string nombreArchivo = "SIAMMAT16172-FINAL.xlsx";
             string nombreHoja = "E4_2017_01_12";
 
-            c = new Conexion(Conexion.datosConexionPrueba, excelDir, nombreArchivo, nombreHoja, tipo: "T");
+            c = new Conexion(Conexion.datosConexion, excelDir, nombreArchivo, nombreHoja, tipo: "T");
 
 
             if (c.Autenticacion())
