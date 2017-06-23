@@ -138,7 +138,7 @@ namespace OrigenDatos.Clases
         /// </summary>
         /// <param name="hora">Hora a checar</param>
         /// <returns>Arreglo de boleanos que sera false cuando este disponible ese horario</returns>
-        public bool[] EnHora_Bool(int hora)
+        public bool[] Dias(int hora)
         {
             bool[] res = { false, false, false, false, false, false };
 
@@ -248,7 +248,25 @@ namespace OrigenDatos.Clases
             return new ListaGrupos(query.ToList());
         }
 
-        public ListaGrupos NoEn(List<Grupo> grupos)
+        public ListaGrupos EnHora(int[] hora_ini, int[] hora_fin)
+        {
+            var query = from g in grupos
+                        where g.EnHora(hora_ini, hora_fin)
+                        select g;
+
+            return new ListaGrupos(query.ToList());
+        }
+
+        public ListaGrupos EnHora(int hora_ini, int hora_fin, string dias)
+        {
+            var query = from g in grupos
+                        where g.EnHora(hora_ini, hora_fin, dias)
+                        select g;
+
+            return new ListaGrupos(query.ToList());
+        }
+
+        public ListaGrupos NoEn(IList<Grupo> grupos)
         {
             var query = from Grupo g in this.grupos
                         where !grupos.Contains(g)
@@ -339,36 +357,6 @@ namespace OrigenDatos.Clases
             }
 
             return new ListaSalones(res);
-        }
-        #endregion
-
-        #region Chequeos
-        public bool HayEmpalme(int[] hora_ini, int[] hora_fin)
-        {
-            var query = from g in grupos
-                        where g.empalme(hora_ini, hora_fin)
-                        select g;
-
-            return query.ToList().Count == 0 ? true : false;
-        }
-
-        public bool HayEmpalme(int hora_ini, int hora_fin, string dias)
-        {
-            var query = from g in grupos
-                        where g.EnHora(hora_ini, hora_fin, dias)
-                        select g;
-
-            return query.ToList().Count == 0 ? true : false;
-        }
-
-        public bool HayEmpalme()
-        {
-            var query = from g in grupos
-                        from g1 in grupos
-                        where g.empalme(g1)
-                        select g;
-
-            return query.Distinct().ToList().Count == 0 ? false : true;
         }
         #endregion
     }

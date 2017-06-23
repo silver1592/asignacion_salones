@@ -20,7 +20,7 @@ namespace InterfazWeb_02.Clases
             if (!bd)
             {
                 Excel = new LibroExcel(dir, file, ciclo, "T");
-                Excel.setHojaHorarios(sheet);
+                //Excel.setHojaHorarios(sheet);
             }
             else
             {
@@ -30,7 +30,7 @@ namespace InterfazWeb_02.Clases
             }
         }
 
-        public Conexion(string Datos, string excelDireccion = null, string archivoEntrada = null, string hoja = null, string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, archivoEntrada, hoja, ciclo, tipo) { }
+        public Conexion(string Datos, string excelDireccion = null, string hoja = null, string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, hoja, ciclo, tipo) { }
 
         internal string[] Sheets()
         {
@@ -53,6 +53,15 @@ namespace InterfazWeb_02.Clases
             string query = "insert into ae_horario (" + ") values (" + ")";
 
             Comando(query);
+        }
+
+        /// <summary>
+        /// Inserta Grupos en la base de datos
+        /// </summary>
+        /// <param name="grupos"></param>
+        public void InsertaGrupos(ListaGrupos grupos)
+        {
+
         }
     }
 }

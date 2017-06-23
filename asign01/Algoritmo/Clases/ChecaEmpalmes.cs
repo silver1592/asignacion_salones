@@ -35,7 +35,7 @@ namespace Algoritmo02.Clases
             foreach(ListaGrupos empalme in empalmados)
             {
                 //Chequeo de empalme
-                if (empalme.HayEmpalme())
+                if (empalme.Empalmados().Count()!=0)
                 {
                     s = new  Salon(salones.busca(empalme[0].Salon));
                     #region solucion de empalmes

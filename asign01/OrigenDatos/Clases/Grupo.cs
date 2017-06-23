@@ -257,7 +257,14 @@ namespace OrigenDatos.Clases
 
         #region Constructores
 
-        //Construcctor base para los heredados
+        /// <summary>
+        /// Constructor por copia
+        /// </summary>
+        /// <remarks>Es utilizado como base para ls metodos que heredan de la clase. 
+        /// Ademas que permite volver a solicitar la informacion si esta no estaba cubierta</remarks>
+        /// <param name="g"></param>
+        /// <param name="c"></param>
+        /// <param name="salones"></param>
         public Grupo(Grupo g,Conexion c=null, ListaSalones salones=null)
         {
             cve_materia = g.cve_materia;
@@ -336,7 +343,7 @@ namespace OrigenDatos.Clases
         }
 
         #region Inicializadores
-        public void Set_From_Row(DataRow r,IDictionary<string,string> h)
+        protected void Set_From_Row(DataRow r,IDictionary<string,string> h)
         {
             try
             {
@@ -384,7 +391,7 @@ namespace OrigenDatos.Clases
             }
         }
 
-        public void Set_NecesidadesGrupo(DataTable dt)
+        protected void Set_NecesidadesGrupo(DataTable dt)
         {
             //DataTable ng = cn.Necesidades_Grupo(cve_materia, tipo, rpe);
             requerimientos_Salon = new List<Requerimiento_Valor>();
@@ -399,7 +406,7 @@ namespace OrigenDatos.Clases
             }
         }
 
-        public void Set_RequerimientosProfesor(DataTable dt)
+        protected void Set_RequerimientosProfesor(DataTable dt)
         {
             //DataTable np = cn.Necesidades_Profesor(this.rpe);
             if (dt.Rows.Count == 1)
@@ -409,7 +416,7 @@ namespace OrigenDatos.Clases
             }
         }
 
-        public void Set_SalonesPosibles(DataTable dt, ListaSalones salones)
+        protected void Set_SalonesPosibles(DataTable dt, ListaSalones salones)
         {
             salones_Posibles = salones.EnTabla(dt);
         }
@@ -540,7 +547,7 @@ namespace OrigenDatos.Clases
             return false;
         }
 
-        public bool empalme(int[] ini, int[] fin)
+        public bool EnHora(int[] ini, int[] fin)
         {
             if ((lunes_ini >= ini[0] && lunes_ini < fin[0]) ||
                 (lunes_fin <= fin[0] && lunes_fin > ini[0]))

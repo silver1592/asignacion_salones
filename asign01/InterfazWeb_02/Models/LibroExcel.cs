@@ -10,7 +10,7 @@ namespace InterfazWeb_02.Models
         private string nombre;
         public string Nombre { get { return nombre; } }
 
-        public LibroExcel(string direccion, string archivo, string ciclo ="2016-2017/II", string tipo =""):base(direccion,archivo,ciclo,tipo)
+        public LibroExcel(string direccion, string archivo, string ciclo ="2016-2017/II", string tipo =""):base(direccion+archivo,ciclo,tipo)
         {
             nombre = archivo;
         }

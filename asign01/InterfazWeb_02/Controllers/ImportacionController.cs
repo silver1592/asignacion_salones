@@ -131,7 +131,7 @@ namespace InterfazWeb_02.Controllers
         public JsonResult PaginasExcel(string file)
         {
             string excelDir = Server.MapPath("~/Archivos/");
-            Conexion c = new Conexion(Conexion.datosConexion, excelDir, file);
+            Conexion c = new Conexion(Conexion.datosConexion, excelDir+file);
 
             string[] sheets = c.Sheets();
 

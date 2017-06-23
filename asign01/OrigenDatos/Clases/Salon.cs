@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace OrigenDatos.Clases
 {
+    /// <summary>
+    /// Contiene la informacion de un salon
+    /// </summary>
     public class Salon
     {
         #region atributos <protected>
@@ -60,7 +63,7 @@ namespace OrigenDatos.Clases
         {
             get
             {
-                return gruposAsignados.EnHora_Bool(hora);
+                return gruposAsignados.Dias(hora);
             }
         }
         public string dias
@@ -118,7 +121,7 @@ namespace OrigenDatos.Clases
 
         #region Constructores
         /// <summary>
-        /// Constructor por copia </br>
+        /// Constructor por copia 
         /// (Solo usarlo para asignarlo a las variables del algoritmo)
         /// </summary>
         /// <param name="s">Salon a copiar</param>
@@ -185,7 +188,8 @@ namespace OrigenDatos.Clases
             SetExcepciones(c.Exepciones(cve_espacio));
         }
 
-        private void SetValues(DataRow salon)
+        #region Inicializadores
+        protected void SetValues(DataRow salon)
         {
             if (salon != null)
             {
@@ -204,8 +208,7 @@ namespace OrigenDatos.Clases
                 throw new Exception("Datos del salon no validos");
         }
 
-        #region Inicializadores
-        public void SetEquipo(DataTable Equipo)
+        protected void SetEquipo(DataTable Equipo)
         {
             //DataTable Equipo = Consultas.Salon_equipo(cve_espacio);
 
@@ -214,7 +217,7 @@ namespace OrigenDatos.Clases
                 equipo_instalado.Add(Convert.ToInt32(equipo["cve_equipo"].ToString()));
         }
 
-        public void SetAreaEdificio(DataTable AreaEdif)
+        protected void SetAreaEdificio(DataTable AreaEdif)
         {
             //DataTable AreaEdif = Consultas.Edificio_Area(cve_edificio);
             int i = 0;
@@ -234,7 +237,7 @@ namespace OrigenDatos.Clases
             }
         }
 
-        public void SetExcepciones(DataTable excep)
+        protected void SetExcepciones(DataTable excep)
         {
             //DataTable excep = Consultas.Exepciones(cve_espacio);
             if (excep.Rows.Count == 1)

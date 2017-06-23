@@ -68,15 +68,6 @@ namespace Algoritmo02.Heredados
         /// <summary>
         /// Actualiza la tabla horario con los valores que tiene
         /// </summary>
-        public void Update(Conexion c, string observaciones = "")
-        {
-            this.observaciones = observaciones;
-            c.UpdateGrupoExcel(this, observaciones);
-        }
-
-        /// <summary>
-        /// Actualiza la tabla horario con los valores que tiene
-        /// </summary>
         public void Update(string observaciones = "")
         {
             this.observaciones = observaciones;

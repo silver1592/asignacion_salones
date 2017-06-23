@@ -114,28 +114,29 @@ namespace OrigenDatos.Clases
         }
 
         /// <summary>
-        /// Constructor completo
+        /// Constructor con opcion a cadena de conexion
         /// </summary>
         /// <remarks>
-        /// Permite administrar mas la conexion, permitiendo que se agregue un excel a la conexion
+        /// Permite administrar mas la conexion
         /// </remarks>
         /// <param name="Datos">Cadena de conexion a la base de datos</param>
+        public Conexion(string Datos)
+        {
+            DatosConexion = Datos;
+        }
+
+        /// <summary>
+        /// Constructor completo
+        /// </summary>
+        /// <param name="Datos"></param>
         /// <param name="excelDireccion"></param>
-        /// <param name="archivoEntrada"></param>
-        /// <param name="hoja"></param>
         /// <param name="ciclo"></param>
-        /// <param name="tipo">Tipo de grupo por default(solo si usa Excel)</param>
-        public Conexion(string Datos, string excelDireccion=null, string archivoEntrada=null, string hoja = null, string ciclo= "2016-2017/II", string tipo ="")
+        /// <param name="tipo"></param>
+        public Conexion(string Datos, string excelDireccion, string ciclo, string tipo)
         {
             DatosConexion = Datos;
 
-            if(excelDireccion != null)
-            {
-                Excel = new LibroExcel(excelDireccion,archivoEntrada, ciclo, tipo);
-
-                if(hoja!=null)
-                    Excel.setHojaHorarios(hoja);
-            }
+            Excel = new LibroExcel(excelDireccion, ciclo, tipo);
         }
 
         #region Consultas
@@ -160,7 +161,6 @@ namespace OrigenDatos.Clases
         /// <returns></returns>
         public DataTable Edificio_Area(string cve_edificio)
         {
-            ///ver lo de funciones almacenadas.
             string textoCmd = "SELECT * FROM[asignacion].[ae_area_edificio]  where idEdificio = '" + cve_edificio + "'";
 
             DataTable datos = Querry(textoCmd);
@@ -175,7 +175,6 @@ namespace OrigenDatos.Clases
         /// <returns></returns>
         public DataTable Necesidades_prof(string rpe)
         {
-            ///ver lo de funciones almacenadas.
             string textoCmd = "SELECT [rpe], [discapacidad], [salon_unico] FROM [asignacion].[asignacion].[ae_necesidad_profesor]"
                               + "where rpe=" + rpe + ";";
 
@@ -187,11 +186,9 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Muestra los salones registrados en la base de datos
         /// </summary>
-        /// <param name="Edificio">id del edificio</param>
         /// <returns></returns>
         public DataTable Salones()
         {
-            ///ver lo de funciones almacenadas.
             string textoCmd = "SELECT * "
                               + "FROM [asignacion].[ae_cat_espacio] "
                               + "where not(cve_edificio='F') and not(cve_edificio='P') and not(cve_edificio='ZP')";
@@ -202,9 +199,13 @@ namespace OrigenDatos.Clases
             return datos;
         }
 
+        /// <summary>
+        /// Obtiene de la base de datos el equipo instalado en el salon
+        /// </summary>
+        /// <param name="cve_espacio">Clave del salon</param>
+        /// <returns></returns>
         public DataTable Salon_equipo(string cve_espacio)
         {
-            ///ver lo de funciones almacenadas.
             string textoCmd = "SELECT * "
                               + "FROM [asignacion].[ae_equipamiento]"
                               + "where cve_espacio='" + cve_espacio + "'; ";
@@ -218,12 +219,11 @@ namespace OrigenDatos.Clases
         /// Obtiene las necesidades de un grupo
         /// </summary>
         /// <param name="cve_materia">Clave de la materia</param>
-        /// <param name="grupo">grupo de la materia</param>
+        /// <param name="rpe">clave del profesor</param>
         /// <param name="tipo">tipo de claser (T/L)</param>
         /// <returns></returns>
         public DataTable Necesidades_Grupo(string cve_materia, string tipo, string rpe)
         {
-            ///ver lo de funciones almacenadas.
             string textoCmd ="";
 
             if(cve_materia!="" && rpe!="")
@@ -249,6 +249,7 @@ namespace OrigenDatos.Clases
         /// </summary>
         /// <param name="rpe">Clave unica del profesor</param>
         /// <param name="hora">Hora de la cual se quiere obtener la informacion</param>
+        /// <param name="ciclo">Semestre</param>
         /// <returns>DataTable con los datos de los grupos impartidos</returns>
         public DataTable GruposAnteriores(int rpe, int hora, string ciclo)
         {
@@ -275,6 +276,13 @@ namespace OrigenDatos.Clases
             return datos;
         }
 
+        /// <summary>
+        /// Obtiene Los grupos de semestres anteriores
+        /// </summary>
+        /// <param name="cve_materia">Clave de la materia</param>
+        /// <param name="ciclo"></param>
+        /// <param name="rpe"></param>
+        /// <returns></returns>
         public DataTable SemestresAnteriores(string cve_materia,string ciclo,string rpe)
         {
             string query = "select * from ae_horario where not(ciclo = '" + ciclo + "') and rpe = '"+rpe+"' and cve_materia = '"+cve_materia+"'";
@@ -285,6 +293,10 @@ namespace OrigenDatos.Clases
         #endregion
 
         #region Base
+        /// <summary>
+        /// Checa si la conexion es correcta
+        /// </summary>
+        /// <returns></returns>
         public bool Autenticacion()
         {
             SqlConnection con = new SqlConnection();
@@ -306,7 +318,7 @@ namespace OrigenDatos.Clases
         /// Ejecuta una consulta en SQL utilizando el comando enviado como parametro
         /// Usado principalmente para consultas DLL (Data Definition Language)
         /// </summary>
-        /// <param name="cad"></param>
+        /// <param name="textoCmd"></param>
         public void Comando(string textoCmd)
         {
             SqlCommand cmd;
@@ -330,6 +342,11 @@ namespace OrigenDatos.Clases
             }
         }
 
+        /// <summary>
+        /// Manda un comando a la base de datos y regresa el DataTable como resultado
+        /// </summary>
+        /// <param name="textoCmd"> Query a ejecutar</param>
+        /// <returns></returns>
         public DataTable Querry(string textoCmd)
         {
             SqlCommand cmd;
@@ -352,16 +369,17 @@ namespace OrigenDatos.Clases
             return datos;
         }
 
-        ///En esta region intente agrupar todas las consultas que requieren de la tabla grupos y por lo tanto
-        ///son las que pudiese tener otro origen de datos (excel)
-        public void UpdateGrupoExcel(Grupo g, string observaciones="", bool bd=false)
+        /// <summary>
+        /// Actualiza la informacion en la base de datos
+        /// </summary>
+        /// <param name="grupos">Lista de grupos a escribir</param>
+        /// <param name="hojaExcel">Hoja en la que se va a escribir(No importa si existe)</param>
+        public void UpdateGrupo(ListaGrupos grupos, string hojaExcel = "resultado")
         {
-            if (Excel!=null && !bd)
-            {
-                Excel.Update(g, observaciones);
-            }
-            else
+            foreach(Grupo g in grupos)
                 Comando(g.qUpdate);
+
+            Excel.EscribeGrupos(grupos, hojaExcel);
         }
         #endregion
     }

@@ -8,42 +8,32 @@ using System.Data;
 
 namespace OrigenDatos.Clases
 {
+    /// <summary>
+    /// Abre un archivo de excel y lee o escribe en el
+    /// </summary>
     public class LibroExcel
     {
-        private string archivo = @"";
+        /// <summary>
+        /// Nombre del archivo
+        /// </summary>
+        private string archivo;
+        /// <summary>
+        /// Direccion del archivo
+        /// </summary>
         private string dir;
-        private int ContColumn;
-        private List<Grupo> grupos;
-        private DataTable rawGrupos;
-        private string[,] posicionesHorarios;
-        private string[] sheets;
-
-        public ListaGrupos Grupos { get { return new ListaGrupos(grupos); } }
-        public DataTable RawGrupos { get { return rawGrupos; } }
-        public string[,] PosicionesHorarios{ get { return posicionesHorarios; } }
-        public string Direccion { get { return dir; } }
-        public string[] Sheets { get { return sheets; } }
 
         #region Atributos a buscar
+        /// <summary>
+        /// Diccionario con los encabezados de la tabla
+        /// </summary>
         public Dictionary<string, string> headers;
 
-        #endregion
-
-        #region Constructores e Inicializaciones
-        public LibroExcel(string direccion, string archivo, string ciclo, string tipo="")
-        {
-            if (File.Exists(direccion + archivo))
-            {
-                SetHeaders();
-                this.archivo += direccion + archivo;
-                this.dir = direccion;
-                headers["cicloDefault"] = ciclo;
-                headers["tipoDefault"] = tipo;
-            }
-            else
-                throw new Exception("No se encontro archivo", null);
-        }
-
+        /// <summary>
+        /// Inicializa el diccionario
+        /// </summary>
+        /// <remarks>
+        /// Solo se llama cuando se crea el objeto
+        /// </remarks>
         private void SetHeaders()
         {
             headers = new Dictionary<string, string>();
@@ -75,12 +65,42 @@ namespace OrigenDatos.Clases
             headers.Add("tipoDefault", "T");
             headers.Add("salonDefault", "");
         }
+        #endregion
+
+        #region Constructores e Inicializaciones
+        /// <summary>
+        /// Almacena la informacion y la guarda y checa si existe el archivo
+        /// </summary>
+        /// <param name="direccion">Direccion del archivo</param>
+        /// <param name="ciclo">Semestre al cual se va a considerar</param>
+        /// <param name="tipo">tipo por default para los grupos</param>
+        public LibroExcel(string direccion, string ciclo, string tipo="")
+        {
+            string[] split = direccion.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
+            string archivo = split[split.Length - 1];
+
+            if (!File.Exists(direccion))
+            {
+                //TODO: Si no existe crealo
+                Microsoft.Office.Interop.Excel.Application appExcel = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook workbook = appExcel.Workbooks.Add();
+                workbook.SaveAs(direccion);
+                workbook.Close();
+                //throw new Exception("No se encontro archivo", null);
+            }
+
+            SetHeaders();
+            this.archivo = archivo;
+            this.dir = direccion;
+            headers["cicloDefault"] = ciclo;
+            headers["tipoDefault"] = tipo;
+        }
 
         /// <summary>
         /// Lee el excel y regresa las hojas en una coleccion de tablas
         /// </summary>
-        /// <returns></returns>
-        public DataTableCollection GetSheets()
+        /// <returns>Hojas del excel</returns>
+        private DataTableCollection GetSheets()
         {
             string filePath = archivo;
             //Es necesaria para que se inicialize ContCoumn
@@ -107,92 +127,11 @@ namespace OrigenDatos.Clases
         }
 
         /// <summary>
-        /// Lee el excel y toma la informacion de una hoja original y la almacena en la variable leeGrupos
+        /// Convierte un DataTable a List de tipo grupo
         /// </summary>
-        /// <param name="hoja">Hoja de excel</param>
-        public void setHojaHorarios(string hoja)
-        {
-            DataTable dt = GetHojaHorarios(hoja);
-
-            setPosicionesHorarios(dt);
-
-            rawGrupos = dt;
-            grupos = AsList(dt);
-        }
-
-        /// <summary>
-        /// Revisa el excel y obtiene el nombre de las columnas
-        /// Nota: Esta es considerando que las columnas adicionales de Observaciones y de salon anterior estan al finla
-        /// </summary>
-        public void setPosicionesHorarios(DataTable dt)
-        {
-            string[,] pos;
-
-            if (dt.Columns.Contains("salon anterior"))
-                ContColumn = dt.Columns.Count - 3;
-            else
-                ContColumn = dt.Columns.Count;
-            pos = new string[ContColumn, 2];
-
-            for (int i = 0; i < ContColumn; i++)
-            {
-                pos[i, 0] = ((char)('A' + i)).ToString();
-                pos[i, 1] = dt.Columns[i].ToString();
-            }
-
-            posicionesHorarios = pos;
-        }
-
-        /// <summary>
-        /// Obtiene el nombre de las hojas del excel y lo asigna a la variable Sheets
-        /// </summary>
-        public void SetHojas()
-        {
-            DataTableCollection tables = GetSheets();
-
-            sheets = new string[tables.Count];
-            for (int i = 0; i < tables.Count; i++)
-                sheets[i] = tables[i].ToString();
-        }
-        #endregion
-
-        #region Consultas
-        #region DataTable
-        private DataTable AsDataTable(List<DataRow> lr)
-        {
-            DataTable dt = new DataTable();
-
-            foreach (DataRow r in lr)
-            {
-                if (dt.Columns.Count == 0)
-                    dt = rawGrupos.Clone();
-
-                dt.ImportRow(r);
-            }
-
-            return dt;
-        }
-
-        public DataTable GetHojaHorarios(string hoja)
-        {
-            DataTableCollection tables = GetSheets();
-
-            return tables[hoja];
-        }
-
-        public DataTable GetGrupo(DataTable datos,string materia, string grupo)
-        {
-            var query = from DataRow r in datos.Rows
-                        where r[headers["cve_mat"]].ToString() == materia && r[headers["cve_gpo"]].ToString() == grupo
-                        select r;
-
-            return AsDataTable(query.ToList<DataRow>());
-        }
-        #endregion
-
-        #region List<Grupo>
-
-        public List<Grupo> AsList(DataTable dtGrupos)
+        /// <param name="dtGrupos">Tabla de grupos</param>
+        /// <returns></returns>
+        private List<Grupo> AsList(DataTable dtGrupos)
         {
             List<Grupo> res = new List<Grupo>();
 
@@ -201,45 +140,15 @@ namespace OrigenDatos.Clases
 
             return res;
         }
-
-        #endregion
-
-        #region index
-        public int GetGrupoRawIndex(string materia, int grupo)
-        {
-            int i = 0;
-            foreach (DataRow r in rawGrupos.Rows)
-            {
-                if (r[headers["cve_mat"]].ToString() == materia && r[headers["cve_gpo"]].ToString() == grupo.ToString())
-                    return i;
-                i++;
-            }
-
-            return -1;
-        }
-
-        public int GetGrupoIndex(string materia, int grupo)
-        {
-            int i = 0;
-
-            foreach (Grupo g in grupos)
-            {
-                if (g.Cve_materia == materia && g.num_Grupo == grupo)
-                    return i;
-                i++;
-            }
-
-            return -1;
-        }
-        #endregion
         #endregion
 
         #region Comandos
         /// <summary>
-        /// Escribe la informaciion que tenga en la variable LeeGrupos
+        /// Escribe la informacion de los grupos
         /// </summary>
-        /// <param name="hoja">Nombre de la hoja que se quiere poner </param>
-        public void Escribe_Horario_Excel(string hoja, string dir)
+        /// <param name="grupos">Nombre de la hoja que se quiere poner </param>
+        /// <param name="hoja">Hoja en la que se va a escribir</param>
+        public void EscribeGrupos(IList<Grupo> grupos, string hoja)
         {
             var workbook = new XLWorkbook();
             //Abre la hoja seleccionada y de no existir la crea
@@ -250,68 +159,60 @@ namespace OrigenDatos.Clases
                 worksheet = workbook.Worksheets.Worksheet(hoja);
             }catch
             {
+                List<string> keyList = new List<string>(headers.Keys);
                 worksheet = workbook.Worksheets.Add(hoja);
-            }
 
-            //Escribe los encabezados de las hojas
-            for (int i = 0; i < ContColumn + 3; i++)
-            {
-                if (i < ContColumn)
-                    worksheet.Cell(posicionesHorarios[i, 0] + "1").Value = posicionesHorarios[i, 1];
-                else if (i<ContColumn+1)
-                    worksheet.Cell(((char)(posicionesHorarios[ContColumn - 1, 0].ToCharArray()[0] + 1))+"1").Value = "salon anterior";
-                else if (i<ContColumn+2)
-                    worksheet.Cell(((char)(posicionesHorarios[ContColumn - 1, 0].ToCharArray()[0] + 2)) + "1").Value = "puntos de asignacion";
-                else if (i < ContColumn + 3)
-                    worksheet.Cell(((char)(posicionesHorarios[ContColumn - 1, 0].ToCharArray()[0] + 3)) + "1").Value = "observaciones";
+                //Escribe los encabezados de las hojas
+                for (int i = 0; i < headers.Count + 1; i++)
+                {
+                    if (i < headers.Count)
+                        worksheet.Row(0).Cell(i).Value = headers[keyList[i]];
+                    else if (i < headers.Count + 1)
+                        worksheet.Row(0).Cell(i).Value = "observaciones";
+                }
             }
-
-            //Escribe la informacion de los grupos
-            int counter = 2;
-            int rawIndex;
 
             foreach (Grupo item in grupos)
-            {
-                for (int i = 0; i < ContColumn + 3; i++)
-                {
-                    rawIndex = GetGrupoRawIndex(item.Cve_materia, item.num_Grupo);
-
-                    if (i < ContColumn)
-                        if (posicionesHorarios[i, 1] == headers["salon"])
-                            worksheet.Cell(posicionesHorarios[i, 0] + counter).Value = item.Salon;
-                        else
-                            worksheet.Cell(posicionesHorarios[i, 0] + counter).Value = rawGrupos.Rows[rawIndex][posicionesHorarios[i, 1]];
-                    else if (i < ContColumn + 1)
-                        worksheet.Cell(((char)(posicionesHorarios[ContColumn - 1, 0].ToCharArray()[0] + 1)) + counter.ToString()).Value = item.SalonBD;
-                    else if (i < ContColumn + 2)
-                        worksheet.Cell(((char)(posicionesHorarios[ContColumn - 1, 0].ToCharArray()[0] + 2)) + counter.ToString()).Value = "";
-                    else if (i < ContColumn + 3 && item.observaciones != "")
-                        worksheet.Cell(((char)(posicionesHorarios[ContColumn - 1, 0].ToCharArray()[0] + 3)) + counter.ToString()).Value = item.observaciones;
-                }
-                counter++;
-            }
+                EscribeGrupo(item,worksheet);
 
             workbook.SaveAs(dir == null ? this.archivo : dir);
             workbook.Dispose();
         }
 
-        public void Update(Grupo g, string observaciones = null)
+        /// <summary>
+        /// Escribe un grupo en la hoja dada
+        /// </summary>
+        /// <param name="g">Grupo a escribir</param>
+        /// <param name="worksheet">Hoja a modificar</param>
+        public void EscribeGrupo(Grupo g, IXLWorksheet worksheet)
         {
-            ///Busca el grupo en el dataTable
-            int rawIndex = GetGrupoRawIndex(g.Cve_materia, g.num_Grupo);
-            int grupoIndex = GetGrupoIndex(g.Cve_materia, g.num_Grupo);
+            worksheet.Row(1).Cell(0).Value = g.Cve_materia;
+            worksheet.Row(1).Cell(1).Value = g.num_Grupo;
+        }
 
-            if (grupoIndex == -1 || rawIndex == -1)
-                throw new Exception("No se pudo guardar el grupo, error al intentar guardar en la columna");
+        /// <summary>
+        /// Obtiene el nombre de las hojas del excel e inicializa la variable Sheets
+        /// </summary>
+        public string[] GetStringSheets()
+        {
+            DataTableCollection tables = GetSheets();
 
-            if (observaciones != null && observaciones != "")
-            {
-                grupos[grupoIndex].observaciones += "-" + observaciones;
-            }
+            string[] sheets = new string[tables.Count];
+            for (int i = 0; i < tables.Count; i++)
+                sheets[i] = tables[i].ToString();
 
-            ///Modifica el grupo en el dataRow
-            rawGrupos.Rows[rawIndex][headers["salon"]] = g.Salon;
-            grupos[grupoIndex].Salon = g.Salon;
+            return sheets;
+        }
+
+        /// <summary>
+        /// Lee el excel e inicializa los grupos con la ainfromacion
+        /// </summary>
+        /// <param name="hoja">Hoja de excel</param>
+        public List<Grupo> GetGrupos(string hoja)
+        {
+            DataTable dt = GetSheets()[hoja];
+
+            return AsList(dt);
         }
         #endregion
     }
