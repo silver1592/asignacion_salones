@@ -9,9 +9,9 @@ namespace Algoritmo02.Heredados
     {
         public Conexion() : base() { }
 
-        public Conexion(string Datos, string excelDireccion = null, string archivoEntrada = null, string hoja = null, string ciclo = "2016-2017/II", string tipo = ""): base(Datos, excelDireccion,hoja, ciclo,tipo){}
+        public Conexion(string Datos, string excelDireccion = null, string ciclo = "2016-2017/II", string tipo = ""): base(Datos, excelDireccion, ciclo,tipo){}
 
-        public ListaGrupos GetGrupos(string semestre, int ini = 7, int fin=22,bool bExcel=true)
+        public ListaGrupos GetGrupos(string semestre, int ini = 7, int fin=22,bool bExcel=false)
         {
             ListaGrupos res = null;
             List<OrigenDatos.Clases.Grupo> grupos;
@@ -27,7 +27,7 @@ namespace Algoritmo02.Heredados
             }
             else
             {
-                res = new ListaGrupos(Excel.Grupos, materias, profesores,this);
+                res = new ListaGrupos(Excel.GetGrupos(hoja), materias, profesores,this);
             }
 
             return res;
@@ -49,7 +49,7 @@ namespace Algoritmo02.Heredados
             }
             else
             {
-                res = new ListaGrupos(Excel.Grupos, materias, profesores);
+                res = new ListaGrupos(Excel.GetGrupos(hoja), materias, profesores);
             }
 
             return res;

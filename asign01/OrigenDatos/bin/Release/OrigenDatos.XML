@@ -179,6 +179,16 @@
             Cadena para el query de update.
             </summary>
         </member>
+        <member name="M:OrigenDatos.Clases.Grupo.#ctor(OrigenDatos.Clases.Grupo,OrigenDatos.Clases.Conexion,OrigenDatos.Clases.ListaSalones)">
+            <summary>
+            Constructor por copia
+            </summary>
+            <remarks>Es utilizado como base para ls metodos que heredan de la clase. 
+            Ademas que permite volver a solicitar la informacion si esta no estaba cubierta</remarks>
+            <param name="g"></param>
+            <param name="c"></param>
+            <param name="salones"></param>
+        </member>
         <member name="M:OrigenDatos.Clases.Grupo.Set_GruposHorasAnteriores(System.Data.DataTable,System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
             Busca los grupos en los que dio clases el profesor anteriormente
@@ -273,7 +283,7 @@
             </summary>
             <param name="hoja">Hoja de excel</param>
         </member>
-        <member name="M:OrigenDatos.Clases.ListaGrupos.EnHora_Bool(System.Int32)">
+        <member name="M:OrigenDatos.Clases.ListaGrupos.Dias(System.Int32)">
             <summary>
             Checa si los grupos estan asignados a cierta hora
             </summary>

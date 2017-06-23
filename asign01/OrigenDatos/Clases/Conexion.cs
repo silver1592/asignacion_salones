@@ -49,6 +49,27 @@ namespace OrigenDatos.Clases
         /// Excel utlizado
         /// </summary>
         protected LibroExcel Excel;
+        /// <summary>
+        /// Hoja de excel a utilizar
+        /// </summary>
+        protected string hoja;
+        /// <summary>
+        /// Asigna la hoja a utilizar
+        /// </summary>
+        public string Sheet { set { hoja = value; } }
+        /// <summary>
+        /// Nombre de las Hojas disponibles
+        /// </summary>
+        public string[] Sheets
+        {
+            get
+            {
+                if (Excel != null)
+                    return Excel.GetStringSheets();
+                else
+                    return new string[0];
+            }
+        }
 
         #region Diccionarios
         /// <summary>
