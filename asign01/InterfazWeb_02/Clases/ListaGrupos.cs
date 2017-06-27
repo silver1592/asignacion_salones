@@ -51,6 +51,14 @@ namespace InterfazWeb_02.Clases
             return new ListaGrupos(query.ToList());
         }
 
+        public ListaGrupos NoRepetidos()
+        {
+            var query = from g in this
+                        select g;
+
+            return new ListaGrupos(query.GroupBy(p=> new {p.Cve_materia, p.num_Grupo, p.Ciclo}).Select(g=>g.First()).ToList());
+        }
+
         /// <summary>
         /// Busca la materia del grupo que se encuentra en el indice [index]
         /// </summary>

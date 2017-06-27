@@ -75,7 +75,7 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Diccionario para leer la informacion del excel
         /// </summary>
-        public Dictionary<string, string> DGruposExcel { get { return Excel.headers; } }
+        public Dictionary<string, string> DGruposExcel { get { return Excel.dHeaders; } }
 
         /// <summary>
         /// Diccionario para leer la informacion de la base de datos
@@ -120,7 +120,7 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Diccionario utilizado por la conexion actual
         /// </summary>
-        public Dictionary<string,string> DGrupos { get { return Excel != null ? Excel.headers : DGruposBD; } }
+        public Dictionary<string,string> DGrupos { get { return Excel != null ? Excel.dHeaders : DGruposBD; } }
         #endregion
 
         /// <summary>
@@ -400,7 +400,8 @@ namespace OrigenDatos.Clases
             foreach(Grupo g in grupos)
                 Comando(g.qUpdate);
 
-            Excel.EscribeGrupos(grupos, hojaExcel);
+            if(Excel!=null)
+                Excel.EscribeGrupos(grupos, hojaExcel);
         }
         #endregion
     }

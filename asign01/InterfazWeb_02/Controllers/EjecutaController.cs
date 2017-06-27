@@ -1,4 +1,5 @@
-﻿using InterfazWeb_02.Clases;
+﻿using Algoritmo02.Clases;
+using InterfazWeb_02.Clases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,15 +27,49 @@ namespace InterfazWeb_02.Controllers
         public JsonResult EjecutaOperaciones(string hora,string empalmes, string preasignacion, string otrosSemestres, string algoritmo, string individuos, string generacion)
         {
             string res = "asignacion fallida";
+            if (Session["ResExcel"] == null)
+            {
+                Session.Add("ResExcel", Server.MapPath("~/Archivos/") + DateTime.Today.ToString("yyyyMMdd")+ ".xlsx");
+                Session.Add("ResSheet", DateTime.Now.ToString("HH_mm"));
+            }
 
             try
             {
+                //TODO:Checar que funcione
                 string ciclo = Session["ciclo"].ToString();
 
-                Conexion c = new Conexion(Conexion.datosConexion,this);
-                ListaGrupos grupos = new ListaGrupos(c.GetGrupos(ciclo,Convert.ToInt32(hora),Convert.ToInt32(hora)+1));
+                Conexion c = new Conexion(Conexion.datosConexion,Session["ResExcel"].ToString(),Session["ciclo"].ToString());
+                ListaGrupos grupos = new ListaGrupos(c.GetGruposIni(ciclo,Convert.ToInt32(hora),false));
+                ListaSalones salones = new ListaSalones(c,c.Salones(), Convert.ToInt32(hora));
 
-                //TODO: Hacer metodo que guarde en un excel el resultado
+                if(Convert.ToBoolean(empalmes))
+                {
+                    ChecaEmpalmes emp = new ChecaEmpalmes(grupos, salones);
+                    emp.ejecuta();
+
+                    grupos.Actualiza(emp.Grupos);
+                }
+
+                if(Convert.ToBoolean(preasignacion) || Convert.ToBoolean(otrosSemestres))
+                {
+                    PreAsignacion pre = new PreAsignacion(grupos, salones);
+                    if(Convert.ToBoolean(preasignacion))
+                        pre.preferencial();
+                    if(Convert.ToBoolean(otrosSemestres))
+                        pre.semestres_anteriores();
+
+                    grupos.Actualiza(pre.Grupos);
+                }
+
+                if(Convert.ToBoolean(algoritmo))
+                {
+                    Algoritmo alg = new Algoritmo(grupos, salones, Convert.ToInt32(hora), 5, 50);
+                    alg.AsignaSalones();
+
+                    grupos.Actualiza(alg.GruposAsignados);
+                }
+
+                c.UpdateGrupo(grupos, Session["ResSheet"].ToString());
 
                 res = "Asignacion de " + hora + " completada";
             }

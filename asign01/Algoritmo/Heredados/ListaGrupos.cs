@@ -17,21 +17,7 @@ namespace Algoritmo02.Heredados
         #region Constuctores
         public ListaGrupos() : base(){}
 
-        public ListaGrupos(List<OrigenDatos.Clases.Grupo> grupos)
-        {
-            this.grupos = new List<OrigenDatos.Clases.Grupo>();
-            foreach (Grupo g in grupos)
-                this.grupos.Add(g);
-        }
-
-        public ListaGrupos(ListaGrupos grupos)
-        {
-            this.grupos = new List<OrigenDatos.Clases.Grupo>();
-            foreach (Grupo g in grupos.grupos)
-                this.grupos.Add(new Grupo(g));
-        }
-
-        public ListaGrupos(OrigenDatos.Clases.ListaGrupos grupos)
+        public ListaGrupos(IList<OrigenDatos.Clases.Grupo> grupos)
         {
             this.grupos = new List<OrigenDatos.Clases.Grupo>();
             foreach (Grupo g in grupos)
@@ -69,6 +55,10 @@ namespace Algoritmo02.Heredados
         #endregion
 
         #region consultas
+        /// <summary>
+        /// Obtiene los Grupos que requieran un salon en especifico
+        /// </summary>
+        /// <returns></returns>
         public ListaGrupos EnSalonesFijos()
         {
             var query = from g in grupos
@@ -78,6 +68,12 @@ namespace Algoritmo02.Heredados
             return new ListaGrupos(query.ToList());
         }
 
+        /// <summary>
+        /// Obtiene los grupos con mejor puntiacion con cierto salon
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="limite"></param>
+        /// <returns></returns>
         public ListaGrupos MejorPuntuacion(Salon s, int limite = 1)
         {
             var query = from g in grupos
@@ -88,6 +84,10 @@ namespace Algoritmo02.Heredados
             return new ListaGrupos(query.Take(limite).ToList());
         }
 
+        /// <summary>
+        /// Obtiene los grupos que requieren planta baja
+        /// </summary>
+        /// <returns></returns>
         public ListaGrupos QuierenPlantabaja()
         {
             var query = from g in grupos
@@ -97,6 +97,11 @@ namespace Algoritmo02.Heredados
             return new ListaGrupos(query.ToList());
         }
 
+        /// <summary>
+        /// Obtiene los grupos que han estado en el salon en otros semestres
+        /// </summary>
+        /// <param name="salon"></param>
+        /// <returns></returns>
         public ListaGrupos AsignacionOtrosSemestres(string salon)
         {
             var query = from g in grupos
@@ -106,15 +111,26 @@ namespace Algoritmo02.Heredados
             return new ListaGrupos(query.ToList());
         }
 
-        public ListaGrupos Horario(int hora)
+        /// <summary>
+        /// Obtiene los grupos que inicial a cierta hora
+        /// </summary>
+        /// <param name="hola"></param>
+        /// <returns></returns>
+        public ListaGrupos InicialALas(int hora)
         {
-            var query = from g in grupos
-                        where ((Grupo)g).horario(hora)
-                        select (OrigenDatos.Clases.Grupo)g;
+            var query = from g in this
+                        where g.hora_ini == hora
+                        select g;
 
             return new ListaGrupos(query.ToList());
         }
 
+        /// <summary>
+        /// Obtiene el grupo que coincida
+        /// </summary>
+        /// <param name="cve_materia"></param>
+        /// <param name="num_Grupo"></param>
+        /// <returns></returns>
         public Grupo Busca(string cve_materia, int num_Grupo)
         {
             var query = from g in grupos
@@ -127,6 +143,11 @@ namespace Algoritmo02.Heredados
             return null;
         }
 
+        /// <summary>
+        /// Obtiene el grupo que tenga mas puntos para el salon
+        /// </summary>
+        /// <param name="salon"></param>
+        /// <returns></returns>
         public Grupo MejorPara(Salon salon)
         {
             ListaGrupos aux = this;
@@ -147,12 +168,6 @@ namespace Algoritmo02.Heredados
         #endregion
 
         #region Operaciones
-        internal void Ejecuta(Func<Grupo, object> p)
-        {
-            foreach(Grupo g in grupos)
-                p(g);
-        }
-
         public void Update(Grupo g)
         {
             Grupo gAux = Busca(g.Cve_materia, g.num_Grupo);

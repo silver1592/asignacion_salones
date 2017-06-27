@@ -43,6 +43,8 @@ namespace OrigenDatos.Clases
         #endregion
 
         #region gets y sets
+        public string observaciones;
+        public string Tipo { get { return tipo; } }
         /// <summary>
         /// Convierte el ciclo a numeros faciles de usar en un condicional para saber cual es mayor
         /// Se empieza desde el 2014-2015/I al cual se le asigna 0 y de ai en adelante aumenta en 0.5
@@ -77,42 +79,24 @@ namespace OrigenDatos.Clases
                     return -1;
             }
         }
-
-        public bool EnDias(string dias)
-        {
-            for (int i = 0; i < 6; i++)
-                if (dias[i]=='1' && Dias[i]=='0')
-                    return false;
-
-            return true;
-        }
-
+        public string Ciclo { get { return ciclo; } }
         public string Salon { get { return salon; } set { salon = value; } }
         public string SalonBD { get { return salonBD; } }
-        public string observaciones;
         public Grupo GHoraAnterior { get { return HoraAnterior; } }
-
         public int hora_ini
         {
             get
             {
-                if (lunes_ini != 0)
-                    return lunes_ini;
-                else if (martes_ini != 0)
-                    return martes_ini;
-                else if (miercoles_ini != 0)
-                    return miercoles_ini;
-                else if (jueves_ini != 0)
-                    return jueves_ini;
-                else if (viernes_ini != 0)
-                    return viernes_ini;
-                else
-                    return sabado_ini;
+                int i = 0;
+                foreach (int n in horario_ini)
+                    if ((i > n && n != 0) || i==0)
+                        i = n;
+
+                return i;
             }
         }        
         public string Area { get { return cve_materia.Substring(0, 1); } }
         public int Cupo { get { return cupo; } }
-
         public string Cve_materia { get { return cve_materia; } }
         public int num_Grupo { get { return grupo; } }
         public int RPE { get { return rpe; } }
@@ -265,7 +249,7 @@ namespace OrigenDatos.Clases
         /// <param name="g"></param>
         /// <param name="c"></param>
         /// <param name="salones"></param>
-        public Grupo(Grupo g,Conexion c=null, ListaSalones salones=null)
+        public Grupo(Grupo g,Conexion c=null, IList<Salon> salones =null)
         {
             cve_materia = g.cve_materia;
             grupo = g.grupo;
@@ -324,9 +308,9 @@ namespace OrigenDatos.Clases
             }
         }
 
-        public Grupo(DataRow r, IDictionary<string, string> h, Conexion c=null, ListaSalones salones=null)
+        public Grupo(DataRow r, IDictionary<string, string> h,IDictionary<string,string> def=null, Conexion c=null, IList<Salon> salones=null)
         {
-            Set_From_Row(r, h);
+            Set_From_Row(r, h,def);
 
             if (c != null)
             {
@@ -343,7 +327,7 @@ namespace OrigenDatos.Clases
         }
 
         #region Inicializadores
-        protected void Set_From_Row(DataRow r,IDictionary<string,string> h)
+        protected void Set_From_Row(DataRow r,IDictionary<string,string> h, IDictionary<string, string> def)
         {
             try
             {
@@ -361,7 +345,6 @@ namespace OrigenDatos.Clases
                 }
 
                 rpe = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cverpe"])));
-                tipo = h["tipoDefault"] == "" ? r.Field<string>(h["tipo"]) : h["tipoDefault"];
                 salon = r.Field<string>(h["salon"]);
                 lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunes"])));
                 lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunesf"])));
@@ -377,13 +360,15 @@ namespace OrigenDatos.Clases
                 sabado_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabadof"])));
                 cupo = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cupo"])));
                 try
-                {
-                    ciclo = Convert.ToString(r.Field<object>(h["ciclo"]));
-                }
+                { tipo = r.Field<string>(h["tipo"]); }
                 catch
-                {
-                    ciclo = h["cicloDefault"];
-                }
+                { tipo = def["tipo"]; }
+
+                try
+                { ciclo = Convert.ToString(r.Field<object>(h["ciclo"])); }
+                catch
+                { ciclo = def["ciclo"]; }
+
             }
             catch (Exception ex)
             {
@@ -416,9 +401,10 @@ namespace OrigenDatos.Clases
             }
         }
 
-        protected void Set_SalonesPosibles(DataTable dt, ListaSalones salones)
+        protected void Set_SalonesPosibles(DataTable dt, IList<Salon> salones)
         {
-            salones_Posibles = salones.EnTabla(dt);
+            ListaSalones lSalones = new ListaSalones(salones);
+            salones_Posibles = lSalones.EnTabla(dt);
         }
 
         /// <summary>
@@ -574,6 +560,15 @@ namespace OrigenDatos.Clases
                 return true;
 
             return false;
+        }
+
+        public bool EnDias(string dias)
+        {
+            for (int i = 0; i < 6; i++)
+                if (dias[i] == '1' && Dias[i] == '0')
+                    return false;
+
+            return true;
         }
 
         public override string ToString()

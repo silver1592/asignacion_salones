@@ -16,19 +16,7 @@ namespace Algoritmo02.Heredados
         /// </summary>
         public ListaSalones() : base () { }
 
-        /// <summary>
-        /// Inicializa todos los componentes con algun valor
-        /// </summary>
-        /// <param name="c">Conexion a utilizar</param>
-        /// <param name="salones">Lista de salones a utilizar</param>
-        public ListaSalones(List<Salon> salones)
-        {
-            this.salones = new List<OrigenDatos.Clases.Salon>();
-            foreach(Salon s in salones)
-                this.salones.Add(s);
-        }
-
-        public ListaSalones(OrigenDatos.Clases.ListaSalones salones)
+        public ListaSalones(IList<OrigenDatos.Clases.Salon> salones)
         {
             this.salones = new List<OrigenDatos.Clases.Salon>();
             foreach (OrigenDatos.Clases.Salon s in salones)

@@ -13,7 +13,7 @@ namespace Algoritmo02.Heredados
         #region Constructores
         public Grupo(OrigenDatos.Clases.Grupo g,Conexion c=null, ListaSalones salones=null) :base(g,c,salones){ }
 
-        public Grupo(DataRow r, IDictionary<string, string> h, Conexion c=null, ListaSalones salones=null) : base(r, h,c,salones) { }
+        public Grupo(DataRow r, IDictionary<string, string> h, IDictionary<string, string> def=null, Conexion c=null, ListaSalones salones=null) : base(r,h,def,c,salones) { }
         #endregion
 
         #region Atributos

@@ -11,7 +11,15 @@ namespace Algoritmo02.Heredados
 
         public Conexion(string Datos, string excelDireccion = null, string ciclo = "2016-2017/II", string tipo = ""): base(Datos, excelDireccion, ciclo,tipo){}
 
-        public ListaGrupos GetGrupos(string semestre, int ini = 7, int fin=22,bool bExcel=false)
+        /// <summary>
+        /// Obtiene los grupos de la base de datos o del excel
+        /// </summary>
+        /// <param name="semestre">Semestre del cual se obtendran los grupos, si es excel los inicializara a ese semestre</param>
+        /// <param name="ini"></param>
+        /// <param name="fin"></param>
+        /// <param name="bExcel"></param>
+        /// <returns></returns>
+        public ListaGrupos GetGrupos(string semestre, int ini = 7, int fin=22,bool bExcel=true)
         {
             ListaGrupos res = null;
             List<OrigenDatos.Clases.Grupo> grupos;
@@ -20,7 +28,7 @@ namespace Algoritmo02.Heredados
 
             if (Excel==null || !bExcel)
             {
-                DataTable dt = Querry("SELECT * FROM  [asignacion].[Grupos_a_las] ("+ini+","+fin+") where ciclo = '" + semestre + "'");
+                DataTable dt = Querry("SELECT DISTINCT * FROM  [asignacion].[Grupos_a_las] (" + ini+","+fin+") where ciclo = '" + semestre + "'");
 
                 grupos = AsList(dt);
                 res = new ListaGrupos(grupos, materias, profesores,this);
@@ -33,6 +41,27 @@ namespace Algoritmo02.Heredados
             return res;
         }
 
+        public ListaGrupos GetGruposIni(string semestre, int ini, bool bExcel)
+        {
+            ListaGrupos res = null;
+            List<OrigenDatos.Clases.Grupo> grupos;
+            List<Algoritmo02.Clases.Materia> materias = GetMaterias();
+            List<Algoritmo02.Clases.Profesor> profesores = GetProfesores();
+
+            if (Excel == null || !bExcel)
+            {
+                DataTable dt = Querry("SELECT DISTINCT *  FROM [asignacion].[ae_Grupos_ini] (" + ini + ") where ciclo = '" + semestre + "'");
+
+                grupos = AsList(dt);
+                res = new ListaGrupos(grupos, materias, profesores, this);
+            }
+            else
+            {
+                res = new ListaGrupos(Excel.GetGrupos(hoja), materias, profesores, this);
+            }
+
+            return res;
+        }
         public ListaGrupos GetLightGrupos(string semestre, int ini=7, int fin=22,bool bExcel = true)
         {
             ListaGrupos res = null;

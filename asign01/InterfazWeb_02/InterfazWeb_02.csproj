@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Clases\Conexion.cs" />
     <Compile Include="Clases\ListaGrupos.cs" />
+    <Compile Include="Clases\ListaSalones.cs" />
     <Compile Include="Controllers\ConsultasController.cs" />
     <Compile Include="Controllers\EjecutaController.cs" />
     <Compile Include="Controllers\GruposController.cs" />

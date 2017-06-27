@@ -9,10 +9,12 @@ namespace Algoritmo02.Clases
     public class Algoritmo
     {
         private ListaGrupos grupos;
+        private ListaGrupos gruposAsignados;
         private ListaSalones salones;
         private int hora;
 
         private ListaGrupos Grupos { get { return new ListaGrupos(grupos); } }
+        public ListaGrupos GruposAsignados { get { return gruposAsignados; } }
         private ListaSalones Salones { get { return new ListaSalones(salones); } }
 
         private int tamPoblacion;
@@ -31,7 +33,7 @@ namespace Algoritmo02.Clases
         /// <param name="salones">Lista de salones disponibles para asignar</param>
         public Algoritmo(ListaGrupos grupos, ListaSalones salones, int hora,int _tamPoblacion = 5, int _generaciones =50)
         {
-            this.grupos = grupos;
+            this.grupos = new ListaGrupos(grupos.SinAsignar("111111", hora));
             this.salones = salones;
             this.hora = hora;
             tamPoblacion = _tamPoblacion;
@@ -59,7 +61,7 @@ namespace Algoritmo02.Clases
         /// Marca el inicio del algoritmo
         /// </summary>
         /// <returns>Lista con los grupos asignados</returns>
-        public ListaGrupos AsignaSalones()
+        public void AsignaSalones()
         {
             try
             {
@@ -77,7 +79,7 @@ namespace Algoritmo02.Clases
                     rescate();
                 }
 
-                return mejorRespuesta();
+                gruposAsignados = mejorRespuesta();
             }
             catch (Exception ex)
             {

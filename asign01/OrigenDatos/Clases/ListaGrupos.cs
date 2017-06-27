@@ -99,30 +99,21 @@ namespace OrigenDatos.Clases
             grupos = new List<Grupo>();
         }
 
-        public ListaGrupos(List<Grupo> grupos)
+        public ListaGrupos(IList<Grupo> grupos)
         {
             this.grupos = new List<Grupo>();
             foreach(Grupo g in grupos)
             {
-                this.grupos.Add(g);
+                this.grupos.Add(new Grupo(g));
             }
         }
 
-        public ListaGrupos(Conexion c, DataTable dtGrupos, ListaSalones salones)
+        public ListaGrupos(Conexion c, DataTable dtGrupos, IList<Salon> salones)
         {
             grupos = new List<Grupo>();
 
             foreach (DataRow r in dtGrupos.Rows)
-                grupos.Add(new Grupo(r, c.DGrupos,c,salones));
-        }
-
-        public ListaGrupos(ListaGrupos grp)
-        {
-            this.grupos = new List<Grupo>();
-            foreach (Grupo g in grp.grupos)
-            {
-                this.grupos.Add(new Grupo(g));
-            }
+                grupos.Add(new Grupo(r, c.DGrupos,null,c,salones));
         }
 
         public void SetGrupos(List<Grupo> grupos)
@@ -157,6 +148,7 @@ namespace OrigenDatos.Clases
                 cad+=g.ToString()+"\n";
             return base.ToString();
         }
+
         #endregion
 
         #region Consultas Grupos
@@ -273,36 +265,6 @@ namespace OrigenDatos.Clases
                         select g;
 
             return new ListaGrupos(query.ToList());
-        }
-
-        public List<ListaGrupos> PorHorario()
-        {
-            List<ListaGrupos> res = new List<ListaGrupos>();
-
-            var query = from Grupo g in grupos
-                        group g by g.Salon into horarioSalon
-                        select horarioSalon;
-
-            foreach (var lg in query)
-                res.Add( new ListaGrupos(lg.ToList<Grupo>()));
-
-            return res;
-        }
-
-        public List<ListaGrupos> Empalmes()
-        {
-            List<ListaGrupos> res = new List<ListaGrupos>();
-            ListaGrupos aux;
-
-            foreach (ListaGrupos lg in PorHorario())
-            {
-                aux = lg.Empalmados();
-
-                if (aux.Count()!=0)
-                    res.Add(aux);
-            }
-
-            return res;
         }
 
         public ListaGrupos ConProfesor(string rpe)

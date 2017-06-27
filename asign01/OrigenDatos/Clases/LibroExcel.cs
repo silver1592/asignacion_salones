@@ -26,7 +26,9 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Diccionario con los encabezados de la tabla
         /// </summary>
-        public Dictionary<string, string> headers;
+        public Dictionary<string, string> dHeaders;
+
+        public Dictionary<string,string> dDefault;
 
         /// <summary>
         /// Inicializa el diccionario
@@ -36,34 +38,33 @@ namespace OrigenDatos.Clases
         /// </remarks>
         private void SetHeaders()
         {
-            headers = new Dictionary<string, string>();
-            headers.Add("cve_mat", "CVE_MAT");
-            headers.Add("cve_gpo", "CVE_GPO");
+            dHeaders = new Dictionary<string, string>();
+            dDefault = new Dictionary<string, string>();
 
-            headers.Add("cve", "CLAVEMAT");
-
-            headers.Add("cverpe", "CVERPE");
-            headers.Add("tipo", "TIPO");    //*
-            headers.Add("salon", "SALON");  //*
-            headers.Add("lunes", "LUNES");
-            headers.Add("lunesf", "LUNESF");
-            headers.Add("martes", "MARTES");
-            headers.Add("martesf", "MARTESF");
-            headers.Add("miercoles", "MIERCOLES");
-            headers.Add("miercolesf", "MIERCOLESF");
-            headers.Add("jueves", "JUEVES");
-            headers.Add("juevesf", "JUEVESF");
-            headers.Add("viernes", "VIERNES");
-            headers.Add("viernesf", "VIERNESF");
-            headers.Add("sabado", "SABADO");
-            headers.Add("sabadof", "SABADOF");
-            headers.Add("cupo", "CUPO");
-            headers.Add("ciclo", "CICLO");  //*
+            dHeaders.Add("cve_mat", "CVE_MAT");
+            dHeaders.Add("cve_gpo", "CVE_GPO");
+            dHeaders.Add("cve", "CLAVEMAT");
+            dHeaders.Add("cverpe", "CVERPE");
+            dHeaders.Add("tipo", "TIPO");    //*
+            dHeaders.Add("salon", "SALON");  //*
+            dHeaders.Add("lunes", "LUNES");
+            dHeaders.Add("lunesf", "LUNESF");
+            dHeaders.Add("martes", "MARTES");
+            dHeaders.Add("martesf", "MARTESF");
+            dHeaders.Add("miercoles", "MIERCOLES");
+            dHeaders.Add("miercolesf", "MIERCOLESF");
+            dHeaders.Add("jueves", "JUEVES");
+            dHeaders.Add("juevesf", "JUEVESF");
+            dHeaders.Add("viernes", "VIERNES");
+            dHeaders.Add("viernesf", "VIERNESF");
+            dHeaders.Add("sabado", "SABADO");
+            dHeaders.Add("sabadof", "SABADOF");
+            dHeaders.Add("cupo", "CUPO");
+            dHeaders.Add("ciclo", "CICLO");  //*
 
             //Valores default
-            headers.Add("cicloDefault", "");
-            headers.Add("tipoDefault", "T");
-            headers.Add("salonDefault", "");
+            dDefault.Add("ciclo", "");
+            dDefault.Add("tipo", "T");
         }
         #endregion
 
@@ -81,19 +82,17 @@ namespace OrigenDatos.Clases
 
             if (!File.Exists(direccion))
             {
-                //TODO: Si no existe crealo
                 Microsoft.Office.Interop.Excel.Application appExcel = new Microsoft.Office.Interop.Excel.Application();
                 Microsoft.Office.Interop.Excel.Workbook workbook = appExcel.Workbooks.Add();
                 workbook.SaveAs(direccion);
                 workbook.Close();
-                //throw new Exception("No se encontro archivo", null);
             }
 
             SetHeaders();
             this.archivo = archivo;
             this.dir = direccion;
-            headers["cicloDefault"] = ciclo;
-            headers["tipoDefault"] = tipo;
+            dHeaders["cicloDefault"] = ciclo;
+            dHeaders["tipoDefault"] = tipo;
         }
 
         /// <summary>
@@ -102,16 +101,14 @@ namespace OrigenDatos.Clases
         /// <returns>Hojas del excel</returns>
         private DataTableCollection GetSheets()
         {
-            string filePath = archivo;
             //Es necesaria para que se inicialize ContCoumn
-
-            FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
+            FileStream stream = File.Open(dir, FileMode.Open, FileAccess.Read);
 
             IExcelDataReader excelReader;
-            if (filePath.Contains(".xlsx"))
+            if (dir.Contains(".xlsx"))
                 // De lo contrario descomentaremos esta (2007 format; *.xlsx)
                 excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-            else if (filePath.Contains(".xls"))
+            else if (dir.Contains(".xls"))
                 // Si es un archivo de excel anterior a 2009, debemos usar esta línea
                 excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
             else
@@ -136,7 +133,7 @@ namespace OrigenDatos.Clases
             List<Grupo> res = new List<Grupo>();
 
             foreach (DataRow r in dtGrupos.Rows)
-                res.Add(new Grupo(r, headers));
+                res.Add(new Grupo(r, dHeaders,dDefault));
 
             return res;
         }
@@ -148,9 +145,9 @@ namespace OrigenDatos.Clases
         /// </summary>
         /// <param name="grupos">Nombre de la hoja que se quiere poner </param>
         /// <param name="hoja">Hoja en la que se va a escribir</param>
-        public void EscribeGrupos(IList<Grupo> grupos, string hoja)
+        public void EscribeGrupos(IList<Grupo> grupos, string hoja, IDictionary<string, string> materia = null, IDictionary<int, string> profesor = null)
         {
-            var workbook = new XLWorkbook();
+            var workbook = new XLWorkbook(dir);
             //Abre la hoja seleccionada y de no existir la crea
             IXLWorksheet worksheet;
 
@@ -159,23 +156,23 @@ namespace OrigenDatos.Clases
                 worksheet = workbook.Worksheets.Worksheet(hoja);
             }catch
             {
-                List<string> keyList = new List<string>(headers.Keys);
+                List<string> keyList = new List<string>(dHeaders.Keys);
                 worksheet = workbook.Worksheets.Add(hoja);
 
                 //Escribe los encabezados de las hojas
-                for (int i = 0; i < headers.Count + 1; i++)
+                for (int i = 1; i <= dHeaders.Count + 1; i++)
                 {
-                    if (i < headers.Count)
-                        worksheet.Row(0).Cell(i).Value = headers[keyList[i]];
-                    else if (i < headers.Count + 1)
-                        worksheet.Row(0).Cell(i).Value = "observaciones";
+                    if (i < dHeaders.Count)
+                        worksheet.Cell(1,i).Value = dHeaders[keyList[i-1]];
+                    else if (i < dHeaders.Count + 1)
+                        worksheet.Cell(1,i).Value = "observaciones";
                 }
             }
 
             foreach (Grupo item in grupos)
-                EscribeGrupo(item,worksheet);
+                EscribeGrupo(item,worksheet,materia,profesor);
 
-            workbook.SaveAs(dir == null ? this.archivo : dir);
+            workbook.SaveAs(dir);
             workbook.Dispose();
         }
 
@@ -184,10 +181,33 @@ namespace OrigenDatos.Clases
         /// </summary>
         /// <param name="g">Grupo a escribir</param>
         /// <param name="worksheet">Hoja a modificar</param>
-        public void EscribeGrupo(Grupo g, IXLWorksheet worksheet)
+        public void EscribeGrupo(Grupo g, IXLWorksheet worksheet,IDictionary<string,string> materia, IDictionary<int,string> profesor)
         {
-            worksheet.Row(1).Cell(0).Value = g.Cve_materia;
-            worksheet.Row(1).Cell(1).Value = g.num_Grupo;
+            //Inserta una fila al principio desplazando lo demas hacia abajo
+            //De esa manera siempre escribes en la primera fila
+            worksheet.Row(1).InsertRowsBelow(1);
+
+            worksheet.Cell(2,1).Value = g.Cve_materia;
+            worksheet.Cell(2,2).Value = g.num_Grupo;
+            worksheet.Cell(2,3).Value = materia != null ? materia[g.Cve_materia] : (Convert.ToInt32(g.Cve_materia) * 100 + g.num_Grupo).ToString();
+            worksheet.Cell(2,4).Value = profesor !=null ? profesor[g.RPE] : g.RPE.ToString();
+            worksheet.Cell(2,5).Value = g.Tipo;
+            worksheet.Cell(2,6).Value = g.Salon;
+            worksheet.Cell(2,7).Value = g.horario_ini[0];
+            worksheet.Cell(2,8).Value = g.horario_fin[0];
+            worksheet.Cell(2,9).Value = g.horario_ini[1];
+            worksheet.Cell(2,10).Value = g.horario_fin[1];
+            worksheet.Cell(2,11).Value = g.horario_ini[2];
+            worksheet.Cell(2,12).Value = g.horario_fin[2];
+            worksheet.Cell(2,13).Value = g.horario_ini[3];
+            worksheet.Cell(2,14).Value = g.horario_fin[3];
+            worksheet.Cell(2,15).Value = g.horario_ini[4];
+            worksheet.Cell(2,16).Value = g.horario_fin[4];
+            worksheet.Cell(2,17).Value = g.horario_ini[5];
+            worksheet.Cell(2,18).Value = g.horario_fin[5];
+            worksheet.Cell(2,19).Value = g.Cupo;
+            worksheet.Cell(2,20).Value = g.Ciclo;
+            worksheet.Cell(2,21).Value = g.observaciones;
         }
 
         /// <summary>
@@ -212,7 +232,7 @@ namespace OrigenDatos.Clases
         {
             DataTable dt = GetSheets()[hoja];
 
-            return AsList(dt);
+            return dt != null ? AsList(dt) : new List<Grupo>();
         }
         #endregion
     }

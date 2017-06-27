@@ -11,10 +11,10 @@ namespace Algoritmo02.Clases
 
         public ListaGrupos Grupos { get { return grupos; } }
 
-        public ChecaEmpalmes(ListaGrupos _grupos, ListaSalones _salones)
+        public ChecaEmpalmes(IList<OrigenDatos.Clases.Grupo> _grupos, IList<OrigenDatos.Clases.Salon> _salones)
         {
-            grupos = _grupos;
-            salones = _salones;
+            grupos = new ListaGrupos(_grupos);
+            salones = new ListaSalones(_salones);
         }
 
         /// <summary>

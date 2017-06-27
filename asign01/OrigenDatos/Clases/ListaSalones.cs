@@ -106,7 +106,7 @@ namespace OrigenDatos.Clases
         /// </summary>
         /// <param name="c">Conexion a utilizar</param>
         /// <param name="salones">Lista de salones a utilizar</param>
-        public ListaSalones(List<Salon> salones)
+        public ListaSalones(IList<Salon> salones)
         {
             SetSalones(salones);
         }
@@ -124,9 +124,9 @@ namespace OrigenDatos.Clases
                 salones.Add(new Salon(rSalon, hora, c));
         }
 
-        public void SetSalones(List<Salon> salones)
+        public void SetSalones(IList<Salon> salones)
         {
-            this.salones = salones;
+            this.salones = salones as List<Salon>;
         }
         #endregion
 

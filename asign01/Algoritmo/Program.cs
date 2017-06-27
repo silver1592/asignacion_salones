@@ -15,7 +15,7 @@ namespace Algoritmo02
             inicializaConeccion();
             TimeSpan stop;
             TimeSpan start = new TimeSpan(DateTime.Now.Ticks);
-            Asignacion alg;
+            Algoritmo alg;
             ChecaEmpalmes emp;
             PreAsignacion pre;
             ListaGrupos grupos = c.GetGrupos("2016-2017/II");
@@ -35,9 +35,11 @@ namespace Algoritmo02
                 pre.semestres_anteriores();
                 grupos.Actualiza(pre.Grupos);
 
-                alg = new Asignacion(grupos,salones, i);
-                alg.EjecutaAlgoritmo();
-                grupos.Actualiza(alg.Grupos);
+                alg = new Algoritmo(grupos,salones, i,5,50);
+                alg.AsignaSalones();
+                grupos.Actualiza(alg.GruposAsignados);
+
+                c.UpdateGrupo(gruposActuales);
             }
             stop = new TimeSpan(DateTime.Now.Ticks);
             Console.Write("***Pulsa una tecla para continuar****\n");

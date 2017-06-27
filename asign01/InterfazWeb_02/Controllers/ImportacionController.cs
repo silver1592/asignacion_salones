@@ -56,11 +56,8 @@ namespace InterfazWeb_02.Controllers
         [HttpPost]
         public JsonResult SetSession_OrigenDatos(string excel, string sheet, string ciclo,string bd)
         {
-            if(!Convert.ToBoolean(bd))
-            {
-                Session.Add("excel", excel);
-                Session.Add("sheet", sheet);
-            }
+            Session.Add("excel", excel);
+            Session.Add("sheet", sheet);
 
             Session.Add("ciclo", ciclo);
             Session.Add("usaExcel", !Convert.ToBoolean(bd));

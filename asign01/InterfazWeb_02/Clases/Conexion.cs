@@ -13,30 +13,22 @@ namespace InterfazWeb_02.Clases
             DatosConexion = datos;
             string dir = controller.Server.MapPath("~/Archivos/");
             string file = controller.Session["excel"] != null ? controller.Session["excel"].ToString() : "";
-            string sheet = controller.Session["sheet"] != null ? controller.Session["sheet"].ToString() : "";
+            this.Sheet = controller.Session["sheet"] != null ? controller.Session["sheet"].ToString() : "";
             string ciclo = controller.Session["ciclo"].ToString();
             bool bd = !Convert.ToBoolean(controller.Session["usaExcel"].ToString());
 
             if (!bd)
-            {
                 Excel = new LibroExcel(dir, file, ciclo, "T");
-                //Excel.setHojaHorarios(sheet);
-            }
-            else
-            {
-                DataTable dt = Querry("select count(*) from ae_horario where ciclo = '" + ciclo + "'");
-                if (Convert.ToInt32(dt.Rows[0][0].ToString()) == 0)
-                    throw new Exception("Hay datos de ese semestre");
-            }
+            else if(!ExisteSemestre(ciclo))
+                throw new Exception("No hay datos de ese semestre");
+
         }
 
-        public Conexion(string Datos, string excelDireccion = null, string hoja = null, string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, hoja, ciclo, tipo) { }
+        public Conexion(string Datos, string excelDireccion = null, string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, ciclo, tipo) { }
 
         internal string[] Sheets()
         {
-            Excel.SetHojas();
-
-            return Excel.Sheets;
+            return Excel.GetStringSheets();
         }
 
         public bool ExisteBD(Grupo g)
@@ -46,6 +38,16 @@ namespace InterfazWeb_02.Clases
             DataTable dt = Querry(query);
 
             return dt.Rows.Count != 0;
+        }
+
+        public bool ExisteSemestre(string semestre)
+        {
+            DataTable dt = Querry("select count(*) from ae_horario where ciclo = '" + semestre + "'");
+            if (Convert.ToInt32(dt.Rows[0][0].ToString()) == 0)
+                return false;
+
+            return true;
+
         }
 
         internal void Insert(Grupo g)
