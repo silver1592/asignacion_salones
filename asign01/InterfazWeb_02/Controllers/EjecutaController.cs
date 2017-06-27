@@ -24,21 +24,16 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public JsonResult EjecutaOperaciones(string hora,string empalmes, string preasignacion, string otrosSemestres, string algoritmo, string individuos, string generacion)
+        public JsonResult EjecutaOperaciones(string hora,string empalmes, string preasignacion, string otrosSemestres, string algoritmo, string individuos, string generacion,string semestre)
         {
             string res = "asignacion fallida";
-            if (Session["ResExcel"] == null)
-            {
-                Session.Add("ResExcel", Server.MapPath("~/Archivos/") + DateTime.Today.ToString("yyyyMMdd")+ ".xlsx");
-                Session.Add("ResSheet", DateTime.Now.ToString("HH_mm"));
-            }
 
             try
             {
                 //TODO:Checar que funcione
-                string ciclo = Session["ciclo"].ToString();
+                string ciclo = semestre;
 
-                Conexion c = new Conexion(Conexion.datosConexion,Session["ResExcel"].ToString(),Session["ciclo"].ToString());
+                Conexion c = new Conexion(Conexion.datosConexion);
                 ListaGrupos grupos = new ListaGrupos(c.GetGruposIni(ciclo,Convert.ToInt32(hora),false));
                 ListaSalones salones = new ListaSalones(c,c.Salones(), Convert.ToInt32(hora));
 

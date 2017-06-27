@@ -20,7 +20,7 @@ namespace InterfazWeb_02.Controllers
 
         public ActionResult _Grupos()
         {
-            Conexion c = new Conexion(Conexion.datosConexion, this);
+            Conexion c = new Conexion(Conexion.datosConexion);
             ListaGrupos grupos = new ListaGrupos(c.GetGrupos(Session["semestre"].ToString()));
 
             return PartialView(grupos);

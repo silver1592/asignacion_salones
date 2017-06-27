@@ -32,6 +32,21 @@
             Excel utlizado
             </summary>
         </member>
+        <member name="F:OrigenDatos.Clases.Conexion.hoja">
+            <summary>
+            Hoja de excel a utilizar
+            </summary>
+        </member>
+        <member name="P:OrigenDatos.Clases.Conexion.Sheet">
+            <summary>
+            Asigna la hoja a utilizar
+            </summary>
+        </member>
+        <member name="P:OrigenDatos.Clases.Conexion.Sheets">
+            <summary>
+            Nombre de las Hojas disponibles
+            </summary>
+        </member>
         <member name="P:OrigenDatos.Clases.Conexion.DGruposExcel">
             <summary>
             Diccionario para leer la informacion del excel
@@ -179,7 +194,7 @@
             Cadena para el query de update.
             </summary>
         </member>
-        <member name="M:OrigenDatos.Clases.Grupo.#ctor(OrigenDatos.Clases.Grupo,OrigenDatos.Clases.Conexion,OrigenDatos.Clases.ListaSalones)">
+        <member name="M:OrigenDatos.Clases.Grupo.#ctor(OrigenDatos.Clases.Grupo,OrigenDatos.Clases.Conexion,System.Collections.Generic.IList{OrigenDatos.Clases.Salon})">
             <summary>
             Constructor por copia
             </summary>
@@ -224,7 +239,7 @@
             Direccion del archivo
             </summary>
         </member>
-        <member name="F:OrigenDatos.Clases.LibroExcel.headers">
+        <member name="F:OrigenDatos.Clases.LibroExcel.dHeaders">
             <summary>
             Diccionario con los encabezados de la tabla
             </summary>
@@ -258,14 +273,14 @@
             <param name="dtGrupos">Tabla de grupos</param>
             <returns></returns>
         </member>
-        <member name="M:OrigenDatos.Clases.LibroExcel.EscribeGrupos(System.Collections.Generic.IList{OrigenDatos.Clases.Grupo},System.String)">
+        <member name="M:OrigenDatos.Clases.LibroExcel.EscribeGrupos(System.Collections.Generic.IList{OrigenDatos.Clases.Grupo},System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.Int32,System.String})">
             <summary>
             Escribe la informacion de los grupos
             </summary>
             <param name="grupos">Nombre de la hoja que se quiere poner </param>
             <param name="hoja">Hoja en la que se va a escribir</param>
         </member>
-        <member name="M:OrigenDatos.Clases.LibroExcel.EscribeGrupo(OrigenDatos.Clases.Grupo,ClosedXML.Excel.IXLWorksheet)">
+        <member name="M:OrigenDatos.Clases.LibroExcel.EscribeGrupo(OrigenDatos.Clases.Grupo,ClosedXML.Excel.IXLWorksheet,System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.Int32,System.String})">
             <summary>
             Escribe un grupo en la hoja dada
             </summary>
@@ -328,7 +343,7 @@
             Solo crea la lista, falta inicializar la conexion
             </summary>
         </member>
-        <member name="M:OrigenDatos.Clases.ListaSalones.#ctor(System.Collections.Generic.List{OrigenDatos.Clases.Salon})">
+        <member name="M:OrigenDatos.Clases.ListaSalones.#ctor(System.Collections.Generic.IList{OrigenDatos.Clases.Salon})">
             <summary>
             Inicializa todos los componentes con algun valor
             </summary>

@@ -1,7 +1,7 @@
 ﻿@model List<InterfazWeb_02.Models.LibroExcel> 
 <div id="SeleccionExcel">
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-12">
             <label>Archivo: </label>
             <select id="archivos" class="form-control">
                 <option>---------</option>
@@ -18,24 +18,13 @@
             <label>*Semestre:</label>
             <input type="text" name="semestre" class="form-control"/>
         </div>
-        <div class="col-md-5">
-            <div class="radio">
-                <label><input type="radio" name="operacion" value="e" />Usar excel</label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="operacion" value="b"/>Usar base de datos</label>
-            </div>
-        </div>
     </div>
     <br />
     <div class="row">
         <div class="col-md-12">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-7">
-                        <button id="setSession" class="btn-block">Aceptar</button>
-                    </div>
-                    <div class="col-md-5">
+                    <div class="col-md-12">
                         <button id="uploadExcel" class="btn-block">Cargar excel en base de datos</button>
                     </div>
                 </div>

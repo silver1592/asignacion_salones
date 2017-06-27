@@ -33,3 +33,7 @@ table{
     display:none;
     visibility:hidden;
 }
+
+#optionsTabs{
+    border:0px;
+}

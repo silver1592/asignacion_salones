@@ -1,8 +1,15 @@
-﻿@using (Html.BeginForm("SubirExcel", "Importacion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+﻿@model IList<string>
+@using (Html.BeginForm("SubirExcel", "Importacion", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="file" name="file" accept=".xlsx, .xls" class="form-control"/> <br />
     <button type="submit" class="btn-block">Subir archivo</button>
 }
+<ul>
+    @foreach (string s in Model)
+    {
+        <li><a href="@Request.Url.AbsoluteUri/Archivos/@s">@s</a></li>
+    }
+</ul>
 <div class="direccion">
     <p id="uploadExcelToDB">
         @Url.Action("CargaExcel_BD","Importacion", null, Request.Url.Scheme)

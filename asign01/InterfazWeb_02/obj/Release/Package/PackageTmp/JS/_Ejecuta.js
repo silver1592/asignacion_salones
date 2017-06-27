@@ -4,7 +4,7 @@ var ejecuta_hora_fin = null;
 function Ejecuta() {
     var datos = GetDatosEjecuta();
     $("#resConsola").children().remove();
-
+    $("#resConsola").append($("<p>Iniciando Ejecucion</p>"));
     EjecutaHora()
 }
 
@@ -32,6 +32,8 @@ function EjecutaHora()
             else {
                 ejecuta_hora_ini = null;
                 ejecuta_hora_fin = null;
+                $("#resConsola").append("<p>Asignacion terminada</p>");
+                alert("Operacion terminada");
             }
         },
         error: function (jqXHR, exception) {
@@ -60,6 +62,8 @@ function GetDatosEjecuta()
         fin = ejecuta_hora_fin;
     }
 
+    var semestre = $("#ejecucion [name='semestre']").val();
+
     var bEmpalmes = $("[name='emp']").is(":checked");
 
     var bPreasignacion = $("[name='pre']").is(":checked");
@@ -77,7 +81,8 @@ function GetDatosEjecuta()
         otrosSemestres: bOtrosSemestres,
         algoritmo: bAlgoritmo,
         individuo: iIndividuos,
-        generacion: iGeneraciones
+        generacion: iGeneraciones,
+        semestre : semestre
     }
 
     return datos;

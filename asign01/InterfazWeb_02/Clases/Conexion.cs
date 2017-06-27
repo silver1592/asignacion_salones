@@ -8,20 +8,9 @@ namespace InterfazWeb_02.Clases
 {
     public class Conexion : Algoritmo02.Heredados.Conexion
     {
-        public Conexion(string datos, System.Web.Mvc.Controller controller) : base()
+        public Conexion(string datos) : base()
         {
             DatosConexion = datos;
-            string dir = controller.Server.MapPath("~/Archivos/");
-            string file = controller.Session["excel"] != null ? controller.Session["excel"].ToString() : "";
-            this.Sheet = controller.Session["sheet"] != null ? controller.Session["sheet"].ToString() : "";
-            string ciclo = controller.Session["ciclo"].ToString();
-            bool bd = !Convert.ToBoolean(controller.Session["usaExcel"].ToString());
-
-            if (!bd)
-                Excel = new LibroExcel(dir, file, ciclo, "T");
-            else if(!ExisteSemestre(ciclo))
-                throw new Exception("No hay datos de ese semestre");
-
         }
 
         public Conexion(string Datos, string excelDireccion = null, string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, ciclo, tipo) { }

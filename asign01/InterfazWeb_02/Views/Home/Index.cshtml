@@ -18,20 +18,29 @@
     </header>
     <main class="container">
         <div id="optionsTabs" class="row">
-            <ul>
-                <li><a href="#tab_0">Carga Excel</a></li>
-                <li><a href="#tab_1">Origen de datos</a></li>
-                <li><a href="#ejecutaAsignacion">Ejecucion</a></li>
-            </ul>
-            <div id="tab_1"  class="container-fluid">
-                @{ Html.RenderAction("_SeleccionExcel", "Importacion"); }
-            </div>
+            <div class="container-fluid">
+                <ul>
+                    <li><a href="#tab_1">Excel</a></li>
+                    <li><a href="#ejecutaAsignacion">Ejecucion</a></li>
+                </ul>
+                <div id="tab_1" class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="container-fluid">
+                                @{ Html.RenderAction("_CargaExcel", "Importacion"); }
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="container-fluid">
+                                @{ Html.RenderAction("_SeleccionExcel", "Importacion"); }
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div id="tab_0"  class="container-fluid">
-                @{ Html.RenderAction("_CargaExcel", "Importacion"); }
-            </div>
-            <div id="ejecutaAsignacion" class="container-fluid">
-                @{ Html.RenderAction("_Operaciones", "Ejecuta");}
+                <div id="ejecutaAsignacion" class="container-fluid">
+                    @{ Html.RenderAction("_Operaciones", "Ejecuta");}
+                </div>
             </div>
         </div>
         <div class="row">

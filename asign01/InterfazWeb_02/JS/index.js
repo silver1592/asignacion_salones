@@ -15,7 +15,6 @@ function initialize()
 {
     $("#optionsTabs").tabs({ collapsible: true });
     $("#tabs").tabs({ collapsible: true });
-    
 }
 
 function Wait()

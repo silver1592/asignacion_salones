@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using InterfazWeb_02.Models;
 using InterfazWeb_02.Clases;
+using System.IO;
 
 namespace InterfazWeb_02.Controllers
 {
@@ -36,7 +37,12 @@ namespace InterfazWeb_02.Controllers
 
         public ActionResult _CargaExcel()
         {
-            return PartialView();
+            List<string> lista = new List<string>();
+
+            foreach (string s in Directory.GetFiles(Server.MapPath("~/Archivos/")))
+                lista.Add(Path.GetFileName(s) );
+
+            return PartialView(lista);
         }
 
         [HttpPost]
@@ -54,30 +60,15 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public JsonResult SetSession_OrigenDatos(string excel, string sheet, string ciclo,string bd)
-        {
-            Session.Add("excel", excel);
-            Session.Add("sheet", sheet);
-
-            Session.Add("ciclo", ciclo);
-            Session.Add("usaExcel", !Convert.ToBoolean(bd));
-
-            return new JsonResult() { Data = true, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        [HttpPost]
-        public JsonResult CargaExcel_BD()
+        public JsonResult CargaExcel_BD(string excel, string sheet, string ciclo)
         {
             object[] res = new object[] { true, "" };
             Conexion c;
-            string excel = Session["excel"].ToString();
-            string sheet = Session["sheet"].ToString();
-            string ciclo = Session["ciclo"].ToString();
-            bool db = Convert.ToBoolean(Session["usaExcel"].ToString());
 
             try
             {
-                c = new Conexion(Conexion.datosConexion, this);
+                c = new Conexion(Conexion.datosConexion,excel,ciclo);
+                c.Sheet = sheet;
                 ListaGrupos grupos = new ListaGrupos(c.GetGrupos(Session["ciclo"].ToString()));
 
                 foreach (Grupo g in grupos)
@@ -105,13 +96,10 @@ namespace InterfazWeb_02.Controllers
             string ciclo = Session["ciclo"] != null ? Session["ciclo"].ToString() : "";
             bool db = Session["usaExcel"] != null ? !Convert.ToBoolean(Session["usaExcel"].ToString()) : true;
 
-            if (ciclo == "")
-                return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
             try
             {
-                c = new Conexion(Conexion.datosConexion, this);
-                res[1] = db ? "Base de datos" : excel + "-" + sheet;
+                c = new Conexion(Conexion.datosConexion);
+                res[1] = "Base de datos";
                 res[0] = true;
 
             }

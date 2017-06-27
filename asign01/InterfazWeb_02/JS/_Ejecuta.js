@@ -62,6 +62,8 @@ function GetDatosEjecuta()
         fin = ejecuta_hora_fin;
     }
 
+    var semestre = $("#ejecucion [name='semestre']").val();
+
     var bEmpalmes = $("[name='emp']").is(":checked");
 
     var bPreasignacion = $("[name='pre']").is(":checked");
@@ -79,7 +81,8 @@ function GetDatosEjecuta()
         otrosSemestres: bOtrosSemestres,
         algoritmo: bAlgoritmo,
         individuo: iIndividuos,
-        generacion: iGeneraciones
+        generacion: iGeneraciones,
+        semestre : semestre
     }
 
     return datos;
