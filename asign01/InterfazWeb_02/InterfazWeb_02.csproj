@@ -137,6 +137,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Imagenes\excel_icon.png" />
     <Content Include="JS\Error.js" />
+    <Content Include="JS\externos\jquery.tablesorter.min.js" />
     <Content Include="JS\Grupos\Busqueda.js" />
     <Content Include="JS\Grupos\index.js" />
     <Content Include="JS\_Ejecuta.js" />

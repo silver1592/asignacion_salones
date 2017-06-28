@@ -37,3 +37,7 @@ table{
 #optionsTabs{
     border:0px;
 }
+
+.row{
+    margin-bottom:5px;
+}

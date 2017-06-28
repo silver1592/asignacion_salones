@@ -3,4 +3,6 @@
 
     inicializaMenu();
     ActualizaOrigen();
+
+    $('#lista table').tablesorter();
 });

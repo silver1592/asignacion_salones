@@ -42,6 +42,7 @@ function Busqueda()
         data: dt,
         success: function (resultado) {
             $("#lista").append(resultado);
+            $('#lista table').tablesorter();
         },
         error: function (jqXHR, exception) {
             alert(exception);

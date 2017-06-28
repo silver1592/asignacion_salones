@@ -13,10 +13,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>05/31/2017 10:35:52</publishTime>
     </File>
     <File Include="Archivos/SIAMMAT16172-FINAL.xlsx">
-      <publishTime>06/02/2017 13:03:10</publishTime>
+      <publishTime>02/06/2017 13:03:10</publishTime>
     </File>
     <File Include="bin/Algoritmo02.exe">
-      <publishTime>06/27/2017 11:59:51</publishTime>
+      <publishTime>06/28/2017 15:43:08</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>05/31/2017 10:35:52</publishTime>
@@ -52,28 +52,28 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>05/08/2017 16:10:59</publishTime>
     </File>
     <File Include="bin/InterfazWeb_02.dll">
-      <publishTime>06/27/2017 14:01:44</publishTime>
+      <publishTime>06/28/2017 15:43:13</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>11/30/2016 16:07:42</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.DependencyCollector.dll">
-      <publishTime>12/07/2016 11:45:42</publishTime>
+      <publishTime>07/12/2016 11:45:42</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.PerfCounterCollector.dll">
-      <publishTime>12/07/2016 11:50:34</publishTime>
+      <publishTime>07/12/2016 11:50:34</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.ServerTelemetryChannel.dll">
-      <publishTime>12/06/2016 15:15:48</publishTime>
+      <publishTime>06/12/2016 15:15:48</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Web.dll">
-      <publishTime>12/07/2016 11:49:10</publishTime>
+      <publishTime>07/12/2016 11:49:10</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.WindowsServer.dll">
-      <publishTime>12/07/2016 11:50:34</publishTime>
+      <publishTime>07/12/2016 11:50:34</publishTime>
     </File>
     <File Include="bin/Microsoft.ApplicationInsights.dll">
-      <publishTime>12/06/2016 15:09:52</publishTime>
+      <publishTime>06/12/2016 15:09:52</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>06/15/2015 03:06:24</publishTime>
@@ -82,7 +82,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>07/25/2012 11:48:56</publishTime>
     </File>
     <File Include="bin/OrigenDatos.exe">
-      <publishTime>06/27/2017 11:59:50</publishTime>
+      <publishTime>06/28/2017 15:43:07</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 21:19:46</publishTime>
@@ -187,34 +187,37 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/20/2017 13:02:26</publishTime>
     </File>
     <File Include="JS/externos/bootstrap.js">
-      <publishTime>06/05/2017 10:37:40</publishTime>
+      <publishTime>05/06/2017 10:37:40</publishTime>
     </File>
     <File Include="JS/externos/bootstrap.min.js">
-      <publishTime>06/05/2017 10:37:39</publishTime>
+      <publishTime>05/06/2017 10:37:39</publishTime>
     </File>
     <File Include="JS/externos/jquery-3.2.1.min.js">
-      <publishTime>06/05/2017 10:52:51</publishTime>
+      <publishTime>05/06/2017 10:52:51</publishTime>
     </File>
     <File Include="JS/externos/jquery-ui.min.js">
-      <publishTime>06/05/2017 10:52:51</publishTime>
+      <publishTime>05/06/2017 10:52:51</publishTime>
+    </File>
+    <File Include="JS/externos/jquery.tablesorter.min.js">
+      <publishTime>06/28/2017 15:02:39</publishTime>
     </File>
     <File Include="JS/Grupos/Busqueda.js">
-      <publishTime>06/21/2017 13:52:22</publishTime>
+      <publishTime>06/28/2017 15:05:18</publishTime>
     </File>
     <File Include="JS/Grupos/index.js">
-      <publishTime>06/21/2017 13:45:44</publishTime>
+      <publishTime>06/28/2017 15:05:12</publishTime>
     </File>
     <File Include="JS/index.js">
-      <publishTime>06/27/2017 13:35:31</publishTime>
+      <publishTime>06/28/2017 12:25:19</publishTime>
     </File>
     <File Include="JS/_CargaArchivo.js">
       <publishTime>06/27/2017 12:35:29</publishTime>
     </File>
     <File Include="JS/_Ejecuta.js">
-      <publishTime>06/27/2017 14:01:15</publishTime>
+      <publishTime>06/28/2017 12:43:21</publishTime>
     </File>
     <File Include="JS/_Menu.js">
-      <publishTime>06/20/2017 12:57:26</publishTime>
+      <publishTime>06/28/2017 12:34:29</publishTime>
     </File>
     <File Include="JS/_SeleccionaOrigenDatos.js">
       <publishTime>06/20/2017 12:57:27</publishTime>
@@ -247,43 +250,46 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/06/2017 11:43:17</publishTime>
     </File>
     <File Include="Styles/externos/bootstrap.css">
-      <publishTime>06/05/2017 10:37:40</publishTime>
+      <publishTime>05/06/2017 10:37:40</publishTime>
     </File>
     <File Include="Styles/externos/bootstrap.min.css">
-      <publishTime>06/05/2017 10:37:40</publishTime>
+      <publishTime>05/06/2017 10:37:40</publishTime>
     </File>
     <File Include="Styles/externos/jquery-ui.min.css">
-      <publishTime>06/05/2017 10:54:20</publishTime>
+      <publishTime>05/06/2017 10:54:20</publishTime>
     </File>
     <File Include="Styles/externos/jquery-ui.structure.css">
-      <publishTime>06/05/2017 10:54:20</publishTime>
+      <publishTime>05/06/2017 10:54:20</publishTime>
     </File>
     <File Include="Styles/index.css">
-      <publishTime>06/27/2017 13:59:01</publishTime>
+      <publishTime>06/28/2017 15:37:12</publishTime>
     </File>
     <File Include="Styles/TablaGrupos.css">
-      <publishTime>06/20/2017 13:51:33</publishTime>
+      <publishTime>06/28/2017 15:36:46</publishTime>
     </File>
     <File Include="Views/Consultas/_Grupos.cshtml">
       <publishTime>06/20/2017 11:04:10</publishTime>
     </File>
     <File Include="Views/Ejecuta/_Operaciones.cshtml">
-      <publishTime>06/27/2017 13:39:13</publishTime>
+      <publishTime>06/28/2017 12:42:54</publishTime>
     </File>
     <File Include="Views/Grupos/Index.cshtml">
-      <publishTime>06/21/2017 13:49:27</publishTime>
+      <publishTime>06/28/2017 15:03:28</publishTime>
     </File>
     <File Include="Views/Grupos/_Busqueda.cshtml">
-      <publishTime>06/21/2017 13:51:18</publishTime>
+      <publishTime>06/28/2017 15:29:19</publishTime>
     </File>
     <File Include="Views/Grupos/_Grupos.cshtml">
-      <publishTime>06/21/2017 13:02:12</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>06/27/2017 13:56:15</publishTime>
     </File>
     <File Include="Views/Home/_Menu.cshtml">
-      <publishTime>06/20/2017 11:05:30</publishTime>
+      <publishTime>06/28/2017 12:30:03</publishTime>
+    </File>
+    <File Include="Views/Home/_Semestres.cshtml">
+      <publishTime>06/28/2017 15:00:58</publishTime>
     </File>
     <File Include="Views/Importacion/_CargaExcel.cshtml">
       <publishTime>06/27/2017 13:51:51</publishTime>
@@ -292,13 +298,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/27/2017 12:20:42</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/05/2017 10:37:37</publishTime>
+      <publishTime>05/06/2017 10:37:37</publishTime>
     </File>
     <File Include="Views/web.config">
-      <publishTime>06/02/2017 12:03:20</publishTime>
+      <publishTime>02/06/2017 12:03:20</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
-      <publishTime>06/05/2017 10:51:58</publishTime>
+      <publishTime>05/06/2017 10:51:58</publishTime>
     </File>
     <File Include="Web.config">
       <publishTime>06/16/2017 08:33:28</publishTime>

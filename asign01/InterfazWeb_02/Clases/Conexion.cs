@@ -20,7 +20,7 @@ namespace InterfazWeb_02.Clases
             return Excel.GetStringSheets();
         }
 
-        public List<string> Semestres()
+        public string[] Semestres()
         {
             string query = "SELECT distinct ciclo FROM[asignacion].[ae_horario] order by ciclo desc";
             List<string> res = new List<string>();
@@ -30,7 +30,7 @@ namespace InterfazWeb_02.Clases
             foreach (DataRow r in dt.Rows)
                 res.Add(r[0].ToString());
 
-            return res;
+            return res.ToArray();
         }
 
         public bool ExisteBD(Grupo g)

@@ -3,21 +3,21 @@
 <table>
     <thead>
         <tr>
-            <td width="5%">CVE</td>
-            <td width="26%">Materia</td>
-            <td width="26%">Profesor</td>
-            <td width="5%" colspan="2">Lunes</td>
-            <td width="5%" colspan="2">Martes</td>
-            <td width="5%" colspan="2">Miercoles</td>
-            <td width="5%" colspan="2">Jueves</td>
-            <td width="5%" colspan="2">Viernes</td>
-            <td width="5%" colspan="2">Sabado</td>
-            <td width="5%">Salon</td>
-            <td width="8%" colspan="2">Operaciones</td>
+            <th width="5%"><span>CVE</span></th>
+            <th><span>Materia</span></th>
+            <th><span>Profesor</span></th>
+            <th width="7%" colspan="2"><span>Lunes</span></th>
+            <th width="7%" colspan="2"><span>Martes</span></th>
+            <th width="7%" colspan="2"><span>Miercoles</span></th>
+            <th width="7%" colspan="2"><span>Jueves</span></th>
+            <th width="7%" colspan="2"><span>Viernes</span></th>
+            <th width="7%" colspan="2"><span>Sabado</span></th>
+            <th width="5%"><span>Salon</span></th>
+            <th width="9%" colspan="2"><span>Operaciones</span></th>
         </tr>
     </thead>
     @foreach (var g in Model)
-    {
+    {   
         <tr>
             <td>
                 @(Convert.ToInt32(g.Cve_materia)*100+g.num_Grupo)
