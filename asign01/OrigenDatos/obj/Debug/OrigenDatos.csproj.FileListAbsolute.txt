@@ -58,7 +58,6 @@ C:\Users\Fernando\Desktop\asigna\asign01\OrigenDatos\bin\Debug\ClosedXML.pdb
 C:\Users\Fernando\Desktop\asigna\asign01\OrigenDatos\bin\Debug\ClosedXML.xml
 C:\Users\Fernando\Desktop\asigna\asign01\OrigenDatos\bin\Debug\Excel.pdb
 C:\Users\Fernando\Desktop\asigna\asign01\OrigenDatos\obj\Debug\OrigenDatos.csprojResolveAssemblyReference.cache
-C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Debug\OrigenDatos.csproj.ResolveComReference.cache
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Debug\OrigenDatos.exe.config
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Debug\OrigenDatos.exe
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Debug\OrigenDatos.pdb
@@ -69,5 +68,6 @@ C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Debug\
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Debug\ClosedXML.pdb
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Debug\ClosedXML.xml
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Debug\Excel.pdb
+C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Debug\OrigenDatos.csproj.ResolveComReference.cache
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Debug\OrigenDatos.exe
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Debug\OrigenDatos.pdb

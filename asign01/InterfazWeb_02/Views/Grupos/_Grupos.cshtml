@@ -4,27 +4,23 @@
     <thead>
         <tr>
             <td width="5%">CVE</td>
-            <td width="5%">N°</td>
-            <td>Materia</td>
-            <td>Profesor</td>
-            <td width="6%" colspan="2">Lunes</td>
-            <td width="6%" colspan="2">Martes</td>
-            <td width="6%" colspan="2">Miercoles</td>
-            <td width="6%" colspan="2">Jueves</td>
-            <td width="6%" colspan="2">Viernes</td>
-            <td width="6%" colspan="2">Sabado</td>
+            <td width="26%">Materia</td>
+            <td width="26%">Profesor</td>
+            <td width="5%" colspan="2">Lunes</td>
+            <td width="5%" colspan="2">Martes</td>
+            <td width="5%" colspan="2">Miercoles</td>
+            <td width="5%" colspan="2">Jueves</td>
+            <td width="5%" colspan="2">Viernes</td>
+            <td width="5%" colspan="2">Sabado</td>
             <td width="5%">Salon</td>
-            <td width="4%" colspan="2">Operaciones</td>
+            <td width="8%" colspan="2">Operaciones</td>
         </tr>
     </thead>
-    @foreach(var g in Model)
+    @foreach (var g in Model)
     {
         <tr>
             <td>
-                @g.Cve_materia
-            </td>
-            <td>
-                @g.num_Grupo
+                @(Convert.ToInt32(g.Cve_materia)*100+g.num_Grupo)
             </td>
             <td>
                 @Model.buscaMateria(g.Cve_materia).Nombre
@@ -32,9 +28,18 @@
             <td>
                 @Model.buscaProfesor(g.RPE.ToString()).Nombre
             </td>
-            <td colspan="12">
-                <!--//TODO:Poner el horario del grupo-->
-            </td>
+            <td>@if (g.horario_ini[0] != 0) { @g.horario_ini[0]; }</td>
+            <td>@if (g.horario_fin[0] != 0) { @g.horario_fin[0]; }</td>
+            <td>@if (g.horario_ini[1] != 0) { @g.horario_ini[1]; }</td>
+            <td>@if (g.horario_fin[1] != 0) { @g.horario_fin[1]; }</td>
+            <td>@if (g.horario_ini[2] != 0) { @g.horario_ini[2]; }</td>
+            <td>@if (g.horario_fin[2] != 0) { @g.horario_fin[2]; }</td>
+            <td>@if (g.horario_ini[3] != 0) { @g.horario_ini[3]; }</td>
+            <td>@if (g.horario_fin[3] != 0) { @g.horario_fin[3]; }</td>
+            <td>@if (g.horario_ini[4] != 0) { @g.horario_ini[4]; }</td>
+            <td>@if (g.horario_fin[4] != 0) { @g.horario_fin[4]; }</td>
+            <td>@if (g.horario_ini[5] != 0) { @g.horario_ini[5]; }</td>
+            <td>@if (g.horario_fin[5] != 0) { @g.horario_fin[5]; }</td>
             <td>
                 <input type="text" value="@g.Salon" />
             </td>

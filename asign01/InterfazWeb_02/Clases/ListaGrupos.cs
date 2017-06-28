@@ -19,7 +19,7 @@ namespace InterfazWeb_02.Clases
                 this.grupos.Add(new Grupo(g));
         }
 
-        public ListaGrupos(List<OrigenDatos.Clases.Grupo> grupos) : base(grupos) { }
+        public ListaGrupos(List<OrigenDatos.Clases.Grupo> grupos, List<Algoritmo02.Clases.Profesor> profesores, List<Algoritmo02.Clases.Materia> materia) : base(grupos, profesores,materia) { }
 
         public Materia buscaMateria(string cve_materia)
         {
@@ -39,7 +39,7 @@ namespace InterfazWeb_02.Clases
                         where g.Cve_materia == cve
                         select g;
 
-            return new ListaGrupos(query.ToList());
+            return new ListaGrupos(query.ToList(), profesores, materias);
         }
 
         internal ListaGrupos NoGrupo(int noGrupo)
@@ -48,7 +48,7 @@ namespace InterfazWeb_02.Clases
                         where g.num_Grupo == noGrupo
                         select g;
 
-            return new ListaGrupos(query.ToList());
+            return new ListaGrupos(query.ToList(), profesores, materias);
         }
 
         public ListaGrupos NoRepetidos()
@@ -56,7 +56,7 @@ namespace InterfazWeb_02.Clases
             var query = from g in this
                         select g;
 
-            return new ListaGrupos(query.GroupBy(p=> new {p.Cve_materia, p.num_Grupo, p.Ciclo}).Select(g=>g.First()).ToList());
+            return new ListaGrupos(query.GroupBy(p=> new {p.Cve_materia, p.num_Grupo, p.Ciclo}).Select(g=>g.First()).ToList(), profesores, materias);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace InterfazWeb_02.Clases
                         where g.EnDias(dias)
                         select (OrigenDatos.Clases.Grupo)g;
 
-            return new ListaGrupos(query.ToList());
+            return new ListaGrupos(query.ToList(), profesores,materias);
         }
     }
 }

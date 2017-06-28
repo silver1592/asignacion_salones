@@ -162,34 +162,34 @@ namespace OrigenDatos.Clases
                 string res = "";
 
                 if (horario_ini[0] != 0)
-                    res += "L";
+                    res += "1";
                 else
-                    res += "-";
+                    res += "0";
 
                 if (horario_ini[1] != 0)
-                    res += "M";
+                    res += "1";
                 else
-                    res += "-";
+                    res += "0";
 
                 if (horario_ini[2] != 0)
-                    res += "m";
+                    res += "1";
                 else
-                    res += "-";
+                    res += "0";
 
                 if (horario_ini[3] != 0)
-                    res += "J";
+                    res += "1";
                 else
-                    res += "-";
+                    res += "0";
 
                 if (horario_ini[4] != 0)
-                    res += "V";
+                    res += "1";
                 else
-                    res += "-";
+                    res += "0";
 
                 if (horario_ini[5] != 0)
-                    res += "S";
+                    res += "1";
                 else
-                    res += "-";
+                    res += "0";
 
                 return res;
             }
@@ -564,9 +564,10 @@ namespace OrigenDatos.Clases
 
         public bool EnDias(string dias)
         {
-            for (int i = 0; i < 6; i++)
-                if (dias[i] == '1' && Dias[i] == '0')
-                    return false;
+            if(dias!="111111")
+                for (int i = 0; i < 6; i++)
+                    if (dias[i] != Dias[i])
+                        return false;
 
             return true;
         }

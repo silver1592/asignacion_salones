@@ -206,6 +206,7 @@
     <Content Include="Views\Grupos\Index.cshtml" />
     <Content Include="Views\Grupos\_Busqueda.cshtml" />
     <Content Include="Views\Grupos\_Grupos.cshtml" />
+    <Content Include="Views\Home\_Semestres.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

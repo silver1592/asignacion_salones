@@ -2,11 +2,10 @@
 
 function Busqueda()
 {
-    var cve = $("#cve_materia option:selected").val();
-    var nGrupo = $("input[name='noGrupo']").val();
     var ini = $("input[name ='ini']").val();
     var fin = $("input[name='fin']").val();
 
+    dias = [false,false,false,false,false,false];
     $("input[name='dias']:checked").each(function () {
         switch ($(this).val()) {
             case 'L': dias[0] = true;
@@ -24,11 +23,28 @@ function Busqueda()
         }
     });
 
+    var _dias="";
+    for (var i = 0; i < 6; i++)
+        if (dias[i])
+            _dias += "1";
+        else
+            _dias += "0";
+
     $("#lista").empty();
 
-    //TODO: Llamada para la busqueda
+    var url = $(".direccion #buscaGrupos").text().trim();
+    var dt = JSON.stringify({ ini: ini, fin: fin, dias: _dias });
 
-    //TODO: Carga del resultado de busqueda
-
-    //clv-chica-linda XD:197029
+    $.ajax({
+        type: "POST",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        data: dt,
+        success: function (resultado) {
+            $("#lista").append(resultado);
+        },
+        error: function (jqXHR, exception) {
+            alert(exception);
+        }
+    });
 }

@@ -15,9 +15,22 @@ namespace InterfazWeb_02.Clases
 
         public Conexion(string Datos, string excelDireccion = null, string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, ciclo, tipo) { }
 
-        internal string[] Sheets()
+        public string[] Sheets()
         {
             return Excel.GetStringSheets();
+        }
+
+        public List<string> Semestres()
+        {
+            string query = "SELECT distinct ciclo FROM[asignacion].[ae_horario] order by ciclo desc";
+            List<string> res = new List<string>();
+
+            DataTable dt = Querry(query);
+
+            foreach (DataRow r in dt.Rows)
+                res.Add(r[0].ToString());
+
+            return res;
         }
 
         public bool ExisteBD(Grupo g)

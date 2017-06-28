@@ -1,6 +1,7 @@
 ﻿$().ready(function () {
     //UX
     initialize();
+    inicializaMenu();
 
     //Eventos
     $("#archivos").change(changeExcel);

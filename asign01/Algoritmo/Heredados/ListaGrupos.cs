@@ -17,8 +17,10 @@ namespace Algoritmo02.Heredados
         #region Constuctores
         public ListaGrupos() : base(){}
 
-        public ListaGrupos(IList<OrigenDatos.Clases.Grupo> grupos)
+        public ListaGrupos(IList<OrigenDatos.Clases.Grupo> grupos, List<Profesor> profesores = null, List<Materia> materia = null)
         {
+            this.profesores = profesores;
+            this.materias = materia;
             this.grupos = new List<OrigenDatos.Clases.Grupo>();
             foreach (Grupo g in grupos)
                 this.grupos.Add(new Grupo(g));

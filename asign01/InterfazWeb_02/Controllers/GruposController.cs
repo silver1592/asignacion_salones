@@ -28,18 +28,12 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public ActionResult _Grupos(string ini="7", string fin="22",string cve = "", string grp="0", string dias="111111")
+        public ActionResult _Grupos(string ini, string fin, string dias)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaGrupos list = new ListaGrupos(c.GetGrupos(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)));
+            ListaGrupos list = new ListaGrupos(c.GetLightGrupos(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)));
 
-            list = list.EnDias(dias);
-
-            if (cve != "")
-                list = list.ImpartenMateria(cve);
-
-            if (grp != "0")
-                list = list.NoGrupo(Convert.ToInt32(grp));
+            list = new ListaGrupos(list.EnDias(dias));
 
             return PartialView(list);
         }

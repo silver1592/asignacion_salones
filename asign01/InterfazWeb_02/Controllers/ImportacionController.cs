@@ -86,33 +86,6 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public JsonResult ExcelValid()
-        {
-            Conexion c;
-
-            object[] res = new object[] { false, "No conectado" };
-            string excel = Session["excel"] != null ? Session["excel"].ToString() : "";
-            string sheet = Session["sheet"] != null ? Session["sheet"].ToString() : "";
-            string ciclo = Session["ciclo"] != null ? Session["ciclo"].ToString() : "";
-            bool db = Session["usaExcel"] != null ? !Convert.ToBoolean(Session["usaExcel"].ToString()) : true;
-
-            try
-            {
-                c = new Conexion(Conexion.datosConexion);
-                res[1] = "Base de datos";
-                res[0] = true;
-
-            }
-            catch (Exception ex)
-            {
-                res[0] = false;
-                res[1] = ex.Message;
-            }
-
-            return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        [HttpPost]
         public JsonResult PaginasExcel(string file)
         {
             string excelDir = Server.MapPath("~/Archivos/");

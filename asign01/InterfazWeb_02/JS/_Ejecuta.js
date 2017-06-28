@@ -10,9 +10,6 @@ function Ejecuta() {
 
 function EjecutaHora()
 {
-    //TODO: hacer que lance un evento al terminar que haga que se ejecute el que sigue
-    //while (!siguiente);
-    //siguiente = false;
     var datos = GetDatosEjecuta();
     var dt = JSON.stringify(datos);
     var _url = $(".direccion #Ejecuta").text().trim();
@@ -61,8 +58,6 @@ function GetDatosEjecuta()
         ini = ejecuta_hora_ini;
         fin = ejecuta_hora_fin;
     }
-
-    var semestre = $("#ejecucion [name='semestre']").val();
 
     var bEmpalmes = $("[name='emp']").is(":checked");
 

@@ -24,14 +24,13 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public JsonResult EjecutaOperaciones(string hora,string empalmes, string preasignacion, string otrosSemestres, string algoritmo, string individuos, string generacion,string semestre)
+        public JsonResult EjecutaOperaciones(string hora,string empalmes, string preasignacion, string otrosSemestres, string algoritmo, string individuos, string generacion)
         {
             string res = "asignacion fallida";
 
             try
             {
-                //TODO:Checar que funcione
-                string ciclo = semestre;
+                string ciclo = Session["ciclo"].ToString();
 
                 Conexion c = new Conexion(Conexion.datosConexion);
                 ListaGrupos grupos = new ListaGrupos(c.GetGruposIni(ciclo,Convert.ToInt32(hora),false));
