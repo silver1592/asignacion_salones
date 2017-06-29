@@ -1,4 +1,0 @@
-C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\bin\roslyn\VBCSCompiler.exe
