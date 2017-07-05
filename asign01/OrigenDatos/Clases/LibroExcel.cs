@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using ClosedXML.Excel;
 using Excel;
 using System.Data;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace OrigenDatos.Clases
 {
@@ -82,10 +82,25 @@ namespace OrigenDatos.Clases
 
             if (!File.Exists(direccion))
             {
-                Microsoft.Office.Interop.Excel.Application appExcel = new Microsoft.Office.Interop.Excel.Application();
-                Microsoft.Office.Interop.Excel.Workbook workbook = appExcel.Workbooks.Add();
-                workbook.SaveAs(direccion);
-                workbook.Close();
+                //TODO: Crea archivo de excel
+                SpreadsheetDocument doc = SpreadsheetDocument.Create(direccion, DocumentFormat.OpenXml.SpreadsheetDocumentType.Workbook);
+
+                //Inicializa el documento para que trabaje como libro
+                WorkbookPart workbookpart = doc.AddWorkbookPart();
+                workbookpart.Workbook = new Workbook();
+
+                //Inicializa el documento para que trabaje con hojas
+                WorksheetPart worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
+                worksheetPart.Worksheet = new Worksheet(new SheetData());
+
+                //Obtiene el manejador de las hojas
+                Sheets sheets = doc.WorkbookPart.Workbook.AppendChild<Sheets>(new Sheets());
+
+                //Crea una nueva hoja
+                Sheet sheet = new Sheet(){Id = doc.WorkbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "hoja1"};
+                sheets.Append(sheet);
+
+                doc.Close();
             }
 
             SetHeaders();
@@ -147,33 +162,16 @@ namespace OrigenDatos.Clases
         /// <param name="hoja">Hoja en la que se va a escribir</param>
         public void EscribeGrupos(IList<Grupo> grupos, string hoja, IDictionary<string, string> materia = null, IDictionary<int, string> profesor = null)
         {
-            var workbook = new XLWorkbook(dir);
-            //Abre la hoja seleccionada y de no existir la crea
-            IXLWorksheet worksheet;
-
-            try
-            {
-                worksheet = workbook.Worksheets.Worksheet(hoja);
-            }catch
-            {
-                List<string> keyList = new List<string>(dHeaders.Keys);
-                worksheet = workbook.Worksheets.Add(hoja);
-
-                //Escribe los encabezados de las hojas
-                for (int i = 1; i <= dHeaders.Count + 1; i++)
-                {
-                    if (i < dHeaders.Count)
-                        worksheet.Cell(1,i).Value = dHeaders[keyList[i-1]];
-                    else if (i < dHeaders.Count + 1)
-                        worksheet.Cell(1,i).Value = "observaciones";
-                }
-            }
+            //TODO:Abrir archivo excel
+            SpreadsheetDocument doc = SpreadsheetDocument.Open(dir,true);
+            Sheet sheet = GetSheet(hoja,doc);
 
             foreach (Grupo item in grupos)
-                EscribeGrupo(item,worksheet,materia,profesor);
+                EscribeGrupo(item,sheet,materia,profesor);
 
-            workbook.SaveAs(dir);
-            workbook.Dispose();
+            //doc.WorkbookPart.Workbook.Save();
+            doc.Close();
+            doc.Dispose();
         }
 
         /// <summary>
@@ -181,10 +179,12 @@ namespace OrigenDatos.Clases
         /// </summary>
         /// <param name="g">Grupo a escribir</param>
         /// <param name="worksheet">Hoja a modificar</param>
-        public void EscribeGrupo(Grupo g, IXLWorksheet worksheet,IDictionary<string,string> materia, IDictionary<int,string> profesor)
+        public void EscribeGrupo(Grupo g, Sheet worksheet,IDictionary<string,string> materia, IDictionary<int,string> profesor)
         {
             //Inserta una fila al principio desplazando lo demas hacia abajo
             //De esa manera siempre escribes en la primera fila
+            Row r = new Row();
+            /*
             worksheet.Row(1).InsertRowsBelow(1);
 
             worksheet.Cell(2,1).Value = g.Cve_materia;
@@ -208,6 +208,9 @@ namespace OrigenDatos.Clases
             worksheet.Cell(2,19).Value = g.Cupo;
             worksheet.Cell(2,20).Value = g.Ciclo;
             worksheet.Cell(2,21).Value = g.observaciones;
+            */
+
+            worksheet.InsertAfter<Row>(r, worksheet.FirstChild);
         }
 
         /// <summary>
@@ -233,6 +236,46 @@ namespace OrigenDatos.Clases
             DataTable dt = GetSheets()[hoja];
 
             return dt != null ? AsList(dt) : new List<Grupo>();
+        }
+
+        public SheetData GetSheet(string hoja, SpreadsheetDocument doc)
+        {
+            int count = doc.WorkbookPart.Workbook.Sheets.ChildElements.Count;
+            var ws = doc.WorkbookPart.WorksheetParts
+            var wb = doc.WorkbookPart;
+            SheetData sheet = null;
+            Sheet aux;
+
+            for (int i = 0; i < count; i++)
+            {
+                aux = (Sheet)doc.WorkbookPart.Workbook.Sheets.ChildElements.GetItem(i);
+                if (aux.Name == hoja)
+                    sheet = (SheetData)doc.WorkbookPart.Workbook.Sheets.ChildElements.GetItem(i);
+            }
+
+            if(sheet==null)
+            {
+                List<string> keyList = new List<string>(dHeaders.Keys);
+                doc.WorkbookPart.Workbook.Sheets.Append(new Sheet() { Name = hoja });
+
+                //Escribe los encabezados de las hojas
+                Row r = new Row() { RowIndex = 0 };
+                sheet.Append(r);
+                Cell cell;
+                for (int i = 1; i <= dHeaders.Count + 1; i++)
+                {
+                    cell = new Cell();
+                    cell.DataType = CellValues.String;
+                    if (i < dHeaders.Count)
+                        cell.CellValue = new CellValue(dHeaders[keyList[i - 1]]);
+                    else if (i < dHeaders.Count + 1)
+                        cell.CellValue = new CellValue("observaciones");
+
+                    r.InsertAt<Cell>(cell,i-1);
+                }
+            }
+
+            return sheet;
         }
         #endregion
     }

@@ -37,19 +37,19 @@ namespace ProyectTest
         }
 
         [TestMethod]
-        public void Conexion_CreaExel_Test()
+        public void Conexion_NuevoExel_Test()
         {
             try
             {
                 Conexion c = new Conexion();
-                Grupo g = new Grupo(c.Querry("Select * from ae_horario where cve_materia = '1001'").Rows[0], c.DGrupos);
+                //Grupo g = new Grupo(c.Querry("Select * from ae_horario where cve_materia = '1001'").Rows[0], c.DGrupos);
                 LibroExcel excel = new LibroExcel(@"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\miexcel.xlsx", "2016-2017/II", "T");
                 ListaGrupos grupos = new ListaGrupos();
 
-                grupos.Add(g);
+                //grupos.Add(g);
                 excel.EscribeGrupos(grupos, "prueba");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
@@ -62,7 +62,7 @@ namespace ProyectTest
             {
                 Algoritmo02.Heredados.Conexion c = new Algoritmo02.Heredados.Conexion();
                 LibroExcel excel = new LibroExcel(@"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "2016-2017/II", "T");
-                ListaGrupos grupos = new ListaGrupos(c.GetGrupos("2016-2017/II",7,9));
+                ListaGrupos grupos = new ListaGrupos(c.GetGrupos("2016-2017/II",7,8));
 
                 excel.EscribeGrupos(grupos, "prueba01_2016_2017_II");
             }
