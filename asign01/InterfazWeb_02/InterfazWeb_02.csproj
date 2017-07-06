@@ -135,6 +135,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Imagenes\ajax-loader.gif" />
+    <Content Include="Imagenes\background.png" />
     <Content Include="Imagenes\excel_icon.png" />
     <Content Include="JS\Error.js" />
     <Content Include="JS\externos\jquery.tablesorter.min.js" />
@@ -143,7 +145,6 @@
     <Content Include="JS\_Ejecuta.js" />
     <Content Include="JS\_CargaArchivo.js" />
     <Content Include="JS\_Menu.js" />
-    <Content Include="JS\_SeleccionaOrigenDatos.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\AsignacionSalones.pubxml" />

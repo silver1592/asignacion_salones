@@ -186,9 +186,11 @@ namespace OrigenDatos.Clases
         /// Lee el excel e inicializa los grupos con la ainfromacion
         /// </summary>
         /// <param name="hoja">Hoja de excel</param>
-        public List<Grupo> GetGrupos(string hoja)
+        public List<Grupo> GetGrupos(string hoja,string ciclo = "2016-2017/II", string tipo = "T")
         {
             DataTable dt = GetSheets()[hoja];
+            dDefault["ciclo"]=ciclo;
+            dDefault["tipo"]= tipo;
 
             return dt != null ? AsList(dt) : new List<Grupo>();
         }

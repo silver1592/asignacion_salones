@@ -64,12 +64,13 @@ namespace InterfazWeb_02.Controllers
         {
             object[] res = new object[] { true, "" };
             Conexion c;
+            string excelDir = Server.MapPath("~/Archivos/")+excel;
 
             try
             {
-                c = new Conexion(Conexion.datosConexion,excel,ciclo);
+                c = new Conexion(Conexion.datosConexion,excelDir,ciclo);
                 c.Sheet = sheet;
-                ListaGrupos grupos = new ListaGrupos(c.GetGrupos(Session["ciclo"].ToString()));
+                ListaGrupos grupos = new ListaGrupos(c.GetGrupos(ciclo));
 
                 foreach (Grupo g in grupos)
                     if (c.ExisteBD(g))
@@ -91,7 +92,16 @@ namespace InterfazWeb_02.Controllers
             string excelDir = Server.MapPath("~/Archivos/");
             Conexion c = new Conexion(Conexion.datosConexion, excelDir+file);
 
-            string[] sheets = c.Sheets();
+            string[] sheets=new string[0];
+
+            try
+            {
+                sheets = c.Sheets;
+            }
+            catch(Exception ex)
+            {
+
+            }
 
             return new JsonResult() { Data = sheets, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

@@ -183,131 +183,6 @@
             <param name="grupos">Lista de grupos a escribir</param>
             <param name="hojaExcel">Hoja en la que se va a escribir(No importa si existe)</param>
         </member>
-        <member name="T:OrigenDatos.Clases.Grupo">
-            <summary>
-            Modelo de datos para la representar tabla ae_horario
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.cve_materia">
-            <summary>
-            Clave de la materia
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.grupo">
-            <summary>
-            numero de grupo
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.tipo">
-            <summary>
-            Tipo de grupo (T->Teoria)
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.lunes_ini">
-            <summary>
-            Hora en la que inicia el lunes
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.lunes_fin">
-            <summary>
-            Hora en la que finaliza el lunes
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.martes_ini">
-            <summary>
-            Hora en la que inicia el martes
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.martes_fin">
-            <summary>
-            Hora en la que finaliza el martes
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.miercoles_ini">
-            <summary>
-            Hora en la que inicia el miercoles
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.miercoles_fin">
-            <summary>
-            Hora en la que finaliza el miercoles
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.jueves_ini">
-            <summary>
-            Hora en la que inicia el jueves
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.jueves_fin">
-            <summary>
-            Hora en la que finaliza el jueves
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.viernes_ini">
-            <summary>
-            Hora en la que inicia el viernes
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.viernes_fin">
-            <summary>
-            HOra en la que finaliza el viernes
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.sabado_ini">
-            <summary>
-            Hora en la que inicia el sabado
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.sabado_fin">
-            <summary>
-            Hora en la que finaliza el sabado
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.cupo">
-            <summary>
-            Cupo maximo del grupo
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.inscritos">
-            <summary>
-            Numero de inscritos en la materia (suele ser 0)
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.salon">
-            <summary>
-            Salon asignado al grupo
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.rpe">
-            <summary>
-            RPE del profesor
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.ciclo">
-            <summary>
-            Ciclo en que se imparte el grupo
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.salonBD">
-            <summary>
-            Salon asignado en la base de datos antes 
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.requerimientos_Salon">
-            <summary>
-            Lista de requerimientos para el salon
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.plantaBaja">
-            <summary>
-            Si requiere planta baja
-            </summary>
-        </member>
-        <member name="F:OrigenDatos.Clases.Grupo.salon_fijo">
-            <summary>
-            Si tiene un salon al cual tenga que asignarse
-            </summary>
-        </member>
         <member name="P:OrigenDatos.Clases.Grupo.Requerimientos">
             <summary>
             Convierte el ciclo a numeros faciles de usar en un condicional para saber cual es mayor
@@ -405,23 +280,23 @@
             <param name="grupos">Nombre de la hoja que se quiere poner </param>
             <param name="hoja">Hoja en la que se va a escribir</param>
         </member>
-        <member name="M:OrigenDatos.Clases.LibroExcel.EscribeGrupo(OrigenDatos.Clases.Grupo,DocumentFormat.OpenXml.Spreadsheet.Sheet,System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.Int32,System.String})">
-            <summary>
-            Escribe un grupo en la hoja dada
-            </summary>
-            <param name="g">Grupo a escribir</param>
-            <param name="worksheet">Hoja a modificar</param>
-        </member>
         <member name="M:OrigenDatos.Clases.LibroExcel.GetStringSheets">
             <summary>
             Obtiene el nombre de las hojas del excel e inicializa la variable Sheets
             </summary>
         </member>
-        <member name="M:OrigenDatos.Clases.LibroExcel.GetGrupos(System.String)">
+        <member name="M:OrigenDatos.Clases.LibroExcel.GetGrupos(System.String,System.String,System.String)">
             <summary>
             Lee el excel e inicializa los grupos con la ainfromacion
             </summary>
             <param name="hoja">Hoja de excel</param>
+        </member>
+        <member name="M:OrigenDatos.Clases.LibroExcel.EscribeGrupo(OrigenDatos.Clases.Grupo,DocumentFormat.OpenXml.Spreadsheet.SheetData,System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.Int32,System.String})">
+            <summary>
+            Escribe un grupo en la hoja dada
+            </summary>
+            <param name="g">Grupo a escribir</param>
+            <param name="sheet">Hoja a modificar</param>
         </member>
         <member name="M:OrigenDatos.Clases.ListaGrupos.Dias(System.Int32)">
             <summary>

@@ -11,6 +11,5 @@ namespace InterfazWeb_02.Models
     {
         public Grupo (OrigenDatos.Clases.Grupo copia) : base(copia) { }
 
-        public string Ciclo { get { return ciclo; } }
     }
 }

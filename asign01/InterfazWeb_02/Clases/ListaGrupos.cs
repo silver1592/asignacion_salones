@@ -30,7 +30,8 @@ namespace InterfazWeb_02.Clases
             if (query.Count() > 0)
                 return new Materia(query.ToList()[0]);
             else
-                throw new Exception("No se encontro la materia");
+                return new Materia("-----", cve_materia, 0);
+                //throw new Exception("No se encontro la materia. CVE="+cve_materia);
         }
 
         internal ListaGrupos ImpartenMateria(string cve)

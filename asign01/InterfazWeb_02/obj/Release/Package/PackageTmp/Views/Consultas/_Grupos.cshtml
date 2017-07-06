@@ -1,0 +1,24 @@
+﻿@model InterfazWeb_02.Clases.ListaGrupos
+
+<table>
+    @foreach(var g in Model)
+    {
+        <tr>
+            <td>
+                @g.Cve_materia
+            </td>
+            <td>
+                @g.num_Grupo
+            </td>
+            <td>
+                @Model.buscaMateria(g.Cve_materia).Nombre
+            </td>
+            <td>
+                @Model.buscaProfesor(g.RPE).Nombre
+            </td>
+            <td>
+                @g.Salon
+            </td>
+        </tr>
+    }
+</table>

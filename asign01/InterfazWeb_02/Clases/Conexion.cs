@@ -15,11 +15,6 @@ namespace InterfazWeb_02.Clases
 
         public Conexion(string Datos, string excelDireccion = null, string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, ciclo, tipo) { }
 
-        public string[] Sheets()
-        {
-            return Excel.GetStringSheets();
-        }
-
         public string[] Semestres()
         {
             string query = "SELECT distinct ciclo FROM[asignacion].[ae_horario] order by ciclo desc";

@@ -1,0 +1,33 @@
+﻿<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <a href="@Url.Action("Index", "Home")" class="navbar-brand">Asignacion de salones</a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">        
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+            <li>@Html.ActionLink("Grupos", "Index", "Grupos")</li>
+            <li><a href="#">Salones</a></li>
+            <li><a href="#">Profesores</a></li>
+        </ul>
+        <div class="navbar-right col-md-4">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8" style="padding-top:5px;">
+                        <select id="selectSemestre" class="form-control">
+                            @{ Html.RenderAction("_Semestres", "Home"); }
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="navbar-text" id="dataBaseStatus"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/JS/_Menu.js"></script>
+</nav>
+<div class="direccion">
+    <p id="ActualizaOrigen">
+        @Url.Action("ConexionValida", "Home", null, Request.Url.Scheme)
+    </p>
+</div>

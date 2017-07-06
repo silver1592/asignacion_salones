@@ -35,7 +35,7 @@ namespace Algoritmo02.Heredados
             }
             else
             {
-                res = new ListaGrupos(Excel.GetGrupos(hoja), materias, profesores,this);
+                res = new ListaGrupos(Excel.GetGrupos(hoja,semestre,"T"), materias, profesores,this);
             }
 
             return res;
@@ -57,7 +57,7 @@ namespace Algoritmo02.Heredados
             }
             else
             {
-                res = new ListaGrupos(Excel.GetGrupos(hoja), materias, profesores, this);
+                res = new ListaGrupos(Excel.GetGrupos(hoja,semestre), materias, profesores, this);
             }
 
             return res;
@@ -78,7 +78,7 @@ namespace Algoritmo02.Heredados
             }
             else
             {
-                res = new ListaGrupos(Excel.GetGrupos(hoja), materias, profesores);
+                res = new ListaGrupos(Excel.GetGrupos(hoja,semestre), materias, profesores);
             }
 
             return res;

@@ -6,7 +6,9 @@ C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Releas
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Release\Excel.dll
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Release\ICSharpCode.SharpZipLib.dll
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Release\Excel.pdb
-C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Release\OrigenDatos.csprojResolveAssemblyReference.cache
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Release\OrigenDatos.csproj.ResolveComReference.cache
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Release\OrigenDatos.exe
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Release\OrigenDatos.pdb
+C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Release\ClosedXML.dll
+C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Release\ClosedXML.pdb
+C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\bin\Release\ClosedXML.xml
