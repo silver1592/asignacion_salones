@@ -26,13 +26,10 @@ C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\Al
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\Algoritmo02.pdb
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\OrigenDatos.exe
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\Excel.dll
-C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\ClosedXML.dll
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\ICSharpCode.SharpZipLib.dll
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\OrigenDatos.pdb
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\Excel.pdb
-C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\ClosedXML.pdb
-C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\bin\Debug\ClosedXML.xml
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\obj\Debug\Algoritmo02.csprojResolveAssemblyReference.cache
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\obj\Debug\Algoritmo02.exe
 C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\Algoritmo\obj\Debug\Algoritmo02.pdb

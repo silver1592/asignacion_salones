@@ -95,6 +95,17 @@ namespace Algoritmo02.Heredados
             return materias;
         }
 
+        public Dictionary<string, string> GetMateriasAsDictionary()
+        {
+            Dictionary<string,string> materias = new Dictionary<string, string>();
+            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_materia]");
+
+            foreach (DataRow r in dt.Rows)
+                materias.Add(r["cve_materia"].ToString(),r["materia"].ToString());
+
+            return materias;
+        }
+
         public List<Profesor> GetProfesores()
         {
             List<Profesor> profesores = new List<Profesor>();
@@ -102,6 +113,17 @@ namespace Algoritmo02.Heredados
 
             foreach (DataRow r in dt.Rows)
                 profesores.Add(new Profesor(r));
+
+            return profesores;
+        }
+
+        public Dictionary<int,string> GetProfesoresAsDicctionary()
+        {
+            Dictionary<int, string> profesores = new Dictionary<int, string>();
+            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_profesor]");
+
+            foreach (DataRow r in dt.Rows)
+                profesores.Add(Convert.ToInt32(r["rpe"].ToString()), r["nombre"].ToString());
 
             return profesores;
         }
