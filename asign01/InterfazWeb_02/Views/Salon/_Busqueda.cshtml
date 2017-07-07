@@ -1,0 +1,71 @@
+﻿@model object[]
+@using OrigenDatos.Clases
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <!--Salon-->
+            <label>
+                Salones
+            </label>
+            <select id="salon">
+                <option value="0">---------</option>
+                @foreach (Salon item in (ListaSalones)Model[0])
+                {
+                    <option value="@item.Cve_espacio">@item.Cve_espacio</option>
+                }
+            </select>
+        </div>
+        <div id="dias_horas" class="col-md-6 text-center">
+            <!--Dias-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="dias" class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>L</label><br />
+                                    <input type="checkbox" name="dias" value="L" checked>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>M</label><br />
+                                    <input type="checkbox" name="dias" value="M" checked>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Mi</label><br />
+                                    <input type="checkbox" name="dias" value="Mi" checked>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>J</label><br />
+                                    <input type="checkbox" name="dias" value="J" checked>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>V</label><br />
+                                    <input type="checkbox" name="dias" value="V" checked>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>S</label><br />
+                                    <input type="checkbox" name="dias" value="S" checked>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <!--Equipo-->
+            <label>Equipo</label>
+            <select id="equipo">
+                <option value="0">-------</option>
+                @foreach (KeyValuePair<int, string> item in (Dictionary<int,string>)Model[1])
+                {
+                    <option value="@item.Key">@item.Value</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <!--Botones-->
+        </div>
+    </div>
+</div>

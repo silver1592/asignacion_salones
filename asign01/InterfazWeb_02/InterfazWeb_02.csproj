@@ -172,11 +172,9 @@
     <Compile Include="Clases\Conexion.cs" />
     <Compile Include="Clases\ListaGrupos.cs" />
     <Compile Include="Clases\ListaSalones.cs" />
-    <Compile Include="Controllers\ConsultasController.cs" />
-    <Compile Include="Controllers\EjecutaController.cs" />
     <Compile Include="Controllers\GruposController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ImportacionController.cs" />
+    <Compile Include="Controllers\SalonController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,6 +182,7 @@
     <Compile Include="Models\LibroExcel.cs" />
     <Compile Include="Models\Materia.cs" />
     <Compile Include="Models\Profesor.cs" />
+    <Compile Include="Models\Salon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,11 +193,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Consultas\_Grupos.cshtml" />
-    <Content Include="Views\Ejecuta\_Operaciones.cshtml" />
+    <Content Include="Views\Home\_Operaciones.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Importacion\_CargaExcel.cshtml" />
-    <Content Include="Views\Importacion\_SeleccionExcel.cshtml" />
+    <Content Include="Views\Home\_CargaExcel.cshtml" />
+    <Content Include="Views\Home\_SeleccionExcel.cshtml" />
     <Content Include="Archivos\SIAMMAT16172-FINAL.xlsx" />
     <Content Include="Views\Home\_Menu.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -209,6 +207,8 @@
     <Content Include="Views\Grupos\_Busqueda.cshtml" />
     <Content Include="Views\Grupos\_Grupos.cshtml" />
     <Content Include="Views\Home\_Semestres.cshtml" />
+    <Content Include="Views\Salon\_Busqueda.cshtml" />
+    <Content Include="Views\Salon\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

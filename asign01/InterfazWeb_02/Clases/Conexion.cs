@@ -47,20 +47,17 @@ namespace InterfazWeb_02.Clases
 
         }
 
-        internal void Insert(Grupo g)
+        public Dictionary<int, string> Equipo()
         {
-            string query = "insert into ae_horario (" + ") values (" + ")";
+            string query = "select * from asignacion.ae_cat_equipo";
+            Dictionary<int, string> res = new Dictionary<int, string>();
 
-            Comando(query);
-        }
+            DataTable dt = Querry(query);
 
-        /// <summary>
-        /// Inserta Grupos en la base de datos
-        /// </summary>
-        /// <param name="grupos"></param>
-        public void InsertaGrupos(ListaGrupos grupos)
-        {
+            foreach(DataRow r in dt.Rows)
+                res.Add(Convert.ToInt32(r["cve_equipo"].ToString()), r["equipo"].ToString());
 
+            return res;
         }
     }
 }

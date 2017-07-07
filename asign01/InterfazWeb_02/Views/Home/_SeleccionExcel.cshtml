@@ -1,0 +1,42 @@
+﻿@model List<InterfazWeb_02.Models.LibroExcel> 
+<div id="SeleccionExcel">
+    <div class="row">
+        <div class="col-md-12">
+            <label>Archivo: </label>
+            <select id="archivos" class="form-control">
+                <option>---------</option>
+                @foreach (InterfazWeb_02.Models.LibroExcel exc in Model)
+                {
+                    <option>@exc.Nombre</option>
+                }
+            </select>
+
+            <br />
+            <label>Hoja: </label>
+            <select id="hojas" class="form-control"></select>
+            <br />
+            <label>*Semestre:</label>
+            <input type="text" name="semestre" class="form-control"/>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="uploadExcel" class="btn-block">Cargar excel en base de datos</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="direccion">
+        <p id="changeExcel">
+            @Url.Action("PaginasExcel", "Home", null, Request.Url.Scheme)
+        </p>
+        <p id="seleccionaOrigenDatos">
+            @Url.Action("SetSession_OrigenDatos", "Home",null, Request.Url.Scheme)
+        </p>
+    </div>
+</div>

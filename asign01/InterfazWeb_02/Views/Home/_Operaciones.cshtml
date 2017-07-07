@@ -1,0 +1,57 @@
+﻿<div class="contenedor">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Hora de inicio</label>
+                        <input type="number" name="hora_ini" value="7" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Hora de Limite</label>
+                        <input type="number" name="hora_fin" value="22" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <table>
+                <tr>
+                    <td valign="top" class="separador">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="emp" value="e" /><u>Empalmes</u></label>
+                        </div>
+                    </td>
+
+                    <td valign="top" class="separador">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="pre" value="p" /><u>Preasignacion</u></label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="pre_otros_sem" value="f" />Otros semestres</label>
+                        </div>
+                    </td>
+
+                    <td valign="top">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="asig" value="a" /><u>Algoritmo</u></label>
+                        </div>
+                        <label>Individuos&nbsp;<input type="number" name="alg_individuos" value="5" class="form-control" /></label><br />
+                        <label>Generaciones&nbsp;<input type="number" name="alg_generaciones" value="50" class="form-control" /></label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button id="EjecutaOperaciones" class="btn-block">Ejecutar</button>
+        </div>
+    </div>
+</div>
+<div class="direccion">
+    <p id="Ejecuta">@Url.Action("EjecutaOperaciones", "Home",null, Request.Url.Scheme)</p>
+</div>
+<script src="~/JS/_Ejecuta.js"></script>

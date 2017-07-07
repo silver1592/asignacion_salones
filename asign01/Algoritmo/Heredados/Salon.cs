@@ -10,11 +10,8 @@ namespace Algoritmo02.Heredados
         #region Constructores
         /// <summary>
         /// Constructor por copia </br>
-        /// (Solo usarlo para asignarlo a las variables del algoritmo)
         /// </summary>
         /// <param name="s">Salon a copiar</param>
-        public Salon(Salon s):base(s){}
-
         public Salon(OrigenDatos.Clases.Salon s) : base(s) { }
 
         public Salon(DataRow salon, int hora, DataTable excep=null, DataTable Equipo=null, DataTable AreaEdif=null):base(salon,hora,excep,Equipo){}
