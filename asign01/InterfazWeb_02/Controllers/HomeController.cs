@@ -28,7 +28,8 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Semestres()
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            string[] semestres = c.Semestres();
+            //string[] semestres = c.Semestres();
+            string[] semestres = new string[0];
 
             return View(semestres);
         }

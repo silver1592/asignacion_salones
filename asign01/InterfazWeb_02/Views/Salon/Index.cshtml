@@ -1,18 +1,7 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.indexJs = "";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
-        @{Html.RenderAction("_Busqueda", "Salon");}
-    </div>
-</body>
-</html>
+<div class="row"> 
+    @{Html.RenderAction("_Busqueda", "Salon");}
+</div>

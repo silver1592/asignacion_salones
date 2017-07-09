@@ -209,6 +209,7 @@
     <Content Include="Views\Home\_Semestres.cshtml" />
     <Content Include="Views\Salon\_Busqueda.cshtml" />
     <Content Include="Views\Salon\Index.cshtml" />
+    <Content Include="Views\Shared\_Base.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
