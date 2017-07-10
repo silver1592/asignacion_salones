@@ -1,5 +1,7 @@
 ﻿var ejecuta_hora_ini = null;
 var ejecuta_hora_fin = null;
+var excel = null;
+var sheet = null;
 
 function Ejecuta() {
     var datos = GetDatosEjecuta();
@@ -52,6 +54,11 @@ function GetDatosEjecuta()
         fin = parseInt($("[name='hora_fin']").val());
         ejecuta_hora_fin = fin;
         ejecuta_hora_ini = ini;
+
+        var d = new Date();
+
+        excel = d.yyyymmdd()+".xlsx"
+        sheet = d.getHours().toString()+"_"+d.getMinutes().toString();
     }
     else
     {
@@ -77,7 +84,9 @@ function GetDatosEjecuta()
         algoritmo: bAlgoritmo,
         individuo: iIndividuos,
         generacion: iGeneraciones,
-        semestre : semestre
+        excel:excel,
+        hoja:sheet,
+
     }
 
     return datos;

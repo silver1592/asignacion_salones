@@ -1,4 +1,7 @@
-﻿@model IList<string>
+﻿@{
+    Layout = null;
+}
+@model IList<string>
 <form method="post" action="@Url.Action("SubirExcel","Home",null, Request.Url.Scheme)" enctype="multipart/form-data">
         <input type="file" name="file" accept=".xlsx, .xls" class="form-control" /> <br />
         <button type="submit" class="btn-block">Subir archivo</button>

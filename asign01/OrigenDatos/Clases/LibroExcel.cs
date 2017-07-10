@@ -209,7 +209,7 @@ namespace OrigenDatos.Clases
                 aux = (Sheet)doc.WorkbookPart.Workbook.Sheets.ChildElements.GetItem(i);
                 if (aux.Name == hoja)
                 {
-                    worksheet = (doc.GetPartById(aux.Id.Value) as WorksheetPart).Worksheet;
+                    worksheet = (doc.WorkbookPart.GetPartById(aux.Id) as WorksheetPart).Worksheet;
                     sheet = worksheet.GetFirstChild<SheetData>();
                 }
             }

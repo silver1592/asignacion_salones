@@ -28,8 +28,7 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Semestres()
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            //string[] semestres = c.Semestres();
-            string[] semestres = new string[0];
+            string[] semestres = c.Semestres();
 
             return View(semestres);
         }
@@ -150,15 +149,15 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public JsonResult EjecutaOperaciones(string hora, string empalmes, string preasignacion, string otrosSemestres, string algoritmo, string individuos, string generacion)
+        public JsonResult EjecutaOperaciones(string hora, string empalmes, string preasignacion, string otrosSemestres, string algoritmo, string individuos, string generacion, string excel, string hoja)
         {
-            string res = "asignacion fallida";
+            string res = "<strong>Asignacion Fallida</strong>\n";
 
             try
             {
                 string ciclo = Session["ciclo"].ToString();
 
-                Conexion c = new Conexion(Conexion.datosConexion);
+                Conexion c = new Conexion(Conexion.datosConexion,Server.MapPath("~/Archivos/"+excel),ciclo);
                 ListaGrupos grupos = new ListaGrupos(c.GetGruposIni(ciclo, Convert.ToInt32(hora), false));
                 ListaSalones salones = new ListaSalones(c, c.Salones(), Convert.ToInt32(hora));
 
@@ -189,7 +188,7 @@ namespace InterfazWeb_02.Controllers
                     grupos.Actualiza(alg.GruposAsignados);
                 }
 
-                c.UpdateGrupo(grupos, Session["ResSheet"].ToString());
+                c.UpdateGrupo(grupos, hoja);
 
                 res = "Asignacion de " + hora + " completada";
             }

@@ -18,13 +18,3 @@ function initialize()
     $("#optionsTabs").tabs({ collapsible: true });
     $("#tabs").tabs({ collapsible: true });
 }
-
-function Wait()
-{
-    $('#div_carga').show();
-}
-
-function Continue()
-{
-    $('#div_carga').hide();
-}

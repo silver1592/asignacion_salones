@@ -1,7 +1,10 @@
-﻿@{ 
-    ViewBag.indexJs = "~/JS/Grupos/index.js";
-}
+﻿@section head{
+        <script src="~/JS/externos/jquery.tablesorter.min.js"></script>
+        <script src="~/JS/Grupos/index.js"></script>
+        <link href="~/Styles/TablaGrupos.css" type="text/css" rel="stylesheet" />
+    }
 
+@section content{
 <div class="row">
     <div class="col-md-12">
         @{Html.RenderAction("_Busqueda", "Grupos");}
@@ -12,3 +15,4 @@
         @{Html.RenderAction("_Grupos", "Grupos");}
     </div>
 </div>
+}

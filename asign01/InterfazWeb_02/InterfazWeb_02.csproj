@@ -138,6 +138,7 @@
     <Content Include="Imagenes\ajax-loader.gif" />
     <Content Include="Imagenes\background.png" />
     <Content Include="Imagenes\excel_icon.png" />
+    <Content Include="JS\Default.js" />
     <Content Include="JS\Error.js" />
     <Content Include="JS\externos\jquery.tablesorter.min.js" />
     <Content Include="JS\Grupos\Busqueda.js" />
@@ -198,7 +199,7 @@
     <Content Include="Views\Home\_CargaExcel.cshtml" />
     <Content Include="Views\Home\_SeleccionExcel.cshtml" />
     <Content Include="Archivos\SIAMMAT16172-FINAL.xlsx" />
-    <Content Include="Views\Home\_Menu.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
