@@ -60,7 +60,7 @@ namespace ProyectTest
         {
             try
             {
-                Algoritmo02.Heredados.Conexion c = new Algoritmo02.Heredados.Conexion();
+                Conexion c = new Conexion();
                 LibroExcel excel = new LibroExcel(@"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "2016-2017/II", "T");
                 ListaGrupos grupos = new ListaGrupos(c.GetGrupos("2016-2017/II",7,8));
                 var profesores = c.GetProfesoresAsDicctionary();
@@ -79,7 +79,7 @@ namespace ProyectTest
         {
             try
             {
-                Algoritmo02.Heredados.Conexion c = new Algoritmo02.Heredados.Conexion(Conexion.datosConexion, @"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "T");
+                Conexion c = new Conexion(Conexion.datosConexion, @"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "T");
                 c.Sheet = "prueba";
                 ListaGrupos grupos = new ListaGrupos(c.GetGrupos("2016-2017/II"));
 
@@ -99,7 +99,7 @@ namespace ProyectTest
             int gruposRes = 0;
             try
             {
-                Algoritmo02.Heredados.Conexion c = new Algoritmo02.Heredados.Conexion();
+                Conexion c = new Conexion();
                 LibroExcel excel = new LibroExcel(@"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "2016-2017/II", "T");
                 ListaGrupos grupos = new ListaGrupos(c.GetGrupos("2016-2017/I", 7, 8, false));
                 ListaGrupos grupos2 = new ListaGrupos(c.GetGrupos("2016-2017/I", 8, 9, false));
@@ -108,7 +108,7 @@ namespace ProyectTest
                 excel.EscribeGrupos(grupos, "prueba02");
                 excel.EscribeGrupos(grupos2, "prueba02");
 
-                Algoritmo02.Heredados.Conexion c2 = new Algoritmo02.Heredados.Conexion(Conexion.datosConexion, @"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "2016-2017/I", "T");
+                Conexion c2 = new Conexion(Conexion.datosConexion, @"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "2016-2017/I", "T");
                 c2.Sheet = "prueba02";
 
                 grupos = new ListaGrupos(c2.GetGrupos("2016-2017/I"));
