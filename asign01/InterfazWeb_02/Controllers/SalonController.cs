@@ -28,5 +28,13 @@ namespace InterfazWeb_02.Controllers
 
             return PartialView(model);
         }
+
+        [HttpPost]
+        public ActionResult _Salon(string cve_salon)
+        {
+            Conexion c = new Conexion(Conexion.datosConexion);
+
+            return PartialView();
+        }
     }
 }

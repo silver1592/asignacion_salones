@@ -1,7 +1,12 @@
-﻿@{
-    ViewBag.indexJs = "";
+﻿@section head{
+    
 }
 
-<div class="row"> 
-    @{Html.RenderAction("_Busqueda", "Salon");}
-</div>
+@section content{
+    <div class="row"> 
+        @{Html.RenderAction("_Busqueda", "Salon");}
+    </div>
+    <div class="row">
+        @{Html.RenderAction("_Salon", "Salon");}
+    </div>
+}

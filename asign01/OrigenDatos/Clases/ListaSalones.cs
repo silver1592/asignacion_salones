@@ -229,5 +229,28 @@ namespace OrigenDatos.Clases
             return resultado;
         }
         #endregion
+
+        #region _Algoritmo
+        /// <summary>
+        /// Checa cada salon y obtiene los grupos que esten empalmados y los mete en una lista
+        /// </summary>
+        /// <param name="g">Lista de grupos</param>
+        /// <returns>Lista de grupos empalmados por salon</returns>
+        public List<ListaGrupos> AgrupaGruposEmpalmados(ListaGrupos g)
+        {
+            ListaGrupos aux;
+            List<ListaGrupos> res = new List<ListaGrupos>();
+
+            foreach (Salon s in salones)
+            {
+                aux = new ListaGrupos(g.EnSalon(s.Cve_espacio).Empalmados());
+
+                if (aux.Count() != 0)
+                    res.Add(aux);
+            }
+
+            return res;
+        }
+        #endregion
     }
 }

@@ -15,6 +15,21 @@ namespace InterfazWeb_02.Clases
 
         public Conexion(string Datos, string excelDireccion = null, string ciclo = "2016-2017/II", string tipo = "") : base(Datos, excelDireccion, ciclo, tipo) { }
 
+        public ListaGrupos GetGrupos(string semestre, string salon)
+        {
+            ListaGrupos res = null;
+            List<OrigenDatos.Clases.Grupo> grupos;
+            List<Materia> materias = GetMaterias();
+            List<Profesor> profesores = GetProfesores();
+
+            DataTable dt = Querry("SELECT DISTINCT * FROM  [asignacion].[Grupos_a_las] (" + ini + "," + fin + ") where ciclo = '" + semestre + "'");
+
+            grupos = AsList(dt);
+            res = new ListaGrupos(grupos, materias, profesores, this);
+
+            return res;
+        }
+
         public string[] Semestres()
         {
             string query = "SELECT distinct ciclo FROM[asignacion].[ae_horario] order by ciclo desc";

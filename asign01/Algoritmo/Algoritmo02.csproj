@@ -52,11 +52,6 @@
     <Compile Include="Clases\Individuo.cs" />
     <Compile Include="Clases\Profesor.cs" />
     <Compile Include="Clases\Variable.cs" />
-    <Compile Include="Heredados\Conexion.cs" />
-    <Compile Include="Heredados\Grupo.cs" />
-    <Compile Include="Heredados\ListaGrupos.cs" />
-    <Compile Include="Heredados\ListaSalones.cs" />
-    <Compile Include="Heredados\Salon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

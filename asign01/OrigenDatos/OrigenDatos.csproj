@@ -32,7 +32,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\OrigenDatos.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML, Version=0.85.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
@@ -67,6 +68,8 @@
     <Compile Include="Clases\LibroExcel.cs" />
     <Compile Include="Clases\ListaGrupos.cs" />
     <Compile Include="Clases\ListaSalones.cs" />
+    <Compile Include="Clases\Materia.cs" />
+    <Compile Include="Clases\Profesor.cs" />
     <Compile Include="Clases\Salon.cs" />
     <Compile Include="Estructuras\Estructuras.cs" />
     <Compile Include="Program.cs" />
