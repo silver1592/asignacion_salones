@@ -153,7 +153,7 @@ namespace OrigenDatos.Clases
         /// <param name="excelDireccion"></param>
         /// <param name="ciclo"></param>
         /// <param name="tipo"></param>
-        public Conexion(string Datos, string excelDireccion, string ciclo, string tipo)
+        public Conexion(string Datos, string excelDireccion, string ciclo="2016-2017/I", string tipo="T")
         {
             DatosConexion = Datos;
 
@@ -530,6 +530,68 @@ namespace OrigenDatos.Clases
                 g.Add(new Grupo(r, DGruposBD));
 
             return g;
+        }
+        #endregion
+
+        #region _Interfaz
+        public ListaGrupos GetGrupos(string semestre, string salon)
+        {
+            ListaGrupos res = null;
+            List<OrigenDatos.Clases.Grupo> grupos;
+            List<Materia> materias = GetMaterias();
+            List<Profesor> profesores = GetProfesores();
+
+            DataTable dt = Querry("SELECT DISTINCT * FROM where ciclo = '" + semestre + "' and salon='"+salon+"'");
+
+            grupos = AsList(dt);
+            res = new ListaGrupos(grupos, materias, profesores, this);
+
+            return res;
+        }
+
+        public string[] Semestres()
+        {
+            string query = "SELECT distinct ciclo FROM[asignacion].[ae_horario] order by ciclo desc";
+            List<string> res = new List<string>();
+
+            DataTable dt = Querry(query);
+
+            foreach (DataRow r in dt.Rows)
+                res.Add(r[0].ToString());
+
+            return res.ToArray();
+        }
+
+        public bool ExisteBD(Grupo g)
+        {
+            string query = "select * from ae_horario where cve_materia=" + g.Cve_materia + " and grupo=" + g.num_Grupo + " and ciclo='" + g.Ciclo + "'";
+
+            DataTable dt = Querry(query);
+
+            return dt.Rows.Count != 0;
+        }
+
+        public bool ExisteSemestre(string semestre)
+        {
+            DataTable dt = Querry("select count(*) from ae_horario where ciclo = '" + semestre + "'");
+            if (Convert.ToInt32(dt.Rows[0][0].ToString()) == 0)
+                return false;
+
+            return true;
+
+        }
+
+        public Dictionary<int, string> Equipo()
+        {
+            string query = "select * from asignacion.ae_cat_equipo";
+            Dictionary<int, string> res = new Dictionary<int, string>();
+
+            DataTable dt = Querry(query);
+
+            foreach (DataRow r in dt.Rows)
+                res.Add(Convert.ToInt32(r["cve_equipo"].ToString()), r["equipo"].ToString());
+
+            return res;
         }
         #endregion
     }

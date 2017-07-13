@@ -1,11 +1,10 @@
-﻿using InterfazWeb_02.Clases;
+﻿using OrigenDatos.Clases;
 using Algoritmo02.Clases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InterfazWeb_02.Models;
 using System.IO;
 
 namespace InterfazWeb_02.Controllers
@@ -56,15 +55,15 @@ namespace InterfazWeb_02.Controllers
         #region Importacion
         public ActionResult _SeleccionExcel()
         {
-            List<LibroExcel> libros = new List<LibroExcel>();
+            List<string> libros = new List<string>();
             string[] pathElements;
             string fileName;
 
-            foreach (string s in System.IO.Directory.GetFiles(Server.MapPath("~/Archivos/")))
+            foreach (string s in Directory.GetFiles(Server.MapPath("~/Archivos/")))
             {
                 pathElements = s.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
                 fileName = pathElements[pathElements.Length - 1];
-                libros.Add(new LibroExcel(Server.MapPath("~/Archivos/"), fileName));
+                libros.Add(fileName);
             }
 
             return PartialView(libros);

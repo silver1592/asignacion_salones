@@ -170,20 +170,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Clases\Conexion.cs" />
-    <Compile Include="Clases\ListaGrupos.cs" />
-    <Compile Include="Clases\ListaSalones.cs" />
     <Compile Include="Controllers\GruposController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SalonController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Grupo.cs" />
-    <Compile Include="Models\LibroExcel.cs" />
-    <Compile Include="Models\Materia.cs" />
-    <Compile Include="Models\Profesor.cs" />
-    <Compile Include="Models\Salon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +212,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Clases\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algoritmo\Algoritmo02.csproj">

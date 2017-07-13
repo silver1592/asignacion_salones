@@ -518,5 +518,98 @@ namespace OrigenDatos.Clases
             return false;
         }
         #endregion
+
+        #region _Interfaz
+        public Materia buscaMateria(string cve_materia)
+        {
+            var query = from m in materias
+                        where m.CVE == cve_materia
+                        select m;
+
+            if (query.Count() > 0)
+                return new Materia(query.ToList()[0]);
+            else
+                return new Materia("-----", cve_materia, 0);
+            //throw new Exception("No se encontro la materia. CVE="+cve_materia);
+        }
+
+        internal ListaGrupos ImpartenMateria(string cve)
+        {
+            var query = from g in this
+                        where g.Cve_materia == cve
+                        select g;
+
+            return new ListaGrupos(query.ToList(), profesores, materias);
+        }
+
+        internal ListaGrupos NoGrupo(int noGrupo)
+        {
+            var query = from g in this
+                        where g.num_Grupo == noGrupo
+                        select g;
+
+            return new ListaGrupos(query.ToList(), profesores, materias);
+        }
+
+        public ListaGrupos NoRepetidos()
+        {
+            var query = from g in this
+                        select g;
+
+            return new ListaGrupos(query.GroupBy(p => new { p.Cve_materia, p.num_Grupo, p.Ciclo }).Select(g => g.First()).ToList(), profesores, materias);
+        }
+
+        /// <summary>
+        /// Busca la materia del grupo que se encuentra en el indice [index]
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Materia buscaMateria(int index)
+        {
+            Grupo g = (Grupo)this[index];
+
+            return buscaMateria(g.Cve_materia);
+        }
+
+        public Profesor buscaProfesor(string RPE)
+        {
+            int rpe = Convert.ToInt32(RPE);
+            var query = from p in profesores
+                        where p.RPE == rpe
+                        select p;
+
+            if (query.Count() > 0)
+                return new Profesor(query.ToList()[0]);
+            else
+                return new Profesor(rpe);
+            //throw new Exception("No se encontro el RPE");
+        }
+
+        /// <summary>
+        /// Busca al profesor del grupo que se encuentra en el indice [index]
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Profesor buscaProfesor(int index)
+        {
+            Grupo g = (Grupo)this[index];
+
+            return buscaProfesor(g.RPE.ToString());
+        }
+
+        /// <summary>
+        /// Obtiene los grupos que esten asignados a tales dias
+        /// </summary>
+        /// <param name="dias">Cadena de boleanos que indican los dias (LMmiJVS)</param>
+        /// <returns></returns>
+        public ListaGrupos EnDias(string dias = "111111")
+        {
+            var query = from g in this
+                        where g.EnDias(dias)
+                        select (OrigenDatos.Clases.Grupo)g;
+
+            return new ListaGrupos(query.ToList(), profesores, materias);
+        }
+        #endregion
     }
 }

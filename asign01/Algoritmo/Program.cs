@@ -1,5 +1,5 @@
 ﻿using Algoritmo02.Clases;
-using Algoritmo02.Heredados;
+using OrigenDatos.Clases;
 using System;
 using System.Collections.Generic;
 
@@ -67,9 +67,9 @@ namespace Algoritmo02
         {
             string excelDir = @"C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Referencias y Documentos\2016-2017_II\";
             string nombreArchivo = "SIAMMAT16172-FINAL.xlsx";
-            string nombreHoja = "E_2017_01_12";
+            //string nombreHoja = "E_2017_01_12";
 
-            c = new Conexion(Conexion.datosConexion, excelDir+nombreArchivo, nombreHoja);
+            c = new Conexion(Conexion.datosConexion, excelDir+nombreArchivo);
 
             if (c.Autenticacion())
                 Console.WriteLine("Coneccion realizada");

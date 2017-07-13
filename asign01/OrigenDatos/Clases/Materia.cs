@@ -17,6 +17,13 @@ namespace OrigenDatos.Clases
         public string CVE { get { return cve; } }
         public int Area { get { return area; } }
 
+        public Materia(Materia copia)
+        {
+            cve = copia.cve;
+            nombre = copia.cve;
+            area = copia.area;
+        }
+
         public Materia(DataRow r)
         {
             cve = r["cve_materia"].ToString();

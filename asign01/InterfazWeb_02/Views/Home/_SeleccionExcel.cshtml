@@ -1,16 +1,16 @@
 ﻿@{
     Layout = null;
 }
-@model List<InterfazWeb_02.Models.LibroExcel> 
+@model List<string> 
 <div id="SeleccionExcel">
     <div class="row">
         <div class="col-md-12">
             <label>Archivo: </label>
             <select id="archivos" class="form-control">
                 <option>---------</option>
-                @foreach (InterfazWeb_02.Models.LibroExcel exc in Model)
+                @foreach (string exc in Model)
                 {
-                    <option>@exc.Nombre</option>
+                    <option>@exc</option>
                 }
             </select>
 

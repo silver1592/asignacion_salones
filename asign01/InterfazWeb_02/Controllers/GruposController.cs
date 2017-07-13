@@ -1,5 +1,4 @@
-﻿using InterfazWeb_02.Clases;
-using InterfazWeb_02.Models;
+﻿using OrigenDatos.Clases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +20,6 @@ namespace InterfazWeb_02.Controllers
             Conexion c = new Conexion(Conexion.datosConexion);
             List<Materia> ms = new List<Materia>();
             var materias = c.GetMaterias();
-            foreach (Algoritmo02.Clases.Materia m in materias)
-                ms.Add(new Materia(m));
 
             return PartialView(ms);
         }
