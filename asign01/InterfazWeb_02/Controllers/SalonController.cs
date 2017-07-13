@@ -20,7 +20,7 @@ namespace InterfazWeb_02.Controllers
         {
             Conexion c = new Conexion(Conexion.datosConexion);
             ListaSalones salones = new ListaSalones(c,c.Salones());
-            Dictionary<int, string> equipo = c.Equipo();
+            Dictionary<int, string> equipo = c.Equipos();
             object[] model = new object[2];
 
             model[0] = salones;

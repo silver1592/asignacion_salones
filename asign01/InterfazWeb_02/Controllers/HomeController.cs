@@ -40,7 +40,7 @@ namespace InterfazWeb_02.Controllers
             bool res = false;
 
             c = new Conexion(Conexion.datosConexion);
-            if (c.ExisteSemestre(semestre))
+            if (c.Semestre_Valido(semestre))
             {
                 if (Session["ciclo"] == null)
                     Session.Add("ciclo", semestre);
@@ -104,13 +104,9 @@ namespace InterfazWeb_02.Controllers
             {
                 c = new Conexion(Conexion.datosConexion, excelDir, ciclo);
                 c.Sheet = sheet;
-                ListaGrupos grupos = new ListaGrupos(c.GetGrupos(ciclo));
+                ListaGrupos grupos = c.Grupos(ciclo);
 
-                foreach (Grupo g in grupos)
-                    if (c.ExisteBD(g))
-                        c.Comando(g.qUpdate);
-                    else
-                        c.Comando(g.qInsert);
+                c.Grupos_Carga(grupos,null);
             }
             catch (Exception ex)
             {
@@ -157,7 +153,7 @@ namespace InterfazWeb_02.Controllers
                 string ciclo = Session["ciclo"].ToString();
 
                 Conexion c = new Conexion(Conexion.datosConexion,Server.MapPath("~/Archivos/"+excel),ciclo);
-                ListaGrupos grupos = new ListaGrupos(c.GetGruposIni(ciclo, Convert.ToInt32(hora), false));
+                ListaGrupos grupos = new ListaGrupos(c.Grupos_EmpiezanA(ciclo, Convert.ToInt32(hora), false));
                 ListaSalones salones = new ListaSalones(c, c.Salones(), Convert.ToInt32(hora));
 
                 if (Convert.ToBoolean(empalmes))
@@ -187,7 +183,7 @@ namespace InterfazWeb_02.Controllers
                     grupos.Actualiza(alg.GruposAsignados);
                 }
 
-                c.UpdateGrupo(grupos, hoja);
+                c.Grupos_Carga(grupos, hoja);
 
                 res = "Asignacion de " + hora + " completada";
             }

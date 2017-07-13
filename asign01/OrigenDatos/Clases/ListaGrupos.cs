@@ -99,15 +99,6 @@ namespace OrigenDatos.Clases
             grupos = new List<Grupo>();
         }
 
-        public ListaGrupos(IList<Grupo> grupos)
-        {
-            this.grupos = new List<Grupo>();
-            foreach(Grupo g in grupos)
-            {
-                this.grupos.Add(new Grupo(g));
-            }
-        }
-
         public ListaGrupos(Conexion c, DataTable dtGrupos, IList<Salon> salones)
         {
             grupos = new List<Grupo>();
@@ -116,14 +107,51 @@ namespace OrigenDatos.Clases
                 grupos.Add(new Grupo(r, c.DGrupos,null,c,salones));
         }
 
-        public void SetGrupos(List<Grupo> grupos)
+        public ListaGrupos(IList<Grupo> grupos, IList<Profesor> profesores = null, IList<Materia> materia = null)
         {
-            this.grupos = grupos;
+            this.profesores = profesores;
+            this.materias = materia;
+            SetGrupos(grupos);
+        }
+
+        public ListaGrupos(IList<Grupo> grupos, IList<Materia> materias, IList<Profesor> profesores, Conexion c = null, ListaSalones salones = null) : base()
+        {
+            this.materias = materias;
+            this.profesores = profesores;
+            SetGrupos(grupos,c,salones);
+        }
+
+        public void SetGrupos(IList<Grupo> grupos, Conexion c=null, IList<Salon> salones=null)
+        {
+            this.grupos = new List<Grupo>();
+
+            foreach (Grupo g in grupos)
+                if(c!=null && salones!=null)
+                    this.grupos.Add(new Grupo(g, c, salones));
+                else
+                    this.grupos.Add(new Grupo(g));
         }
 
         #endregion
 
         #region Basicos
+
+        public void Actualiza(ListaGrupos _grupos)
+        {
+            if (this == _grupos)
+                return;
+
+            Grupo temp;
+            int index = 0;
+
+            foreach (Grupo g in _grupos)
+            {
+                temp = Busca(g.Cve_materia, g.num_Grupo);
+                index = IndexOf(temp);
+                grupos[index] = g;
+            }
+        }
+
         /// <summary>
         /// Checa si los grupos estan asignados a cierta hora
         /// </summary>
@@ -328,44 +356,6 @@ namespace OrigenDatos.Clases
 
         public IList<Profesor> Profesores { get { return profesores; } }
         public IList<Materia> Materias { get { return materias; } }
-
-        #region Constuctores
-        public ListaGrupos(IList<Grupo> grupos, IList<Profesor> profesores = null, IList<Materia> materia = null)
-        {
-            this.profesores = profesores;
-            this.materias = materia;
-            this.grupos = new List<Grupo>();
-            foreach (Grupo g in grupos)
-                this.grupos.Add(new Grupo(g));
-        }
-
-        public void Actualiza(ListaGrupos _grupos)
-        {
-            if (this == _grupos)
-                return;
-
-            Grupo temp;
-            int index = 0;
-
-            foreach (Grupo g in _grupos)
-            {
-                temp = Busca(g.Cve_materia, g.num_Grupo);
-                index = IndexOf(temp);
-                grupos[index] = g;
-            }
-        }
-
-        public ListaGrupos(IList<Grupo> grupos, List<Materia> materias, List<Profesor> profesores, Conexion c = null, ListaSalones salones = null) : base()
-        {
-            this.materias = materias;
-            this.profesores = profesores;
-
-            this.grupos = new List<Grupo>();
-
-            foreach (Grupo g in grupos)
-                this.grupos.Add(new Grupo(g, c, salones));
-        }
-        #endregion
 
         #region consultas
         /// <summary>

@@ -1,0 +1,2 @@
+C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Release\OrigenDatos.csprojResolveAssemblyReference.cache
+C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\OrigenDatos\obj\Release\OrigenDatos.csproj.ResolveComReference.cache

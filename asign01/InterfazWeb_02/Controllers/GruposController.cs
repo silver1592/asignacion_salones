@@ -19,7 +19,7 @@ namespace InterfazWeb_02.Controllers
         {
             Conexion c = new Conexion(Conexion.datosConexion);
             List<Materia> ms = new List<Materia>();
-            var materias = c.GetMaterias();
+            var materias = c.Materias();
 
             return PartialView(ms);
         }
@@ -28,7 +28,7 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Grupos(string ini, string fin, string dias)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaGrupos list = new ListaGrupos(c.GetLightGrupos(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)));
+            ListaGrupos list = new ListaGrupos(c.Grupos_Light(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)));
 
             list = new ListaGrupos(list.EnDias(dias));
 
@@ -38,7 +38,7 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Grupos()
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaGrupos list = new ListaGrupos(c.GetLightGrupos(Session["ciclo"].ToString()));
+            ListaGrupos list = new ListaGrupos(c.Grupos_Light(Session["ciclo"].ToString()));
 
             return PartialView(list);
         }

@@ -296,13 +296,13 @@ namespace OrigenDatos.Clases
             }
             else
             {
-                Set_GruposHorasAnteriores(c.GruposAnteriores(RPE, hora_ini, ciclo), Conexion.DGruposBD);
-                Set_NecesidadesGrupo(c.Necesidades_Grupo(Cve_materia, tipo, rpe.ToString()));
-                Set_RequerimientosProfesor(c.Necesidades_prof(RPE.ToString()));
-                Set_GruposOtrosSemestres(c.SemestresAnteriores(cve_materia, ciclo, rpe.ToString()), Conexion.DGruposBD);
+                Set_GruposHorasAnteriores(c.Grupos_HoraAnterior(RPE, hora_ini, ciclo), Conexion.DGruposBD);
+                Set_NecesidadesGrupo(c.Grupo_Necesidades(Cve_materia, tipo, rpe.ToString()));
+                Set_RequerimientosProfesor(c.Profesor_Necesidades(RPE.ToString()));
+                Set_GruposOtrosSemestres(c.Grupos_SemestresAnteriores(cve_materia, ciclo, rpe.ToString()), Conexion.DGruposBD);
 
                 if (salones != null)
-                    Set_SalonesPosibles(c.salonesPosibles(cve_materia), salones);
+                    Set_SalonesPosibles(c.Salones_Posibles(cve_materia), salones);
                 else
                     salones_Posibles = new ListaSalones();
             }
@@ -314,13 +314,13 @@ namespace OrigenDatos.Clases
 
             if (c != null)
             {
-                Set_GruposHorasAnteriores(c.GruposAnteriores(RPE, hora_ini, ciclo), Conexion.DGruposBD);
-                Set_NecesidadesGrupo(c.Necesidades_Grupo(Cve_materia, tipo, rpe.ToString()));
-                Set_RequerimientosProfesor(c.Necesidades_prof(RPE.ToString()));
-                Set_GruposOtrosSemestres(c.SemestresAnteriores(cve_materia, ciclo, rpe.ToString()), Conexion.DGruposBD);
+                Set_GruposHorasAnteriores(c.Grupos_HoraAnterior(RPE, hora_ini, ciclo), Conexion.DGruposBD);
+                Set_NecesidadesGrupo(c.Grupo_Necesidades(Cve_materia, tipo, rpe.ToString()));
+                Set_RequerimientosProfesor(c.Profesor_Necesidades(RPE.ToString()));
+                Set_GruposOtrosSemestres(c.Grupos_SemestresAnteriores(cve_materia, ciclo, rpe.ToString()), Conexion.DGruposBD);
 
                 if(salones!=null)
-                    Set_SalonesPosibles(c.salonesPosibles(cve_materia), salones);
+                    Set_SalonesPosibles(c.Salones_Posibles(cve_materia), salones);
                 else
                     salones_Posibles = new ListaSalones();
             }

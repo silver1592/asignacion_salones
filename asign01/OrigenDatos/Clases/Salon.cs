@@ -183,9 +183,9 @@ namespace OrigenDatos.Clases
             this.hora = hora;
             SetValues(datos);
 
-            SetEquipo(c.Salon_equipo(cve_espacio));
-            SetAreaEdificio(c.Edificio_Area(cve_edificio));
-            SetExcepciones(c.Exepciones(cve_espacio));
+            SetEquipo(c.Salones_Salon_equipo(cve_espacio));
+            SetAreaEdificio(c.Salones_Edificio_Area(cve_edificio));
+            SetExcepciones(c.Salones_Exepciones(cve_espacio));
         }
 
         #region Inicializadores

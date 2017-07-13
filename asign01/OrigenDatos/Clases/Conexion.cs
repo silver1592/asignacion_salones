@@ -19,9 +19,6 @@ namespace OrigenDatos.Clases
     public class Conexion
     {
         #region estaticos
-        /// <summary>
-        /// Contiene la informacion para la conexion con la base de datos sql
-        /// </summary>
         public static string datosConexion
         {
             get
@@ -38,48 +35,8 @@ namespace OrigenDatos.Clases
 
                 return datosConexion;
             }
-        }
-        #endregion
+        } // Contiene la informacion para la conexion con la base de datos sql
 
-        /// <summary>
-        /// Informacion de la conexion del objeto
-        /// </summary>
-        protected string DatosConexion;
-        /// <summary>
-        /// Excel utlizado
-        /// </summary>
-        protected LibroExcel Excel;
-        /// <summary>
-        /// Hoja de excel a utilizar
-        /// </summary>
-        protected string hoja;
-        /// <summary>
-        /// Asigna la hoja a utilizar
-        /// </summary>
-        public string Sheet { set { hoja = value; } }
-        /// <summary>
-        /// Nombre de las Hojas disponibles
-        /// </summary>
-        public string[] Sheets
-        {
-            get
-            {
-                if (Excel != null)
-                    return Excel.GetStringSheets();
-                else
-                    return new string[0];
-            }
-        }
-
-        #region Diccionarios
-        /// <summary>
-        /// Diccionario para leer la informacion del excel
-        /// </summary>
-        public Dictionary<string, string> DGruposExcel { get { return Excel.dHeaders; } }
-
-        /// <summary>
-        /// Diccionario para leer la informacion de la base de datos
-        /// </summary>
         public static Dictionary<string, string> DGruposBD
         {
             get
@@ -115,201 +72,55 @@ namespace OrigenDatos.Clases
 
                 return headers;
             }
-        }
-
-        /// <summary>
-        /// Diccionario utilizado por la conexion actual
-        /// </summary>
-        public Dictionary<string,string> DGrupos { get { return Excel != null ? Excel.dHeaders : DGruposBD; } }
+        } // Diccionario para leer la informacion de la base de datos
         #endregion
 
-        /// <summary>
-        /// Conexion por default
-        /// </summary>
-        /// <remarks>
-        /// Utiliza la informacion basica para la base de datos
-        /// </remarks>
+        #region Atributos, Get y Set
+        protected string DatosConexion; // Informacion de la conexion del objeto
+        protected LibroExcel Excel; //Excel Utilizado
+        protected string hoja; // Hoja de excel a utilizar
+        public string Sheet { set { hoja = value; } } // Asigna la hoja a utilizar
+        public string[] Sheets
+        {
+            get
+            {
+                if (Excel != null)
+                    return Excel.GetStringSheets();
+                else
+                    return new string[0];
+            }
+        } // Nombre de las Hojas disponibles
+
+        #region Diccionarios
+        public Dictionary<string, string> DGruposExcel { get { return Excel.dHeaders; } } // Diccionario para leer la informacion del excel
+
+        public Dictionary<string,string> DGrupos { get { return Excel != null ? Excel.dHeaders : DGruposBD; } } // Selecciona un Diccionario para utilizarlo con la conexion actual
+        #endregion
+        #endregion
+
+        #region Constructores
         public Conexion()
         {
-            DatosConexion = datosConexion;
-        }
+            DatosConexion = Conexion.datosConexion;
+        }// Conexion por default
 
-        /// <summary>
-        /// Constructor con opcion a cadena de conexion
-        /// </summary>
-        /// <remarks>
-        /// Permite administrar mas la conexion
-        /// </remarks>
-        /// <param name="Datos">Cadena de conexion a la base de datos</param>
         public Conexion(string Datos)
         {
             DatosConexion = Datos;
-        }
+        } //Conexion por cadena
 
         /// <summary>
         /// Constructor completo
         /// </summary>
-        /// <param name="Datos"></param>
-        /// <param name="excelDireccion"></param>
-        /// <param name="ciclo"></param>
-        /// <param name="tipo"></param>
+        /// <param name="Datos">Datos de conexion</param>
+        /// <param name="excelDireccion">Direccion del archivo de excel</param>
+        /// <param name="ciclo">Valor por default si el excel no trae ciclo</param>
+        /// <param name="tipo">Valor por default si el excel no trae tipo</param>
         public Conexion(string Datos, string excelDireccion, string ciclo="2016-2017/I", string tipo="T")
         {
             DatosConexion = Datos;
 
             Excel = new LibroExcel(excelDireccion, ciclo, tipo);
-        }
-
-        #region Consultas
-        /// <summary>
-        /// Obtiene la informacion de las excepciones en la base de datos
-        /// </summary>
-        /// <param name="cve_espacio"></param>
-        /// <returns></returns>
-        public DataTable Exepciones(string cve_espacio)
-        {
-            string textoCmd = "SELECT * FROM [asignacion].[ae_excepciones] where cve_espacio='" + cve_espacio + "';";
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
-        }
-
-        /// <summary>
-        /// Obtiene el valor que tiene un edificio con respecto a un edificio
-        /// </summary>
-        /// <param name="cve_edificio">Clave del edificio a buscar</param>
-        /// <returns></returns>
-        public DataTable Edificio_Area(string cve_edificio)
-        {
-            string textoCmd = "SELECT * FROM[asignacion].[ae_area_edificio]  where idEdificio = '" + cve_edificio + "'";
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
-        }
-
-        /// <summary>
-        /// Obtiene de la base de datos las necesidades marcadas al profesor
-        /// </summary>
-        /// <param name="rpe">Profesor a buscar</param>
-        /// <returns></returns>
-        public DataTable Necesidades_prof(string rpe)
-        {
-            string textoCmd = "SELECT [rpe], [discapacidad], [salon_unico] FROM [asignacion].[asignacion].[ae_necesidad_profesor]"
-                              + "where rpe=" + rpe + ";";
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
-        }
-        
-        /// <summary>
-        /// Muestra los salones registrados en la base de datos
-        /// </summary>
-        /// <returns></returns>
-        public DataTable Salones()
-        {
-            string textoCmd = "SELECT * "
-                              + "FROM [asignacion].[ae_cat_espacio] "
-                              + "where not(cve_edificio='F') and not(cve_edificio='P') and not(cve_edificio='ZP')";
-
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
-        }
-
-        /// <summary>
-        /// Obtiene de la base de datos el equipo instalado en el salon
-        /// </summary>
-        /// <param name="cve_espacio">Clave del salon</param>
-        /// <returns></returns>
-        public DataTable Salon_equipo(string cve_espacio)
-        {
-            string textoCmd = "SELECT * "
-                              + "FROM [asignacion].[ae_equipamiento]"
-                              + "where cve_espacio='" + cve_espacio + "'; ";
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
-        }
-
-        /// <summary>
-        /// Obtiene las necesidades de un grupo
-        /// </summary>
-        /// <param name="cve_materia">Clave de la materia</param>
-        /// <param name="rpe">clave del profesor</param>
-        /// <param name="tipo">tipo de claser (T/L)</param>
-        /// <returns></returns>
-        public DataTable Necesidades_Grupo(string cve_materia, string tipo, string rpe)
-        {
-            string textoCmd ="";
-
-            if(cve_materia!="" && rpe!="")
-                textoCmd = "SELECT idEquipo,Equipo, peso "
-                              + "FROM  [asignacion].[ae_necesidades_curso] inner join asignacion.ae_cat_equipo on cve_equipo=idEquipo"
-                              + " where cve_materia = '" + cve_materia + "' and tipo = '" + tipo + "' and rpe = " + rpe + "; ";
-            else if (cve_materia!="" && rpe=="")
-                textoCmd = "SELECT idEquipo,Equipo, peso "
-                              + "FROM  [asignacion].[ae_necesidades_curso] inner join asignacion.ae_cat_equipo on cve_equipo=idEquipo"
-                              + " where cve_materia = '" + cve_materia + "' and tipo = '" + tipo + "'; ";
-            else if (cve_materia == "" && rpe != "")
-                textoCmd = "SELECT idEquipo,Equipo, peso "
-                              + "FROM  [asignacion].[ae_necesidades_curso] inner join asignacion.ae_cat_equipo on cve_equipo=idEquipo"
-                              + " where tipo = '" + tipo + "' and rpe = " + rpe + "; ";
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
-        }
-
-        /// <summary>
-        /// Hace una consulta a la base de datos para obtener los grupos que se impartieron una hora antes por el profesor
-        /// </summary>
-        /// <param name="rpe">Clave unica del profesor</param>
-        /// <param name="hora">Hora de la cual se quiere obtener la informacion</param>
-        /// <param name="ciclo">Semestre</param>
-        /// <returns>DataTable con los datos de los grupos impartidos</returns>
-        public DataTable GruposAnteriores(int rpe, int hora, string ciclo)
-        {
-            string textoCmd = "select * "
-                               + "from ae_Grupos_ini(" + (hora - 1) + ") "
-                               + "where rpe = " + rpe + " and ciclo = '" + ciclo + "';";
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
-        }
-
-        /// <summary>
-        /// Consulta para obtener los salones asignados en las materias
-        /// </summary>
-        /// <param name="cve_materia"></param>
-        /// <returns></returns>
-        public DataTable salonesPosibles(string cve_materia)
-        {
-            string textoCmd = "SELECT [cve_mat],[cve_espacio] FROM[asignacion].[asignacion].[ae_PosiblesSalones] where cve_mat = " + cve_materia;
-
-            DataTable datos = Querry(textoCmd);
-
-            return datos;
-        }
-
-        /// <summary>
-        /// Obtiene Los grupos de semestres anteriores
-        /// </summary>
-        /// <param name="cve_materia">Clave de la materia</param>
-        /// <param name="ciclo"></param>
-        /// <param name="rpe"></param>
-        /// <returns></returns>
-        public DataTable SemestresAnteriores(string cve_materia,string ciclo,string rpe)
-        {
-            string query = "select * from ae_horario where not(ciclo = '" + ciclo + "') and rpe = '"+rpe+"' and cve_materia = '"+cve_materia+"'";
-            DataTable dt = Querry(query);
-
-            return dt;
         }
         #endregion
 
@@ -395,17 +206,111 @@ namespace OrigenDatos.Clases
         /// </summary>
         /// <param name="grupos">Lista de grupos a escribir</param>
         /// <param name="hojaExcel">Hoja en la que se va a escribir(No importa si existe)</param>
-        public void UpdateGrupo(ListaGrupos grupos, string hojaExcel = "resultado")
+        public void Grupos_Carga(ListaGrupos grupos, string hojaExcel = "resultado")
         {
-            foreach(Grupo g in grupos)
-                Comando(g.qUpdate);
+            foreach (Grupo g in grupos)
+                if (Grupo_Existe(g))
+                    Comando(g.qUpdate);
+                else
+                    Comando(g.qInsert);
 
-            if(Excel!=null)
+            if (Excel != null && hojaExcel != null)
                 Excel.EscribeGrupos(grupos, hojaExcel);
         }
         #endregion
 
-        #region _Algoritmo
+        #region Salon y Salones
+        /// <summary>
+        /// Muestra los salones registrados en la base de datos
+        /// </summary>
+        /// <returns></returns>
+        public DataTable Salones()
+        {
+            string textoCmd = "SELECT * "
+                              + "FROM [asignacion].[ae_cat_espacio] "
+                              + "where not(cve_edificio='F') and not(cve_edificio='P') and not(cve_edificio='ZP')";
+
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+
+        /// <summary>
+        /// Obtiene la informacion de los salones que tienen un trato especial
+        /// </summary>
+        /// <param name="cve_espacio"></param>
+        /// <returns></returns>
+        public DataTable Salones_Exepciones(string cve_espacio)
+        {
+            string textoCmd = "SELECT * FROM [asignacion].[ae_excepciones] where cve_espacio='" + cve_espacio + "';";
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+
+        /// <summary>
+        /// Obtiene el valor que tiene un edificio con respecto a una area
+        /// </summary>
+        /// <param name="cve_edificio">Clave del edificio a buscar</param>
+        /// <returns></returns>
+        public DataTable Salones_Edificio_Area(string cve_edificio)
+        {
+            string textoCmd = "SELECT * FROM[asignacion].[ae_area_edificio]  where idEdificio = '" + cve_edificio + "'";
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+
+        /// <summary>
+        /// Obtiene de la base de datos el equipo instalado en el salon
+        /// </summary>
+        /// <param name="cve_espacio">Clave del salon</param>
+        /// <returns></returns>
+        public DataTable Salones_Salon_equipo(string cve_espacio)
+        {
+            string textoCmd = "SELECT * "
+                              + "FROM [asignacion].[ae_equipamiento]"
+                              + "where cve_espacio='" + cve_espacio + "'; ";
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+
+        /// <summary>
+        /// Consulta para obtener los salones asignados en las materias
+        /// </summary>
+        /// <param name="cve_materia"></param>
+        /// <returns></returns>
+        public DataTable Salones_Posibles(string cve_materia)
+        {
+            string textoCmd = "SELECT [cve_mat],[cve_espacio] FROM[asignacion].[asignacion].[ae_PosiblesSalones] where cve_mat = " + cve_materia;
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+        #endregion
+
+        #region Grupo y Grupos
+        public ListaGrupos Grupos(string semestre, string salon)
+        {
+            ListaGrupos res = null;
+            IList<Grupo> grupos;
+            List<Materia> materias = Materias();
+            List<Profesor> profesores = Profesores();
+
+            DataTable dt = Querry("SELECT DISTINCT * FROM where ciclo = '" + semestre + "' and salon='" + salon + "'");
+
+            grupos = Grupos_AsList(dt);
+            res = new ListaGrupos(grupos, materias, profesores, this);
+
+            return res;
+        }
+
         /// <summary>
         /// Obtiene los grupos de la base de datos o del excel
         /// </summary>
@@ -414,18 +319,18 @@ namespace OrigenDatos.Clases
         /// <param name="fin"></param>
         /// <param name="bExcel"></param>
         /// <returns></returns>
-        public ListaGrupos GetGrupos(string semestre, int ini = 7, int fin = 22, bool bExcel = true)
+        public ListaGrupos Grupos(string semestre, int ini = 7, int fin = 22, bool bExcel = true)
         {
             ListaGrupos res = null;
-            List<Grupo> grupos;
-            List<Materia> materias = GetMaterias();
-            List<Profesor> profesores = GetProfesores();
+            IList<Grupo> grupos;
+            List<Materia> materias = Materias();
+            List<Profesor> profesores = Profesores();
 
             if (Excel == null || !bExcel)
             {
                 DataTable dt = Querry("SELECT DISTINCT * FROM  [asignacion].[Grupos_a_las] (" + ini + "," + fin + ") where ciclo = '" + semestre + "'");
 
-                grupos = AsList(dt);
+                grupos = Grupos_AsList(dt);
                 res = new ListaGrupos(grupos, materias, profesores, this);
             }
             else
@@ -436,39 +341,18 @@ namespace OrigenDatos.Clases
             return res;
         }
 
-        public ListaGrupos GetGruposIni(string semestre, int ini, bool bExcel)
+        public ListaGrupos Grupos_Light(string semestre, int ini = 7, int fin = 22, bool bExcel = true)
         {
             ListaGrupos res = null;
-            List<Grupo> grupos;
-            List<Materia> materias = GetMaterias();
-            List<Profesor> profesores = GetProfesores();
-
-            if (Excel == null || !bExcel)
-            {
-                DataTable dt = Querry("SELECT DISTINCT *  FROM [asignacion].[ae_Grupos_ini] (" + ini + ") where ciclo = '" + semestre + "'");
-
-                grupos = AsList(dt);
-                res = new ListaGrupos(grupos, materias, profesores, this);
-            }
-            else
-            {
-                res = new ListaGrupos(Excel.GetGrupos(hoja, semestre), materias, profesores, this);
-            }
-
-            return res;
-        }
-        public ListaGrupos GetLightGrupos(string semestre, int ini = 7, int fin = 22, bool bExcel = true)
-        {
-            ListaGrupos res = null;
-            List<Grupo> grupos;
-            List<Materia> materias = GetMaterias();
-            List<Profesor> profesores = GetProfesores();
+            IList<Grupo> grupos;
+            IList<Materia> materias = Materias();
+            IList<Profesor> profesores = Profesores();
 
             if (Excel == null || !bExcel)
             {
                 DataTable dt = Querry("SELECT * FROM  [asignacion].[Grupos_a_las] (" + ini + "," + fin + ") where ciclo = '" + semestre + "'");
 
-                grupos = AsList(dt);
+                grupos = Grupos_AsList(dt);
                 res = new ListaGrupos(grupos, materias, profesores);
             }
             else
@@ -479,7 +363,120 @@ namespace OrigenDatos.Clases
             return res;
         }
 
-        public List<Materia> GetMaterias()
+        /// <summary>
+        /// Obtiene las necesidades de un grupo
+        /// </summary>
+        /// <param name="cve_materia">Clave de la materia</param>
+        /// <param name="rpe">clave del profesor</param>
+        /// <param name="tipo">tipo de claser (T/L)</param>
+        /// <returns></returns>
+        public DataTable Grupo_Necesidades(string cve_materia, string tipo, string rpe)
+        {
+            string textoCmd = "";
+
+            if (cve_materia != "" && rpe != "")
+                textoCmd = "SELECT idEquipo,Equipo, peso "
+                              + "FROM  [asignacion].[ae_necesidades_curso] inner join asignacion.ae_cat_equipo on cve_equipo=idEquipo"
+                              + " where cve_materia = '" + cve_materia + "' and tipo = '" + tipo + "' and rpe = " + rpe + "; ";
+            else if (cve_materia != "" && rpe == "")
+                textoCmd = "SELECT idEquipo,Equipo, peso "
+                              + "FROM  [asignacion].[ae_necesidades_curso] inner join asignacion.ae_cat_equipo on cve_equipo=idEquipo"
+                              + " where cve_materia = '" + cve_materia + "' and tipo = '" + tipo + "'; ";
+            else if (cve_materia == "" && rpe != "")
+                textoCmd = "SELECT idEquipo,Equipo, peso "
+                              + "FROM  [asignacion].[ae_necesidades_curso] inner join asignacion.ae_cat_equipo on cve_equipo=idEquipo"
+                              + " where tipo = '" + tipo + "' and rpe = " + rpe + "; ";
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+
+        /// <summary>
+        /// Obtiene los grupos que se impartieron una hora antes por el profesor
+        /// </summary>
+        /// <param name="rpe">Clave unica del profesor</param>
+        /// <param name="hora">Hora de la cual se quiere obtener la informacion</param>
+        /// <param name="ciclo">Semestre</param>
+        /// <returns>DataTable con los datos de los grupos impartidos</returns>
+        public DataTable Grupos_HoraAnterior(int rpe, int hora, string ciclo)
+        {
+            string textoCmd = "select * "
+                               + "from ae_Grupos_ini(" + (hora - 1) + ") "
+                               + "where rpe = " + rpe + " and ciclo = '" + ciclo + "';";
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+
+        /// <summary>
+        /// Obtiene Los grupos de semestres anteriores
+        /// </summary>
+        /// <param name="cve_materia">Clave de la materia</param>
+        /// <param name="ciclo"></param>
+        /// <param name="rpe"></param>
+        /// <returns></returns>
+        public DataTable Grupos_SemestresAnteriores(string cve_materia, string ciclo, string rpe)
+        {
+            string query = "select * from ae_horario where not(ciclo = '" + ciclo + "') and rpe = '" + rpe + "' and cve_materia = '" + cve_materia + "'";
+            DataTable dt = Querry(query);
+
+            return dt;
+        }
+
+        private IList<Grupo> Grupos_AsList(DataTable dt)
+        {
+            List<Grupo> g = new List<Grupo>();
+            foreach (DataRow r in dt.Rows)
+                g.Add(new Grupo(r, DGruposBD));
+
+            return g;
+        }
+        #endregion
+
+        #region Profesor
+        /// <summary>
+        /// Obtiene las necesidades marcadas al profesor
+        /// </summary>
+        /// <param name="rpe">Profesor a buscar</param>
+        /// <returns></returns>
+        public DataTable Profesor_Necesidades(string rpe)
+        {
+            string textoCmd = "SELECT [rpe], [discapacidad], [salon_unico] FROM [asignacion].[asignacion].[ae_necesidad_profesor]"
+                              + "where rpe=" + rpe + ";";
+
+            DataTable datos = Querry(textoCmd);
+
+            return datos;
+        }
+
+        #endregion
+
+        #region _Algoritmo
+        public ListaGrupos Grupos_EmpiezanA(string semestre, int ini, bool bExcel)
+        {
+            ListaGrupos res = null;
+            IList<Grupo> grupos;
+            List<Materia> materias = Materias();
+            List<Profesor> profesores = Profesores();
+
+            if (Excel == null || !bExcel)
+            {
+                DataTable dt = Querry("SELECT DISTINCT *  FROM [asignacion].[ae_Grupos_ini] (" + ini + ") where ciclo = '" + semestre + "'");
+
+                grupos = Grupos_AsList(dt);
+                res = new ListaGrupos(grupos, materias, profesores, this);
+            }
+            else
+            {
+                res = new ListaGrupos(Excel.GetGrupos(hoja, semestre), materias, profesores, this);
+            }
+
+            return res;
+        }
+
+        public List<Materia> Materias()
         {
             List<Materia> materias = new List<Materia>();
             DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_materia]");
@@ -490,7 +487,7 @@ namespace OrigenDatos.Clases
             return materias;
         }
 
-        public Dictionary<string, string> GetMateriasAsDictionary()
+        public Dictionary<string, string> Materias_AsDictionary()
         {
             Dictionary<string, string> materias = new Dictionary<string, string>();
             DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_materia]");
@@ -501,7 +498,7 @@ namespace OrigenDatos.Clases
             return materias;
         }
 
-        public List<Profesor> GetProfesores()
+        public List<Profesor> Profesores()
         {
             List<Profesor> profesores = new List<Profesor>();
             DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_profesor]");
@@ -512,7 +509,7 @@ namespace OrigenDatos.Clases
             return profesores;
         }
 
-        public Dictionary<int, string> GetProfesoresAsDicctionary()
+        public Dictionary<int, string> Profesores_AsDicctionary()
         {
             Dictionary<int, string> profesores = new Dictionary<int, string>();
             DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_profesor]");
@@ -523,31 +520,7 @@ namespace OrigenDatos.Clases
             return profesores;
         }
 
-        public List<Grupo> AsList(DataTable dt)
-        {
-            List<Grupo> g = new List<Grupo>();
-            foreach (DataRow r in dt.Rows)
-                g.Add(new Grupo(r, DGruposBD));
-
-            return g;
-        }
         #endregion
-
-        #region _Interfaz
-        public ListaGrupos GetGrupos(string semestre, string salon)
-        {
-            ListaGrupos res = null;
-            List<OrigenDatos.Clases.Grupo> grupos;
-            List<Materia> materias = GetMaterias();
-            List<Profesor> profesores = GetProfesores();
-
-            DataTable dt = Querry("SELECT DISTINCT * FROM where ciclo = '" + semestre + "' and salon='"+salon+"'");
-
-            grupos = AsList(dt);
-            res = new ListaGrupos(grupos, materias, profesores, this);
-
-            return res;
-        }
 
         public string[] Semestres()
         {
@@ -562,7 +535,7 @@ namespace OrigenDatos.Clases
             return res.ToArray();
         }
 
-        public bool ExisteBD(Grupo g)
+        public bool Grupo_Existe(Grupo g)
         {
             string query = "select * from ae_horario where cve_materia=" + g.Cve_materia + " and grupo=" + g.num_Grupo + " and ciclo='" + g.Ciclo + "'";
 
@@ -571,7 +544,7 @@ namespace OrigenDatos.Clases
             return dt.Rows.Count != 0;
         }
 
-        public bool ExisteSemestre(string semestre)
+        public bool Semestre_Valido(string semestre)
         {
             DataTable dt = Querry("select count(*) from ae_horario where ciclo = '" + semestre + "'");
             if (Convert.ToInt32(dt.Rows[0][0].ToString()) == 0)
@@ -581,7 +554,7 @@ namespace OrigenDatos.Clases
 
         }
 
-        public Dictionary<int, string> Equipo()
+        public Dictionary<int, string> Equipos()
         {
             string query = "select * from asignacion.ae_cat_equipo";
             Dictionary<int, string> res = new Dictionary<int, string>();
@@ -593,6 +566,5 @@ namespace OrigenDatos.Clases
 
             return res;
         }
-        #endregion
     }
 }

@@ -18,7 +18,7 @@ namespace Algoritmo02
             Algoritmo alg;
             ChecaEmpalmes emp;
             PreAsignacion pre;
-            ListaGrupos grupos = c.GetGrupos("2016-2017/II");
+            ListaGrupos grupos = c.Grupos("2016-2017/II");
             ListaSalones salones = new ListaSalones(c,c.Salones());
             ListaGrupos gruposActuales;
 
@@ -39,7 +39,7 @@ namespace Algoritmo02
                 alg.AsignaSalones();
                 grupos.Actualiza(alg.GruposAsignados);
 
-                c.UpdateGrupo(gruposActuales);
+                c.Grupos_Carga(gruposActuales);
             }
             stop = new TimeSpan(DateTime.Now.Ticks);
             Console.Write("***Pulsa una tecla para continuar****\n");
