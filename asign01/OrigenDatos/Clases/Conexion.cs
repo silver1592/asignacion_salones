@@ -200,23 +200,6 @@ namespace OrigenDatos.Clases
 
             return datos;
         }
-
-        /// <summary>
-        /// Actualiza la informacion en la base de datos
-        /// </summary>
-        /// <param name="grupos">Lista de grupos a escribir</param>
-        /// <param name="hojaExcel">Hoja en la que se va a escribir(No importa si existe)</param>
-        public void Grupos_Carga(ListaGrupos grupos, string hojaExcel = "resultado")
-        {
-            foreach (Grupo g in grupos)
-                if (Grupo_Existe(g))
-                    Comando(g.qUpdate);
-                else
-                    Comando(g.qInsert);
-
-            if (Excel != null && hojaExcel != null)
-                Excel.EscribeGrupos(grupos, hojaExcel);
-        }
         #endregion
 
         #region Salon y Salones
@@ -363,6 +346,37 @@ namespace OrigenDatos.Clases
             return res;
         }
 
+        public ListaGrupos Grupos_EmpiezanA(string semestre, int ini, bool bExcel)
+        {
+            ListaGrupos res = null;
+            IList<Grupo> grupos;
+            List<Materia> materias = Materias();
+            List<Profesor> profesores = Profesores();
+
+            if (Excel == null || !bExcel)
+            {
+                DataTable dt = Querry("SELECT DISTINCT *  FROM [asignacion].[ae_Grupos_ini] (" + ini + ") where ciclo = '" + semestre + "'");
+
+                grupos = Grupos_AsList(dt);
+                res = new ListaGrupos(grupos, materias, profesores, this);
+            }
+            else
+            {
+                res = new ListaGrupos(Excel.GetGrupos(hoja, semestre), materias, profesores, this);
+            }
+
+            return res;
+        }
+
+        private IList<Grupo> Grupos_AsList(DataTable dt)
+        {
+            List<Grupo> g = new List<Grupo>();
+            foreach (DataRow r in dt.Rows)
+                g.Add(new Grupo(r, DGruposBD));
+
+            return g;
+        }
+
         /// <summary>
         /// Obtiene las necesidades de un grupo
         /// </summary>
@@ -425,17 +439,34 @@ namespace OrigenDatos.Clases
             return dt;
         }
 
-        private IList<Grupo> Grupos_AsList(DataTable dt)
+        public bool Grupo_Existe(Grupo g)
         {
-            List<Grupo> g = new List<Grupo>();
-            foreach (DataRow r in dt.Rows)
-                g.Add(new Grupo(r, DGruposBD));
+            string query = "select * from ae_horario where cve_materia=" + g.Cve_materia + " and grupo=" + g.num_Grupo + " and ciclo='" + g.Ciclo + "'";
 
-            return g;
+            DataTable dt = Querry(query);
+
+            return dt.Rows.Count != 0;
+        }
+
+        /// <summary>
+        /// Actualiza la informacion en la base de datos
+        /// </summary>
+        /// <param name="grupos">Lista de grupos a escribir</param>
+        /// <param name="hojaExcel">Hoja en la que se va a escribir(No importa si existe)</param>
+        public void Grupos_Carga(ListaGrupos grupos, string hojaExcel = "resultado")
+        {
+            foreach (Grupo g in grupos)
+                if (Grupo_Existe(g))
+                    Comando(g.qUpdate);
+                else
+                    Comando(g.qInsert);
+
+            if (Excel != null && hojaExcel != null)
+                Excel.EscribeGrupos(grupos, hojaExcel);
         }
         #endregion
 
-        #region Profesor
+        #region Profesor y Profesores
         /// <summary>
         /// Obtiene las necesidades marcadas al profesor
         /// </summary>
@@ -449,53 +480,6 @@ namespace OrigenDatos.Clases
             DataTable datos = Querry(textoCmd);
 
             return datos;
-        }
-
-        #endregion
-
-        #region _Algoritmo
-        public ListaGrupos Grupos_EmpiezanA(string semestre, int ini, bool bExcel)
-        {
-            ListaGrupos res = null;
-            IList<Grupo> grupos;
-            List<Materia> materias = Materias();
-            List<Profesor> profesores = Profesores();
-
-            if (Excel == null || !bExcel)
-            {
-                DataTable dt = Querry("SELECT DISTINCT *  FROM [asignacion].[ae_Grupos_ini] (" + ini + ") where ciclo = '" + semestre + "'");
-
-                grupos = Grupos_AsList(dt);
-                res = new ListaGrupos(grupos, materias, profesores, this);
-            }
-            else
-            {
-                res = new ListaGrupos(Excel.GetGrupos(hoja, semestre), materias, profesores, this);
-            }
-
-            return res;
-        }
-
-        public List<Materia> Materias()
-        {
-            List<Materia> materias = new List<Materia>();
-            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_materia]");
-
-            foreach (DataRow r in dt.Rows)
-                materias.Add(new Materia(r));
-
-            return materias;
-        }
-
-        public Dictionary<string, string> Materias_AsDictionary()
-        {
-            Dictionary<string, string> materias = new Dictionary<string, string>();
-            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_materia]");
-
-            foreach (DataRow r in dt.Rows)
-                materias.Add(r["cve_materia"].ToString(), r["materia"].ToString());
-
-            return materias;
         }
 
         public List<Profesor> Profesores()
@@ -519,9 +503,33 @@ namespace OrigenDatos.Clases
 
             return profesores;
         }
-
         #endregion
 
+        #region Materias
+        public List<Materia> Materias()
+        {
+            List<Materia> materias = new List<Materia>();
+            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_materia]");
+
+            foreach (DataRow r in dt.Rows)
+                materias.Add(new Materia(r));
+
+            return materias;
+        }
+
+        public Dictionary<string, string> Materias_AsDictionary()
+        {
+            Dictionary<string, string> materias = new Dictionary<string, string>();
+            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_materia]");
+
+            foreach (DataRow r in dt.Rows)
+                materias.Add(r["cve_materia"].ToString(), r["materia"].ToString());
+
+            return materias;
+        }
+        #endregion
+
+        #region Semestre
         public string[] Semestres()
         {
             string query = "SELECT distinct ciclo FROM[asignacion].[ae_horario] order by ciclo desc";
@@ -535,15 +543,6 @@ namespace OrigenDatos.Clases
             return res.ToArray();
         }
 
-        public bool Grupo_Existe(Grupo g)
-        {
-            string query = "select * from ae_horario where cve_materia=" + g.Cve_materia + " and grupo=" + g.num_Grupo + " and ciclo='" + g.Ciclo + "'";
-
-            DataTable dt = Querry(query);
-
-            return dt.Rows.Count != 0;
-        }
-
         public bool Semestre_Valido(string semestre)
         {
             DataTable dt = Querry("select count(*) from ae_horario where ciclo = '" + semestre + "'");
@@ -553,7 +552,9 @@ namespace OrigenDatos.Clases
             return true;
 
         }
+        #endregion
 
+        #region Equipo
         public Dictionary<int, string> Equipos()
         {
             string query = "select * from asignacion.ae_cat_equipo";
@@ -566,5 +567,6 @@ namespace OrigenDatos.Clases
 
             return res;
         }
+        #endregion
     }
 }

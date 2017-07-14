@@ -49,11 +49,10 @@ namespace OrigenDatos.Clases
         /// Convierte el ciclo a numeros faciles de usar en un condicional para saber cual es mayor
         /// Se empieza desde el 2014-2015/I al cual se le asigna 0 y de ai en adelante aumenta en 0.5
         /// </summary>
-        public List<Requerimiento_Valor> Requerimientos { get { return requerimientos_Salon; } }
         public bool PlantaBaja { get { return plantaBaja; } }
         public string Salon_fijo { get { return salon_fijo!=null ? salon_fijo : ""; } }
         public ListaSalones Salones_posibles { get { return salones_Posibles; } }
-        public float fCiclo
+        private float fCiclo
         {
             get
             {
@@ -647,7 +646,7 @@ namespace OrigenDatos.Clases
         {
             int res = 0;
 
-            foreach (Requerimiento_Valor req in Requerimientos)
+            foreach (Requerimiento_Valor req in requerimientos_Salon)
                 if (salon.Equipo.Contains(req.requerimiento))
                     res += req.valor;
 

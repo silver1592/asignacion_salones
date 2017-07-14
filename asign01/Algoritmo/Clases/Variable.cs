@@ -131,7 +131,7 @@ namespace Algoritmo02.Clases
 
         public Grupo HoraAnterior()
         {
-            return grupo.GHoraAnterior as Grupo;
+            return grupo.GHoraAnterior;
         }
     }
 }
