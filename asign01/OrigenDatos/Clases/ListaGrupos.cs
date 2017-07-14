@@ -193,7 +193,7 @@ namespace OrigenDatos.Clases
             ListaGrupos res;
 
             var query = from Grupo g in grupos
-                        where g.EnHora(hora, hora + 1, dias) && (g.Salon=="" || g.Salon==null || g.Salon == " ")
+                        where g.EnHora(hora, hora + 1, dias) && (g.Cve_espacio=="" || g.Cve_espacio==null || g.Cve_espacio == " ")
                         select g;
 
             res = new ListaGrupos(query.ToList<Grupo>());
@@ -212,7 +212,7 @@ namespace OrigenDatos.Clases
             ListaGrupos res;
 
             var query = from Grupo g in grupos
-                        where g.EnHora(hora, hora + 1, dias) && (g.Salon != "" || g.Salon != null || g.Salon != " ")
+                        where g.EnHora(hora, hora + 1, dias) && (g.Cve_espacio != "" || g.Cve_espacio != null || g.Cve_espacio != " ")
                         select g;
 
             res = new ListaGrupos(query.ToList<Grupo>());
@@ -224,7 +224,7 @@ namespace OrigenDatos.Clases
             ListaGrupos res;
 
             var query = from Grupo g in grupos
-                        where g.Salon == salon
+                        where g.Cve_espacio == salon
                         select g;
 
             res = new ListaGrupos(query.ToList<Grupo>());
@@ -253,7 +253,7 @@ namespace OrigenDatos.Clases
         public ListaGrupos EnHora(int hora_ini, int hora_fin, string salon, string dias)
         {
             var query = from Grupo g in this.grupos
-                        where g.EnHora(hora_ini, hora_fin, dias) && g.Salon == salon
+                        where g.EnHora(hora_ini, hora_fin, dias) && g.Cve_espacio == salon
                         select g;
 
             return new ListaGrupos(query.ToList());
@@ -365,7 +365,7 @@ namespace OrigenDatos.Clases
         public ListaGrupos EnSalonesFijos()
         {
             var query = from g in grupos
-                        where g.Salon_fijo == g.Salon
+                        where g.Salon_fijo == g.Cve_espacio
                         select (Grupo)g;
 
             return new ListaGrupos(query.ToList());
@@ -498,7 +498,7 @@ namespace OrigenDatos.Clases
             foreach (Grupo g in grupos)
             {
                 var query = from Salon sal in salones
-                            where sal.Cve_espacio == g.Salon && grupo.SalonValido(sal) > 0 && sal.Disponible_para_grupo(grupo)
+                            where sal.Cve_espacio == g.Cve_espacio && grupo.SalonValido(sal) > 0 && sal.Disponible_para_grupo(grupo)
                             select sal;
 
                 if (query.Count() != 0)

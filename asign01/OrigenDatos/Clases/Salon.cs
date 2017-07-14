@@ -330,7 +330,7 @@ namespace OrigenDatos.Clases
         public void ObtenHorario(List<Grupo> grupos)
         {
             var query = from Grupo g in grupos
-                        where g.Salon == Cve_espacio
+                        where g.Cve_espacio == Cve_espacio
                         select g;
 
             foreach (Grupo g in query.ToList<Grupo>())

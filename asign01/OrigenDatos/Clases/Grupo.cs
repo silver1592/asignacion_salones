@@ -26,7 +26,7 @@ namespace OrigenDatos.Clases
         protected int sabado_fin;//[sabado_fin] [int] NULL,
         protected int cupo;//[cupo] [int] NOT NULL,
         protected int inscritos;//[inscritos] [int] NOT NULL,
-        protected string salon;//[salon] [varchar](60) NULL,
+        protected string cve_espacio;//[salon] [varchar](60) NULL,
         protected int rpe;//[rpe] [int] NULL,
         protected string ciclo;//[ciclo] [varchar](20) NOT NULL
 
@@ -52,34 +52,8 @@ namespace OrigenDatos.Clases
         public bool PlantaBaja { get { return plantaBaja; } }
         public string Salon_fijo { get { return salon_fijo!=null ? salon_fijo : ""; } }
         public ListaSalones Salones_posibles { get { return salones_Posibles; } }
-        private float fCiclo
-        {
-            get
-            {
-                string aux;
-                int yIni;
-                int yFin;
-                float semPar = .5f;
-
-                if (ciclo.Contains("/II"))
-                {
-                    aux = ciclo.Replace("/II", "");
-                    semPar = 2;
-                }
-                else
-                    aux = ciclo.Replace("/I", "");
-
-                yIni = Convert.ToInt32(aux.Split('-')[0]);
-                yFin = Convert.ToInt32(aux.Split('-')[1]);
-
-                if (yIni >= 2014)
-                    return ((yIni - 2014)*10 + semPar);
-                else
-                    return -1;
-            }
-        }
         public string Ciclo { get { return ciclo; } }
-        public string Salon { get { return salon; } set { salon = value; } }
+        public string Cve_espacio { get { return cve_espacio; } set { cve_espacio = value; } }
         public string SalonBD { get { return salonBD; } }
         public Grupo GHoraAnterior { get { return HoraAnterior; } }
         public int hora_ini
@@ -202,7 +176,7 @@ namespace OrigenDatos.Clases
             get
             {
                 return "UPDATE [asignacion].[ae_horario] "
-                              + "SET[salon] = '" + salon + "'"
+                              + "SET[salon] = '" + cve_espacio + "'"
                               + " WHERE[cve_materia] = '" + cve_materia + "' and [grupo] = " + grupo.ToString() + " and [tipo] = '" + tipo + "' and [ciclo] = '" + ciclo + "';";
             }
         }
@@ -229,7 +203,7 @@ namespace OrigenDatos.Clases
                     +sabado_fin +","
                     +cupo+","
                     +"0,"
-                    +"'"+salon +"',"
+                    +"'"+cve_espacio +"',"
                     +rpe+","
                     +"0,"
                     +"'"+ciclo+"',"
@@ -267,7 +241,7 @@ namespace OrigenDatos.Clases
             sabado_fin = g.sabado_fin;
             cupo = g.cupo;
             inscritos = g.inscritos;
-            salon = g.salon;
+            cve_espacio = g.cve_espacio;
             salonBD = g.salonBD;
             rpe = g.rpe;
             ciclo = g.ciclo;
@@ -344,7 +318,7 @@ namespace OrigenDatos.Clases
                 }
 
                 rpe = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cverpe"])));
-                salon = r.Field<string>(h["salon"]);
+                cve_espacio = r.Field<string>(h["salon"]);
                 lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunes"])));
                 lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunesf"])));
                 martes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martes"])));
@@ -416,7 +390,7 @@ namespace OrigenDatos.Clases
             foreach (DataRow r in dt.Rows)
                 GruposHorasAnteriores.Add(new Grupo(r, dicctionary));
 
-            aux = GruposHorasAnteriores.EnHora(hora_ini - 1, hora_ini, salon, Dias);
+            aux = GruposHorasAnteriores.EnHora(hora_ini - 1, hora_ini, cve_espacio, Dias);
             HoraAnterior = aux.Count() != 0 ? aux[0] : null;
         }
 
@@ -426,7 +400,6 @@ namespace OrigenDatos.Clases
             foreach (DataRow r in dt.Rows)
                 otrosSemestres.Add(new Grupo(r, dictionary));
         }
-
         #endregion
         #endregion
 
@@ -446,7 +419,7 @@ namespace OrigenDatos.Clases
             if (salones_Posibles.busca(salon.Cve_espacio)!=null)
                 peso = 10;
             //Checa si ya habia sido asignado en ese salon un horario anterior
-            else if (GHoraAnterior!=null && GHoraAnterior.salon==salon.Cve_espacio)
+            else if (GHoraAnterior!=null && GHoraAnterior.cve_espacio==salon.Cve_espacio)
                 peso = 10;
             //Y si no esta....
             //Checa si corresponden las areas
@@ -573,7 +546,7 @@ namespace OrigenDatos.Clases
 
         public override string ToString()
         {
-            return (Convert.ToInt32(cve_materia) * 100 + grupo) + "\t" + salon+"_"+ciclo;
+            return (Convert.ToInt32(cve_materia) * 100 + grupo) + "\t" + cve_espacio+"_"+ciclo;
         }
 
         public Grupo AsignacionSemestresAnteriores(string salon)
@@ -582,91 +555,6 @@ namespace OrigenDatos.Clases
             ListaGrupos g = otrosSemestres.EnSalon(salon);
 
             return g.Count() != 0 ? g[0] : null;
-        }
-        #endregion
-
-        #region _Algoritmo
-        #region Atributos
-        public int valorTotalEquipo
-        {
-            get
-            {
-                int res = 0;
-
-                foreach (Requerimiento_Valor req in requerimientos_Salon)
-                    res = req.valor;
-
-                return res;
-            }
-        }
-
-        #endregion
-        public bool horario(int hora)
-        {
-            if (lunes_ini != 0 && lunes_ini <= hora && lunes_fin > hora)
-                return true;
-            if (martes_ini != 0 && martes_ini <= hora && martes_fin > hora)
-                return true;
-            if (miercoles_ini != 0 && miercoles_ini <= hora && miercoles_fin > hora)
-                return true;
-            if (jueves_ini != 0 && jueves_ini <= hora && jueves_fin > hora)
-                return true;
-            if (viernes_ini != 0 && viernes_ini <= hora && viernes_fin > hora)
-                return true;
-            if (sabado_ini != 0 && sabado_ini <= hora && sabado_fin > hora)
-                return true;
-
-            return false;
-        }
-
-        public string salonAnioPasado()
-        {
-            Grupo sel = null;
-            Grupo gAux;
-            foreach (Grupo g in otrosSemestres)
-            {
-                gAux = new Grupo(g);
-                if (gAux.fCiclo % 2 == this.fCiclo % 2)
-                    if (sel == null || sel.fCiclo < gAux.fCiclo)
-                        sel = gAux;
-            }
-
-            return sel != null ? sel.ciclo : "";
-        }
-
-        /// <summary>
-        /// Actualiza la tabla horario con los valores que tiene
-        /// </summary>
-        public void Update(string observaciones = "")
-        {
-            this.observaciones = observaciones;
-        }
-
-        public float valorEquipo(Salon salon)
-        {
-            int res = 0;
-
-            foreach (Requerimiento_Valor req in requerimientos_Salon)
-                if (salon.Equipo.Contains(req.requerimiento))
-                    res += req.valor;
-
-            return res;
-        }
-
-        /// <summary>
-        /// Checa si tiene un grupo con salon fijo, y de ser asi lo asigna, sino regresa false
-        /// </summary>
-        /// <returns></returns>
-        public bool salonPreferencial()
-        {
-            if (salon_fijo != null && salon_fijo != "")
-            {
-                salon = salon_fijo;
-
-                return true;
-            }
-
-            return false;
         }
         #endregion
     }

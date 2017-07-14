@@ -260,7 +260,7 @@ namespace OrigenDatos.Clases
                 refCell = CreaCelda(g.RPE, r, 4);
 
             refCell = CreaCelda(g.Tipo, r, 5);
-            refCell = CreaCelda(g.Salon, r, 6);
+            refCell = CreaCelda(g.Cve_espacio, r, 6);
             refCell = CreaCelda(g.horario_ini[0], r, 7);
             refCell = CreaCelda(g.horario_fin[0], r, 8);
             refCell = CreaCelda(g.horario_ini[1], r, 9);

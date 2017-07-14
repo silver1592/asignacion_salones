@@ -37,7 +37,7 @@ namespace Algoritmo02.Clases
                 //Chequeo de empalme
                 if (empalme.Empalmados().Count()!=0)
                 {
-                    s = new  Salon(salones.busca(empalme[0].Salon));
+                    s = new  Salon(salones.busca(empalme[0].Cve_espacio));
                     #region solucion de empalmes
 
                     ///Solucion de empalme
@@ -49,8 +49,8 @@ namespace Algoritmo02.Clases
                     else if (Temp.Count() == 1)///Solo uno tiene preferencia, y a ese se le va a dar
                     {
                         foreach (Grupo grupo in empalme)
-                            if (grupo.Salon_fijo == grupo.Salon)
-                                grupo.Salon = "";
+                            if (grupo.Salon_fijo == grupo.Cve_espacio)
+                                grupo.Cve_espacio = "";
                     }
                     else    /// Si no hay preferencial entonces se elegira por otro medio
                     {
@@ -58,8 +58,8 @@ namespace Algoritmo02.Clases
                         if (g != null)
                         {
                             foreach (Grupo a in empalme)
-                                a.Salon = "";
-                            g.Salon = s.Cve_espacio;
+                                a.Cve_espacio = "";
+                            g.Cve_espacio = s.Cve_espacio;
                         }
                     }
                     #endregion
