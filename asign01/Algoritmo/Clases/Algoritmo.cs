@@ -23,8 +23,8 @@ namespace Algoritmo02.Clases
         private Individuo[] poblacion;
         private Individuo[] mejorPoblacion;
 
-        private ListaGrupos errores;
-        public ListaGrupos Errores { get { return errores; } }
+        private ListaVariables errores;
+        public ListaVariables Errores { get { return errores; } }
 
         /// <summary>
         /// Constructor de la iteracion del algoritmo
@@ -33,12 +33,12 @@ namespace Algoritmo02.Clases
         /// <param name="salones">Lista de salones disponibles para asignar</param>
         public Algoritmo(ListaGrupos grupos, ListaSalones salones, int hora,int _tamPoblacion = 5, int _generaciones =50)
         {
-            this.grupos = new ListaGrupos(grupos.SinAsignar("111111", hora));
+            this.grupos = new ListaVariables(grupos.SinAsignar()).EnHoras(hora,hora+1).EnDias();
             this.salones = salones;
             this.hora = hora;
             tamPoblacion = _tamPoblacion;
             generaciones = _generaciones;
-            errores = new ListaGrupos() ;
+            errores = new ListaVariables() ;
 
             poblacion = new Individuo[tamPoblacion];
             mejorPoblacion = new Individuo[tamPoblacion];

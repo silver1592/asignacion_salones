@@ -99,7 +99,7 @@ namespace Algoritmo02.Clases
                 ListaGrupos lista = new ListaGrupos();
 
                 foreach (Variable v in cromosomas)
-                    lista.Add(v.Grupo);
+                    lista.Add(v);
 
                 return lista;
             }
@@ -193,7 +193,7 @@ namespace Algoritmo02.Clases
                     if (val != -1)
                     {
                         salon = (Salon)salones[val];
-                        if (v.Grupo.Cupo < salon.Cupo && salon.Disponible_para_grupo(v.Grupo))
+                        if (v.Cupo < salon.Cupo && salon.Disponible_para_grupo(v))
                         {
                             v.Salon = salon;
                             r.Reinicia();
@@ -221,8 +221,8 @@ namespace Algoritmo02.Clases
             List<Variable> asignando;
 
             var query1 = from g in cromosomas
-                         where g.Grupo.Area == i.ToString()
-                         orderby g.Grupo.Cupo descending
+                         where g.Area == i.ToString()
+                         orderby g.Cupo descending
                          select g;
 
             asignando = query1.ToList();
@@ -242,7 +242,7 @@ namespace Algoritmo02.Clases
 
             foreach (Variable v in asignando)
             {
-                gAnterior = v.HoraAnterior();
+                gAnterior = v.GHoraAnterior;
                 if (gAnterior== null)
                     asignacionAleatoria(v, s);
                 else
@@ -270,7 +270,7 @@ namespace Algoritmo02.Clases
                 if (val != -1)
                 {
                     salon = (Salon)s[val];
-                    if (v.Grupo.SalonValido(salon) > 0 && salon.Disponible_para_grupo(v.Grupo))
+                    if (v.SalonValido(salon) > 0 && salon.Disponible_para_grupo(v))
                     {
                         v.Salon = salon;
                         r.Reinicia();
@@ -314,12 +314,12 @@ namespace Algoritmo02.Clases
                     grupo1 = cromosomas[iGrupoSelec];
 
                     //selecciona un salon aleatorio para el cambio
-                    salonesXArea = SalonesXArea(grupo1.Grupo.Area);
+                    salonesXArea = SalonesXArea(grupo1.Area);
                     rSalon = new Aleatorio(salonesXArea.Count);
 
                     //Elije un salon que este disponible para el grupo
                     do { iSalonSelec = rSalon.Next(); }
-                    while (iSalonSelec != -1 && !((Salon)salonesXArea[iSalonSelec]).Disponible_para_grupo(grupo1.Grupo));
+                    while (iSalonSelec != -1 && !((Salon)salonesXArea[iSalonSelec]).Disponible_para_grupo(grupo1));
 
                     grupo2 = buscaSalon(salonesXArea[iSalonSelec].Cve_espacio);
                     selecSal = (Salon)salonesXArea[iSalonSelec];
@@ -374,7 +374,7 @@ namespace Algoritmo02.Clases
         private Variable buscaGrupo(Grupo grupo)
         {
             foreach (Variable var in cromosomas)
-                if (var.Grupo == grupo)
+                if (var == grupo)
                     return var;
 
             return null;

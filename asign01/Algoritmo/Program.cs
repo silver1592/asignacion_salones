@@ -18,13 +18,13 @@ namespace Algoritmo02
             Algoritmo alg;
             ChecaEmpalmes emp;
             PreAsignacion pre;
-            ListaGrupos grupos = c.Grupos("2016-2017/II");
+            ListaVariables grupos = new ListaVariables(c.Grupos("2016-2017/II"));
             ListaSalones salones = new ListaSalones(c,c.Salones());
-            ListaGrupos gruposActuales;
+            ListaVariables gruposActuales;
 
             for (int i=7;i<22;i++)
             {
-                gruposActuales = new ListaGrupos(grupos.EnHora(i, i + 1));
+                gruposActuales = new ListaVariables(grupos.EnHoras(i, i + 1));
 
                 emp = new ChecaEmpalmes(grupos, salones);
                 emp.ejecuta();

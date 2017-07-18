@@ -11,6 +11,11 @@ namespace OrigenDatos.Clases
     public class ListaGrupos : IList<Grupo>
     {
         protected List<Grupo> grupos;
+        protected IList<Profesor> profesores;
+        protected IList<Materia> materias;
+
+        public IList<Profesor> Profesores { get { return profesores; } }
+        public IList<Materia> Materias { get { return materias; } }
 
         #region IList
         int ICollection<Grupo>.Count
@@ -181,106 +186,28 @@ namespace OrigenDatos.Clases
 
         #region Consultas Grupos
 
-        /// <summary>
-        /// Checa los grupos que estan por asignar en el horario y dias marcados
-        /// </summary>
-        /// <param name="dias">Cadena de 6 caracteres conformada por 0 y 1 empezando del Lunes a Sabado</param>
-        /// <param name="hora">Hora en la que se buscaran los grupos sin asignar</param>
-        /// <param name="ciclo">Ciclo escolar a checar</param>
-        /// <returns></returns>
-        public ListaGrupos SinAsignar(string dias, int hora)
+        public ListaGrupos SinAsignar()
         {
-            ListaGrupos res;
-
-            var query = from Grupo g in grupos
-                        where g.EnHora(hora, hora + 1, dias) && (g.Cve_espacio=="" || g.Cve_espacio==null || g.Cve_espacio == " ")
+            var query = from g in grupos
+                        where g.Cve_espacio == "" || g.Cve_espacio == null
                         select g;
 
-            res = new ListaGrupos(query.ToList<Grupo>());
-            return res;
+            return new ListaGrupos(query.ToList());
         }
 
-        /// <summary>
-        /// Checa los grupos que estan por asignar en el horario y dias marcados
-        /// </summary>
-        /// <param name="dias">Cadena de 6 caracteres conformada por 0 y 1 empezando del Lunes a Sabado</param>
-        /// <param name="hora">Hora en la que se buscaran los grupos sin asignar</param>
-        /// <param name="ciclo">Ciclo escolar a checar</param>
-        /// <returns></returns>
-        public ListaGrupos Asignados(string dias, int hora)
+        public ListaGrupos Asignados()
         {
-            ListaGrupos res;
-
-            var query = from Grupo g in grupos
-                        where g.EnHora(hora, hora + 1, dias) && (g.Cve_espacio != "" || g.Cve_espacio != null || g.Cve_espacio != " ")
+            var query = from g in grupos
+                        where g.Cve_espacio != "" || g.Cve_espacio != null
                         select g;
 
-            res = new ListaGrupos(query.ToList<Grupo>());
-            return res;
+            return new ListaGrupos(query.ToList());
         }
 
         public ListaGrupos EnSalon(string salon)
         {
-            ListaGrupos res;
-
-            var query = from Grupo g in grupos
+            var query = from g in grupos
                         where g.Cve_espacio == salon
-                        select g;
-
-            res = new ListaGrupos(query.ToList<Grupo>());
-            return res;
-        }
-
-        public ListaGrupos Empalmados()
-        {
-            var query = from g in grupos
-                        from g1 in grupos
-                        where g.empalme(g1)
-                        select g;
-
-            return new ListaGrupos(query.Distinct().ToList());
-        }
-
-        public ListaGrupos Empalmados(Grupo grupo)
-        {
-            var query = from g in grupos
-                        where g.empalme(grupo)
-                        select g;
-
-            return new ListaGrupos(query.ToList());
-        }
-
-        public ListaGrupos EnHora(int hora_ini, int hora_fin, string salon, string dias)
-        {
-            var query = from Grupo g in this.grupos
-                        where g.EnHora(hora_ini, hora_fin, dias) && g.Cve_espacio == salon
-                        select g;
-
-            return new ListaGrupos(query.ToList());
-        }
-
-        public ListaGrupos EnHora(int hora_ini, int hora_fin)
-        {
-            var query = from Grupo g in this.grupos
-                        where g.EnHora(hora_ini, hora_fin)
-                        select g;
-
-            return new ListaGrupos(query.ToList());
-        }
-
-        public ListaGrupos EnHora(int[] hora_ini, int[] hora_fin)
-        {
-            var query = from g in grupos
-                        where g.EnHora(hora_ini, hora_fin)
-                        select g;
-
-            return new ListaGrupos(query.ToList());
-        }
-
-        public ListaGrupos EnHora(int hora_ini, int hora_fin, string dias)
-        {
-            var query = from g in grupos
-                        where g.EnHora(hora_ini, hora_fin, dias)
                         select g;
 
             return new ListaGrupos(query.ToList());
@@ -304,6 +231,15 @@ namespace OrigenDatos.Clases
             return new ListaGrupos(query.ToList<Grupo>());
         }
 
+        public ListaGrupos DeMateria(string cve)
+        {
+            var query = from g in this
+                        where g.Cve_materia == cve
+                        select g;
+
+            return new ListaGrupos(query.ToList(), profesores, materias);
+        }
+
         public ListaGrupos RequeirePlantaBaja()
         {
             var query = from Grupo g in grupos
@@ -323,41 +259,6 @@ namespace OrigenDatos.Clases
         }
         #endregion
 
-        #region Consultas Salones
-        /// <summary>
-        /// busca salon a salon los que esten ocupados entre las horas designadas y los dias
-        /// </summary>
-        /// <param name="salones">Grupo de salones validos para checar</param>
-        /// <param name="ini">hora inicial para el rango de horas</param>
-        /// <param name="fin">hora final para el rango de horas</param>
-        /// <param name="dias">dias que se van a buscar. L-M-Mi-J-V-S Marcar con un 1 los dias que quieres obtener</param>
-        /// <returns></returns>
-        public ListaSalones Ocupados(ListaSalones salones, int ini, int fin, string dias = "111111")
-        {
-            List<Salon> res = new List<Salon>();
-            ListaGrupos auxG;
-            Salon s;
-
-            for(int i = 0; i<salones.Count;i++)
-            {
-                s = salones.Get(i);
-                auxG = EnHora(ini, fin, s.Cve_espacio, dias);
-                if (auxG.Count() == 0)
-                    res.Add(s);
-            }
-
-            return new ListaSalones(res);
-        }
-        #endregion
-
-        #region _Algoritmo
-        protected IList<Profesor> profesores;
-        protected IList<Materia> materias;
-
-        public IList<Profesor> Profesores { get { return profesores; } }
-        public IList<Materia> Materias { get { return materias; } }
-
-        #region consultas
         /// <summary>
         /// Obtiene los Grupos que requieran un salon en especifico
         /// </summary>
@@ -369,22 +270,6 @@ namespace OrigenDatos.Clases
                         select (Grupo)g;
 
             return new ListaGrupos(query.ToList());
-        }
-
-        /// <summary>
-        /// Obtiene los grupos con mejor puntiacion con cierto salon
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="limite"></param>
-        /// <returns></returns>
-        public ListaGrupos MejorPuntuacion(Salon s, int limite = 1)
-        {
-            var query = from g in grupos
-                        where g.SalonValido(s) > 0
-                        orderby g.SalonValido(s)
-                        select (Grupo)g;
-
-            return new ListaGrupos(query.Take(limite).ToList());
         }
 
         /// <summary>
@@ -446,30 +331,6 @@ namespace OrigenDatos.Clases
             return null;
         }
 
-        /// <summary>
-        /// Obtiene el grupo que tenga mas puntos para el salon
-        /// </summary>
-        /// <param name="salon"></param>
-        /// <returns></returns>
-        public Grupo MejorPara(Salon salon)
-        {
-            ListaGrupos aux = this;
-
-            if (salon.plantaBaja)
-                aux = aux.QuierenPlantabaja();
-
-            //Salon de otros semestres
-            if (aux.Count() > 1)
-                aux = aux.AsignacionOtrosSemestres(salon.Cve_espacio);
-
-            //Mejor puntuacion de equipamiento
-            if (aux.Count() > 1)
-                aux = aux.MejorPuntuacion(salon);
-
-            return aux.Count() != 0 ? (Grupo)aux[0] : null;
-        }
-        #endregion
-
         #region Operaciones
         public void Update(Grupo g)
         {
@@ -493,52 +354,15 @@ namespace OrigenDatos.Clases
         }
         #endregion
 
-        public bool EnSalones(ListaSalones salones, Grupo grupo)
+        public List<ListaGrupos> EnSalones(ListaSalones salones)
         {
-            foreach (Grupo g in grupos)
-            {
-                var query = from Salon sal in salones
-                            where sal.Cve_espacio == g.Cve_espacio && grupo.SalonValido(sal) > 0 && sal.Disponible_para_grupo(grupo)
-                            select sal;
+                var query = from sal in salones
+                            from g in this
+                            where sal.Cve_espacio == g.Cve_espacio
+                            group g by g.Cve_espacio into gs
+                            select new ListaGrupos(gs.ToList());
 
-                if (query.Count() != 0)
-                    return true;
-            }
-
-            return false;
-        }
-        #endregion
-
-        #region _Interfaz
-        public Materia buscaMateria(string cve_materia)
-        {
-            var query = from m in materias
-                        where m.CVE == cve_materia
-                        select m;
-
-            if (query.Count() > 0)
-                return new Materia(query.ToList()[0]);
-            else
-                return new Materia("-----", cve_materia, 0);
-            //throw new Exception("No se encontro la materia. CVE="+cve_materia);
-        }
-
-        internal ListaGrupos ImpartenMateria(string cve)
-        {
-            var query = from g in this
-                        where g.Cve_materia == cve
-                        select g;
-
-            return new ListaGrupos(query.ToList(), profesores, materias);
-        }
-
-        internal ListaGrupos NoGrupo(int noGrupo)
-        {
-            var query = from g in this
-                        where g.num_Grupo == noGrupo
-                        select g;
-
-            return new ListaGrupos(query.ToList(), profesores, materias);
+            return query.ToList();
         }
 
         public ListaGrupos NoRepetidos()
@@ -556,9 +380,20 @@ namespace OrigenDatos.Clases
         /// <returns></returns>
         public Materia buscaMateria(int index)
         {
-            Grupo g = (Grupo)this[index];
+            return buscaMateria(this[index].Cve_materia);
+        }
 
-            return buscaMateria(g.Cve_materia);
+        public Materia buscaMateria(string cve_materia)
+        {
+            var query = from m in materias
+                        where m.CVE == cve_materia
+                        select m;
+
+            if (query.Count() > 0)
+                return new Materia(query.ToList()[0]);
+            else
+                return new Materia("-----", cve_materia, 0);
+            //throw new Exception("No se encontro la materia. CVE="+cve_materia);
         }
 
         public Profesor buscaProfesor(string RPE)
@@ -587,19 +422,22 @@ namespace OrigenDatos.Clases
             return buscaProfesor(g.RPE.ToString());
         }
 
-        /// <summary>
-        /// Obtiene los grupos que esten asignados a tales dias
-        /// </summary>
-        /// <param name="dias">Cadena de boleanos que indican los dias (LMmiJVS)</param>
-        /// <returns></returns>
-        public ListaGrupos EnDias(string dias = "111111")
+        public List<ListaGrupos> Agrupados_Salon()
         {
-            var query = from g in this
-                        where g.EnDias(dias)
-                        select (OrigenDatos.Clases.Grupo)g;
+            var query = from g in grupos
+                        group g by g.Cve_espacio into gs
+                        select new ListaGrupos(gs.ToList());
 
-            return new ListaGrupos(query.ToList(), profesores, materias);
+            return query.ToList();
         }
-        #endregion
+
+        public ListaGrupos IniciaEnHora(int hora)
+        {
+            var query = from g in grupos
+                        where g.hora_ini == hora
+                        select g;
+
+            return new ListaGrupos(query.ToList());
+        }
     }
 }

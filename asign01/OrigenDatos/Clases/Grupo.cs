@@ -67,7 +67,7 @@ namespace OrigenDatos.Clases
 
                 return i;
             }
-        }        
+        }         //Muestra la hora mas temprana en la que inicia el grupo
         public string Area { get { return cve_materia.Substring(0, 1); } }
         public int Cupo { get { return cupo; } }
         public string Cve_materia { get { return cve_materia; } }
@@ -114,19 +114,6 @@ namespace OrigenDatos.Clases
                     res[i] = true;
 
             return res;
-        }
-        public int catDias
-        {
-            get
-            {
-                int i = 0;
-
-                foreach (int b in horario_ini)
-                    if (b!=0)
-                        i++;
-
-                return i;
-            }
         }
         public string Dias
         {
@@ -390,7 +377,7 @@ namespace OrigenDatos.Clases
             foreach (DataRow r in dt.Rows)
                 GruposHorasAnteriores.Add(new Grupo(r, dicctionary));
 
-            aux = GruposHorasAnteriores.EnHora(hora_ini - 1, hora_ini, cve_espacio, Dias);
+            aux = GruposHorasAnteriores.IniciaEnHora(hora_ini-1);
             HoraAnterior = aux.Count() != 0 ? aux[0] : null;
         }
 
@@ -404,146 +391,6 @@ namespace OrigenDatos.Clases
         #endregion
 
         #region Metodos
-
-        /// <summary>
-        /// Regresa cual es el valor que tiene un salon para el area del grupo.
-        /// 02/06/2016--Decidi definir el -1 como un valor completamente incorrecto y que fuerse al sistema a ignorar esta asignacion.
-        /// </summary>
-        /// <param name="salon"></param>
-        /// <returns></returns>
-        public float SalonValido(Salon salon)
-        {
-            float peso = -1;
-
-            //Checa si esta en la lista de posibles salones o si esta en uno de los salones anteriores
-            if (salones_Posibles.busca(salon.Cve_espacio)!=null)
-                peso = 10;
-            //Checa si ya habia sido asignado en ese salon un horario anterior
-            else if (GHoraAnterior!=null && GHoraAnterior.cve_espacio==salon.Cve_espacio)
-                peso = 10;
-            //Y si no esta....
-            //Checa si corresponden las areas
-            //Si hay cupo para el salon
-            //Si tienen que ser en un salon de la planta baja o no
-            else if (salon.Area.Contains(Area)
-                        && salon.Cupo >= cupo
-                        && !(plantaBaja && !salon.plantaBaja))
-                peso = salon.PrioridadArea(Area);
-
-            return peso;
-        }
-
-        /// <summary>
-        /// Checa si hay empalme con el grupo que se pasa por parametro
-        /// </summary>
-        /// <param name="grupo">Grupo a checar si hay empalme</param>
-        /// <returns>Regresa true si hay un empalme entre los grupos.</returns>
-        public bool empalme(Grupo grupo)
-        {
-            if (this == grupo)
-                return false;
-
-            if ((lunes_ini >= grupo.lunes_ini && lunes_ini < grupo.lunes_fin) ||
-                (lunes_fin <= grupo.lunes_fin && lunes_fin > grupo.lunes_ini))
-                return true;
-
-            if ((martes_ini >= grupo.martes_ini && martes_ini < grupo.martes_fin) ||
-                (martes_fin <= grupo.martes_fin && martes_fin > grupo.martes_ini))
-                return true;
-
-            if ((miercoles_ini >= grupo.miercoles_ini && miercoles_ini < grupo.miercoles_fin) ||
-                (miercoles_fin <= grupo.miercoles_fin && miercoles_fin > grupo.miercoles_ini))
-                return true;
-
-            if ((jueves_ini >= grupo.jueves_ini && jueves_ini < grupo.jueves_fin) ||
-                (jueves_fin <= grupo.jueves_fin && jueves_fin > grupo.jueves_ini))
-                return true;
-
-            if ((viernes_ini >= grupo.viernes_ini && viernes_ini < grupo.viernes_fin) ||
-                (viernes_fin <= grupo.viernes_fin && viernes_fin > grupo.viernes_ini))
-                return true;
-
-            if ((sabado_ini >= grupo.sabado_ini && sabado_ini < grupo.sabado_fin) ||
-                (sabado_fin <= grupo.sabado_fin && sabado_fin > grupo.sabado_ini))
-                return true;
-
-            return false;
-        }
-
-        public bool EnHora(int ini, int fin, string dias = "111111")
-        {
-            if (dias[0] == '1')
-                if ((lunes_ini >= ini && lunes_ini < fin) ||
-                    (lunes_fin <= fin && lunes_fin > ini))
-                    return true;
-
-            if (dias[1] == '1')
-                if ((martes_ini >= ini && martes_ini < fin) ||
-                (martes_fin <= fin && martes_fin > ini))
-                    return true;
-
-            if (dias[2] == '1')
-                if ((miercoles_ini >= ini && miercoles_ini < fin) ||
-                (miercoles_fin <= fin && miercoles_fin > ini))
-                    return true;
-
-            if (dias[3] == '1')
-                if ((jueves_ini >= ini && jueves_ini < fin) ||
-                (jueves_fin <= fin && jueves_fin > ini))
-                    return true;
-
-            if (dias[4] == '1')
-                if ((viernes_ini >= ini && viernes_ini < fin) ||
-                (viernes_fin <= fin && viernes_fin > ini))
-                    return true;
-
-            if (dias[5] == '1')
-                if ((sabado_ini >= ini && sabado_ini < fin) ||
-                (sabado_fin <= fin && sabado_fin > ini))
-                    return true;
-
-            return false;
-        }
-
-        public bool EnHora(int[] ini, int[] fin)
-        {
-            if ((lunes_ini >= ini[0] && lunes_ini < fin[0]) ||
-                (lunes_fin <= fin[0] && lunes_fin > ini[0]))
-                return true;
-
-            if ((martes_ini >= ini[1] && martes_ini < fin[1]) ||
-            (martes_fin <= fin[1] && martes_fin > ini[1]))
-                return true;
-
-            if ((miercoles_ini >= ini[2] && miercoles_ini < fin[2]) ||
-            (miercoles_fin <= fin[2] && miercoles_fin > ini[2]))
-                return true;
-
-            if ((jueves_ini >= ini[3] && jueves_ini < fin[3]) ||
-            (jueves_fin <= fin[3] && jueves_fin > ini[3]))
-                return true;
-
-            if ((viernes_ini >= ini[4] && viernes_ini < fin[4]) ||
-            (viernes_fin <= fin[4] && viernes_fin > ini[4]))
-                return true;
-
-            if ((sabado_ini >= ini[5] && sabado_ini < fin[5]) ||
-            (sabado_fin <= fin[5] && sabado_fin > ini[5]))
-                return true;
-
-            return false;
-        }
-
-        public bool EnDias(string dias)
-        {
-            if(dias!="111111")
-                for (int i = 0; i < 6; i++)
-                    if (dias[i] != Dias[i])
-                        return false;
-
-            return true;
-        }
-
         public override string ToString()
         {
             return (Convert.ToInt32(cve_materia) * 100 + grupo) + "\t" + cve_espacio+"_"+ciclo;
@@ -556,6 +403,30 @@ namespace OrigenDatos.Clases
 
             return g.Count() != 0 ? g[0] : null;
         }
+
+        public bool EnHora(int hora)
+        {
+            if (lunes_ini >= hora && lunes_fin > hora)
+                return true;
+
+            if ((martes_ini >= hora &&  martes_fin > hora))
+                return true;
+
+            if ((miercoles_ini >= hora && miercoles_fin > hora))
+                return true;
+
+            if ((jueves_ini >= hora && jueves_fin > hora))
+                return true;
+
+            if ((viernes_ini >= hora && viernes_fin > hora))
+                return true;
+
+            if ((sabado_ini >= hora && sabado_fin > hora))
+                return true;
+
+            return false;
+        }
+
         #endregion
     }
 }

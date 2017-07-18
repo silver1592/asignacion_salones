@@ -105,6 +105,7 @@ namespace OrigenDatos.Clases
                 return res;
             }
         }
+        /*
         public float puntos
         {
             get
@@ -117,6 +118,7 @@ namespace OrigenDatos.Clases
                 return p;
             }
         }
+        */
         #endregion
 
         #region Constructores
@@ -301,7 +303,7 @@ namespace OrigenDatos.Clases
 
             return true;
         }
-
+        /*
         /// <summary>
         /// Puntos que otorga al Grupo
         /// -corregir-
@@ -320,6 +322,7 @@ namespace OrigenDatos.Clases
 
             return p;
         }
+        */
 
         /// <summary>
         /// Busca los grupos dentro de una lista que esten asignados en el salon y los almacena 

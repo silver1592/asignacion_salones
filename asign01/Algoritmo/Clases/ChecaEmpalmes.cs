@@ -6,14 +6,14 @@ namespace Algoritmo02.Clases
 {
     public class ChecaEmpalmes
     {
-        private ListaGrupos grupos;
+        private ListaVariables grupos;
         private ListaSalones salones;
 
-        public ListaGrupos Grupos { get { return grupos; } }
+        public ListaVariables Grupos { get { return grupos; } }
 
-        public ChecaEmpalmes(IList<OrigenDatos.Clases.Grupo> _grupos, IList<OrigenDatos.Clases.Salon> _salones)
+        public ChecaEmpalmes(ListaGrupos _grupos, IList<Salon> _salones)
         {
-            grupos = new ListaGrupos(_grupos);
+            grupos = new ListaVariables(_grupos);
             salones = new ListaSalones(_salones);
         }
 
@@ -23,7 +23,7 @@ namespace Algoritmo02.Clases
         /// <returns></returns>
         public void ejecuta(string mensaje_plantilla = "")
         {
-            List<ListaGrupos> empalmados = new List<ListaGrupos>();
+            List<ListaVariables> empalmados = new List<ListaVariables>();
             ListaGrupos checando = new ListaGrupos();
             ListaGrupos Temp;
             Grupo g;
@@ -32,10 +32,10 @@ namespace Algoritmo02.Clases
             //obtiene grupos de grupos empalmados
             empalmados = GruposEmpalmados();
 
-            foreach(ListaGrupos empalme in empalmados)
+            foreach(ListaVariables empalme in empalmados)
             {
                 //Chequeo de empalme
-                if (empalme.Empalmados().Count()!=0)
+                if (empalme.Empalmados().Count!=0)
                 {
                     s = new  Salon(salones.busca(empalme[0].Cve_espacio));
                     #region solucion de empalmes
@@ -67,9 +67,9 @@ namespace Algoritmo02.Clases
             }
         }
 
-        private List<ListaGrupos> GruposEmpalmados()
+        private List<ListaVariables> GruposEmpalmados()
         {
-            List<ListaGrupos> res = salones.AgrupaGruposEmpalmados(grupos);
+            List<ListaVariables> res = grupos.AgrupaGruposEmpalmados();
 
             return res;
         }
