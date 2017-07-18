@@ -355,6 +355,9 @@ namespace Algoritmo02.Clases
 
         public bool EnDias(string dias="111111")
         {
+            for(int i = 0; i<6; i++)
+                if(dias[i]=='1' && this.)
+
             return true;
         }
     }

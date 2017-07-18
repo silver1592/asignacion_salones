@@ -306,18 +306,64 @@ namespace OrigenDatos.Clases
 
                 rpe = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cverpe"])));
                 cve_espacio = r.Field<string>(h["salon"]);
-                lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunes"])));
-                lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunesf"])));
-                martes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martes"])));
-                martes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martesf"])));
-                miercoles_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercoles"])));
-                miercoles_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercolesf"])));
-                jueves_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["jueves"])));
-                jueves_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["juevesf"])));
-                viernes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernes"])));
-                viernes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernesf"])));
-                sabado_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabado"])));
-                sabado_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabadof"])));
+                try
+                { lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunes"]))); }
+                catch
+                { lunes_ini = 0; }
+                try
+                { lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunesf"]))); }
+                catch
+                { lunes_fin = 0; }
+                try
+                { martes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martes"]))); }
+                catch
+                { martes_ini = 0; }
+
+                try
+                { martes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martesf"]))); }
+                catch
+                { martes_fin = 0; }
+
+                try
+                { miercoles_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercoles"]))); }
+                catch
+                { miercoles_ini = 0; }
+
+                try
+                { miercoles_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercolesf"]))); }
+                catch
+                { miercoles_fin = 0; }
+
+                try
+                { jueves_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["jueves"]))); }
+                catch
+                { jueves_ini = 0; }
+
+                try
+                { jueves_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["juevesf"]))); }
+                catch
+                { jueves_fin = 0; }
+
+                try
+                { viernes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernes"]))); }
+                catch
+                { viernes_ini = 0; }
+
+                try
+                { viernes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernesf"]))); }
+                catch
+                { viernes_fin = 0; }
+
+                try
+                { sabado_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabado"]))); }
+                catch
+                { sabado_ini = 0; }
+
+                try
+                { sabado_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabadof"]))); }
+                catch
+                { sabado_fin = 0; }
+
                 cupo = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cupo"])));
                 try
                 { tipo = r.Field<string>(h["tipo"]); }

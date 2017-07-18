@@ -153,7 +153,7 @@ namespace InterfazWeb_02.Controllers
                 string ciclo = Session["ciclo"].ToString();
 
                 Conexion c = new Conexion(Conexion.datosConexion,Server.MapPath("~/Archivos/"+excel),ciclo);
-                ListaGrupos grupos = new ListaGrupos(c.Grupos_EmpiezanA(ciclo, Convert.ToInt32(hora), false));
+                ListaVariables grupos = new ListaVariables(c.Grupos_EmpiezanA(ciclo, Convert.ToInt32(hora), false));
                 ListaSalones salones = new ListaSalones(c, c.Salones(), Convert.ToInt32(hora));
 
                 if (Convert.ToBoolean(empalmes))

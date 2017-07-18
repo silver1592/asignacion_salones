@@ -76,7 +76,7 @@ namespace Algoritmo02.Clases
         #region Constructores
 
         public ListaVariables() : base() { }
-        public ListaVariables(IList<Grupo> grupos, IList<Profesor> Profesores=null, IList<Materia> Materias=null):base(grupos,Profesores,Materias){}
+        public ListaVariables(ListaVariables grupos, IList<Profesor> Profesores=null, IList<Materia> Materias=null):base(grupos,Profesores!=null ? Profesores :grupos.profesores,Materias!=null ? Materias: grupos.materias){}
 
         public ListaVariables(IList<Variable> variables, IList<Profesor> Profesores = null, IList<Materia> Materias = null) : base()
         {
@@ -92,7 +92,7 @@ namespace Algoritmo02.Clases
             materias = grupos.Materias;
             profesores = grupos.Profesores;
             foreach (Grupo g in grupos)
-                grupos.Add(g);
+                this.grupos.Add(new Variable(g,0));
         }
         #endregion
 
