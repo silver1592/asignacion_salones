@@ -8,8 +8,8 @@ namespace Algoritmo02.Clases
 {
     public class Algoritmo
     {
-        private ListaGrupos grupos;
-        private ListaGrupos gruposAsignados;
+        private ListaVariables grupos;
+        private ListaVariables gruposAsignados;
         private ListaSalones salones;
         private int hora;
 
@@ -33,8 +33,11 @@ namespace Algoritmo02.Clases
         /// <param name="salones">Lista de salones disponibles para asignar</param>
         public Algoritmo(ListaGrupos grupos, ListaSalones salones, int hora,int _tamPoblacion = 5, int _generaciones =50)
         {
-            this.grupos = new ListaVariables(grupos.SinAsignar()).EnHoras(hora,hora+1).EnDias();
+            this.grupos = new ListaVariables(grupos.SinAsignar());
+            this.grupos = this.grupos.EnHoras(hora, hora + 1);
+            this.grupos = this.grupos.EnDias();
             this.salones = salones;
+            this.grupos.SetSalones(this.salones);
             this.hora = hora;
             tamPoblacion = _tamPoblacion;
             generaciones = _generaciones;
@@ -103,7 +106,7 @@ namespace Algoritmo02.Clases
         /// --03/06/2016 si el valor que retorna es nulo significa que ninguna asignacion es valida
         /// </summary>
         /// <returns>Respuesta mejor evaluada.</returns>
-        private ListaGrupos mejorRespuesta()
+        private ListaVariables mejorRespuesta()
         {
             Individuo seleccionado = mejorPoblacion[0];
 
@@ -115,7 +118,7 @@ namespace Algoritmo02.Clases
                 if (i.valor > seleccionado.valor)
                     seleccionado = i;
 
-            return seleccionado.Grupos;
+            return new ListaVariables(seleccionado.Grupos);
         }
 
         /// <summary>

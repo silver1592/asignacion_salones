@@ -222,6 +222,16 @@ namespace OrigenDatos.Clases
             return new ListaGrupos(query.ToList());
         }
 
+        public ListaGrupos NoEn(IList<Salon> salones)
+        {
+            var query = from Grupo g in this.grupos
+                        from Salon s in salones
+                        where s.Cve_espacio == g.Cve_espacio
+                        select g;
+
+            return this.NoEn(query.Distinct().ToList());
+        }
+
         public ListaGrupos ConProfesor(string rpe)
         {
             var query = from Grupo g in grupos

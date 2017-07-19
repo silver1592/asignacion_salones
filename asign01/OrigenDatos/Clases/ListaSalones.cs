@@ -126,7 +126,9 @@ namespace OrigenDatos.Clases
 
         public void SetSalones(IList<Salon> salones)
         {
-            this.salones = salones as List<Salon>;
+            this.salones = new List<Salon>();
+            foreach(Salon s in salones)
+                this.salones.Add(s);
         }
         #endregion
 
@@ -187,6 +189,14 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
+        public ListaSalones PermiteEmpalmes()
+        {
+            var query = from s in salones
+                        where s.empalme
+                        select s;
+
+            return new ListaSalones(query.ToList());
+        }
         #endregion
     }
 }

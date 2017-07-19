@@ -1,4 +1,5 @@
 ﻿using OrigenDatos.Clases;
+using Algoritmo02.Clases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,9 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Grupos(string ini, string fin, string dias)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaGrupos list = new ListaGrupos(c.Grupos_Light(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)));
+            ListaVariables list = new ListaVariables(c.Grupos_Light(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)));
 
-            list = new ListaGrupos(list.EnDias(dias));
+            list = list.EnDias(dias);
 
             return PartialView(list);
         }
@@ -38,7 +39,7 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Grupos()
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaGrupos list = new ListaGrupos(c.Grupos_Light(Session["ciclo"].ToString()));
+            ListaGrupos list = c.Grupos_Light(Session["ciclo"].ToString());
 
             return PartialView(list);
         }

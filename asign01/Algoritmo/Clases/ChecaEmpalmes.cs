@@ -25,19 +25,24 @@ namespace Algoritmo02.Clases
         {
             List<ListaVariables> empalmados = new List<ListaVariables>();
             ListaGrupos checando = new ListaGrupos();
+            ListaSalones permiteEmpalmes = salones.PermiteEmpalmes();
             ListaGrupos Temp;
+            ListaVariables aux;
             Grupo g;
             Salon s;
 
             //obtiene grupos de grupos empalmados
-            empalmados = GruposEmpalmados();
+            empalmados = new ListaVariables(grupos.NoEn(permiteEmpalmes)).AgrupaGruposEmpalmados();
 
             foreach(ListaVariables empalme in empalmados)
             {
+                aux = empalme.Empalmados();
+
                 //Chequeo de empalme
-                if (empalme.Empalmados().Count!=0)
+                if (aux.Count>1 && permiteEmpalmes.busca(aux[0].Cve_espacio)==null)
                 {
-                    s = new  Salon(salones.busca(empalme[0].Cve_espacio));
+                    s = salones.busca(empalme[0].Cve_espacio);
+                    if (s == null) continue;
                     #region solucion de empalmes
 
                     ///Solucion de empalme
@@ -55,23 +60,14 @@ namespace Algoritmo02.Clases
                     else    /// Si no hay preferencial entonces se elegira por otro medio
                     {
                         g = empalme.MejorPara(s);
+                        foreach (Grupo a in empalme)
+                            a.Cve_espacio = "";
                         if (g != null)
-                        {
-                            foreach (Grupo a in empalme)
-                                a.Cve_espacio = "";
                             g.Cve_espacio = s.Cve_espacio;
-                        }
                     }
                     #endregion
                 }
             }
-        }
-
-        private List<ListaVariables> GruposEmpalmados()
-        {
-            List<ListaVariables> res = grupos.AgrupaGruposEmpalmados();
-
-            return res;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using OrigenDatos.Clases;
+﻿using Algoritmo02.Clases;
+using OrigenDatos.Clases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +34,21 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Salon(string cve_salon)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
+            ListaVariables grupos = new ListaVariables(c.Grupos(Session["ciclo"].ToString(), cve_salon));
+            List<ListaVariables> ls = new List<ListaVariables>();
+            ls.Add(grupos);
 
-            return PartialView();
+            return PartialView(ls);
+        }
+
+        public ActionResult _Salon()
+        {
+            Conexion c = new Conexion(Conexion.datosConexion);
+            ListaVariables grupos = new ListaVariables(c.Grupos(Session["ciclo"].ToString(), "I-02"));
+            List<ListaVariables> ls = new List<ListaVariables>();
+            ls.Add(grupos);
+
+            return PartialView(ls);
         }
     }
 }

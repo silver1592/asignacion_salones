@@ -25,7 +25,7 @@ function EjecutaHora()
         success: function (resultado) {
             $("#resConsola").append("<p>" + resultado + "</p>");
             ejecuta_hora_ini++;
-            if (ejecuta_hora_ini <= ejecuta_hora_fin) {
+            if (ejecuta_hora_ini < ejecuta_hora_fin) {
                 EjecutaHora();
             }
             else {
