@@ -10,6 +10,8 @@ namespace Algoritmo02.Clases
 {
     public class ListaVariables : ListaGrupos, IList<Variable>
     {
+        private ListaSalones Salones;
+
         #region IList
         Variable IList<Variable>.this[int index]
         {
@@ -71,6 +73,12 @@ namespace Algoritmo02.Clases
 
             return var.GetEnumerator();
         }
+
+        public void SetSalones(ListaSalones salones)
+        {
+            foreach(Variable v in this)
+                v.Salon = salones.busca(v.Cve_espacio);
+        }
         #endregion
 
         #region Constructores
@@ -106,7 +114,7 @@ namespace Algoritmo02.Clases
         {
             var query = from g in this as IList<Variable>
                         where g.SalonValido(s) > 0
-                        orderby g.SalonValido(s)
+                        orderby g.SalonValido(s) descending
                         select g;
 
             return new ListaVariables(query.Take(limite).ToList());
@@ -116,7 +124,7 @@ namespace Algoritmo02.Clases
         {
             var query = from g in this as IList<Variable>
                         from g1 in grupos
-                        where g.empalme(g1)
+                        where g!=g1 && g.empalme(g1)
                         select g;
 
             return new ListaVariables(query.Distinct().ToList());
@@ -176,13 +184,14 @@ namespace Algoritmo02.Clases
         public List<ListaVariables> AgrupaGruposEmpalmados()
         {
             var query = from g in Agrupados_Salon()
+                        where g.Count()!=0 && (g[0].Cve_espacio!="" && g[0].Cve_espacio!=null)
                         select new ListaVariables(g);
 
             var query2 = from g in query
                          select g.Empalmados();
 
             var query3 = from g in query2
-                         where g.Count != 0
+                         where g.Count > 1
                          select g;
 
             return query3.ToList();
@@ -199,14 +208,18 @@ namespace Algoritmo02.Clases
 
             if (salon.plantaBaja)
                 aux = new ListaVariables(aux.QuierenPlantabaja());
-
-            //Salon de otros semestres
-            if (aux.Count > 1)
-                aux = new ListaVariables(aux.AsignacionOtrosSemestres(salon.Cve_espacio));
+            if (aux.Count == 0)
+                aux = this;
 
             //Mejor puntuacion de equipamiento
             if (aux.Count > 1)
                 aux = aux.MejorPuntuacion(salon);
+
+            //Salon de otros semestres
+            if (aux.Count > 1)
+                aux = new ListaVariables(aux.AsignacionOtrosSemestres(salon.Cve_espacio));
+            if (aux.Count == 0)
+                aux = this;
 
             return aux.Count != 0 ? (aux as IList<Variable>)[0] : null;
         }
@@ -218,6 +231,22 @@ namespace Algoritmo02.Clases
         /// <returns></returns>
         public ListaVariables EnDias(string dias = "111111")
         {
+            var query = from g in this as IList<Variable>
+                        where g.EnDias(dias)
+                        select g;
+
+            return new ListaVariables(query.ToList(), profesores, materias);
+        }
+
+        public ListaVariables EnDia(int dia)
+        {
+            string dias = "";
+            for (int i = 0; i < 6; i++)
+                if (dia != i)
+                    dias += '0';
+                else
+                    dias += '1';
+
             var query = from g in this as IList<Variable>
                         where g.EnDias(dias)
                         select g;

@@ -82,7 +82,7 @@ namespace Algoritmo02.Clases
                         sel = v;
             }
 
-            return sel != null ? sel.ciclo : "";
+            return sel != null ? sel.Cve_espacio : "";
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Algoritmo02.Clases
         {
             if (salon_fijo != null && salon_fijo != "")
             {
-                cve_espacio = salon_fijo;
+                Cve_espacio = salon_fijo;
 
                 return true;
             }
@@ -355,10 +355,11 @@ namespace Algoritmo02.Clases
 
         public bool EnDias(string dias="111111")
         {
-            for(int i = 0; i<6; i++)
-                if(dias[i]=='1' && this.)
+            for (int i = 0; i < 6; i++)
+                if ((dias[i] == '1' && this.Dias[i] == '1') || dias[i] == '0')
+                    return true;
 
-            return true;
+            return false;
         }
     }
 }

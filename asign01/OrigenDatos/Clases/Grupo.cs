@@ -50,7 +50,7 @@ namespace OrigenDatos.Clases
         /// Se empieza desde el 2014-2015/I al cual se le asigna 0 y de ai en adelante aumenta en 0.5
         /// </summary>
         public bool PlantaBaja { get { return plantaBaja; } }
-        public string Salon_fijo { get { return salon_fijo!=null ? salon_fijo : ""; } }
+        public string Salon_fijo { get { return salon_fijo != null ? salon_fijo : ""; } }
         public ListaSalones Salones_posibles { get { return salones_Posibles; } }
         public string Ciclo { get { return ciclo; } }
         public string Cve_espacio { get { return cve_espacio; } set { cve_espacio = value; } }
@@ -62,7 +62,7 @@ namespace OrigenDatos.Clases
             {
                 int i = 0;
                 foreach (int n in horario_ini)
-                    if ((i > n && n != 0) || i==0)
+                    if ((i > n && n != 0) || i == 0)
                         i = n;
 
                 return i;
@@ -86,7 +86,7 @@ namespace OrigenDatos.Clases
                 res[4] = viernes_ini;
                 res[5] = sabado_ini;
 
-                return res;                
+                return res;
             }
         }
         public int[] horario_fin
@@ -107,9 +107,9 @@ namespace OrigenDatos.Clases
         }
         public bool[] dias(int hora)
         {
-            bool[] res = { false,false,false,false,false,false};
+            bool[] res = { false, false, false, false, false, false };
 
-            for(int i=0;i<6;i++)
+            for (int i = 0; i < 6; i++)
                 if (horario_ini[i] >= hora && hora + 1 >= horario_fin[i])
                     res[i] = true;
 
@@ -163,7 +163,7 @@ namespace OrigenDatos.Clases
             get
             {
                 return "UPDATE [asignacion].[ae_horario] "
-                              + "SET[salon] = '" + cve_espacio + "'"
+                              + "SET[salon] = '" + Cve_espacio + "'"
                               + " WHERE[cve_materia] = '" + cve_materia + "' and [grupo] = " + grupo.ToString() + " and [tipo] = '" + tipo + "' and [ciclo] = '" + ciclo + "';";
             }
         }
@@ -173,30 +173,32 @@ namespace OrigenDatos.Clases
             get
             {
                 return "INSERT INTO [asignacion].[ae_horario] ([cve_materia],[grupo],[tipo],[lunes_ini],[lunes_fin],[martes_ini],[martes_fin],[miercoles_ini],[miercoles_fin],[jueves_ini],[jueves_fin],[viernes_ini],[viernes_fin],[sabado_ini],[sabado_fin],[cupo],[inscritos],[salon],[rpe],[lab_obl],[ciclo],[checador]) VALUES("
-                    +"'"+cve_materia+"',"
-                    +num_Grupo+","
-                    +"'"+tipo+"',"
-                    +lunes_ini+","
-                    +lunes_fin +","
-                    +martes_ini+","
-                    +martes_fin+","
-                    +miercoles_ini +","
-                    +miercoles_fin +","
-                    +jueves_ini+","
-                    +jueves_fin +","
-                    +viernes_ini +","
-                    +viernes_fin+","
-                    +sabado_ini+","
-                    +sabado_fin +","
-                    +cupo+","
-                    +"0,"
-                    +"'"+cve_espacio +"',"
-                    +rpe+","
-                    +"0,"
-                    +"'"+ciclo+"',"
-                    +"0)";
+                    + "'" + cve_materia + "',"
+                    + num_Grupo + ","
+                    + "'" + tipo + "',"
+                    + lunes_ini + ","
+                    + lunes_fin + ","
+                    + martes_ini + ","
+                    + martes_fin + ","
+                    + miercoles_ini + ","
+                    + miercoles_fin + ","
+                    + jueves_ini + ","
+                    + jueves_fin + ","
+                    + viernes_ini + ","
+                    + viernes_fin + ","
+                    + sabado_ini + ","
+                    + sabado_fin + ","
+                    + cupo + ","
+                    + "0,"
+                    + "'" + Cve_espacio + "',"
+                    + rpe + ","
+                    + "0,"
+                    + "'" + ciclo + "',"
+                    + "0)";
             }
         }
+
+        public string cve_full { get { return (Convert.ToInt32(Cve_materia) * 100 + num_Grupo).ToString(); } }
         #endregion
 
         #region Constructores
@@ -228,7 +230,7 @@ namespace OrigenDatos.Clases
             sabado_fin = g.sabado_fin;
             cupo = g.cupo;
             inscritos = g.inscritos;
-            cve_espacio = g.cve_espacio;
+            Cve_espacio = g.Cve_espacio;
             salonBD = g.salonBD;
             rpe = g.rpe;
             ciclo = g.ciclo;
@@ -305,7 +307,7 @@ namespace OrigenDatos.Clases
                 }
 
                 rpe = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cverpe"])));
-                cve_espacio = r.Field<string>(h["salon"]);
+                Cve_espacio = r.Field<string>(h["salon"]);
                 try
                 { lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunes"]))); }
                 catch
@@ -439,11 +441,13 @@ namespace OrigenDatos.Clases
         #region Metodos
         public override string ToString()
         {
-            return (Convert.ToInt32(cve_materia) * 100 + grupo) + "\t" + cve_espacio+"_"+ciclo;
+            return (Convert.ToInt32(cve_materia) * 100 + grupo) + "_" + Cve_espacio+"_"+ciclo;
         }
 
         public Grupo AsignacionSemestresAnteriores(string salon)
         {
+            if (otrosSemestres == null)
+                return null;
 
             ListaGrupos g = otrosSemestres.EnSalon(salon);
 

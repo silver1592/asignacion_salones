@@ -286,7 +286,7 @@ namespace OrigenDatos.Clases
             List<Materia> materias = Materias();
             List<Profesor> profesores = Profesores();
 
-            DataTable dt = Querry("SELECT DISTINCT * FROM where ciclo = '" + semestre + "' and salon='" + salon + "'");
+            DataTable dt = Querry("SELECT DISTINCT * FROM asignacion.ae_horario where ciclo = '" + semestre + "' and salon='" + salon + "'");
 
             grupos = Grupos_AsList(dt);
             res = new ListaGrupos(grupos, materias, profesores, this);
@@ -372,7 +372,7 @@ namespace OrigenDatos.Clases
         {
             List<Grupo> g = new List<Grupo>();
             foreach (DataRow r in dt.Rows)
-                g.Add(new Grupo(r, DGruposBD));
+                g.Add(new Grupo(r, DGruposBD,null,this));
 
             return g;
         }

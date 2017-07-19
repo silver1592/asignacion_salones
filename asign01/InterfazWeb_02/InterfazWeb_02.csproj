@@ -143,6 +143,7 @@
     <Content Include="JS\externos\jquery.tablesorter.min.js" />
     <Content Include="JS\Grupos\Busqueda.js" />
     <Content Include="JS\Grupos\index.js" />
+    <Content Include="JS\Salones\index.js" />
     <Content Include="JS\_Ejecuta.js" />
     <Content Include="JS\_CargaArchivo.js" />
     <Content Include="JS\_Menu.js" />
@@ -203,6 +204,7 @@
     <Content Include="Views\Salon\_Busqueda.cshtml" />
     <Content Include="Views\Salon\Index.cshtml" />
     <Content Include="Views\Shared\_Base.cshtml" />
+    <Content Include="Views\Salon\_Salon.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
