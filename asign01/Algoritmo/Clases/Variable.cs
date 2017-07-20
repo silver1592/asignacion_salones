@@ -92,6 +92,7 @@ namespace Algoritmo02.Clases
         {
             get
             {
+                if (salon == null) return 0;
                 float pT = this.valorTotalEquipo;
                 float pE = this.valorEquipo(salon);
 
@@ -116,7 +117,10 @@ namespace Algoritmo02.Clases
 
         public Variable(Variable v):base(v)
         {
-            Salon = new Salon(v.salon);
+            if (v.salon != null)
+                Salon = new Salon(v.salon);
+            else
+                Salon = null; 
             Hora = v.Hora;
         }
         #endregion

@@ -10,8 +10,6 @@ namespace Algoritmo02.Clases
 {
     public class ListaVariables : ListaGrupos, IList<Variable>
     {
-        private ListaSalones Salones;
-
         #region IList
         Variable IList<Variable>.this[int index]
         {
