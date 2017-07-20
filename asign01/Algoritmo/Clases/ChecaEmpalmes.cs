@@ -60,13 +60,15 @@ namespace Algoritmo02.Clases
                     else    /// Si no hay preferencial entonces se elegira por otro medio
                     {
                         g = empalme.MejorPara(s);
+
                         foreach (Grupo a in empalme)
-                            a.Cve_espacio = "";
-                        if (g != null)
-                            g.Cve_espacio = s.Cve_espacio;
+                            if (g != null && g.cve_full!=a.cve_full)
+                                a.Cve_espacio = "";
                     }
                     #endregion
                 }
+
+                grupos.Actualiza(empalme);
             }
         }
     }

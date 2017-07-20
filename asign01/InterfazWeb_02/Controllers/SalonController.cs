@@ -34,19 +34,18 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Salon(string cve_salon)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaVariables grupos = new ListaVariables(c.Grupos(Session["ciclo"].ToString(), cve_salon));
             List<ListaVariables> ls = new List<ListaVariables>();
-            ls.Add(grupos);
-
-            return PartialView(ls);
-        }
-
-        public ActionResult _Salon()
-        {
-            Conexion c = new Conexion(Conexion.datosConexion);
-            ListaVariables grupos = new ListaVariables(c.Grupos(Session["ciclo"].ToString(), "I-02"));
-            List<ListaVariables> ls = new List<ListaVariables>();
-            ls.Add(grupos);
+            ListaVariables grupos;
+            switch (cve_salon) {
+                case "empalmes":    //Empalmes
+                    grupos = new ListaVariables(c.Grupos(Session["ciclo"].ToString()));
+                    ls = grupos.AgrupaGruposEmpalmados();
+                    break;
+                default:
+                    grupos = new ListaVariables(c.Grupos(Session["ciclo"].ToString(), cve_salon));
+                    ls.Add(grupos);
+                break;
+            }
 
             return PartialView(ls);
         }

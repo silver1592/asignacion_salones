@@ -124,7 +124,7 @@ namespace Algoritmo02.Clases
         {
             var query = from g in this as IList<Variable>
                         from g1 in grupos
-                        where g!=g1 && g.empalme(g1)
+                        where g.cve_full!=g1.cve_full && g.empalme(g1)
                         select g;
 
             return new ListaVariables(query.Distinct().ToList());
