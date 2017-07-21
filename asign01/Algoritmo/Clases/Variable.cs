@@ -11,7 +11,7 @@ namespace Algoritmo02.Clases
         private Salon salon;
         private int Hora;
 
-        private float fCiclo
+        public float fCiclo
         {
             get
             {

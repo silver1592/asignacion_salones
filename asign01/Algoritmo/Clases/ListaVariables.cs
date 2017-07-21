@@ -251,5 +251,14 @@ namespace Algoritmo02.Clases
 
             return new ListaVariables(query.ToList(), profesores, materias);
         }
+
+        public ListaVariables OrdenarPorCiclo()
+        {
+            var query = from g in this as IList<Variable>
+                        orderby g.fCiclo descending
+                        select g;
+
+            return new ListaVariables(query.ToList(),profesores,materias);
+        }
     }
 }
