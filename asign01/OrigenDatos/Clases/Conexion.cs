@@ -73,6 +73,18 @@ namespace OrigenDatos.Clases
                 return headers;
             }
         } // Diccionario para leer la informacion de la base de datos
+
+        public Grupo Grupo(string cve_full, string semestre)
+        {
+            string query = "select * from ae_horario where cve_materia*100+grupo =" + cve_full + " ciclo=" + semestre;
+
+            DataTable dt = Querry(query);
+
+            if (dt.Rows.Count == 1)
+                return new Grupo(dt.Rows[0], DGruposBD, null, this, null);
+
+            return null;
+        }
         #endregion
 
         #region Atributos, Get y Set

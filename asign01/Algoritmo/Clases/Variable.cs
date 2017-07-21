@@ -48,6 +48,7 @@ namespace Algoritmo02.Clases
                 if (salon != null)
                 {
                     Cve_espacio = salon.Cve_espacio;
+                    value.AsignaGrupo(this);
                 }
                 else
                     Cve_espacio = "";
@@ -247,7 +248,7 @@ namespace Algoritmo02.Clases
             //Si hay cupo para el salon
             //Si tienen que ser en un salon de la planta baja o no
             else if (salon.Area.Contains(Area)
-                        && salon.Cupo >= cupo
+                        && salon.Cupo >= Cupo
                         && !(plantaBaja && !salon.plantaBaja))
                 peso = salon.PrioridadArea(Area);
 

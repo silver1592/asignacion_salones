@@ -43,5 +43,14 @@ namespace InterfazWeb_02.Controllers
 
             return PartialView(list);
         }
+
+        [HttpGet]
+        public ActionResult Grupo(string cve_full)
+        {
+            Conexion c = new Conexion(Conexion.datosConexion);
+            Grupo g = c.Grupo(cve_full, Session["ciclo"].ToString());
+
+            return View(g);
+        }
     }
 }

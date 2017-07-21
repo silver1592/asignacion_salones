@@ -69,7 +69,7 @@ namespace OrigenDatos.Clases
             }
         }         //Muestra la hora mas temprana en la que inicia el grupo
         public string Area { get { return cve_materia.Substring(0, 1); } }
-        public int Cupo { get { return cupo; } }
+        public int Cupo { get { return inscritos==0 ? cupo : inscritos; } }
         public string Cve_materia { get { return cve_materia; } }
         public int num_Grupo { get { return grupo; } }
         public int RPE { get { return rpe; } }
@@ -188,7 +188,7 @@ namespace OrigenDatos.Clases
                     + viernes_fin + ","
                     + sabado_ini + ","
                     + sabado_fin + ","
-                    + cupo + ","
+                    + Cupo + ","
                     + "0,"
                     + "'" + Cve_espacio + "',"
                     + rpe + ","

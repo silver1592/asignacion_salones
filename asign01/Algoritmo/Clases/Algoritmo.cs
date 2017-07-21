@@ -37,7 +37,6 @@ namespace Algoritmo02.Clases
             this.grupos = this.grupos.EnHoras(hora, hora + 1);
             this.grupos = this.grupos.EnDias();
             this.salones = salones;
-            this.grupos.SetSalones(this.salones);
             this.hora = hora;
             tamPoblacion = _tamPoblacion;
             generaciones = _generaciones;

@@ -26,7 +26,7 @@ namespace OrigenDatos.Clases
         protected bool asignable;
         protected bool empalmes;
         protected ListaGrupos gruposAsignados;
-
+        protected int[,] horario;
         #endregion
 
         #region atributos <public>
@@ -59,66 +59,6 @@ namespace OrigenDatos.Clases
         /// Marca con True cuando ya ahy una materia que lo ocupa
         /// Este solo es en base al horario marcado por la hora
         /// </summary>
-        public bool[] horario
-        {
-            get
-            {
-                return gruposAsignados.Dias(hora);
-            }
-        }
-        public string dias
-        {
-            get
-            {
-                string res="";
-
-                if (horario[0] == false)
-                    res += "L";
-                else
-                    res += "-";
-
-                if (horario[1] == false)
-                    res += "M";
-                else
-                    res += "-";
-
-                if (horario[2] == false)
-                    res += "m";
-                else
-                    res += "-";
-
-                if (horario[3] == false)
-                    res += "J";
-                else
-                    res += "-";
-
-                if (horario[4] == false)
-                    res += "V";
-                else
-                    res += "-";
-
-                if (horario[5] == false)
-                    res += "S";
-                else
-                    res += "-";
-
-                return res;
-            }
-        }
-        /*
-        public float puntos
-        {
-            get
-            {
-                float p = 0;
-
-                for(int i = 0;i<gruposAsignados.Count();i++)
-                    p += gruposAsignados[i].SalonValido(this);
-
-                return p;
-            }
-        }
-        */
         #endregion
 
         #region Constructores
@@ -157,7 +97,7 @@ namespace OrigenDatos.Clases
 
             #region Horarios
             hora = s.hora;
-            gruposAsignados = new ListaGrupos(s.gruposAsignados);
+            horario = s.horario;
             #endregion
         }
 
@@ -254,6 +194,26 @@ namespace OrigenDatos.Clases
             }
         }
 
+        public void SetHorario(ListaGrupos grupos)
+        {
+            ListaGrupos gs = grupos.EnSalon(Cve_espacio);
+            horario = new int[6, 15];
+
+
+            try { 
+                for (int i = 0; i < 6; i++)
+                    for (int j = 0; j < 15; j++)
+                        horario[i, j] = 0;
+
+                foreach (Grupo g in gs)
+                    AsignaGrupo(g);
+            }
+            catch(Exception ex)
+            {
+
+            }
+}
+
         #endregion
         #endregion
 
@@ -288,8 +248,6 @@ namespace OrigenDatos.Clases
             return cve_espacio;
         }
 
-        #region _Algoritmo
-
         /// <summary>
         /// Checa si hay horario y si cabe para el grupo que se le pasa por parametro.
         /// </summary>
@@ -297,48 +255,31 @@ namespace OrigenDatos.Clases
         /// <returns></returns>
         public bool Disponible_para_grupo(Grupo grupo)
         {
-            for (int i = 0; i < 6; i++)
-                if (horario[i] && grupo.dias(hora)[i] || grupo.Cupo > Cupo)
-                    return false;
+            for(int d = 0;d<6;d++)
+                for (int i = 0; i < 6; i++)
+                    if (horario[d,i]==0 && grupo.dias(i)[d] || grupo.Cupo > Cupo)
+                        return false;
 
             return true;
         }
-        /*
-        /// <summary>
-        /// Puntos que otorga al Grupo
-        /// -corregir-
-        /// que la salida sea una estructura de multiples puntos
-        /// </summary>
-        /// <param name="grupo"></param>
-        /// <returns></returns>
-        public float puntosCon(Grupo grupo)
+
+        public void AsignaGrupo(Grupo g)
         {
-            float p = 0;
 
-            if (gruposAsignados.Empalmados(grupo).Count() == 0)
-                p += grupo.SalonValido(this);
-            else
-                p = -1;
+            for (int d = 0; d < 6; d++)
+                for (int i = g.horario_ini[d] - 7; i < g.horario_fin[d] - 7; i++)
+                    horario[d, i]++;
 
-            return p;
         }
-        */
 
-        /// <summary>
-        /// Busca los grupos dentro de una lista que esten asignados en el salon y los almacena 
-        /// para poder generar un horario de un salon
-        /// </summary>
-        /// <param name="hora">Solo se genera el horario por hora</param>
-        /// <param name="ciclo">Ciclo escolar a generar el horario</param>
-        public void ObtenHorario(List<Grupo> grupos)
+        public bool Empalmado()
         {
-            var query = from Grupo g in grupos
-                        where g.Cve_espacio == Cve_espacio
-                        select g;
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 15; j++)
+                    if (horario[i, j] > 1)
+                        return true;
 
-            foreach (Grupo g in query.ToList<Grupo>())
-                gruposAsignados.Add(g);
+            return false;
         }
-        #endregion
     }
 }

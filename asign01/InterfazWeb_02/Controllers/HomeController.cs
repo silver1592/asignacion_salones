@@ -177,6 +177,7 @@ namespace InterfazWeb_02.Controllers
 
                 if (Convert.ToBoolean(algoritmo))
                 {
+                    salones.SetHorarios(c,Session["ciclo"].ToString());
                     Algoritmo alg = new Algoritmo(grupos, salones, Convert.ToInt32(hora), 5, 50);
                     alg.AsignaSalones();
 
