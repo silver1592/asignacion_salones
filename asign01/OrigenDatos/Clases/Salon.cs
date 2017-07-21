@@ -257,7 +257,8 @@ namespace OrigenDatos.Clases
         {
             for(int d = 0;d<6;d++)
                 for (int i = 0; i < 6; i++)
-                    if (horario[d,i]==0 && grupo.dias(i)[d] || grupo.Cupo > Cupo)
+                    if ((horario[d,i]!=0 && grupo.dias(i)[d]) 
+                        || grupo.Cupo > Cupo)
                         return false;
 
             return true;
