@@ -238,15 +238,8 @@ namespace Algoritmo02.Clases
 
         public ListaVariables EnDia(int dia)
         {
-            string dias = "";
-            for (int i = 0; i < 6; i++)
-                if (dia != i)
-                    dias += '0';
-                else
-                    dias += '1';
-
             var query = from g in this as IList<Variable>
-                        where g.EnDias(dias)
+                        where g.EnDia(dia)
                         select g;
 
             return new ListaVariables(query.ToList(), profesores, materias);

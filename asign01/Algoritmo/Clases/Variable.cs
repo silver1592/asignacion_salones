@@ -365,5 +365,13 @@ namespace Algoritmo02.Clases
 
             return false;
         }
+
+        public bool EnDia(int dia)
+        {
+            if (this.Dias[dia] == '1')
+                return true;
+
+            return false;
+        }
     }
 }
