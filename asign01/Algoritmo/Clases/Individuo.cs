@@ -116,7 +116,7 @@ namespace Algoritmo02.Clases
                 float fRes = 0;
 
                 foreach (Variable v in cromosomas)
-                    fRes += v.puntos;
+                    fRes += v.Puntos;
 
                 return fRes;
             }
@@ -270,7 +270,7 @@ namespace Algoritmo02.Clases
                 if (val != -1)
                 {
                     salon = (Salon)s[val];
-                    if (v.SalonValido(salon) > 0 && salon.Disponible_para_grupo(v))
+                    if (v.EsValido(salon) && salon.Disponible_para_grupo(v))
                     {
                         v.Salon = salon;
                         r.Reinicia();
@@ -341,7 +341,7 @@ namespace Algoritmo02.Clases
             float f = 0 ;
 
             foreach (Variable v in lista)
-                f += v.puntos;
+                f += v.Puntos;
 
             f = f / lista.Count;
 

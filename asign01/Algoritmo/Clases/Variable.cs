@@ -8,10 +8,10 @@ namespace Algoritmo02.Clases
 {
     public class Variable : Grupo
     {
-        private Salon salon;
-        private int Hora;
+        private Salon salon;    //Salon asignado
+        private int Hora;       //Hora en la que se esta asignando
 
-        public float fCiclo
+        public float fCiclo     //Convierte el cilco a puntos para que sea facil distinguir cual es el mas actual
         {
             get
             {
@@ -37,8 +37,7 @@ namespace Algoritmo02.Clases
                     return -1;
             }
         }
-
-        public Salon Salon
+        public Salon Salon      //Salon asignado
         {
             get { return salon; }
             set
@@ -54,20 +53,37 @@ namespace Algoritmo02.Clases
                     Cve_espacio = "";
             }
         }
-
-        /// <summary>
-        /// Retorna cuantos son los puntos que tiene esta asignacion para el algoritmo
-        /// </summary>
-        public float puntos
+        public float Puntos     //Puntos que tiene esta asignacion
         {
             get
             {
                 if (salon != null)
                 {
-                    return calcula_PuntosSalon(salon);
+                    return CalculaPuntos(salon);
                 }
                 else
                     return 0;
+            }
+        }
+        public bool Valido      //Checa si la asignacion es valida
+        {
+            get
+            {
+                return EsValido(Salon);
+            }
+        }
+        public float puntosEquipo//Retorna los puntos que se tiene con el equipo instalado en el salon y los que necesita el grupo
+        {
+            get
+            {
+                if (salon == null) return 0;
+                float pT = this.valorTotalEquipo;
+                float pE = this.valorEquipo(salon);
+
+                if (pT == 0)
+                    return 1;
+
+                return pE / pT;
             }
         }
 
@@ -84,24 +100,6 @@ namespace Algoritmo02.Clases
             }
 
             return sel != null ? sel.Cve_espacio : "";
-        }
-
-        /// <summary>
-        /// Retorna los puntos que se tiene con el equipo instalado en el salon y los que necesita el grupo
-        /// </summary>
-        public float puntosEquipo
-        {
-            get
-            {
-                if (salon == null) return 0;
-                float pT = this.valorTotalEquipo;
-                float pE = this.valorEquipo(salon);
-
-                if (pT == 0)
-                    return 1;
-
-                return pE / pT;
-            }
         }
 
         #region Constuctores
@@ -127,46 +125,29 @@ namespace Algoritmo02.Clases
         #endregion
 
         /// <summary>
-        /// checa si un grupo es compatible con el salon
-        /// </summary>
-        /// <param name="salon">salon a checar compatibilidad</param>
-        /// <returns>Si el grupo es valido para asignarse en este salon</returns>
-        public bool valido(Salon salon)
-        {
-            bool res = false;
-
-            if (this.SalonValido(salon) > 0)
-                res = true;
-
-            return res;
-        }
-
-        /// <summary>
         /// Calcula los puntos que tiene el grupo con el salon solicitado
         /// </summary>
         /// <param name="s">Salon con que se quiere checar</param>
-        /// <returns>Valor que se obtubo de los puntos. \nSi es -1 quiere decir que no es un salon valido</returns>
-        public float calcula_PuntosSalon(Salon s)
+        /// <returns>Valor que se obtubo de los puntos. Max = 10</returns>
+        public float CalculaPuntos(Salon s)
         {
-            //CHECA SI EL PROFESOR TIENE UN SALON FIJO Y CHECA SI ES EL SALON AL QUE SE LE ASIGNO, Y DE SER ASI REGRESA EL VALOR INMEDIATAMENTE, SI NO 
-            if (this.Salon_fijo != null && this.Salon_fijo != "")
-            if (this.Salon_fijo == s.Cve_espacio)
-                return 10;
-            else
-                return -1;
+            float puntos = 0;
+            if (s == null) return 0;
 
-            //INICIALIZA EL VALOR DEL GRUPO AL VALOR QUE LE DA EL AREA.
-            float fRes = this.SalonValido(s);
+            //Checa el area. Max = 5
+            puntos += s.PrioridadArea(Area) * 5 / 10;
 
-            //CHECA SI EL PROFESOR REQUERE ESTAR EN LA PLANTA BAJA Y SI EL SALON TAMBIEN ESTA EN LA PLANTA BAJA
-            //La validacion comentada es para cuando se haya instalado un elevador en el edificio T
-            if (this.PlantaBaja && (!s.plantaBaja /*|| salon.Edificio == "T"*/))
-                fRes = -1;
+            //Checa la hora anterior. Max = 3
+            if (GHoraAnterior != null && GHoraAnterior.Cve_espacio == s.Cve_espacio)
+                puntos += 3;
 
-            if (fRes > -1)
-                fRes *= puntosEquipo;
+            //Checa el equipo instalado. Max = 2
+            puntos += valorEquipo(s) * 2 / 10;
 
-            return fRes;
+            //Diferencia de cupo del grupo entre el del salon dividido entre 3 y restado a los puntos totales. Extra
+            puntos -= Math.Abs(Cupo - salon.Cupo) / 3;
+
+            return puntos;
         }
 
         public float valorEquipo(Salon salon)
@@ -227,32 +208,15 @@ namespace Algoritmo02.Clases
             return false;
         }
 
-        /// <summary>
-        /// Regresa cual es el valor que tiene un salon para el area del grupo.
-        /// 02/06/2016--Decidi definir el -1 como un valor completamente incorrecto y que fuerse al sistema a ignorar esta asignacion.
-        /// </summary>
-        /// <param name="salon"></param>
-        /// <returns></returns>
-        public float SalonValido(Salon salon)
+        public bool EsValido(Salon salon)
         {
-            float peso = -1;
+            if (salon == null) return false;
+            else if (Salon_fijo != "" && Salon_fijo != salon.Cve_espacio) return false;
+            else if (salones_Posibles.Count != 0 && salones_Posibles.busca(salon.Cve_espacio) == null) return false;
+            else if (PlantaBaja && (!salon.plantaBaja || salon.Edificio == "T")) return false;
+            else if (Cupo > salon.Cupo) return false;
 
-            //Checa si esta en la lista de posibles salones o si esta en uno de los salones anteriores
-            if (salones_Posibles.busca(salon.Cve_espacio) != null)
-                peso = 10;
-            //Checa si ya habia sido asignado en ese salon un horario anterior
-            else if (GHoraAnterior != null && GHoraAnterior.Cve_espacio == salon.Cve_espacio)
-                peso = 10;
-            //Y si no esta....
-            //Checa si corresponden las areas
-            //Si hay cupo para el salon
-            //Si tienen que ser en un salon de la planta baja o no
-            else if (salon.Area.Contains(Area)
-                        && salon.Cupo >= Cupo
-                        && !(plantaBaja && !salon.plantaBaja))
-                peso = salon.PrioridadArea(Area);
-
-            return peso;
+            return true;
         }
 
         /// <summary>
@@ -260,7 +224,7 @@ namespace Algoritmo02.Clases
         /// </summary>
         /// <param name="grupo">Grupo a checar si hay empalme</param>
         /// <returns>Regresa true si hay un empalme entre los grupos.</returns>
-        public bool empalme(Grupo grupo)
+        public bool Empalme(Grupo grupo)
         {
             if (this == grupo)
                 return false;
@@ -325,35 +289,6 @@ namespace Algoritmo02.Clases
                 if ((sabado_ini >= ini && sabado_ini < fin) ||
                 (sabado_fin <= fin && sabado_fin > ini))
                     return true;
-
-            return false;
-        }
-
-        public bool EnHora(int[] ini, int[] fin)
-        {
-            if ((lunes_ini >= ini[0] && lunes_ini < fin[0]) ||
-                (lunes_fin <= fin[0] && lunes_fin > ini[0]))
-                return true;
-
-            if ((martes_ini >= ini[1] && martes_ini < fin[1]) ||
-            (martes_fin <= fin[1] && martes_fin > ini[1]))
-                return true;
-
-            if ((miercoles_ini >= ini[2] && miercoles_ini < fin[2]) ||
-            (miercoles_fin <= fin[2] && miercoles_fin > ini[2]))
-                return true;
-
-            if ((jueves_ini >= ini[3] && jueves_ini < fin[3]) ||
-            (jueves_fin <= fin[3] && jueves_fin > ini[3]))
-                return true;
-
-            if ((viernes_ini >= ini[4] && viernes_ini < fin[4]) ||
-            (viernes_fin <= fin[4] && viernes_fin > ini[4]))
-                return true;
-
-            if ((sabado_ini >= ini[5] && sabado_ini < fin[5]) ||
-            (sabado_fin <= fin[5] && sabado_fin > ini[5]))
-                return true;
 
             return false;
         }

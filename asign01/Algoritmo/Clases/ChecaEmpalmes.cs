@@ -1,6 +1,7 @@
 ﻿using OrigenDatos.Clases;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Algoritmo02.Clases
 {
@@ -8,6 +9,7 @@ namespace Algoritmo02.Clases
     {
         private ListaVariables grupos;
         private ListaSalones salones;
+        private ListaSalones permiteEmpalmes;
 
         public ListaVariables Grupos { get { return grupos; } }
 
@@ -15,6 +17,7 @@ namespace Algoritmo02.Clases
         {
             grupos = new ListaVariables(_grupos);
             salones = new ListaSalones(_salones);
+            permiteEmpalmes = salones.PermiteEmpalmes();
         }
 
         /// <summary>
@@ -25,51 +28,101 @@ namespace Algoritmo02.Clases
         {
             List<ListaVariables> empalmados = new List<ListaVariables>();
             ListaGrupos checando = new ListaGrupos();
-            ListaSalones permiteEmpalmes = salones.PermiteEmpalmes();
-            ListaGrupos Temp;
-            ListaVariables aux;
-            Grupo g;
-            Salon s;
 
             //obtiene grupos de grupos empalmados
             empalmados = new ListaVariables(grupos.NoEn(permiteEmpalmes)).AgrupaGruposEmpalmados();
 
-            foreach(ListaVariables empalme in empalmados)
-            {
-                aux = empalme.Empalmados();
-
-                //Chequeo de empalme
-                if (aux.Count>1 && permiteEmpalmes.busca(aux[0].Cve_espacio)==null)
+            foreach (ListaVariables empalme in empalmados)
+                try
                 {
-                    s = salones.busca(empalme[0].Cve_espacio);
-                    if (s == null) continue;
-                    #region solucion de empalmes
-
-                    ///Solucion de empalme
-                    ///selecciona el grupo que se va a quedar con el salon si es que hay algun preferencial
-                    Temp = empalme.EnSalonesFijos();
-
-
-                    if (Temp.Count() > 1) { }  ///Si hay conflicto en el preferencial
-                    else if (Temp.Count() == 1)///Solo uno tiene preferencia, y a ese se le va a dar
-                    {
-                        foreach (Grupo grupo in empalme)
-                            if (grupo.Salon_fijo == grupo.Cve_espacio)
-                                grupo.Cve_espacio = "";
-                    }
-                    else    /// Si no hay preferencial entonces se elegira por otro medio
-                    {
-                        g = empalme.MejorPara(s);
-
-                        foreach (Grupo a in empalme)
-                            if (g != null && g.cve_full!=a.cve_full)
-                                a.Cve_espacio = "";
-                    }
-                    #endregion
+                    ResuelveEmpalme(empalme);
                 }
+                catch (Exception ex)//Se le quita el salon a todos
+                {
+                    QuitaSalon(empalme);
+                }
+        }
 
-                grupos.Actualiza(empalme);
+        private void ResuelveEmpalme(ListaVariables empalme)
+        {
+            ListaGrupos Temp;
+            ListaVariables aux;
+            Salon s;
+
+            aux = empalme.Empalmados();
+
+            //Chequeo de empalme
+            if (aux.Count > 1 && permiteEmpalmes.busca(aux[0].Cve_espacio) == null)
+            {
+                s = salones.busca(empalme[0].Cve_espacio);
+                if (s == null) return;
+
+                Temp = empalme.EnSalonesFijos();
+
+                if (Temp.Count() > 1) { }  //Si hay conflicto en el preferencial
+                else if (Temp.Count() == 1)//Solo uno tiene preferencia, y a ese se le va a dar
+                    AsignacionPreferencial(empalme, s);
+                else    // Si no hay preferencial entonces se elegira por otro medio
+                    AsignacionMejorEleccion(empalme, s);
             }
+
+            grupos.Actualiza(empalme);
+        }
+
+        /// <summary>
+        /// Selecciona entre la lista de grupos el salon que tiene mas puntos en la base de datos para el salon
+        /// </summary>
+        /// <param name="empalme"></param>
+        /// <param name="s"></param>
+        private void AsignacionMejorEleccion(ListaVariables empalme, Salon s)
+        {
+            Grupo g=null;
+            ListaVariables aux = empalme;
+
+            if (s.plantaBaja)
+                aux = new ListaVariables(aux.QuierenPlantabaja());
+            if (aux.Count == 0)
+                aux = empalme;
+
+            //TODO: Lista de validos
+            //TODO: Lista ordenada
+
+            //Mejor puntuacion de equipamiento
+            if (aux.Count > 1)
+                aux = aux.MejorPuntuacion(s);
+
+            //Salon de otros semestres
+            if (aux.Count > 1)
+                aux = new ListaVariables(aux.AsignacionOtrosSemestres(s.Cve_espacio));
+            if (aux.Count == 0)
+                aux = empalme;
+
+            g = aux.Count != 0 ? (aux as IList<Variable>)[0] : null;
+
+            QuitaSalon(empalme, g);
+        }
+
+        /// <summary>
+        /// Busca el grupo que tiene preferencia sobre el salon y a ese se le asigna
+        /// </summary>
+        /// <param name="empalmes"></param>
+        /// <param name="s"></param>
+        private void AsignacionPreferencial(ListaVariables empalmes, Salon s)
+        {
+            Grupo g=null;
+
+            foreach (Grupo grupo in empalmes)
+                if (grupo.Salon_fijo == s.Cve_espacio)
+                    g = grupo;
+
+            QuitaSalon(empalmes, g);
+        }
+
+        private void QuitaSalon(ListaGrupos empalmes, Grupo excepto=null)
+        {
+            foreach (Grupo g in empalmes)
+                if (excepto != null && excepto.cve_full != g.cve_full)
+                    g.Cve_espacio = "";
         }
     }
 }

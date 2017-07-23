@@ -14,29 +14,17 @@ namespace OrigenDatos.Clases
     /// </summary>
     public class LibroExcel
     {
-        /// <summary>
-        /// Nombre del archivo
-        /// </summary>
-        private string archivo;
-        /// <summary>
-        /// Direccion del archivo
-        /// </summary>
-        private string dir;
+        private string archivo; // Nombre del archivo
+        private string dir;// Direccion del archivo
 
         #region Atributos a buscar
-        /// <summary>
-        /// Diccionario con los encabezados de la tabla
-        /// </summary>
-        public Dictionary<string, string> dHeaders;
+        public Dictionary<string, string> dHeaders; // Diccionario con los encabezados de la tabla
 
-        public Dictionary<string,string> dDefault;
+        public Dictionary<string,string> dDefault; //Valores por default
 
         /// <summary>
-        /// Inicializa el diccionario
+        /// Inicializa los diccionario
         /// </summary>
-        /// <remarks>
-        /// Solo se llama cuando se crea el objeto
-        /// </remarks>
         private void SetHeaders()
         {
             dHeaders = new Dictionary<string, string>();
@@ -107,7 +95,7 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Lee el excel y regresa las hojas en una coleccion de tablas
         /// </summary>
-        /// <returns>Hojas del excel</returns>
+        /// <returns>Coleccion de Hojas del excel</returns>
         private DataTableCollection GetSheets()
         {
             //Es necesaria para que se inicialize ContCoumn
@@ -136,7 +124,7 @@ namespace OrigenDatos.Clases
         /// Convierte un DataTable a List de tipo grupo
         /// </summary>
         /// <param name="dtGrupos">Tabla de grupos</param>
-        /// <returns></returns>
+        /// <returns>Lista de Grupos</returns>
         private List<Grupo> AsList(DataTable dtGrupos)
         {
             List<Grupo> res = new List<Grupo>();
@@ -167,7 +155,6 @@ namespace OrigenDatos.Clases
             doc.Close();
         }
 
-
         /// <summary>
         /// Obtiene el nombre de las hojas del excel e inicializa la variable Sheets
         /// </summary>
@@ -183,7 +170,7 @@ namespace OrigenDatos.Clases
         }
 
         /// <summary>
-        /// Lee el excel e inicializa los grupos con la ainfromacion
+        /// Lee el excel e inicializa los grupos con la infromacion
         /// </summary>
         /// <param name="hoja">Hoja de excel</param>
         public List<Grupo> GetGrupos(string hoja,string ciclo = "2016-2017/II", string tipo = "T")

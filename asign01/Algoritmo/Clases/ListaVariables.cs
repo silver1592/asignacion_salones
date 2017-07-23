@@ -111,8 +111,8 @@ namespace Algoritmo02.Clases
         public ListaVariables MejorPuntuacion(Salon s, int limite = 1)
         {
             var query = from g in this as IList<Variable>
-                        where g.SalonValido(s) > 0
-                        orderby g.SalonValido(s) descending
+                        where g.Puntos > 0
+                        orderby g.Puntos descending
                         select g;
 
             return new ListaVariables(query.Take(limite).ToList());
@@ -122,7 +122,7 @@ namespace Algoritmo02.Clases
         {
             var query = from g in this as IList<Variable>
                         from g1 in grupos
-                        where g.cve_full!=g1.cve_full && g.empalme(g1)
+                        where g.cve_full!=g1.cve_full && g.Empalme(g1)
                         select g;
 
             return new ListaVariables(query.Distinct().ToList());
@@ -131,7 +131,7 @@ namespace Algoritmo02.Clases
         public ListaVariables Empalmados(Grupo grupo)
         {
             var query = from g in this as IList<Variable>
-                        where g.empalme(grupo)
+                        where g.Empalme(grupo)
                         select g;
 
             return new ListaVariables(query.ToList());
@@ -193,33 +193,6 @@ namespace Algoritmo02.Clases
                          select g;
 
             return query3.ToList();
-        }
-
-        /// <summary>
-        /// Obtiene el grupo que tenga mas puntos para el salon
-        /// </summary>
-        /// <param name="salon"></param>
-        /// <returns></returns>
-        public Variable MejorPara(Salon salon)
-        {
-            ListaVariables aux = this;
-
-            if (salon.plantaBaja)
-                aux = new ListaVariables(aux.QuierenPlantabaja());
-            if (aux.Count == 0)
-                aux = this;
-
-            //Mejor puntuacion de equipamiento
-            if (aux.Count > 1)
-                aux = aux.MejorPuntuacion(salon);
-
-            //Salon de otros semestres
-            if (aux.Count > 1)
-                aux = new ListaVariables(aux.AsignacionOtrosSemestres(salon.Cve_espacio));
-            if (aux.Count == 0)
-                aux = this;
-
-            return aux.Count != 0 ? (aux as IList<Variable>)[0] : null;
         }
 
         /// <summary>
