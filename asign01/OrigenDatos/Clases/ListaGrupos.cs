@@ -131,10 +131,7 @@ namespace OrigenDatos.Clases
             this.grupos = new List<Grupo>();
 
             foreach (Grupo g in grupos)
-                if(c!=null && salones!=null)
-                    this.grupos.Add(new Grupo(g, c, salones));
-                else
-                    this.grupos.Add(new Grupo(g));
+                this.grupos.Add(new Grupo(g, c, salones));
         }
 
         #endregion
