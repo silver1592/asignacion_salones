@@ -15,7 +15,7 @@ namespace Algoritmo02.Clases
         {
             get
             {
-                return new Variable(grupos[index],0);
+                return grupos[index] as Variable;
             }
 
             set
@@ -71,12 +71,6 @@ namespace Algoritmo02.Clases
 
             return var.GetEnumerator();
         }
-
-        public void SetSalones(ListaSalones salones)
-        {
-            foreach(Variable v in this)
-                v.Salon = salones.busca(v.Cve_espacio);
-        }
         #endregion
 
         #region Constructores
@@ -90,7 +84,7 @@ namespace Algoritmo02.Clases
             this.profesores = Profesores;
             this.materias = Materias;
             foreach (Variable v in variables)
-                grupos.Add(v);
+                grupos.Add(new Variable(v));
         }
 
         public ListaVariables(ListaGrupos grupos)
@@ -100,16 +94,26 @@ namespace Algoritmo02.Clases
             foreach (Grupo g in grupos)
                 this.grupos.Add(new Variable(g,0));
         }
+        public void SetSalones(ListaSalones salones)
+        {
+            Salon s;
+            foreach (Variable v in this)
+            {
+                s = salones.busca(v.Cve_espacio);
+                if (s != null)
+                    v.Salon = s;
+            }
+        }
 
-        internal ListaVariables Validos()
+        #endregion
+
+        public ListaVariables Validos()
         {
             var query = from g in this as IList<Variable>
                         select g;
 
             return new ListaVariables(query.ToList());
         }
-
-        #endregion
 
         /// <summary>
         /// Obtiene los grupos con mejor puntiacion con cierto salon
@@ -120,7 +124,6 @@ namespace Algoritmo02.Clases
         public ListaVariables OrdenarMejorPuntuacion(Salon s, int limite=0)
         {
             var query = from g in this as IList<Variable>
-                        where g.Puntos > 0
                         orderby g.Puntos descending
                         select g;
 

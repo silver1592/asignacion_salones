@@ -5,6 +5,7 @@ using System;
 
 namespace Algoritmo02.Clases
 {
+    //TODO:Hacer que cheque tambien el empalme con horas siguientes
     public class ChecaEmpalmes
     {
         private ListaVariables grupos;
@@ -78,19 +79,26 @@ namespace Algoritmo02.Clases
         private void AsignacionMejorEleccion(ListaVariables empalme, Salon s)
         {
             Variable gOtrosSemestres = null, gAux = null, g =null;
+            empalme.SetSalones(salones);
 
             //Obtiene los gupos validos
             ListaVariables validos = empalme.Validos();
             //Obtiene los grupos que estaban 
             ListaVariables otrosSemestres = new ListaVariables(validos.AsignacionOtrosSemestres(s.Cve_espacio));
+            otrosSemestres.SetSalones(salones);
+            validos.SetSalones(salones);
             otrosSemestres = otrosSemestres.OrdenarMejorPuntuacion(s);
             ListaVariables aux = validos.OrdenarMejorPuntuacion(s);
-
 
             gAux = aux.Count != 0 ? (aux as IList<Variable>)[0] : null;
             gOtrosSemestres = otrosSemestres.Count != 0 ? (otrosSemestres as IList<Variable>)[0] : null;
 
-            g = gAux != null && gOtrosSemestres != null && gAux.Puntos > gOtrosSemestres.Puntos ? gAux : gOtrosSemestres;
+            if (gAux != null && gOtrosSemestres != null)
+                g = gAux.Puntos > gOtrosSemestres.Puntos ? gAux : gOtrosSemestres;
+            else if (gAux != null && gOtrosSemestres == null)
+                g = gAux;
+            else
+                g = gOtrosSemestres;
 
             QuitaSalon(empalme, g);
         }

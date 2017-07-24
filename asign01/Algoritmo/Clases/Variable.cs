@@ -42,6 +42,8 @@ namespace Algoritmo02.Clases
             get { return salon; }
             set
             {
+                if (salon != null)
+                    salon.ElminaGrupo(this);
                 salon = value;
 
                 if (salon != null)
@@ -118,8 +120,6 @@ namespace Algoritmo02.Clases
         {
             if (v.salon != null)
                 Salon = new Salon(v.salon);
-            else
-                Salon = null; 
             Hora = v.Hora;
         }
         #endregion
@@ -134,10 +134,10 @@ namespace Algoritmo02.Clases
             float puntos = 0;
             if (s == null) return 0;
 
-            //Checa el area. Max = 5
-            puntos += s.PrioridadArea(Area) * 5 / 10;
+            //Checa el area. Max = 6
+            puntos += s.PrioridadArea(Area) * 6 / 10;
 
-            //Checa la hora anterior. Max = 3
+            //Checa la hora anterior. Max = 2
             if (GHoraAnterior != null && GHoraAnterior.Cve_espacio == s.Cve_espacio)
                 puntos += 3;
 
@@ -145,9 +145,12 @@ namespace Algoritmo02.Clases
             puntos += valorEquipo(s) * 2 / 10;
 
             //TODO: Checa que haya estado en ese salon el año pasado. Extra
+            ListaGrupos semestres = otrosSemestres.EnSalon(s.Cve_espacio);
+            if (semestres.Count() != 0)
+                puntos += (new ListaVariables(semestres).OrdenarPorCiclo() as IList<Variable>)[0].fCiclo/2;
 
-            //Diferencia de cupo del grupo entre el del salon dividido entre 3 y restado a los puntos totales. Extra
-            puntos -= Math.Abs(Cupo - salon.Cupo) / 3;
+            //Diferencia de cupo del grupo entre el del salon dividido entre 4 y restado a los puntos totales. Extra
+            puntos -= Math.Abs(Cupo - salon.Cupo) / 4;
 
             return puntos;
         }
@@ -160,7 +163,7 @@ namespace Algoritmo02.Clases
                 if (salon.Equipo.Contains(req.requerimiento))
                     res += req.valor;
 
-            return res;
+            return valorTotalEquipo!=0 ? res*10/valorTotalEquipo : res;
         }
 
         public bool horario(int hora)

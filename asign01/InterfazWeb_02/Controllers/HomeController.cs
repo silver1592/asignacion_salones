@@ -96,6 +96,7 @@ namespace InterfazWeb_02.Controllers
         [HttpPost]
         public JsonResult CargaExcel_BD(string excel, string sheet, string ciclo)
         {
+            //TODO: Hacer validaciones de ciclo por si se anota mal
             object[] res = new object[] { true, "" };
             Conexion c;
             string excelDir = Server.MapPath("~/Archivos/") + excel;
@@ -177,7 +178,7 @@ namespace InterfazWeb_02.Controllers
 
                 if (Convert.ToBoolean(algoritmo))
                 {
-                    salones.SetHorarios(c,Session["ciclo"].ToString());
+                    salones.SetHorarios(c, Session["ciclo"].ToString());
                     Algoritmo alg = new Algoritmo(grupos, salones, Convert.ToInt32(hora), 5, 50);
                     alg.AsignaSalones();
 

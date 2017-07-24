@@ -163,7 +163,7 @@ namespace Algoritmo02.Clases
         {
             Errores = new List<Variable>();
 
-            this.salones = Salones;
+            this.salones = new ListaSalones(Salones);
 
             for(int i=2;i<=7;i++)
             {

@@ -53,7 +53,7 @@ namespace OrigenDatos.Clases
         public string Salon_fijo { get { return salon_fijo != null ? salon_fijo : ""; } }
         public ListaSalones Salones_posibles { get { return salones_Posibles; } }
         public string Ciclo { get { return ciclo; } }
-        public string Cve_espacio { get { return cve_espacio; } set { cve_espacio = value; } }
+        public string Cve_espacio { get { return cve_espacio.Trim(); } set { cve_espacio = value; } }
         public string SalonBD { get { return salonBD; } }
         public Grupo GHoraAnterior { get { return HoraAnterior; } }
         public int hora_ini

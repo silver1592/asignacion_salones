@@ -50,6 +50,7 @@ namespace OrigenDatos.Clases
                 return false;
             }
         }
+
         public string Cve_espacio { get { return cve_espacio; } }
         public string Edificio { get { return cve_edificio; } }
         public List<string> Area { get { return area; } }
@@ -120,7 +121,6 @@ namespace OrigenDatos.Clases
 
         public Salon(DataRow datos, int hora, Conexion c)
         {
-
             ///Tabla Horario
             this.hora = hora;
             SetValues(datos);
@@ -148,6 +148,12 @@ namespace OrigenDatos.Clases
             }
             else
                 throw new Exception("Datos del salon no validos");
+
+            horario = new int[6, 15];
+
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 15; j++)
+                    horario[i, j] = 0;
         }
 
         protected void SetEquipo(DataTable Equipo)
@@ -266,11 +272,9 @@ namespace OrigenDatos.Clases
 
         public void AsignaGrupo(Grupo g)
         {
-
             for (int d = 0; d < 6; d++)
                 for (int i = g.horario_ini[d] - 7; i < g.horario_fin[d] - 7; i++)
                     horario[d, i]++;
-
         }
 
         public bool Empalmado()
@@ -281,6 +285,13 @@ namespace OrigenDatos.Clases
                         return true;
 
             return false;
+        }
+
+        public void ElminaGrupo(Grupo g)
+        {
+            for (int d = 0; d < 6; d++)
+                for (int i = g.horario_ini[d] - 7; i < g.horario_fin[d] - 7; i++)
+                    horario[d, i]--;
         }
     }
 }
