@@ -128,7 +128,7 @@ namespace OrigenDatos.Clases
         {
             this.salones = new List<Salon>();
             foreach(Salon s in salones)
-                this.salones.Add(s);
+                this.salones.Add(new Salon(s));
         }
         #endregion
 

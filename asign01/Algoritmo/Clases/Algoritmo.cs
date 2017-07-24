@@ -40,22 +40,22 @@ namespace Algoritmo02.Clases
             this.hora = hora;
             tamPoblacion = _tamPoblacion;
             generaciones = _generaciones;
-            errores = new ListaVariables() ;
+            errores = new ListaVariables();
 
             poblacion = new Individuo[tamPoblacion];
             mejorPoblacion = new Individuo[tamPoblacion];
 
-            try
+            for (int i = 0; i < tamPoblacion; i++)
             {
-                for (int i = 0; i < tamPoblacion; i++)
+                poblacion[i] = new Individuo(Grupos, hora);
+                try
                 {
-                    poblacion[i] = new Individuo(Grupos, hora);
-                    poblacion[i].asignaSalones(Salones);
+                  poblacion[i].asignaSalones(Salones);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error de ejecucion (constructor Algoritmo)\n No existen salones validos para el grupo: " + ex.Message);
+                catch (Exception ex)
+                {
+                    throw new Exception("Error de ejecucion (constructor Algoritmo)\n No existen salones validos para el grupo: " + ex.Message);
+                }
             }
         }
 
@@ -65,29 +65,24 @@ namespace Algoritmo02.Clases
         /// <returns>Lista con los grupos asignados</returns>
         public void AsignaSalones()
         {
-            try
+            rescate();
+            
+            //Generacion
+            for (int g = 0; g < generaciones; g++)
             {
-                rescate();
-                //Generacion
-                for (int g = 0; g < generaciones; g++)
-                { 
-                    //Mutacion
-                    //se mantiene un grupo de individuos congelados
-                    foreach(Individuo i in poblacion)
-                        i.mutacion();
-
-                    seleccion();
-
-                    rescate();
+                foreach (Individuo i in poblacion)
+                {
+                    try { i.mutacion(); }
+                    catch (Exception ex)
+                    { throw new Exception("Error de ejecucion (AsignaSalones): " + ex); }
                 }
 
-                gruposAsignados = mejorRespuesta();
+                seleccion();
+
+                rescate();
             }
-            catch (Exception ex)
-            {
-                //MessageBox.Show();
-                throw new Exception("Error de ejecucion (AsignaSalones): " + ex);
-            }
+
+            gruposAsignados = mejorRespuesta();
         }
 
         /// <summary>
@@ -136,18 +131,6 @@ namespace Algoritmo02.Clases
                     temp.asignaSalones(Salones);
                     poblacion[i] = temp;
                 }
-        }
-
-        /// <summary>
-        /// mensaje llamado cuando el evento Warning se activa y manda un grupo al que no se le pudo encontrar un salon al cual asignarsele
-        /// </summary>
-        /// <param name="grupo">Grupo con el uqe se tubo problemas</param>
-        private void AddWarning(Grupo grupo)
-        {
-            var query = errores.Busca(grupo.Cve_materia, grupo.num_Grupo);
-
-            if(query!=null)
-                errores.Add(grupo);
         }
     }
 }

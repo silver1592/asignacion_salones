@@ -137,7 +137,7 @@ namespace Algoritmo02.Clases
         /// Inicializa el arreglo de cromosomas.
         /// </summary>
         /// <param name="salonesDisponibles">Lista de salones a considerar para la interacion del algoritmo</param>
-        public Individuo(ListaGrupos gruposPorAsignar, int  hora)
+        public Individuo(ListaGrupos gruposPorAsignar,int  hora)
         {
             cromosomas = new List<Variable>();
 
@@ -148,7 +148,7 @@ namespace Algoritmo02.Clases
         public Individuo(Individuo individuo)
         {
             cromosomas = new List<Variable>();
-
+            salones = new ListaSalones(individuo.salones);
             foreach (Variable v in individuo.cromosomas)
                 cromosomas.Add(new Variable(v));
         }
@@ -163,7 +163,7 @@ namespace Algoritmo02.Clases
         {
             Errores = new List<Variable>();
 
-            this.salones = new ListaSalones(Salones);
+            salones = new ListaSalones(Salones);
 
             for(int i=2;i<=7;i++)
             {
@@ -192,7 +192,7 @@ namespace Algoritmo02.Clases
 
                     if (val != -1)
                     {
-                        salon = (Salon)salones[val];
+                        salon = salones[val];
                         if (v.Cupo < salon.Cupo && salon.Disponible_para_grupo(v))
                         {
                             v.Salon = salon;
@@ -217,7 +217,6 @@ namespace Algoritmo02.Clases
         /// <param name="i"></param>
         private void separacionXArea(int i)
         {
-            ListaSalones s;
             List<Variable> asignando;
 
             var query1 = from g in cromosomas
@@ -228,11 +227,7 @@ namespace Algoritmo02.Clases
             asignando = query1.ToList();
 
             if (asignando.Count != 0)
-            {
-                s = new ListaSalones(salones.EnArea(i));
-
-                asignandoXArea(asignando, s);
-            }
+                asignandoXArea(asignando, new ListaSalones(salones.EnArea(i)));
         }
 
         private void asignandoXArea(List<Variable> asignando, ListaSalones s)
@@ -248,7 +243,7 @@ namespace Algoritmo02.Clases
                 else
                 {
                     sAnterior = s.busca(gAnterior.Cve_espacio);
-                    if (sAnterior.Disponible_para_grupo(v))
+                    if (sAnterior!=null && sAnterior.Disponible_para_grupo(v))
                         v.Salon = sAnterior;
                     else
                         asignacionAleatoria(v, s);
@@ -268,7 +263,7 @@ namespace Algoritmo02.Clases
 
                 if (val != -1)
                 {
-                    salon = (Salon)s[val];
+                    salon = s[val];
                     if (v.EsValido(salon) && salon.Disponible_para_grupo(v))
                     {
                         v.Salon = salon;
@@ -301,7 +296,6 @@ namespace Algoritmo02.Clases
             Salon selecSal;
             ListaSalones salonesXArea;
             Variable grupo1;
-            List<Variable> grupo2;
 
             for (int c = 0; c < cromosomas_a_Mutar && c < cromosomas.Count; c++)
             {
@@ -318,10 +312,9 @@ namespace Algoritmo02.Clases
 
                     //Elije un salon que este disponible para el grupo
                     do { iSalonSelec = rSalon.Next(); }
-                    while (iSalonSelec != -1 && !((Salon)salonesXArea[iSalonSelec]).Disponible_para_grupo(grupo1));
+                    while (iSalonSelec != -1 && !salonesXArea[iSalonSelec].Disponible_para_grupo(grupo1));
 
-                    grupo2 = buscaSalon(salonesXArea[iSalonSelec].Cve_espacio);
-                    selecSal = (Salon)salonesXArea[iSalonSelec];
+                    selecSal = salonesXArea[iSalonSelec];
                 }
                 catch
                 {
