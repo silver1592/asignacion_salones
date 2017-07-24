@@ -247,12 +247,11 @@ namespace Algoritmo02.Clases
                     asignacionAleatoria(v, s);
                 else
                 {
-                    sAnterior = (Salon)s.busca(gAnterior.Cve_espacio);
-                    //TODO: Encontrar otra solucion mas diplomatica (baja importacia)
-                    //if ((sAnterior).Disponible_para_grupo(v.Grupo))
+                    sAnterior = s.busca(gAnterior.Cve_espacio);
+                    if (sAnterior.Disponible_para_grupo(v))
                         v.Salon = sAnterior;
-                    //else
-                        //asignacionAleatoria(v, s);
+                    else
+                        asignacionAleatoria(v, s);
                 }
             }
         }

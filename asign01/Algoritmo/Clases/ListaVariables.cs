@@ -100,6 +100,15 @@ namespace Algoritmo02.Clases
             foreach (Grupo g in grupos)
                 this.grupos.Add(new Variable(g,0));
         }
+
+        internal ListaVariables Validos()
+        {
+            var query = from g in this as IList<Variable>
+                        select g;
+
+            return new ListaVariables(query.ToList());
+        }
+
         #endregion
 
         /// <summary>
@@ -108,14 +117,17 @@ namespace Algoritmo02.Clases
         /// <param name="s"></param>
         /// <param name="limite"></param>
         /// <returns></returns>
-        public ListaVariables MejorPuntuacion(Salon s, int limite = 1)
+        public ListaVariables OrdenarMejorPuntuacion(Salon s, int limite=0)
         {
             var query = from g in this as IList<Variable>
                         where g.Puntos > 0
                         orderby g.Puntos descending
                         select g;
 
-            return new ListaVariables(query.Take(limite).ToList());
+            if (limite != 0)
+                return new ListaVariables(query.Take(limite).ToList());
+            else
+                return new ListaVariables(query.ToList());
         }
 
         public ListaVariables Empalmados()

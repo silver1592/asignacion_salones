@@ -144,6 +144,8 @@ namespace Algoritmo02.Clases
             //Checa el equipo instalado. Max = 2
             puntos += valorEquipo(s) * 2 / 10;
 
+            //TODO: Checa que haya estado en ese salon el año pasado. Extra
+
             //Diferencia de cupo del grupo entre el del salon dividido entre 3 y restado a los puntos totales. Extra
             puntos -= Math.Abs(Cupo - salon.Cupo) / 3;
 

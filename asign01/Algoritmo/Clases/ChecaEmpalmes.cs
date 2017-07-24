@@ -55,7 +55,8 @@ namespace Algoritmo02.Clases
             if (aux.Count > 1 && permiteEmpalmes.busca(aux[0].Cve_espacio) == null)
             {
                 s = salones.busca(empalme[0].Cve_espacio);
-                if (s == null) return;
+                if (s == null) return;  //Si no encuentra el salon es porque es algo como Campo o asi. Se valen los empalmes
+                aux.SetSalones(salones);
 
                 Temp = empalme.EnSalonesFijos();
 
@@ -76,28 +77,20 @@ namespace Algoritmo02.Clases
         /// <param name="s"></param>
         private void AsignacionMejorEleccion(ListaVariables empalme, Salon s)
         {
-            Grupo g=null;
-            ListaVariables aux = empalme;
+            Variable gOtrosSemestres = null, gAux = null, g =null;
 
-            if (s.plantaBaja)
-                aux = new ListaVariables(aux.QuierenPlantabaja());
-            if (aux.Count == 0)
-                aux = empalme;
+            //Obtiene los gupos validos
+            ListaVariables validos = empalme.Validos();
+            //Obtiene los grupos que estaban 
+            ListaVariables otrosSemestres = new ListaVariables(validos.AsignacionOtrosSemestres(s.Cve_espacio));
+            otrosSemestres = otrosSemestres.OrdenarMejorPuntuacion(s);
+            ListaVariables aux = validos.OrdenarMejorPuntuacion(s);
 
-            //TODO: Lista de validos
-            //TODO: Lista ordenada
 
-            //Mejor puntuacion de equipamiento
-            if (aux.Count > 1)
-                aux = aux.MejorPuntuacion(s);
+            gAux = aux.Count != 0 ? (aux as IList<Variable>)[0] : null;
+            gOtrosSemestres = otrosSemestres.Count != 0 ? (otrosSemestres as IList<Variable>)[0] : null;
 
-            //Salon de otros semestres
-            if (aux.Count > 1)
-                aux = new ListaVariables(aux.AsignacionOtrosSemestres(s.Cve_espacio));
-            if (aux.Count == 0)
-                aux = empalme;
-
-            g = aux.Count != 0 ? (aux as IList<Variable>)[0] : null;
+            g = gAux != null && gOtrosSemestres != null && gAux.Puntos > gOtrosSemestres.Puntos ? gAux : gOtrosSemestres;
 
             QuitaSalon(empalme, g);
         }
