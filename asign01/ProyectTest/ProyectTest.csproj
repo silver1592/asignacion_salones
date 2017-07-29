@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Algoritmo_Test.cs" />
     <Compile Include="OrigenDatos_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -69,11 +70,6 @@
       <Project>{4dd4a1ad-eead-4a76-aac7-cb46a32e32e0}</Project>
       <Name>OrigenDatos</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="OrderedTest1.orderedtest">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

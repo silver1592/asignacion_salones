@@ -8,6 +8,7 @@ namespace ProyectTest
     [TestClass]
     public class OrigenDatos_Test
     {
+        //Prueba de conexion
         [TestMethod]
         public void Conexion_Default_Test()
         {
@@ -22,6 +23,7 @@ namespace ProyectTest
             Assert.AreEqual(valido, res);
         }
 
+        //Prueba de lectura de un grupo de la base de datos
         [TestMethod]
         public void Conexion_GetGrupo_Test()
         {
@@ -36,6 +38,7 @@ namespace ProyectTest
             }
         }
 
+        //Prueba de escritura en excel
         [TestMethod]
         public void Conexion_NuevoExel_Test()
        {
@@ -55,6 +58,7 @@ namespace ProyectTest
             }
         }
 
+        //Prueba de escritura con nombres en Excel
         [TestMethod]
         public void Conexion_Exportacion_Test()
         {
@@ -74,6 +78,7 @@ namespace ProyectTest
             }
         }
 
+        //Prueba de lectura en excel
         [TestMethod]
         public void Conexion_Importacion_Test()
         {
@@ -92,6 +97,7 @@ namespace ProyectTest
             }
         }
 
+        //Prueba de escritura en excel con 2 llamadas (Creando una hoja y reutilizando la hoja)
         [TestMethod]
         public void Conexion_ExportacionPartes_Test()
         {
@@ -122,5 +128,19 @@ namespace ProyectTest
             }
 
         }
+
+        //Genera DataRow de un grupo para las pruebas
+
+        //Genera DataRow de un salon para las pruebas
+
+        //Prueba de lectura de salon
+
+        //Prueba de constructores de Grupo
+
+        //Prueba de Constructores de Salon
+
+        //Prueba de grupos de metodos (No deben retornar null)
+
+        //Prueba de salones de Metodos (No deben retornar null)
     }
 }
