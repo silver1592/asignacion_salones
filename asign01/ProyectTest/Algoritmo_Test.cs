@@ -14,8 +14,19 @@ namespace ProyectTest
     { 
         //Prueba de aleatorio
         [TestMethod]
-        public void TestMethod1()
+        public void Aleatorio_Test()
         {
+            int max=10, num;
+            List<int> aceptados= new List<int>();
+            Aleatorio aleatorio = new Aleatorio(max);
+            for(int i = 0; i < max; i++)
+            {
+                num = aleatorio.Next();
+                aleatorio.aceptado(num);
+                if (aceptados.Contains(num))
+                    Assert.Fail();
+                aceptados.Add(num);
+            }
         }
 
         //Prueba de ejecucion del algoritmo

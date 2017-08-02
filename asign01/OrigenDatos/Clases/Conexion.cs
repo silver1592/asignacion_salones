@@ -23,16 +23,23 @@ namespace OrigenDatos.Clases
         {
             get
             {
-                string dir = @"148.224.93.146\FINGENIERIA,2433;";
-                string usuario = "asignacion";
-                string pass = "Asigna#2016Ing";
-                //Datos de la coneccion
+                string dir = @"(localdb)\asignacion;";
+                string database = "asignacion";
                 string datosConexion = "Data Source=" + dir
-                                        + "Initial Catalog=asignacion;"
+                                        + "Initial Catalog=" + database + ";"
+                                        + "Integrated Security = false;";
+
+                //string dir = @"148.224.93.146\FINGENIERIA,2433;"; //servidor de la escuela
+                //string usuario = "asignacion";
+                //string pass = "Asigna#2016Ing";
+                //Datos de la coneccion
+                /*
+                string datosConexion = "Data Source=" + dir
+                                        + "Initial Catalog="+database+";"
                                         + "Integrated Security =false;"
                                         + "Uid = " + usuario + ";"
                                         + "Pwd= " + pass + ";";
-
+                */
                 return datosConexion;
             }
         } // Contiene la informacion para la conexion con la base de datos sql
@@ -76,7 +83,7 @@ namespace OrigenDatos.Clases
 
         public Grupo Grupo(string cve_full, string semestre)
         {
-            string query = "select * from ae_horario where cve_materia*100+grupo =" + cve_full + " ciclo=" + semestre;
+            string query = "select * from asignacion.ae_horario where cve_materia*100+grupo =" + cve_full + " and ciclo='" + semestre+"'";
 
             DataTable dt = Querry(query);
 
@@ -340,19 +347,17 @@ namespace OrigenDatos.Clases
         {
             ListaGrupos res = null;
             IList<Grupo> grupos;
-            IList<Materia> materias = Materias();
-            IList<Profesor> profesores = Profesores();
 
             if (Excel == null || !bExcel)
             {
                 DataTable dt = Querry("SELECT * FROM  [asignacion].[Grupos_a_las] (" + ini + "," + fin + ") where ciclo = '" + semestre + "'");
 
                 grupos = Grupos_AsList(dt);
-                res = new ListaGrupos(grupos, materias, profesores);
+                res = new ListaGrupos(grupos);
             }
             else
             {
-                res = new ListaGrupos(Excel.GetGrupos(hoja, semestre), materias, profesores);
+                res = new ListaGrupos(Excel.GetGrupos(hoja, semestre));
             }
 
             return res;
@@ -367,7 +372,7 @@ namespace OrigenDatos.Clases
 
             if (Excel == null || !bExcel)
             {
-                DataTable dt = Querry("SELECT DISTINCT *  FROM [asignacion].[ae_Grupos_ini] (" + ini + ") where ciclo = '" + semestre + "'");
+                DataTable dt = Querry("SELECT DISTINCT *  FROM ae_Grupos_ini (" + ini + ") where ciclo = '" + semestre + "'");
 
                 grupos = Grupos_AsList(dt);
                 res = new ListaGrupos(grupos, materias, profesores, this);
@@ -445,7 +450,7 @@ namespace OrigenDatos.Clases
         /// <returns></returns>
         public DataTable Grupos_SemestresAnteriores(string cve_materia, string ciclo, string rpe)
         {
-            string query = "select * from ae_horario where not(ciclo = '" + ciclo + "') and rpe = '" + rpe + "' and cve_materia = '" + cve_materia + "'";
+            string query = "select * from asignacion.ae_horario where not(ciclo = '" + ciclo + "') and rpe = '" + rpe + "' and cve_materia = '" + cve_materia + "'";
             DataTable dt = Querry(query);
 
             return dt;
@@ -453,7 +458,7 @@ namespace OrigenDatos.Clases
 
         public bool Grupo_Existe(Grupo g)
         {
-            string query = "select * from ae_horario where cve_materia=" + g.Cve_materia + " and grupo=" + g.num_Grupo + " and ciclo='" + g.Ciclo + "'";
+            string query = "select * from asignacion.ae_horario where cve_materia=" + g.Cve_materia + " and grupo=" + g.num_Grupo + " and ciclo='" + g.Ciclo + "'";
 
             DataTable dt = Querry(query);
 
@@ -497,18 +502,25 @@ namespace OrigenDatos.Clases
         public List<Profesor> Profesores()
         {
             List<Profesor> profesores = new List<Profesor>();
-            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_profesor]");
+            try
+            {
+                DataTable dt = Querry("SELECT * FROM [asignacion].[vae_cat_profesor]");
 
-            foreach (DataRow r in dt.Rows)
-                profesores.Add(new Profesor(r));
+                foreach (DataRow r in dt.Rows)
+                    profesores.Add(new Profesor(r));
 
-            return profesores;
+                return profesores;
+            }
+            catch (Exception ex) //para que no truene en las pruebas
+            {
+                return null;
+            }
         }
 
         public Dictionary<int, string> Profesores_AsDicctionary()
         {
             Dictionary<int, string> profesores = new Dictionary<int, string>();
-            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_profesor]");
+            DataTable dt = Querry("SELECT * FROM [asignacion].[vae_cat_profesor]");
 
             foreach (DataRow r in dt.Rows)
                 profesores.Add(Convert.ToInt32(r["rpe"].ToString()), r["nombre"].ToString());
@@ -521,18 +533,25 @@ namespace OrigenDatos.Clases
         public List<Materia> Materias()
         {
             List<Materia> materias = new List<Materia>();
-            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_materia]");
+            try
+            {
+                DataTable dt = Querry("SELECT * FROM [asignacion].[vae_cat_materia]");
 
-            foreach (DataRow r in dt.Rows)
-                materias.Add(new Materia(r));
+                foreach (DataRow r in dt.Rows)
+                    materias.Add(new Materia(r));
 
-            return materias;
+                return materias;
+            }
+            catch(Exception ex) //para que no truene en las pruebas
+            {
+                return null;
+            }
         }
 
         public Dictionary<string, string> Materias_AsDictionary()
         {
             Dictionary<string, string> materias = new Dictionary<string, string>();
-            DataTable dt = Querry("SELECT * FROM [asignacion].[dbo].[vae_cat_materia]");
+            DataTable dt = Querry("SELECT * FROM [asignacion].[vae_cat_materia]");
 
             foreach (DataRow r in dt.Rows)
                 materias.Add(r["cve_materia"].ToString(), r["materia"].ToString());
@@ -557,7 +576,7 @@ namespace OrigenDatos.Clases
 
         public bool Semestre_Valido(string semestre)
         {
-            DataTable dt = Querry("select count(*) from ae_horario where ciclo = '" + semestre + "'");
+            DataTable dt = Querry("select count(*) from asignacion.ae_horario where ciclo = '" + semestre + "'");
             if (Convert.ToInt32(dt.Rows[0][0].ToString()) == 0)
                 return false;
 

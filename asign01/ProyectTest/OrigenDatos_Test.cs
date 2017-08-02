@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OrigenDatos.Clases;
 using System.Linq;
+using System.IO;
 
 namespace ProyectTest
 {
@@ -30,7 +31,7 @@ namespace ProyectTest
             try
             {
                 Conexion c = new Conexion();
-                Grupo g = new Grupo(c.Querry("Select * from ae_horario where cve_materia = '1001'").Rows[0], c.DGrupos);
+                Grupo g = new Grupo(c.Querry("Select * from asignacion.ae_horario where cve_materia = '1001'").Rows[0], c.DGrupos);
             }
             catch (Exception ex)
             {
@@ -45,8 +46,8 @@ namespace ProyectTest
             try
            { 
                 Conexion c = new Conexion();
-                Grupo g = new Grupo(c.Querry("Select * from ae_horario where cve_materia = '1001'").Rows[0], c.DGrupos);
-                LibroExcel excel = new LibroExcel(@"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\excel.xlsx", "2016-2017/II", "T");
+                Grupo g = new Grupo(c.Querry("Select * from asignacion.ae_horario where cve_materia = '1001'").Rows[0], c.DGrupos);
+                LibroExcel excel = new LibroExcel(@"excel.xlsx", "2016-2017/II", "T");
                 ListaGrupos grupos = new ListaGrupos();
 
                 grupos.Add(g);
@@ -59,13 +60,14 @@ namespace ProyectTest
         }
 
         //Prueba de escritura con nombres en Excel
+        //Requiere vistas
         [TestMethod]
         public void Conexion_Exportacion_Test()
         {
             try
             {
                 Conexion c = new Conexion();
-                LibroExcel excel = new LibroExcel(@"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "2016-2017/II", "T");
+                LibroExcel excel = new LibroExcel(@"exp_2016_2017_II.xlsx", "2016-2017/II", "T");
                 ListaGrupos grupos = new ListaGrupos(c.Grupos("2016-2017/II",7,8));
                 var profesores = c.Profesores_AsDicctionary();
                 var materias = c.Materias_AsDictionary();
@@ -84,7 +86,7 @@ namespace ProyectTest
         {
             try
             {
-                Conexion c = new Conexion(Conexion.datosConexion, @"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "T");
+                Conexion c = new Conexion(Conexion.datosConexion, @"exp_2016_2017_II.xlsx", "T");
                 c.Sheet = "prueba";
                 ListaGrupos grupos = new ListaGrupos(c.Grupos("2016-2017/II"));
 
@@ -98,6 +100,7 @@ namespace ProyectTest
         }
 
         //Prueba de escritura en excel con 2 llamadas (Creando una hoja y reutilizando la hoja)
+        //Requiere vistas
         [TestMethod]
         public void Conexion_ExportacionPartes_Test()
         {
@@ -106,7 +109,7 @@ namespace ProyectTest
             try
             {
                 Conexion c = new Conexion();
-                LibroExcel excel = new LibroExcel(@"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "2016-2017/II", "T");
+                LibroExcel excel = new LibroExcel(@"exp_2016_2017_II.xlsx", "2016-2017/II", "T");
                 ListaGrupos grupos = new ListaGrupos(c.Grupos("2016-2017/I", 7, 8, false));
                 ListaGrupos grupos2 = new ListaGrupos(c.Grupos("2016-2017/I", 8, 9, false));
 
@@ -114,7 +117,7 @@ namespace ProyectTest
                 excel.EscribeGrupos(grupos, "prueba02");
                 excel.EscribeGrupos(grupos2, "prueba02");
 
-                Conexion c2 = new Conexion(Conexion.datosConexion, @"C:\Users\Fernando\Source\Repos\asignacion_salones\asign01\InterfazWeb_02\Archivos\exp_2016_2017_II.xlsx", "2016-2017/I", "T");
+                Conexion c2 = new Conexion(Conexion.datosConexion, @"exp_2016_2017_II.xlsx", "2016-2017/I", "T");
                 c2.Sheet = "prueba02";
 
                 grupos = new ListaGrupos(c2.Grupos("2016-2017/I"));
@@ -129,17 +132,61 @@ namespace ProyectTest
 
         }
 
-        //Genera DataRow de un grupo para las pruebas
-
-        //Genera DataRow de un salon para las pruebas
-
         //Prueba de lectura de salon
+        [TestMethod]
+        public void Conexion_GetSalon_Test()
+        {
+            Conexion c = new Conexion();
+            ListaSalones salones = new ListaSalones(c,c.Salones());
+
+            Assert.IsFalse(salones.Count == 0);
+        }
 
         //Prueba de constructores de Grupo
+        [TestMethod]
+        public void Grupo_Constructores_Test()
+        {
+            Grupo g1,g2;
+            Conexion c = new Conexion();
+            ListaSalones s = new ListaSalones(c, c.Salones(), 0);
+
+            g1 = new Grupo(c.Grupo("100101", "2016-2017/I"));
+            Assert.IsFalse(g1 == null);
+            g1 = new Grupo(c.Grupo("100101", "2016-2017/I"), c);
+            Assert.IsFalse(g1 == null);
+            g1 = new Grupo(c.Grupo("100101", "2016-2017/I"), null, s);
+            Assert.IsFalse(g1 == null);
+            g1 = new Grupo(c.Grupo("100101", "2016-2017/I"),c,s);
+            Assert.IsFalse(g1 == null);
+
+            g2 = new Grupo(g1);
+            Assert.IsFalse(g2 == null);
+            g2 = new Grupo(g1,c);
+            Assert.IsFalse(g2 == null);
+            g2 = new Grupo(g1,null,s);
+            Assert.IsFalse(g2 == null);
+            g2 = new Grupo(g1, c, s);
+            Assert.IsFalse(g2 == null);
+        }
 
         //Prueba de Constructores de Salon
+        [TestMethod]
+        public void Salon_Constructores_Test()
+        {
+            Conexion c = new Conexion();
+            Salon s1, s2,s3;
+            s1 = new Salon(c.Salones().Rows[0], 0, c);
+            Assert.IsFalse(s1 == null);
+            s2 = new Salon(s1);
+            Assert.IsFalse(s2 == null);
+        }
 
         //Prueba de grupos de metodos (No deben retornar null)
+        [TestMethod]
+        public void Grupo_Metodos_Test()
+        {
+
+        }
 
         //Prueba de salones de Metodos (No deben retornar null)
     }
