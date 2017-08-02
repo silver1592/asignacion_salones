@@ -105,7 +105,7 @@ namespace InterfazWeb_02.Controllers
             {
                 c = new Conexion(Conexion.datosConexion, excelDir, ciclo);
                 c.Sheet = sheet;
-                ListaGrupos grupos = c.Grupos(ciclo);
+                ListaGrupos grupos = c.Grupos_Light(ciclo);
 
                 c.Grupos_Carga(grupos,null);
             }

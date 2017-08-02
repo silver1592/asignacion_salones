@@ -102,23 +102,6 @@ namespace OrigenDatos.Clases
             #endregion
         }
 
-        public Salon(DataRow salon, int hora, DataTable excep=null, DataTable Equipo=null, DataTable AreaEdif=null)
-        {
-            ///Tabla Horario
-            this.hora = hora;
-
-            SetValues(salon);
-
-            if (Equipo != null)
-                SetEquipo(Equipo);
-
-            if (AreaEdif != null)
-                SetAreaEdificio(AreaEdif);
-
-            if (excep != null)
-                SetExcepciones(excep);
-        }
-
         public Salon(DataRow datos, int hora, Conexion c)
         {
             ///Tabla Horario

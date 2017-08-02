@@ -6,7 +6,7 @@ namespace Algoritmo02.Clases
     /// <summary>
     /// Clase creada para evitar chequeos repeetitivos en el algoritmo cuando se usa un random.
     /// </summary>
-    class Aleatorio
+    public class Aleatorio
     {
         private Random r;
         private List<int> mostrados;
