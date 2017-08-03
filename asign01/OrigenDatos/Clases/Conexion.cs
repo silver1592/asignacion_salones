@@ -232,7 +232,6 @@ namespace OrigenDatos.Clases
                               + "FROM [asignacion].[ae_cat_espacio] "
                               + "where not(cve_edificio='F') and not(cve_edificio='P') and not(cve_edificio='ZP')";
 
-
             DataTable datos = Querry(textoCmd);
 
             return datos;
