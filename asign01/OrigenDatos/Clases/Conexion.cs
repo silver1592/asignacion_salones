@@ -110,6 +110,30 @@ namespace OrigenDatos.Clases
             }
         } // Nombre de las Hojas disponibles
 
+        public List<int[,]> Salon_Horario(string semestre, string cve_espacio)
+        {
+            string query = "select lunes_ini,lunes_fin,martes_ini,martes_fin,miercoles_ini,miercoles_fin,jueves_ini,jueves_fin,viernes_ini,viernes_fin,sabado_ini,sabado_fin"
+                           + "from asignacion.ae_horario where ciclo = '"+semestre+"' and salon = '"+cve_espacio+"';";
+
+            DataTable dt = Querry(query);
+            List<int[,]> res = new List<int[,]>();
+            int[,] aux;
+
+            foreach(DataRow r in dt.Rows)
+            {
+                aux = new int[2, 6];
+                for (int i = 0; i < 12; i++)
+                    if (i % 2 == 0)
+                        aux[0, i] = Convert.ToInt32(r[i].ToString());
+                    else
+                        aux[1, i] = Convert.ToInt32(r[i].ToString());
+
+                res.Add(aux);
+            }
+
+            return res;
+        }
+
         #region Diccionarios
         public Dictionary<string, string> DGruposExcel { get { return Excel.dHeaders; } } // Diccionario para leer la informacion del excel
 

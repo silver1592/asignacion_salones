@@ -446,5 +446,14 @@ namespace OrigenDatos.Clases
 
             return new ListaGrupos(query.ToList());
         }
+
+        public List<int[,]> Horarios()
+        {
+            List<int[,]> horarios = new List<int[,]>();
+            foreach (Grupo g in this)
+                horarios.Add(g.horario);
+
+            return horarios;
+        }
     }
 }

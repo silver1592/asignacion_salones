@@ -105,6 +105,21 @@ namespace OrigenDatos.Clases
                 return res;
             }
         }
+        public int[,] horario
+        {
+            get
+            {
+                int[,] horario = new int[2,6];
+
+                for (int i = 0; i < 6; i++)
+                    horario[0, i] = horario_ini[i];
+                for (int i = 0; i < 6; i++)
+                    horario[1, i] = horario_fin[i];
+
+                return horario;
+
+            }
+        }
         public bool[] dias(int hora)
         {
             bool[] res = { false, false, false, false, false, false };

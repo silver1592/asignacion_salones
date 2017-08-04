@@ -183,23 +183,22 @@ namespace OrigenDatos.Clases
             }
         }
 
-        public void SetHorario(ListaGrupos grupos)
+        public void SetHorario(List<int[,]> grupos)
         {
-            ListaGrupos gs = grupos.EnSalon(Cve_espacio);
             horario = new int[6, 15];
 
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 15; j++)
+                    horario[i, j] = 0;
 
-            try { 
-                for (int i = 0; i < 6; i++)
-                    for (int j = 0; j < 15; j++)
-                        horario[i, j] = 0;
 
-                foreach (Grupo g in gs)
-                    AsignaGrupo(g);
-            }
-            catch(Exception ex)
+            foreach (int[,] g in grupos)
             {
-
+                for(int d = 0;d<6;d++)
+                    for(int i = g[0,d]-7; i<g[1,d]-7;i++)
+                    {
+                        horario[d, i]++;
+                    }
             }
         }
 

@@ -104,6 +104,7 @@ namespace OrigenDatos.Clases
             IExcelDataReader excelReader;
             if (dir.Contains(".xlsx"))
                 // De lo contrario descomentaremos esta (2007 format; *.xlsx)
+                //TODO:Usar OpenXML sin usar otras librerias (hay problemas al abrir los archivos creados en el servidor)
                 excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
             else if (dir.Contains(".xls"))
                 // Si es un archivo de excel anterior a 2009, debemos usar esta línea

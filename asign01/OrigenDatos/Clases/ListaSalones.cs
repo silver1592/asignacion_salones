@@ -149,16 +149,10 @@ namespace OrigenDatos.Clases
             return res;
         }
 
-        public void SetHorarios(ListaGrupos listaGrupos)
-        {
-            foreach (Salon s in this)
-                s.SetHorario(listaGrupos);
-        }
-
         public void SetHorarios(Conexion c,string semestre)
         {
             foreach (Salon s in this)
-                s.SetHorario(c.Grupos(semestre,s.Cve_espacio));
+                s.SetHorario(c.Salon_Horario(semestre,s.Cve_espacio));
         }
         #endregion
 
