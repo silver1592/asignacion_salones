@@ -98,7 +98,8 @@ namespace OrigenDatos.Clases
 
             #region Horarios
             hora = s.hora;
-            SetHorario(s.horario);
+            horario = s.horario; //TODO:Checar que no se pierda 
+            //SetHorario(s.horario);
             #endregion
         }
 
@@ -202,6 +203,7 @@ namespace OrigenDatos.Clases
             }
         }
 
+        //Todo: tentativo a borrar
         public void SetHorario(int[,] Horario)
         {
             horario = new int[6, 15];

@@ -156,6 +156,7 @@ namespace InterfazWeb_02.Controllers
                 Conexion c = new Conexion(Conexion.datosConexion,Server.MapPath("~/Archivos/"+excel),ciclo);
                 ListaVariables grupos = new ListaVariables(c.Grupos_EmpiezanA(ciclo, Convert.ToInt32(hora), false));
                 ListaSalones salones = new ListaSalones(c, c.Salones(), Convert.ToInt32(hora));
+                salones.SetHorarios(c, Session["ciclo"].ToString());
 
                 if (Convert.ToBoolean(empalmes))
                 {
@@ -178,7 +179,6 @@ namespace InterfazWeb_02.Controllers
 
                 if (Convert.ToBoolean(algoritmo))
                 {
-                    salones.SetHorarios(c, Session["ciclo"].ToString());
                     Algoritmo alg = new Algoritmo(grupos, salones, Convert.ToInt32(hora), 5, 50);
                     alg.AsignaSalones();
 

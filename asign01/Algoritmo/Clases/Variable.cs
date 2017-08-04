@@ -17,26 +17,21 @@ namespace Algoritmo02.Clases
             {
                 string aux;
                 int yIni;
-                int yFin;
-                float semPar = .5f;
 
                 if (ciclo.Contains("/II"))
-                {
                     aux = ciclo.Replace("/II", "");
-                    semPar = 2;
-                }
                 else
                     aux = ciclo.Replace("/I", "");
 
                 yIni = Convert.ToInt32(aux.Split('-')[0]);
-                yFin = Convert.ToInt32(aux.Split('-')[1]);
 
                 if (yIni >= 2014)
-                    return ((yIni - 2014) * 10 + semPar);
+                    return yIni - 2014;
                 else
                     return -1;
             }
         }
+        public bool SemestrePar { get { return ciclo.Contains("/II"); } }   //Checa si el semestre es par
         public Salon Salon      //Salon asignado
         {
             get { return salon; }
@@ -89,14 +84,14 @@ namespace Algoritmo02.Clases
             }
         }
 
-        public string salonAnioPasado()
+        public string salonAnioPasado(int limite=1)//Limite es para que chece la diferencia entre fCiclo y por ejemplo, solo cuente los de hace un año
         {
             Variable sel = null;
             Variable v;
             foreach (Grupo g in otrosSemestres)
             {
                 v = new Variable(g, 0);
-                if (v.fCiclo % 2 == this.fCiclo % 2)
+                if (v.SemestrePar == SemestrePar && fCiclo -limite< v.fCiclo)
                     if (sel == null || sel.fCiclo < v.fCiclo)
                         sel = v;
             }

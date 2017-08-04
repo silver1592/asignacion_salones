@@ -29,7 +29,7 @@ namespace Algoritmo02.Clases
             ListaVariables gruposPreferencial = new ListaVariables(grupos.SalonFijo());
 
             foreach (Variable g in gruposPreferencial)
-                if (g.Cve_espacio == "" || g.Cve_espacio == null)
+                if (g.Cve_espacio == "")
                     g.salonPreferencial();
         }
 
@@ -39,7 +39,7 @@ namespace Algoritmo02.Clases
         public void semestres_anteriores()
         {
             foreach (Variable g in grupos)
-                if (g.Cve_espacio == "" || g.Cve_espacio == null)
+                if (g.Cve_espacio == "")
                     g.Cve_espacio= g.salonAnioPasado();
         }
     }
