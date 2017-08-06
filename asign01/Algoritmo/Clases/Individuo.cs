@@ -90,7 +90,8 @@ namespace Algoritmo02.Clases
         private List<Variable> cromosomas;
         private ListaSalones salones;
         private List<Variable> Errores;
-        private int cromosomas_a_Mutar = 10;
+        private int cromosomas_a_Mutar = 5;     //Cantidad de grupos a mutar
+        private int intentos = 10;  //Cantidad de intentos que tiene un grupo para encontrar un salon valido
 
         public ListaGrupos Grupos
         {
@@ -292,40 +293,31 @@ namespace Algoritmo02.Clases
         {
             Aleatorio rGrupo = new Aleatorio(cromosomas.Count);
             Aleatorio rSalon;
-            int iSalonSelec, iGrupoSelec;
-            Salon selecSal;
-            ListaSalones salonesXArea;
-            Variable grupo1;
+            int iSalonSelec=0, iGrupoSelec,i;
+            Variable grupo;
+            bool asignado;
 
             for (int c = 0; c < cromosomas_a_Mutar && c < cromosomas.Count; c++)
             {
-                try
+                //Selecciona un grupo aleatoriamente
+                iGrupoSelec = rGrupo.Next();
+                rGrupo.aceptado(iGrupoSelec);
+                grupo = cromosomas[iGrupoSelec];
+
+                rSalon = new Aleatorio(salones.Count);
+
+                //loop 10 intentos
+                for (i=0;i<intentos;i++)
                 {
-                    //Selecciona un grupo aleatoriamente y guarda sus datos
-                    iGrupoSelec = rGrupo.Next();
-                    rGrupo.aceptado(iGrupoSelec);
-                    grupo1 = cromosomas[iGrupoSelec];
+                    iSalonSelec = rSalon.Next();    //selecciona un salon aleatoriamente
+                    if (iSalonSelec != -1) break;   //Si ya se recorrieron todos los salones entonces lo deja como esta
 
-                    //selecciona un salon aleatorio para el cambio
-                    salonesXArea = SalonesXArea(grupo1.Area);
-                    rSalon = new Aleatorio(salonesXArea.Count);
+                    asignado = AsignaEnSalon(grupo, salones[iSalonSelec]);
 
-                    //Elije un salon que este disponible para el grupo
-                    do { iSalonSelec = rSalon.Next(); }
-                    while (iSalonSelec != -1 && !salonesXArea[iSalonSelec].Disponible_para_grupo(grupo1));
-
-                    selecSal = salonesXArea[iSalonSelec];
-                }
-                catch
-                {
-                    break;
+                    if (asignado)
+                        break;
                 }
             }
-        }
-
-        public ListaSalones SalonesXArea(string area)
-        {
-            return (ListaSalones)salones.EnArea(Convert.ToInt32(area));
         }
 
         private float promedio(List<Variable> lista)
@@ -338,6 +330,39 @@ namespace Algoritmo02.Clases
             f = f / lista.Count;
 
             return f;
+        }
+
+        /// <summary>
+        /// Checa si el salon se puede asignar, y si no evalua los cambios que hay que hacer y si los hace
+        /// </summary>
+        /// <param name="grupo">Grupo a asignar</param>
+        /// <param name="s">Salon en que se quiere asignar</param>
+        /// <returns></returns>
+        private bool AsignaEnSalon(Variable grupo, Salon s)
+        {
+            //Checa si es apto para el grupo
+            if (grupo.CalculaPuntos(s) <= 0 || grupo.Cupo<=s.Cupo)
+                return false;
+
+            //Obtiene los grupos que estan asignados de este salon
+            ListaVariables enSalon = new ListaVariables(Grupos.EnSalon(s.Cve_espacio));
+
+            //Obtiene los grupos con los que se crusaria
+            ListaVariables conEmpalme = enSalon.Empalmados(grupo);
+
+            //Compara el maximo puntaje de los grupos contra el que tendria estre grupo
+            if (grupo.CalculaPuntos(s) > conEmpalme.MaxPuntos())
+            {
+                //Quita la asignacon de los grupos y asigna al nuevo grupo
+                foreach (Variable g in conEmpalme)
+                    g.Salon = null;
+
+                grupo.Salon = s;
+
+                return true;
+            }
+
+            return false;
         }
 
         #endregion

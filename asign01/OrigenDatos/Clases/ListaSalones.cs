@@ -203,6 +203,15 @@ namespace OrigenDatos.Clases
 
             return new ListaSalones(query.ToList());
         }
+
+        public ListaSalones Asignables()
+        {
+            var query = from Salon s in this
+                        where s.Asignable
+                        select s;
+
+            return new ListaSalones(query.ToList());
+        }
         #endregion
     }
 }

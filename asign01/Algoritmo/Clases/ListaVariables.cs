@@ -143,10 +143,15 @@ namespace Algoritmo02.Clases
             return new ListaVariables(query.Distinct().ToList());
         }
 
+        /// <summary>
+        /// Lista de grupos con los que se empalma en horario (No checa el salon)
+        /// </summary>
+        /// <param name="grupo">Grupo a checar</param>
+        /// <returns></returns>
         public ListaVariables Empalmados(Grupo grupo)
         {
             var query = from g in this as IList<Variable>
-                        where g.Empalme(grupo)
+                        where g.cve_full != grupo.cve_full && g.Empalme(grupo)
                         select g;
 
             return new ListaVariables(query.ToList());
@@ -240,6 +245,15 @@ namespace Algoritmo02.Clases
                         select g;
 
             return new ListaVariables(query.ToList(),profesores,materias);
+        }
+
+        public float MaxPuntos()
+        {
+            var query = from g in this as IList<Variable>
+                        orderby g.Puntos descending
+                        select g;
+
+            return query.ToList()[0]!=null ? query.ToList()[0].Puntos : 0;
         }
     }
 }

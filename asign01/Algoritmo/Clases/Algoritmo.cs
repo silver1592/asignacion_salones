@@ -36,7 +36,7 @@ namespace Algoritmo02.Clases
             this.grupos = new ListaVariables(grupos.SinAsignar());
             this.grupos = this.grupos.EnHoras(hora, hora + 1);
             this.grupos = this.grupos.EnDias();
-            this.salones = salones;
+            this.salones = salones.Asignables();
             this.hora = hora;
             tamPoblacion = _tamPoblacion;
             generaciones = _generaciones;
@@ -97,7 +97,6 @@ namespace Algoritmo02.Clases
 
         /// <summary>
         /// Checa los individuos y selecciona la respuesta mejor evaluada
-        /// --03/06/2016 si el valor que retorna es nulo significa que ninguna asignacion es valida
         /// </summary>
         /// <returns>Respuesta mejor evaluada.</returns>
         private ListaVariables mejorRespuesta()
@@ -117,7 +116,6 @@ namespace Algoritmo02.Clases
 
         /// <summary>
         /// recorre la poblacion y dependiendo de un random y el valor que tenga el individuo se decide si se elimina o no
-        /// --03/06/2016 si el individuo tiene valor de -1 sera eliminado
         /// </summary>
         private void seleccion()
         {
