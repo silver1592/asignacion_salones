@@ -112,7 +112,7 @@ namespace OrigenDatos.Clases
 
         public List<int[,]> Salon_Horario(string semestre, string cve_espacio)
         {
-            string query = "select lunes_ini,lunes_fin,martes_ini,martes_fin,miercoles_ini,miercoles_fin,jueves_ini,jueves_fin,viernes_ini,viernes_fin,sabado_ini,sabado_fin"
+            string query = "select lunes_ini,lunes_fin,martes_ini,martes_fin,miercoles_ini,miercoles_fin,jueves_ini,jueves_fin,viernes_ini,viernes_fin,sabado_ini,sabado_fin "
                            + "from asignacion.ae_horario where ciclo = '"+semestre+"' and salon = '"+cve_espacio+"';";
 
             DataTable dt = Querry(query);
@@ -124,9 +124,9 @@ namespace OrigenDatos.Clases
                 aux = new int[2, 6];
                 for (int i = 0; i < 12; i++)
                     if (i % 2 == 0)
-                        aux[0, i] = Convert.ToInt32(r[i].ToString());
+                        aux[0, i/2] = Convert.ToInt32(r[i].ToString());
                     else
-                        aux[1, i] = Convert.ToInt32(r[i].ToString());
+                        aux[1, Convert.ToInt32(i/2)] = Convert.ToInt32(r[i].ToString());
 
                 res.Add(aux);
             }

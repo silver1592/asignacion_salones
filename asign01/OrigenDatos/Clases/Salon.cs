@@ -98,8 +98,10 @@ namespace OrigenDatos.Clases
 
             #region Horarios
             hora = s.hora;
-            horario = s.horario; //TODO:Checar que no se pierda 
-            //SetHorario(s.horario);
+            horario = new int[2, 6];
+            for(int i=0;i<2;i++)
+                for(int j=0;j<6;j++)
+                    horario[i,j] = s.horario[i,j];
             #endregion
         }
 

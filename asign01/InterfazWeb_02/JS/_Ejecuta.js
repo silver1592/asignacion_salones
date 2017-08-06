@@ -84,6 +84,8 @@ function GetDatosEjecuta()
         algoritmo: bAlgoritmo,
         individuo: iIndividuos,
         generacion: iGeneraciones,
+        excel: excel,
+        hoja: sheet,
     }
 
     return datos;
