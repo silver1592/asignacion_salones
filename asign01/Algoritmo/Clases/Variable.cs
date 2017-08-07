@@ -147,8 +147,6 @@ namespace Algoritmo02.Clases
             //Diferencia de cupo del grupo entre el del salon dividido entre 4 y restado a los puntos totales. Extra
             puntos -= Math.Abs(Cupo - salon.Cupo) / 4;
 
-            puntos += GHoraAnterior != null && GHoraAnterior.Cve_espacio == salon.Cve_espacio ? 2 : 0;
-
             return puntos;
         }
 
