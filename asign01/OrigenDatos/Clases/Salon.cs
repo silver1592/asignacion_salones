@@ -98,9 +98,9 @@ namespace OrigenDatos.Clases
 
             #region Horarios
             hora = s.hora;
-            horario = new int[2, 6];
-            for(int i=0;i<2;i++)
-                for(int j=0;j<6;j++)
+            horario = new int[6, 15];
+            for(int i=0;i<6;i++)
+                for(int j=0;j<15;j++)
                     horario[i,j] = s.horario[i,j];
             #endregion
         }
@@ -257,7 +257,7 @@ namespace OrigenDatos.Clases
         public bool Disponible_para_grupo(Grupo grupo)
         {
             for(int d = 0;d<6;d++)
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 15; i++)
                     if ((horario[d,i]!=0 && grupo.dias(i)[d]) 
                         || grupo.Cupo > Cupo)
                         return false;

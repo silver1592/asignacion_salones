@@ -48,14 +48,7 @@ namespace Algoritmo02.Clases
             for (int i = 0; i < tamPoblacion; i++)
             {
                 poblacion[i] = new Individuo(Grupos, hora);
-                try
-                {
-                  poblacion[i].asignaSalones(Salones);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error de ejecucion (constructor Algoritmo)\n No existen salones validos para el grupo: " + ex.Message);
-                }
+                poblacion[i].asignaSalones(Salones);
             }
         }
 
