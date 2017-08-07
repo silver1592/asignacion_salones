@@ -97,7 +97,7 @@ namespace Algoritmo02.Clases
         public void SetSalones(ListaSalones salones)
         {
             Salon s;
-            foreach (Variable v in this)
+            foreach (Variable v in this as IList<Variable>)
             {
                 s = salones.busca(v.Cve_espacio);
                 if (s != null)

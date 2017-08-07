@@ -32,42 +32,48 @@ namespace Algoritmo02.Clases
         /// <returns></returns>
         public void ejecuta(string mensaje_plantilla = "")
         {
-            ListaVariables grupos;
-            ListaSalones empalmados = salones.ConEmpalme();
+            List<ListaVariables> empalmados = new List<ListaVariables>();
+            ListaGrupos checando = new ListaGrupos();
 
+            //obtiene grupos de grupos empalmados
+            empalmados = new ListaVariables(grupos.NoEn(permiteEmpalmes)).AgrupaGruposEmpalmados();
 
-            foreach (Salon empalme in empalmados)
-            {
-                grupos = new ListaVariables(Grupos.EnSalon(empalme.Cve_espacio));
-
-                ResuelveEmpalme(grupos);
-            }
+            foreach (ListaVariables empalme in empalmados)
+                try
+                {
+                    ResuelveEmpalme(empalme);
+                }
+                catch (Exception ex)//Se le quita el salon a todos
+                {
+                    QuitaSalon(empalme);
+                }
         }
 
-        private void ResuelveEmpalme(ListaVariables grupos)
+        private void ResuelveEmpalme(ListaVariables empalme)
         {
             ListaGrupos Temp;
             ListaVariables aux;
             Salon s;
 
-            aux = grupos.Empalmados();
+            aux = empalme.Empalmados();
 
             //Chequeo de empalme
             if (aux.Count > 1 && permiteEmpalmes.busca(aux[0].Cve_espacio) == null)
             {
-                s = salones.busca(grupos[0].Cve_espacio);
+                s = salones.busca(empalme[0].Cve_espacio);
                 if (s == null) return;  //Si no encuentra el salon es porque es algo como Campo o asi. Se valen los empalmes
+                aux.SetSalones(salones);
 
-                Temp = grupos.EnSalonesFijos();
+                Temp = empalme.EnSalonesFijos();
 
                 if (Temp.Count() > 1) { }  //Si hay conflicto en el preferencial
                 else if (Temp.Count() == 1)//Solo uno tiene preferencia, y a ese se le va a dar
-                    AsignacionPreferencial(grupos, s);
+                    AsignacionPreferencial(empalme, s);
                 else    // Si no hay preferencial entonces se elegira por otro medio
-                    AsignacionMejorEleccion(grupos, s);
+                    AsignacionMejorEleccion(empalme, s);
             }
 
-            this.grupos.Actualiza(grupos);
+            grupos.Actualiza(empalme);
         }
 
         /// <summary>
