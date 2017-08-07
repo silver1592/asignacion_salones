@@ -23,23 +23,24 @@ namespace OrigenDatos.Clases
         {
             get
             {
+                /* Conexion de prueba (local)
                 string dir = @"(localdb)\asignacion;";
                 string database = "asignacion";
                 string datosConexion = "Data Source=" + dir
                                         + "Initial Catalog=" + database + ";"
                                         + "Integrated Security = false;";
-
-                //string dir = @"148.224.93.146\FINGENIERIA,2433;"; //servidor de la escuela
-                //string usuario = "asignacion";
-                //string pass = "Asigna#2016Ing";
+                */
+                string dir = @"148.224.93.146\FINGENIERIA,2433;"; //servidor de la escuela
+                string usuario = "asignacion";
+                string pass = "Asigna#2016Ing";
+                string database = "asignacion";
                 //Datos de la coneccion
-                /*
+                
                 string datosConexion = "Data Source=" + dir
                                         + "Initial Catalog="+database+";"
                                         + "Integrated Security =false;"
                                         + "Uid = " + usuario + ";"
                                         + "Pwd= " + pass + ";";
-                */
                 return datosConexion;
             }
         } // Contiene la informacion para la conexion con la base de datos sql

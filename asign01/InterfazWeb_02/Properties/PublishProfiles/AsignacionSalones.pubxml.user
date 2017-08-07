@@ -6,137 +6,137 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>Y:</_PublishTargetUrl>
+    <_PublishTargetUrl>Y:\</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
-      <publishTime>05/31/2017 10:35:52</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Archivos/SIAMMAT16172-FINAL.xlsx">
-      <publishTime>06/29/2017 10:47:09</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/Algoritmo02.exe">
-      <publishTime>07/24/2017 14:03:58</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
-      <publishTime>05/31/2017 10:35:52</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/ClosedXML.dll">
-      <publishTime>05/08/2017 16:10:59</publishTime>
+      <publishTime>08/05/2017 16:10:59</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
-      <publishTime>05/08/2017 16:10:59</publishTime>
+      <publishTime>08/05/2017 16:10:59</publishTime>
     </File>
     <File Include="bin/es/System.Web.Helpers.resources.dll">
-      <publishTime>01/28/2015 04:04:36</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/es/System.Web.Mvc.resources.dll">
-      <publishTime>01/28/2015 04:02:24</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/es/System.Web.Razor.resources.dll">
-      <publishTime>01/28/2015 04:02:36</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/es/System.Web.Webpages.Deployment.resources.dll">
-      <publishTime>01/28/2015 04:04:36</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/es/System.Web.Webpages.Razor.resources.dll">
-      <publishTime>01/28/2015 04:04:36</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/es/System.Web.Webpages.resources.dll">
-      <publishTime>01/28/2015 04:04:36</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/Excel.dll">
-      <publishTime>05/08/2017 16:10:59</publishTime>
+      <publishTime>08/05/2017 16:10:59</publishTime>
     </File>
     <File Include="bin/ICSharpCode.SharpZipLib.dll">
-      <publishTime>05/08/2017 16:10:59</publishTime>
+      <publishTime>08/05/2017 16:10:59</publishTime>
     </File>
     <File Include="bin/InterfazWeb_02.dll">
-      <publishTime>07/24/2017 14:04:04</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
-      <publishTime>11/30/2016 16:07:42</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.DependencyCollector.dll">
-      <publishTime>12/07/2016 11:45:42</publishTime>
+      <publishTime>07/12/2016 11:45:42</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.PerfCounterCollector.dll">
-      <publishTime>12/07/2016 11:50:34</publishTime>
+      <publishTime>07/12/2016 11:50:34</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.ServerTelemetryChannel.dll">
-      <publishTime>12/06/2016 15:15:48</publishTime>
+      <publishTime>06/12/2016 15:15:48</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Web.dll">
-      <publishTime>12/07/2016 11:49:10</publishTime>
+      <publishTime>07/12/2016 11:49:10</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.WindowsServer.dll">
-      <publishTime>12/07/2016 11:50:34</publishTime>
+      <publishTime>07/12/2016 11:50:34</publishTime>
     </File>
     <File Include="bin/Microsoft.ApplicationInsights.dll">
-      <publishTime>12/06/2016 15:09:52</publishTime>
+      <publishTime>06/12/2016 15:09:52</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
-      <publishTime>06/15/2015 03:06:24</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
-      <publishTime>07/25/2012 11:48:56</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/OrigenDatos.exe">
-      <publishTime>07/24/2017 14:03:57</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
-      <publishTime>06/18/2015 21:19:44</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/System.Collections.Immutable.dll">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/System.Reflection.Metadata.dll">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/vbc.exe">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/VBCSCompiler.exe">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/roslyn/VBCSCompiler.exe.config">
-      <publishTime>06/18/2015 21:19:46</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
-      <publishTime>01/28/2015 04:04:30</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
-      <publishTime>01/28/2015 04:02:18</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/System.Web.Razor.dll">
-      <publishTime>01/28/2015 04:02:32</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/System.Web.Webpages.Deployment.dll">
-      <publishTime>01/28/2015 04:04:30</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/System.Web.Webpages.dll">
-      <publishTime>01/28/2015 04:04:30</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/System.Web.Webpages.Razor.dll">
-      <publishTime>01/28/2015 04:04:30</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Content/bootstrap-theme.css">
       <publishTime>06/06/2017 11:43:07</publishTime>
@@ -178,58 +178,58 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/06/2017 11:43:06</publishTime>
     </File>
     <File Include="Global.asax">
-      <publishTime>05/31/2017 10:35:40</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Imagenes/ajax-loader.gif">
-      <publishTime>07/06/2017 13:17:15</publishTime>
+      <publishTime>06/07/2017 13:17:15</publishTime>
     </File>
     <File Include="Imagenes/background.png">
-      <publishTime>07/06/2017 13:21:18</publishTime>
+      <publishTime>06/07/2017 13:21:18</publishTime>
     </File>
     <File Include="Imagenes/excel_icon.png">
-      <publishTime>06/27/2017 13:07:18</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="JS/Default.js">
-      <publishTime>07/10/2017 13:52:29</publishTime>
+      <publishTime>10/07/2017 13:52:29</publishTime>
     </File>
     <File Include="JS/Error.js">
-      <publishTime>06/20/2017 13:02:26</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="JS/externos/bootstrap.js">
-      <publishTime>06/05/2017 10:37:40</publishTime>
+      <publishTime>05/06/2017 10:37:40</publishTime>
     </File>
     <File Include="JS/externos/bootstrap.min.js">
-      <publishTime>06/05/2017 10:37:39</publishTime>
+      <publishTime>05/06/2017 10:37:39</publishTime>
     </File>
     <File Include="JS/externos/jquery-3.2.1.min.js">
-      <publishTime>06/05/2017 10:52:51</publishTime>
+      <publishTime>05/06/2017 10:52:51</publishTime>
     </File>
     <File Include="JS/externos/jquery-ui.min.js">
-      <publishTime>06/05/2017 10:52:51</publishTime>
+      <publishTime>05/06/2017 10:52:51</publishTime>
     </File>
     <File Include="JS/externos/jquery.tablesorter.min.js">
-      <publishTime>06/28/2017 15:02:39</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="JS/Grupos/Busqueda.js">
-      <publishTime>07/06/2017 13:44:23</publishTime>
+      <publishTime>06/07/2017 13:44:23</publishTime>
     </File>
     <File Include="JS/Grupos/index.js">
-      <publishTime>06/28/2017 15:05:12</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="JS/index.js">
-      <publishTime>07/10/2017 13:52:21</publishTime>
+      <publishTime>10/07/2017 13:52:21</publishTime>
     </File>
     <File Include="JS/Salones/index.js">
-      <publishTime>07/20/2017 13:31:49</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="JS/_CargaArchivo.js">
-      <publishTime>07/06/2017 13:28:48</publishTime>
+      <publishTime>06/07/2017 13:28:48</publishTime>
     </File>
     <File Include="JS/_Ejecuta.js">
-      <publishTime>07/19/2017 15:02:57</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="JS/_Menu.js">
-      <publishTime>07/06/2017 13:43:58</publishTime>
+      <publishTime>06/07/2017 13:43:58</publishTime>
     </File>
     <File Include="JS/_SeleccionaOrigenDatos.js">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -262,22 +262,22 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/06/2017 11:43:17</publishTime>
     </File>
     <File Include="Styles/externos/bootstrap.css">
-      <publishTime>06/05/2017 10:37:40</publishTime>
+      <publishTime>05/06/2017 10:37:40</publishTime>
     </File>
     <File Include="Styles/externos/bootstrap.min.css">
-      <publishTime>06/05/2017 10:37:40</publishTime>
+      <publishTime>05/06/2017 10:37:40</publishTime>
     </File>
     <File Include="Styles/externos/jquery-ui.min.css">
-      <publishTime>06/05/2017 10:54:20</publishTime>
+      <publishTime>05/06/2017 10:54:20</publishTime>
     </File>
     <File Include="Styles/externos/jquery-ui.structure.css">
-      <publishTime>06/05/2017 10:54:20</publishTime>
+      <publishTime>05/06/2017 10:54:20</publishTime>
     </File>
     <File Include="Styles/index.css">
-      <publishTime>07/06/2017 13:31:46</publishTime>
+      <publishTime>06/07/2017 13:31:46</publishTime>
     </File>
     <File Include="Styles/TablaGrupos.css">
-      <publishTime>07/10/2017 13:57:28</publishTime>
+      <publishTime>10/07/2017 13:57:28</publishTime>
     </File>
     <File Include="Views/Consultas/_Grupos.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -286,64 +286,64 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Grupos/Index.cshtml">
-      <publishTime>07/10/2017 14:09:59</publishTime>
+      <publishTime>10/07/2017 14:09:59</publishTime>
     </File>
     <File Include="Views/Grupos/_Busqueda.cshtml">
-      <publishTime>07/13/2017 13:03:54</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Grupos/_Grupos.cshtml">
-      <publishTime>07/19/2017 14:46:58</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>07/10/2017 14:10:40</publishTime>
+      <publishTime>10/07/2017 14:10:40</publishTime>
     </File>
     <File Include="Views/Home/_CargaExcel.cshtml">
-      <publishTime>07/10/2017 12:12:10</publishTime>
+      <publishTime>10/07/2017 12:12:10</publishTime>
     </File>
     <File Include="Views/Home/_Menu.cshtml">
-      <publishTime>10/07/2017 12:13:23</publishTime>
+      <publishTime>07/10/2017 12:13:23</publishTime>
     </File>
     <File Include="Views/Home/_Operaciones.cshtml">
-      <publishTime>07/10/2017 12:12:35</publishTime>
+      <publishTime>10/07/2017 12:12:35</publishTime>
     </File>
     <File Include="Views/Home/_SeleccionExcel.cshtml">
-      <publishTime>07/13/2017 12:45:29</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Home/_Semestres.cshtml">
-      <publishTime>07/10/2017 12:12:14</publishTime>
+      <publishTime>10/07/2017 12:12:14</publishTime>
     </File>
     <File Include="Views/Importacion/_CargaExcel.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Importacion/_SeleccionExcel.cshtml">
-      <publishTime>06/07/2017 13:29:26</publishTime>
+      <publishTime>07/06/2017 13:29:26</publishTime>
     </File>
     <File Include="Views/Salon/Index.cshtml">
-      <publishTime>07/19/2017 14:46:58</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Salon/_Busqueda.cshtml">
-      <publishTime>07/20/2017 12:56:15</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Salon/_Salon.cshtml">
-      <publishTime>07/21/2017 13:10:32</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Shared/_Base.cshtml">
-      <publishTime>07/10/2017 14:09:11</publishTime>
+      <publishTime>10/07/2017 14:09:11</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/05/2017 10:37:37</publishTime>
+      <publishTime>05/06/2017 10:37:37</publishTime>
     </File>
     <File Include="Views/Shared/_Menu.cshtml">
-      <publishTime>07/13/2017 12:06:41</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/web.config">
-      <publishTime>06/02/2017 12:03:20</publishTime>
+      <publishTime>02/06/2017 12:03:20</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
-      <publishTime>07/08/2017 20:54:40</publishTime>
+      <publishTime>08/07/2017 20:54:40</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/24/2017 14:04:07</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
   </ItemGroup>
 </Project>
