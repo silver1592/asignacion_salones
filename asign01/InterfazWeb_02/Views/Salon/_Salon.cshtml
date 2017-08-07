@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+@using Algoritmo02.Clases
+@model List<ListaVariables>
+    
+@foreach (ListaVariables ls in Model)
+{
+    <table>
+        <thead>
+            <tr>
+                <td colspan="7"><strong>@ls[0].Cve_espacio</strong></td>
+            </tr>
+            <tr>
+                <td>Hora</td>
+                <td>Lunes</td>
+                <td>Martes</td>
+                <td>Miercoles</td>
+                <td>Jueves</td>
+                <td>Viernes</td>
+                <td>Sabado</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{ ListaVariables hora, dia;
+                string estilo;}
+            @for (int i = 7; i < 22; i++)
+            {
+                hora = ls.EnHoras(i, i + 1);
+                <tr>
+                    <td>@i:00-@(i + 1):00</td>
+                    @for (int d = 0; d < 6; d++)
+                    {
+                        dia = hora.EnDia(d);
+                        if (dia.Count == 1)
+                        {
+                            estilo = "lightgreen";
+                        }
+                        else if (dia.Count > 0)
+                        {
+                            estilo = "red";
+                        }
+                        else
+                        {
+                            estilo = "white";
+                        }
+                        <td style="background-color:@estilo">
+                            @foreach (Variable g in dia)
+                            {
+                                <a target="_blank" href="@Url.Action("Grupo","Grupo",new { cve_full = @g.cve_full })">@g.cve_full</a>
+                            } 
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
