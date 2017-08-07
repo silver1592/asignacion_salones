@@ -256,11 +256,8 @@ namespace OrigenDatos.Clases
         /// <returns></returns>
         public bool Disponible_para_grupo(Grupo grupo)
         {
-            for(int d = 0;d<6;d++)
-                for (int i = 0; i < 15; i++)
-                    if ((horario[d,i]!=0 && grupo.dias(i)[d]) 
-                        || grupo.Cupo > Cupo)
-                        return false;
+            if (!Disponible(grupo.horario) || grupo.Cupo > Cupo)
+                return false;
 
             return true;
         }
@@ -287,6 +284,21 @@ namespace OrigenDatos.Clases
             for (int d = 0; d < 6; d++)
                 for (int i = g.horario_ini[d] - 7; i < g.horario_fin[d] - 7; i++)
                     horario[d, i]--;
+        }
+
+        /// <summary>
+        /// Checa si esta disponible en el horario dado
+        /// </summary>
+        /// <param name="horario">de un grupo [2,6]</param>
+        /// <returns>Si esta disponible</returns>
+        public bool Disponible(int[,] horario)
+        {
+            for (int d = 0; d < 6; d++)
+                for (int h = horario[0, d] - 7; h < horario[1, d] - 7; h++)
+                    if (this.horario[d, h] != 0)
+                        return false;
+
+            return true;
         }
     }
 }

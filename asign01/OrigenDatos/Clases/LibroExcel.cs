@@ -154,6 +154,8 @@ namespace OrigenDatos.Clases
 
             worksheet.Save();
             doc.Close();
+            doc.Dispose();
+
         }
 
         /// <summary>
