@@ -161,24 +161,6 @@ namespace Algoritmo02.Clases
             return valorTotalEquipo!=0 ? res*10/valorTotalEquipo : res;
         }
 
-        public bool horario(int hora)
-        {
-            if (lunes_ini != 0 && lunes_ini <= hora && lunes_fin > hora)
-                return true;
-            if (martes_ini != 0 && martes_ini <= hora && martes_fin > hora)
-                return true;
-            if (miercoles_ini != 0 && miercoles_ini <= hora && miercoles_fin > hora)
-                return true;
-            if (jueves_ini != 0 && jueves_ini <= hora && jueves_fin > hora)
-                return true;
-            if (viernes_ini != 0 && viernes_ini <= hora && viernes_fin > hora)
-                return true;
-            if (sabado_ini != 0 && sabado_ini <= hora && sabado_fin > hora)
-                return true;
-
-            return false;
-        }
-
         public int valorTotalEquipo
         {
             get

@@ -341,8 +341,14 @@ namespace Algoritmo02.Clases
         private bool AsignaEnSalon(Variable grupo, Salon s)
         {
             //Checa si es apto para el grupo
-            if (grupo.CalculaPuntos(s) <= 0 || grupo.Cupo<=s.Cupo)
+            if (grupo.CalculaPuntos(s) <= 0 || grupo.Cupo <= s.Cupo)
                 return false;
+
+            if (s.Disponible(grupo.horario))
+            {
+                grupo.Salon = s;
+                return true;
+            }
 
             //Obtiene los grupos que estan asignados de este salon
             ListaVariables enSalon = new ListaVariables(Grupos.EnSalon(s.Cve_espacio));
@@ -357,9 +363,19 @@ namespace Algoritmo02.Clases
                 foreach (Variable g in conEmpalme)
                     g.Salon = null;
 
-                grupo.Salon = s;
+                if (s.Disponible(grupo.horario))
+                {
+                    Grupos.Actualiza(conEmpalme);
 
-                return true;
+                    grupo.Salon = s;
+
+                    return true;
+                }
+                else
+                {
+                    foreach (Variable g in conEmpalme)
+                        g.Salon = s;
+                }
             }
 
             return false;
