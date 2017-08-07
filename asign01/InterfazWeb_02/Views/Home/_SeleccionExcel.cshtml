@@ -5,21 +5,39 @@
 <div id="SeleccionExcel">
     <div class="row">
         <div class="col-md-12">
-            <label>Archivo: </label>
-            <select id="archivos" class="form-control">
-                <option>---------</option>
-                @foreach (string exc in Model)
-                {
-                    <option>@exc</option>
-                }
-            </select>
+            <label>Archivo: </label><br />
+            <div class="row">
+                <div class="col-md-9">
+                    <select id="archivos" class="form-control">
+                        <option>---------</option>
+                        @foreach (string exc in Model)
+                        {
+                            <option>@exc</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button id="descarga">D</button>
+                </div>
+                <div class="col-md-1">
+                    <button id="descarga">E</button>
+                </div>
+                <div class="col-md-1">
+                    <button id="descarga">S</button>
+                </div>
+            </div>
 
             <br />
-            <label>Hoja: </label>
-            <select id="hojas" class="form-control"></select>
-            <br />
-            <label>*Semestre:</label>
-            <input type="text" name="semestre" class="form-control"/>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Hoja: </label>
+                    <select id="hojas" class="form-control"></select>
+                </div>
+                <div class="col-md-6">
+                    <label>*Semestre:</label>
+                    <input type="text" name="semestre" class="form-control" />
+                </div>
+            </div>
         </div>
     </div>
     <br />

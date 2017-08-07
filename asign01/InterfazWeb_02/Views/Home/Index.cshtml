@@ -1,5 +1,7 @@
 ﻿@section head{
-    <script src="~/JS/index.js"></script>
+    <script src="~/JS/Home/index.js"></script>
+    <script src="~/JS/Home/_CargaArchivo.js"></script>
+    <script src="~/JS/Home/_Ejecuta.js"></script>
 }
 
 @section content{
@@ -11,12 +13,7 @@
         </ul>
         <div id="tab_1" class="container-fluid">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="container-fluid">
-                        @{ Html.RenderAction("_CargaExcel", "Home"); }
-                    </div>
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="container-fluid">
                         @{ Html.RenderAction("_SeleccionExcel", "Home"); }
                     </div>

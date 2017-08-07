@@ -144,8 +144,8 @@
     <Content Include="JS\Grupos\Busqueda.js" />
     <Content Include="JS\Grupos\index.js" />
     <Content Include="JS\Salones\index.js" />
-    <Content Include="JS\_Ejecuta.js" />
-    <Content Include="JS\_CargaArchivo.js" />
+    <Content Include="JS\Home\_Ejecuta.js" />
+    <Content Include="JS\Home\_CargaArchivo.js" />
     <Content Include="JS\_Menu.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -158,7 +158,7 @@
     <Content Include="Styles\externos\bootstrap.css" />
     <Content Include="Styles\externos\bootstrap.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="JS\index.js" />
+    <Content Include="JS\Home\index.js" />
     <Content Include="JS\externos\jquery-3.2.1.min.js" />
     <Content Include="JS\externos\jquery-ui.min.js" />
     <Content Include="JS\externos\bootstrap.js" />
@@ -199,7 +199,7 @@
     <Content Include="Views\Grupos\Index.cshtml" />
     <Content Include="Views\Grupos\_Busqueda.cshtml" />
     <Content Include="Views\Grupos\_Grupos.cshtml" />
-    <Content Include="Views\Home\_Semestres.cshtml" />
+    <Content Include="Views\Shared\_Semestres.cshtml" />
     <Content Include="Views\Salon\_Busqueda.cshtml" />
     <Content Include="Views\Salon\Index.cshtml" />
     <Content Include="Views\Shared\_Base.cshtml" />
