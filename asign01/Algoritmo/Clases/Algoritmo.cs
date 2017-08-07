@@ -70,8 +70,6 @@ namespace Algoritmo02.Clases
                     { throw new Exception("Error de ejecucion (AsignaSalones): " + ex); }
                 }
 
-                seleccion();
-
                 rescate();
             }
 
@@ -105,23 +103,6 @@ namespace Algoritmo02.Clases
                     seleccionado = i;
 
             return new ListaVariables(seleccionado.Grupos);
-        }
-
-        /// <summary>
-        /// recorre la poblacion y dependiendo de un random y el valor que tenga el individuo se decide si se elimina o no
-        /// </summary>
-        private void seleccion()
-        {
-            Random r = new Random();
-            Individuo temp;
-
-            for (int i = 0; i < poblacion.Length; i++)
-                if (poblacion[i].valor < r.Next(15))
-                {
-                    temp = new Individuo(Grupos, hora);
-                    temp.asignaSalones(Salones);
-                    poblacion[i] = temp;
-                }
         }
     }
 }
