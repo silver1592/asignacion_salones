@@ -44,6 +44,8 @@ function Busqueda()
             $("#lista").append(resultado);
             $('#lista table').tablesorter();
         },
+        beforeSend: Wait,
+        complete: Continue,
         error: function (jqXHR, exception) {
             alert(exception);
         }

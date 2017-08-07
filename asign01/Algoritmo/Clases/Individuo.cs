@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Algoritmo02.Heredados;
+using OrigenDatos.Clases;
 
 namespace Algoritmo02.Clases
 {
@@ -90,7 +90,8 @@ namespace Algoritmo02.Clases
         private List<Variable> cromosomas;
         private ListaSalones salones;
         private List<Variable> Errores;
-        private int cromosomas_a_Mutar = 10;
+        private int cromosomas_a_Mutar = 5;     //Cantidad de grupos a mutar
+        private int intentos = 10;  //Cantidad de intentos que tiene un grupo para encontrar un salon valido
 
         public ListaGrupos Grupos
         {
@@ -99,7 +100,7 @@ namespace Algoritmo02.Clases
                 ListaGrupos lista = new ListaGrupos();
 
                 foreach (Variable v in cromosomas)
-                    lista.Add(v.Grupo);
+                    lista.Add(v);
 
                 return lista;
             }
@@ -116,7 +117,7 @@ namespace Algoritmo02.Clases
                 float fRes = 0;
 
                 foreach (Variable v in cromosomas)
-                    fRes += v.puntos;
+                    fRes += v.Puntos;
 
                 return fRes;
             }
@@ -137,7 +138,7 @@ namespace Algoritmo02.Clases
         /// Inicializa el arreglo de cromosomas.
         /// </summary>
         /// <param name="salonesDisponibles">Lista de salones a considerar para la interacion del algoritmo</param>
-        public Individuo(ListaGrupos gruposPorAsignar, int  hora)
+        public Individuo(ListaGrupos gruposPorAsignar,int  hora)
         {
             cromosomas = new List<Variable>();
 
@@ -148,7 +149,7 @@ namespace Algoritmo02.Clases
         public Individuo(Individuo individuo)
         {
             cromosomas = new List<Variable>();
-
+            salones = new ListaSalones(individuo.salones);
             foreach (Variable v in individuo.cromosomas)
                 cromosomas.Add(new Variable(v));
         }
@@ -163,7 +164,7 @@ namespace Algoritmo02.Clases
         {
             Errores = new List<Variable>();
 
-            this.salones = Salones;
+            salones = new ListaSalones(Salones);
 
             for(int i=2;i<=7;i++)
             {
@@ -192,8 +193,8 @@ namespace Algoritmo02.Clases
 
                     if (val != -1)
                     {
-                        salon = (Salon)salones[val];
-                        if (v.Grupo.Cupo < salon.Cupo && salon.Disponible_para_grupo(v.Grupo))
+                        salon = salones[val];
+                        if (v.Cupo < salon.Cupo && salon.Disponible_para_grupo(v))
                         {
                             v.Salon = salon;
                             r.Reinicia();
@@ -217,22 +218,17 @@ namespace Algoritmo02.Clases
         /// <param name="i"></param>
         private void separacionXArea(int i)
         {
-            ListaSalones s;
             List<Variable> asignando;
 
             var query1 = from g in cromosomas
-                         where g.Grupo.Area == i.ToString()
-                         orderby g.Grupo.Cupo descending
+                         where g.Area == i.ToString()
+                         orderby g.Cupo descending
                          select g;
 
             asignando = query1.ToList();
 
             if (asignando.Count != 0)
-            {
-                s = new ListaSalones(salones.EnArea(i));
-
-                asignandoXArea(asignando, s);
-            }
+                asignandoXArea(asignando, new ListaSalones(salones.EnArea(i)));
         }
 
         private void asignandoXArea(List<Variable> asignando, ListaSalones s)
@@ -242,17 +238,16 @@ namespace Algoritmo02.Clases
 
             foreach (Variable v in asignando)
             {
-                gAnterior = v.HoraAnterior();
+                gAnterior = v.GHoraAnterior;
                 if (gAnterior== null)
                     asignacionAleatoria(v, s);
                 else
                 {
-                    sAnterior = (Salon)s.busca(gAnterior.Salon);
-                    //TODO: Encontrar otra solucion mas diplomatica (baja importacia)
-                    //if ((sAnterior).Disponible_para_grupo(v.Grupo))
+                    sAnterior = s.busca(gAnterior.Cve_espacio);
+                    if (sAnterior!=null && sAnterior.Disponible_para_grupo(v))
                         v.Salon = sAnterior;
-                    //else
-                        //asignacionAleatoria(v, s);
+                    else
+                        asignacionAleatoria(v, s);
                 }
             }
         }
@@ -269,8 +264,8 @@ namespace Algoritmo02.Clases
 
                 if (val != -1)
                 {
-                    salon = (Salon)s[val];
-                    if (v.Grupo.SalonValido(salon) > 0 && salon.Disponible_para_grupo(v.Grupo))
+                    salon = s[val];
+                    if (v.EsValido(salon) && salon.Disponible_para_grupo(v))
                     {
                         v.Salon = salon;
                         r.Reinicia();
@@ -298,42 +293,31 @@ namespace Algoritmo02.Clases
         {
             Aleatorio rGrupo = new Aleatorio(cromosomas.Count);
             Aleatorio rSalon;
-            int iSalonSelec, iGrupoSelec;
-            Salon selecSal;
-            ListaSalones salonesXArea;
-            Variable grupo1;
-            List<Variable> grupo2;
+            int iSalonSelec=0, iGrupoSelec,i;
+            Variable grupo;
+            bool asignado;
 
             for (int c = 0; c < cromosomas_a_Mutar && c < cromosomas.Count; c++)
             {
-                try
+                //Selecciona un grupo aleatoriamente
+                iGrupoSelec = rGrupo.Next();
+                rGrupo.aceptado(iGrupoSelec);
+                grupo = cromosomas[iGrupoSelec];
+
+                rSalon = new Aleatorio(salones.Count);
+
+                //loop 10 intentos
+                for (i=0;i<intentos;i++)
                 {
-                    //Selecciona un grupo aleatoriamente y guarda sus datos
-                    iGrupoSelec = rGrupo.Next();
-                    rGrupo.aceptado(iGrupoSelec);
-                    grupo1 = cromosomas[iGrupoSelec];
+                    iSalonSelec = rSalon.Next();    //selecciona un salon aleatoriamente
+                    if (iSalonSelec != -1) break;   //Si ya se recorrieron todos los salones entonces lo deja como esta
 
-                    //selecciona un salon aleatorio para el cambio
-                    salonesXArea = SalonesXArea(grupo1.Grupo.Area);
-                    rSalon = new Aleatorio(salonesXArea.Count);
+                    asignado = AsignaEnSalon(grupo, salones[iSalonSelec]);
 
-                    //Elije un salon que este disponible para el grupo
-                    do { iSalonSelec = rSalon.Next(); }
-                    while (iSalonSelec != -1 && !((Salon)salonesXArea[iSalonSelec]).Disponible_para_grupo(grupo1.Grupo));
-
-                    grupo2 = buscaSalon(salonesXArea[iSalonSelec].Cve_espacio);
-                    selecSal = (Salon)salonesXArea[iSalonSelec];
-                }
-                catch
-                {
-                    break;
+                    if (asignado)
+                        break;
                 }
             }
-        }
-
-        public ListaSalones SalonesXArea(string area)
-        {
-            return (ListaSalones)salones.EnArea(Convert.ToInt32(area));
         }
 
         private float promedio(List<Variable> lista)
@@ -341,11 +325,60 @@ namespace Algoritmo02.Clases
             float f = 0 ;
 
             foreach (Variable v in lista)
-                f += v.puntos;
+                f += v.Puntos;
 
             f = f / lista.Count;
 
             return f;
+        }
+
+        /// <summary>
+        /// Checa si el salon se puede asignar, y si no evalua los cambios que hay que hacer y si los hace
+        /// </summary>
+        /// <param name="grupo">Grupo a asignar</param>
+        /// <param name="s">Salon en que se quiere asignar</param>
+        /// <returns></returns>
+        private bool AsignaEnSalon(Variable grupo, Salon s)
+        {
+            //Checa si es apto para el grupo
+            if (grupo.CalculaPuntos(s) <= 0 || grupo.Cupo <= s.Cupo)
+                return false;
+
+            if (s.Disponible(grupo.horario))
+            {
+                grupo.Salon = s;
+                return true;
+            }
+
+            //Obtiene los grupos que estan asignados de este salon
+            ListaVariables enSalon = new ListaVariables(Grupos.EnSalon(s.Cve_espacio));
+
+            //Obtiene los grupos con los que se crusaria
+            ListaVariables conEmpalme = enSalon.Empalmados(grupo);
+
+            //Compara el maximo puntaje de los grupos contra el que tendria estre grupo
+            if (grupo.CalculaPuntos(s) > conEmpalme.MaxPuntos())
+            {
+                //Quita la asignacon de los grupos y asigna al nuevo grupo
+                foreach (Variable g in conEmpalme)
+                    g.Salon = null;
+
+                if (s.Disponible(grupo.horario))
+                {
+                    Grupos.Actualiza(conEmpalme);
+
+                    grupo.Salon = s;
+
+                    return true;
+                }
+                else
+                {
+                    foreach (Variable g in conEmpalme)
+                        g.Salon = s;
+                }
+            }
+
+            return false;
         }
 
         #endregion
@@ -374,7 +407,7 @@ namespace Algoritmo02.Clases
         private Variable buscaGrupo(Grupo grupo)
         {
             foreach (Variable var in cromosomas)
-                if (var.Grupo == grupo)
+                if (var == grupo)
                     return var;
 
             return null;

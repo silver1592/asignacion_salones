@@ -14,6 +14,8 @@ function ActualizaOrigen()
         success: function (resultado) {
             $("#dataBaseStatus").text(resultado);
         },
+        beforeSend: Wait,
+        complete: Continue,
         error: ErrorFunction
     });
 }

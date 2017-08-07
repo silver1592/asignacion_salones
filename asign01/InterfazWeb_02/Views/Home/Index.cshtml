@@ -1,54 +1,38 @@
-﻿<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Asignacion de salones</title>
-    <link href="~/Styles/externos/jquery-ui.min.css" type="text/css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <link href="~/Styles/index.css" type="text/css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="~/JS/externos/jquery-ui.min.js"></script>
+﻿@section head{
     <script src="~/JS/index.js"></script>
-    <script src="~/JS/Error.js"></script>
-</head>
-<body>
-    <header class="container">
-        @{ Html.RenderAction("_Menu", "Home");}
-    </header>
-    <main class="container">
-        <div id="optionsTabs" class="row">
-            <div class="container-fluid">
-                <ul>
-                    <li><a href="#tab_1">Excel</a></li>
-                    <li><a href="#ejecutaAsignacion">Ejecucion</a></li>
-                </ul>
-                <div id="tab_1" class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="container-fluid">
-                                @{ Html.RenderAction("_CargaExcel", "Importacion"); }
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="container-fluid">
-                                @{ Html.RenderAction("_SeleccionExcel", "Importacion"); }
-                            </div>
-                        </div>
+}
+
+@section content{
+<div id="optionsTabs" class="row">
+    <div class="container-fluid">
+        <ul>
+            <li><a href="#tab_1">Excel</a></li>
+            <li><a href="#ejecutaAsignacion">Ejecucion</a></li>
+        </ul>
+        <div id="tab_1" class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="container-fluid">
+                        @{ Html.RenderAction("_CargaExcel", "Home"); }
                     </div>
                 </div>
-
-                <div id="ejecutaAsignacion" class="container-fluid">
-                    @{ Html.RenderAction("_Operaciones", "Ejecuta");}
+                <div class="col-md-8">
+                    <div class="container-fluid">
+                        @{ Html.RenderAction("_SeleccionExcel", "Home"); }
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Resultado</h3>
-                <div id="resConsola"></div>
-            </div>
+
+        <div id="ejecutaAsignacion" class="container-fluid">
+            @{ Html.RenderAction("_Operaciones", "Home");}
         </div>
-    </main>
-</body>
-</html>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Resultado</h3>
+        <div id="resConsola"></div>
+    </div>
+</div>
+}

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Algoritmo02.Heredados;
+using OrigenDatos.Clases;
 
 namespace Algoritmo02.Clases
 {
     public class Algoritmo
     {
-        private ListaGrupos grupos;
-        private ListaGrupos gruposAsignados;
+        private ListaVariables grupos;
+        private ListaVariables gruposAsignados;
         private ListaSalones salones;
         private int hora;
 
@@ -23,8 +23,8 @@ namespace Algoritmo02.Clases
         private Individuo[] poblacion;
         private Individuo[] mejorPoblacion;
 
-        private ListaGrupos errores;
-        public ListaGrupos Errores { get { return errores; } }
+        private ListaVariables errores;
+        public ListaVariables Errores { get { return errores; } }
 
         /// <summary>
         /// Constructor de la iteracion del algoritmo
@@ -33,27 +33,22 @@ namespace Algoritmo02.Clases
         /// <param name="salones">Lista de salones disponibles para asignar</param>
         public Algoritmo(ListaGrupos grupos, ListaSalones salones, int hora,int _tamPoblacion = 5, int _generaciones =50)
         {
-            this.grupos = new ListaGrupos(grupos.SinAsignar("111111", hora));
-            this.salones = salones;
+            this.grupos = new ListaVariables(grupos.SinAsignar());
+            this.grupos = this.grupos.EnHoras(hora, hora + 1);
+            this.grupos = this.grupos.EnDias();
+            this.salones = salones.Asignables();
             this.hora = hora;
             tamPoblacion = _tamPoblacion;
             generaciones = _generaciones;
-            errores = new ListaGrupos() ;
+            errores = new ListaVariables();
 
             poblacion = new Individuo[tamPoblacion];
             mejorPoblacion = new Individuo[tamPoblacion];
 
-            try
+            for (int i = 0; i < tamPoblacion; i++)
             {
-                for (int i = 0; i < tamPoblacion; i++)
-                {
-                    poblacion[i] = new Individuo(Grupos, hora);
-                    poblacion[i].asignaSalones(Salones);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error de ejecucion (constructor Algoritmo)\n No existen salones validos para el grupo: " + ex.Message);
+                poblacion[i] = new Individuo(Grupos, hora);
+                poblacion[i].asignaSalones(Salones);
             }
         }
 
@@ -63,29 +58,22 @@ namespace Algoritmo02.Clases
         /// <returns>Lista con los grupos asignados</returns>
         public void AsignaSalones()
         {
-            try
+            rescate();
+            
+            //Generacion
+            for (int g = 0; g < generaciones; g++)
             {
-                rescate();
-                //Generacion
-                for (int g = 0; g < generaciones; g++)
-                { 
-                    //Mutacion
-                    //se mantiene un grupo de individuos congelados
-                    foreach(Individuo i in poblacion)
-                        i.mutacion();
-
-                    seleccion();
-
-                    rescate();
+                foreach (Individuo i in poblacion)
+                {
+                    try { i.mutacion(); }
+                    catch (Exception ex)
+                    { throw new Exception("Error de ejecucion (AsignaSalones): " + ex); }
                 }
 
-                gruposAsignados = mejorRespuesta();
+                rescate();
             }
-            catch (Exception ex)
-            {
-                //MessageBox.Show();
-                throw new Exception("Error de ejecucion (AsignaSalones): " + ex);
-            }
+
+            gruposAsignados = mejorRespuesta();
         }
 
         /// <summary>
@@ -100,10 +88,9 @@ namespace Algoritmo02.Clases
 
         /// <summary>
         /// Checa los individuos y selecciona la respuesta mejor evaluada
-        /// --03/06/2016 si el valor que retorna es nulo significa que ninguna asignacion es valida
         /// </summary>
         /// <returns>Respuesta mejor evaluada.</returns>
-        private ListaGrupos mejorRespuesta()
+        private ListaVariables mejorRespuesta()
         {
             Individuo seleccionado = mejorPoblacion[0];
 
@@ -115,37 +102,7 @@ namespace Algoritmo02.Clases
                 if (i.valor > seleccionado.valor)
                     seleccionado = i;
 
-            return seleccionado.Grupos;
-        }
-
-        /// <summary>
-        /// recorre la poblacion y dependiendo de un random y el valor que tenga el individuo se decide si se elimina o no
-        /// --03/06/2016 si el individuo tiene valor de -1 sera eliminado
-        /// </summary>
-        private void seleccion()
-        {
-            Random r = new Random();
-            Individuo temp;
-
-            for (int i = 0; i < poblacion.Length; i++)
-                if (poblacion[i].valor < r.Next(15))
-                {
-                    temp = new Individuo(Grupos, hora);
-                    temp.asignaSalones(Salones);
-                    poblacion[i] = temp;
-                }
-        }
-
-        /// <summary>
-        /// mensaje llamado cuando el evento Warning se activa y manda un grupo al que no se le pudo encontrar un salon al cual asignarsele
-        /// </summary>
-        /// <param name="grupo">Grupo con el uqe se tubo problemas</param>
-        private void AddWarning(Grupo grupo)
-        {
-            var query = errores.Busca(grupo.Cve_materia, grupo.num_Grupo);
-
-            if(query!=null)
-                errores.Add(grupo);
+            return new ListaVariables(seleccionado.Grupos);
         }
     }
 }

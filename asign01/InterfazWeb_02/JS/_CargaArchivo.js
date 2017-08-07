@@ -16,9 +16,35 @@
         contentType: "application/json; charset=utf-8",
         data: data,
         dataType: "json",
+        beforeSend: Wait,
+        complete: Continue,
         success: function (resultado) {
             if (resultado[0] != true) alert(resultado[1]);
         },
         error: ErrorFunction
     });
+}
+
+function changeExcel() {
+    var excelName = $("#archivos option:selected").text();
+    var _url = $(".direccion #changeExcel").text().trim();
+
+    $("#hojas option").remove();
+    if (excelName != "---------") {
+        $.ajax({
+            type: "POST",
+            url: _url,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ file: excelName }),
+            dataType: "json",
+            success: function (resultado) {
+                $.each(resultado, function (index, item) {
+                    $("#hojas").append($("<option>" + item + "</option>"))
+                });
+            },
+            error: ErrorFunction,
+            beforeSend: Wait,
+            complete: Continue,
+        });
+    }
 }

@@ -126,7 +126,9 @@ namespace OrigenDatos.Clases
 
         public void SetSalones(IList<Salon> salones)
         {
-            this.salones = salones as List<Salon>;
+            this.salones = new List<Salon>();
+            foreach(Salon s in salones)
+                this.salones.Add(new Salon(s));
         }
         #endregion
 
@@ -145,6 +147,12 @@ namespace OrigenDatos.Clases
                     res = s;
 
             return res;
+        }
+
+        public void SetHorarios(Conexion c,string semestre)
+        {
+            foreach (Salon s in this)
+                s.SetHorario(c.Salon_Horario(semestre,s.Cve_espacio));
         }
         #endregion
 
@@ -187,46 +195,22 @@ namespace OrigenDatos.Clases
             return resultado;
         }
 
-        public ListaSalones EnEdifico(string edificio)
+        public ListaSalones PermiteEmpalmes()
         {
-            List<Salon> temp = new List<Salon>();
-
-            var query = from Salon s in salones
-                        where s.Edificio == edificio
+            var query = from s in salones
+                        where s.empalme
                         select s;
 
-            temp = query.ToList<Salon>();
-
-            ListaSalones resultado = new ListaSalones(temp);
-            return resultado;
+            return new ListaSalones(query.ToList());
         }
 
-        public ListaSalones Validos(Grupo g)
+        public ListaSalones Asignables()
         {
-            List<Salon> temp = new List<Salon>();
-
-            var query = from Salon s in salones
-                        where g.SalonValido(s)>0
+            var query = from Salon s in this
+                        where s.Asignable
                         select s;
 
-            temp = query.ToList<Salon>();
-
-            ListaSalones resultado = new ListaSalones(temp);
-            return resultado;
-        }
-
-        public ListaSalones Preferenciales(Grupo g)
-        {
-            List<Salon> temp = new List<Salon>();
-
-            var query = from Salon s in salones
-                        where g.Salones_posibles.busca(s.Cve_espacio)!=null
-                        select s;
-
-            temp = query.ToList<Salon>();
-
-            ListaSalones resultado = new ListaSalones(temp);
-            return resultado;
+            return new ListaSalones(query.ToList());
         }
         #endregion
     }

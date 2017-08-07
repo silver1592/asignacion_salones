@@ -1,0 +1,11 @@
+﻿@section head{
+    <script src="~/JS/Salones/index.js"></script>
+}
+
+@section content{
+    <div class="row"> 
+        @{Html.RenderAction("_Busqueda", "Salon");}
+    </div>
+    <div class="row" id="salonList">
+    </div>
+}

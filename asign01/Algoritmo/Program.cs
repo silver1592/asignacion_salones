@@ -1,5 +1,5 @@
 ﻿using Algoritmo02.Clases;
-using Algoritmo02.Heredados;
+using OrigenDatos.Clases;
 using System;
 using System.Collections.Generic;
 
@@ -18,13 +18,13 @@ namespace Algoritmo02
             Algoritmo alg;
             ChecaEmpalmes emp;
             PreAsignacion pre;
-            ListaGrupos grupos = c.GetGrupos("2016-2017/II");
+            ListaVariables grupos = new ListaVariables(c.Grupos("2016-2017/II"));
             ListaSalones salones = new ListaSalones(c,c.Salones());
-            ListaGrupos gruposActuales;
+            ListaVariables gruposActuales;
 
             for (int i=7;i<22;i++)
             {
-                gruposActuales = new ListaGrupos(grupos.EnHora(i, i + 1));
+                gruposActuales = new ListaVariables(grupos.EnHoras(i, i + 1));
 
                 emp = new ChecaEmpalmes(grupos, salones);
                 emp.ejecuta();
@@ -39,7 +39,7 @@ namespace Algoritmo02
                 alg.AsignaSalones();
                 grupos.Actualiza(alg.GruposAsignados);
 
-                c.UpdateGrupo(gruposActuales);
+                c.Grupos_Carga(gruposActuales);
             }
             stop = new TimeSpan(DateTime.Now.Ticks);
             Console.Write("***Pulsa una tecla para continuar****\n");
@@ -67,9 +67,9 @@ namespace Algoritmo02
         {
             string excelDir = @"C:\Users\Fernando\_DD\Mega\UASLP\Sandra\Sistema de Asignacion de Salones\Referencias y Documentos\2016-2017_II\";
             string nombreArchivo = "SIAMMAT16172-FINAL.xlsx";
-            string nombreHoja = "E_2017_01_12";
+            //string nombreHoja = "E_2017_01_12";
 
-            c = new Conexion(Conexion.datosConexion, excelDir+nombreArchivo, nombreHoja);
+            c = new Conexion(Conexion.datosConexion, excelDir+nombreArchivo);
 
             if (c.Autenticacion())
                 Console.WriteLine("Coneccion realizada");

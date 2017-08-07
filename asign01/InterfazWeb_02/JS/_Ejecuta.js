@@ -1,10 +1,12 @@
 ﻿var ejecuta_hora_ini = null;
 var ejecuta_hora_fin = null;
+var excel = null;
+var sheet = null;
 
 function Ejecuta() {
     var datos = GetDatosEjecuta();
     $("#resConsola").children().remove();
-    $("#resConsola").append($("<p>Iniciando Ejecucion</p>"));
+    $("#resConsola").prepend($("<p>Iniciando Ejecucion</p>"));
     EjecutaHora()
 }
 
@@ -21,15 +23,15 @@ function EjecutaHora()
         data: dt,
         dataType: "json",
         success: function (resultado) {
-            $("#resConsola").append("<p>" + resultado + "</p>");
+            $("#resConsola").prepend("<p>" + resultado + "</p>");
             ejecuta_hora_ini++;
-            if (ejecuta_hora_ini <= ejecuta_hora_fin) {
+            if (ejecuta_hora_ini < ejecuta_hora_fin) {
                 EjecutaHora();
             }
             else {
                 ejecuta_hora_ini = null;
                 ejecuta_hora_fin = null;
-                $("#resConsola").append("<p>Asignacion terminada</p>");
+                $("#resConsola").prepend("<p>Asignacion terminada</p>");
                 alert("Operacion terminada");
             }
         },
@@ -52,6 +54,11 @@ function GetDatosEjecuta()
         fin = parseInt($("[name='hora_fin']").val());
         ejecuta_hora_fin = fin;
         ejecuta_hora_ini = ini;
+
+        var d = new Date();
+
+        excel = d.yyyymmdd()+".xlsx"
+        sheet = d.getHours().toString()+"_"+d.getMinutes().toString();
     }
     else
     {
@@ -77,7 +84,8 @@ function GetDatosEjecuta()
         algoritmo: bAlgoritmo,
         individuo: iIndividuos,
         generacion: iGeneraciones,
-        semestre : semestre
+        excel: excel,
+        hoja: sheet,
     }
 
     return datos;

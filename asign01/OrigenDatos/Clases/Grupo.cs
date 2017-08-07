@@ -26,7 +26,7 @@ namespace OrigenDatos.Clases
         protected int sabado_fin;//[sabado_fin] [int] NULL,
         protected int cupo;//[cupo] [int] NOT NULL,
         protected int inscritos;//[inscritos] [int] NOT NULL,
-        protected string salon;//[salon] [varchar](60) NULL,
+        protected string cve_espacio;//[salon] [varchar](60) NULL,
         protected int rpe;//[rpe] [int] NULL,
         protected string ciclo;//[ciclo] [varchar](20) NOT NULL
 
@@ -49,38 +49,11 @@ namespace OrigenDatos.Clases
         /// Convierte el ciclo a numeros faciles de usar en un condicional para saber cual es mayor
         /// Se empieza desde el 2014-2015/I al cual se le asigna 0 y de ai en adelante aumenta en 0.5
         /// </summary>
-        public List<Requerimiento_Valor> Requerimientos { get { return requerimientos_Salon; } }
         public bool PlantaBaja { get { return plantaBaja; } }
-        public string Salon_fijo { get { return salon_fijo!=null ? salon_fijo : ""; } }
+        public string Salon_fijo { get { return salon_fijo != null ? salon_fijo : ""; } }
         public ListaSalones Salones_posibles { get { return salones_Posibles; } }
-        public float fCiclo
-        {
-            get
-            {
-                string aux;
-                int yIni;
-                int yFin;
-                float semPar = .5f;
-
-                if (ciclo.Contains("/II"))
-                {
-                    aux = ciclo.Replace("/II", "");
-                    semPar = 2;
-                }
-                else
-                    aux = ciclo.Replace("/I", "");
-
-                yIni = Convert.ToInt32(aux.Split('-')[0]);
-                yFin = Convert.ToInt32(aux.Split('-')[1]);
-
-                if (yIni >= 2014)
-                    return ((yIni - 2014)*10 + semPar);
-                else
-                    return -1;
-            }
-        }
         public string Ciclo { get { return ciclo; } }
-        public string Salon { get { return salon; } set { salon = value; } }
+        public string Cve_espacio { get { return cve_espacio != null ? cve_espacio.Trim() : ""; } set { cve_espacio = value; } }
         public string SalonBD { get { return salonBD; } }
         public Grupo GHoraAnterior { get { return HoraAnterior; } }
         public int hora_ini
@@ -89,14 +62,14 @@ namespace OrigenDatos.Clases
             {
                 int i = 0;
                 foreach (int n in horario_ini)
-                    if ((i > n && n != 0) || i==0)
+                    if ((i > n && n != 0) || i == 0)
                         i = n;
 
                 return i;
             }
-        }        
+        }         //Muestra la hora mas temprana en la que inicia el grupo
         public string Area { get { return cve_materia.Substring(0, 1); } }
-        public int Cupo { get { return cupo; } }
+        public int Cupo { get { return inscritos==0 ? cupo : inscritos; } }
         public string Cve_materia { get { return cve_materia; } }
         public int num_Grupo { get { return grupo; } }
         public int RPE { get { return rpe; } }
@@ -113,7 +86,7 @@ namespace OrigenDatos.Clases
                 res[4] = viernes_ini;
                 res[5] = sabado_ini;
 
-                return res;                
+                return res;
             }
         }
         public int[] horario_fin
@@ -132,28 +105,30 @@ namespace OrigenDatos.Clases
                 return res;
             }
         }
+        public int[,] horario
+        {
+            get
+            {
+                int[,] horario = new int[2,6];
+
+                for (int i = 0; i < 6; i++)
+                    horario[0, i] = horario_ini[i];
+                for (int i = 0; i < 6; i++)
+                    horario[1, i] = horario_fin[i];
+
+                return horario;
+
+            }
+        }
         public bool[] dias(int hora)
         {
-            bool[] res = { false,false,false,false,false,false};
+            bool[] res = { false, false, false, false, false, false };
 
-            for(int i=0;i<6;i++)
+            for (int i = 0; i < 6; i++)
                 if (horario_ini[i] >= hora && hora + 1 >= horario_fin[i])
                     res[i] = true;
 
             return res;
-        }
-        public int catDias
-        {
-            get
-            {
-                int i = 0;
-
-                foreach (int b in horario_ini)
-                    if (b!=0)
-                        i++;
-
-                return i;
-            }
         }
         public string Dias
         {
@@ -203,7 +178,7 @@ namespace OrigenDatos.Clases
             get
             {
                 return "UPDATE [asignacion].[ae_horario] "
-                              + "SET[salon] = '" + salon + "'"
+                              + "SET[salon] = '" + Cve_espacio + "'"
                               + " WHERE[cve_materia] = '" + cve_materia + "' and [grupo] = " + grupo.ToString() + " and [tipo] = '" + tipo + "' and [ciclo] = '" + ciclo + "';";
             }
         }
@@ -213,30 +188,32 @@ namespace OrigenDatos.Clases
             get
             {
                 return "INSERT INTO [asignacion].[ae_horario] ([cve_materia],[grupo],[tipo],[lunes_ini],[lunes_fin],[martes_ini],[martes_fin],[miercoles_ini],[miercoles_fin],[jueves_ini],[jueves_fin],[viernes_ini],[viernes_fin],[sabado_ini],[sabado_fin],[cupo],[inscritos],[salon],[rpe],[lab_obl],[ciclo],[checador]) VALUES("
-                    +"'"+cve_materia+"',"
-                    +num_Grupo+","
-                    +"'"+tipo+"',"
-                    +lunes_ini+","
-                    +lunes_fin +","
-                    +martes_ini+","
-                    +martes_fin+","
-                    +miercoles_ini +","
-                    +miercoles_fin +","
-                    +jueves_ini+","
-                    +jueves_fin +","
-                    +viernes_ini +","
-                    +viernes_fin+","
-                    +sabado_ini+","
-                    +sabado_fin +","
-                    +cupo+","
-                    +"0,"
-                    +"'"+salon +"',"
-                    +rpe+","
-                    +"0,"
-                    +"'"+ciclo+"',"
-                    +"0)";
+                    + "'" + cve_materia + "',"
+                    + num_Grupo + ","
+                    + "'" + tipo + "',"
+                    + lunes_ini + ","
+                    + lunes_fin + ","
+                    + martes_ini + ","
+                    + martes_fin + ","
+                    + miercoles_ini + ","
+                    + miercoles_fin + ","
+                    + jueves_ini + ","
+                    + jueves_fin + ","
+                    + viernes_ini + ","
+                    + viernes_fin + ","
+                    + sabado_ini + ","
+                    + sabado_fin + ","
+                    + Cupo + ","
+                    + "0,"
+                    + "'" + Cve_espacio + "',"
+                    + rpe + ","
+                    + "0,"
+                    + "'" + ciclo + "',"
+                    + "0)";
             }
         }
+
+        public string cve_full { get { return (Convert.ToInt32(Cve_materia) * 100 + num_Grupo).ToString(); } }
         #endregion
 
         #region Constructores
@@ -268,7 +245,7 @@ namespace OrigenDatos.Clases
             sabado_fin = g.sabado_fin;
             cupo = g.cupo;
             inscritos = g.inscritos;
-            salon = g.salon;
+            Cve_espacio = g.Cve_espacio;
             salonBD = g.salonBD;
             rpe = g.rpe;
             ciclo = g.ciclo;
@@ -296,13 +273,13 @@ namespace OrigenDatos.Clases
             }
             else
             {
-                Set_GruposHorasAnteriores(c.GruposAnteriores(RPE, hora_ini, ciclo), Conexion.DGruposBD);
-                Set_NecesidadesGrupo(c.Necesidades_Grupo(Cve_materia, tipo, rpe.ToString()));
-                Set_RequerimientosProfesor(c.Necesidades_prof(RPE.ToString()));
-                Set_GruposOtrosSemestres(c.SemestresAnteriores(cve_materia, ciclo, rpe.ToString()), Conexion.DGruposBD);
+                Set_GruposHorasAnteriores(c.Grupos_HoraAnterior(RPE, hora_ini, ciclo), Conexion.DGruposBD);
+                Set_NecesidadesGrupo(c.Grupo_Necesidades(Cve_materia, tipo, rpe.ToString()));
+                Set_RequerimientosProfesor(c.Profesor_Necesidades(RPE.ToString()));
+                Set_GruposOtrosSemestres(c.Grupos_SemestresAnteriores(cve_materia, ciclo, rpe.ToString(),num_Grupo,horario_ini), Conexion.DGruposBD);
 
                 if (salones != null)
-                    Set_SalonesPosibles(c.salonesPosibles(cve_materia), salones);
+                    Set_SalonesPosibles(c.Salones_Posibles(cve_materia), salones);
                 else
                     salones_Posibles = new ListaSalones();
             }
@@ -314,13 +291,13 @@ namespace OrigenDatos.Clases
 
             if (c != null)
             {
-                Set_GruposHorasAnteriores(c.GruposAnteriores(RPE, hora_ini, ciclo), Conexion.DGruposBD);
-                Set_NecesidadesGrupo(c.Necesidades_Grupo(Cve_materia, tipo, rpe.ToString()));
-                Set_RequerimientosProfesor(c.Necesidades_prof(RPE.ToString()));
-                Set_GruposOtrosSemestres(c.SemestresAnteriores(cve_materia, ciclo, rpe.ToString()), Conexion.DGruposBD);
+                Set_GruposHorasAnteriores(c.Grupos_HoraAnterior(RPE, hora_ini, ciclo), Conexion.DGruposBD);
+                Set_NecesidadesGrupo(c.Grupo_Necesidades(Cve_materia, tipo, rpe.ToString()));
+                Set_RequerimientosProfesor(c.Profesor_Necesidades(RPE.ToString()));
+                Set_GruposOtrosSemestres(c.Grupos_SemestresAnteriores(cve_materia, ciclo, rpe.ToString(),num_Grupo,horario_ini), Conexion.DGruposBD);
 
                 if(salones!=null)
-                    Set_SalonesPosibles(c.salonesPosibles(cve_materia), salones);
+                    Set_SalonesPosibles(c.Salones_Posibles(cve_materia), salones);
                 else
                     salones_Posibles = new ListaSalones();
             }
@@ -345,19 +322,65 @@ namespace OrigenDatos.Clases
                 }
 
                 rpe = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cverpe"])));
-                salon = r.Field<string>(h["salon"]);
-                lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunes"])));
-                lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunesf"])));
-                martes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martes"])));
-                martes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martesf"])));
-                miercoles_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercoles"])));
-                miercoles_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercolesf"])));
-                jueves_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["jueves"])));
-                jueves_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["juevesf"])));
-                viernes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernes"])));
-                viernes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernesf"])));
-                sabado_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabado"])));
-                sabado_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabadof"])));
+                Cve_espacio = r.Field<string>(h["salon"]);
+                try
+                { lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunes"]))); }
+                catch
+                { lunes_ini = 0; }
+                try
+                { lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunesf"]))); }
+                catch
+                { lunes_fin = 0; }
+                try
+                { martes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martes"]))); }
+                catch
+                { martes_ini = 0; }
+
+                try
+                { martes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martesf"]))); }
+                catch
+                { martes_fin = 0; }
+
+                try
+                { miercoles_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercoles"]))); }
+                catch
+                { miercoles_ini = 0; }
+
+                try
+                { miercoles_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercolesf"]))); }
+                catch
+                { miercoles_fin = 0; }
+
+                try
+                { jueves_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["jueves"]))); }
+                catch
+                { jueves_ini = 0; }
+
+                try
+                { jueves_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["juevesf"]))); }
+                catch
+                { jueves_fin = 0; }
+
+                try
+                { viernes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernes"]))); }
+                catch
+                { viernes_ini = 0; }
+
+                try
+                { viernes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernesf"]))); }
+                catch
+                { viernes_fin = 0; }
+
+                try
+                { sabado_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabado"]))); }
+                catch
+                { sabado_ini = 0; }
+
+                try
+                { sabado_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabadof"]))); }
+                catch
+                { sabado_fin = 0; }
+
                 cupo = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cupo"])));
                 try
                 { tipo = r.Field<string>(h["tipo"]); }
@@ -417,7 +440,7 @@ namespace OrigenDatos.Clases
             foreach (DataRow r in dt.Rows)
                 GruposHorasAnteriores.Add(new Grupo(r, dicctionary));
 
-            aux = GruposHorasAnteriores.EnHora(hora_ini - 1, hora_ini, salon, Dias);
+            aux = GruposHorasAnteriores.IniciaEnHora(hora_ini-1);
             HoraAnterior = aux.Count() != 0 ? aux[0] : null;
         }
 
@@ -427,162 +450,46 @@ namespace OrigenDatos.Clases
             foreach (DataRow r in dt.Rows)
                 otrosSemestres.Add(new Grupo(r, dictionary));
         }
-
         #endregion
         #endregion
 
         #region Metodos
-
-        /// <summary>
-        /// Regresa cual es el valor que tiene un salon para el area del grupo.
-        /// 02/06/2016--Decidi definir el -1 como un valor completamente incorrecto y que fuerse al sistema a ignorar esta asignacion.
-        /// </summary>
-        /// <param name="salon"></param>
-        /// <returns></returns>
-        public float SalonValido(Salon salon)
-        {
-            float peso = -1;
-
-            //Checa si esta en la lista de posibles salones o si esta en uno de los salones anteriores
-            if (salones_Posibles.busca(salon.Cve_espacio)!=null)
-                peso = 10;
-            //Checa si ya habia sido asignado en ese salon un horario anterior
-            else if (GHoraAnterior!=null && GHoraAnterior.salon==salon.Cve_espacio)
-                peso = 10;
-            //Y si no esta....
-            //Checa si corresponden las areas
-            //Si hay cupo para el salon
-            //Si tienen que ser en un salon de la planta baja o no
-            else if (salon.Area.Contains(Area)
-                        && salon.Cupo >= cupo
-                        && !(plantaBaja && !salon.plantaBaja))
-                peso = salon.PrioridadArea(Area);
-
-            return peso;
-        }
-
-        /// <summary>
-        /// Checa si hay empalme con el grupo que se pasa por parametro
-        /// </summary>
-        /// <param name="grupo">Grupo a checar si hay empalme</param>
-        /// <returns>Regresa true si hay un empalme entre los grupos.</returns>
-        public bool empalme(Grupo grupo)
-        {
-            if (this == grupo)
-                return false;
-
-            if ((lunes_ini >= grupo.lunes_ini && lunes_ini < grupo.lunes_fin) ||
-                (lunes_fin <= grupo.lunes_fin && lunes_fin > grupo.lunes_ini))
-                return true;
-
-            if ((martes_ini >= grupo.martes_ini && martes_ini < grupo.martes_fin) ||
-                (martes_fin <= grupo.martes_fin && martes_fin > grupo.martes_ini))
-                return true;
-
-            if ((miercoles_ini >= grupo.miercoles_ini && miercoles_ini < grupo.miercoles_fin) ||
-                (miercoles_fin <= grupo.miercoles_fin && miercoles_fin > grupo.miercoles_ini))
-                return true;
-
-            if ((jueves_ini >= grupo.jueves_ini && jueves_ini < grupo.jueves_fin) ||
-                (jueves_fin <= grupo.jueves_fin && jueves_fin > grupo.jueves_ini))
-                return true;
-
-            if ((viernes_ini >= grupo.viernes_ini && viernes_ini < grupo.viernes_fin) ||
-                (viernes_fin <= grupo.viernes_fin && viernes_fin > grupo.viernes_ini))
-                return true;
-
-            if ((sabado_ini >= grupo.sabado_ini && sabado_ini < grupo.sabado_fin) ||
-                (sabado_fin <= grupo.sabado_fin && sabado_fin > grupo.sabado_ini))
-                return true;
-
-            return false;
-        }
-
-        public bool EnHora(int ini, int fin, string dias = "111111")
-        {
-            if (dias[0] == '1')
-                if ((lunes_ini >= ini && lunes_ini < fin) ||
-                    (lunes_fin <= fin && lunes_fin > ini))
-                    return true;
-
-            if (dias[1] == '1')
-                if ((martes_ini >= ini && martes_ini < fin) ||
-                (martes_fin <= fin && martes_fin > ini))
-                    return true;
-
-            if (dias[2] == '1')
-                if ((miercoles_ini >= ini && miercoles_ini < fin) ||
-                (miercoles_fin <= fin && miercoles_fin > ini))
-                    return true;
-
-            if (dias[3] == '1')
-                if ((jueves_ini >= ini && jueves_ini < fin) ||
-                (jueves_fin <= fin && jueves_fin > ini))
-                    return true;
-
-            if (dias[4] == '1')
-                if ((viernes_ini >= ini && viernes_ini < fin) ||
-                (viernes_fin <= fin && viernes_fin > ini))
-                    return true;
-
-            if (dias[5] == '1')
-                if ((sabado_ini >= ini && sabado_ini < fin) ||
-                (sabado_fin <= fin && sabado_fin > ini))
-                    return true;
-
-            return false;
-        }
-
-        public bool EnHora(int[] ini, int[] fin)
-        {
-            if ((lunes_ini >= ini[0] && lunes_ini < fin[0]) ||
-                (lunes_fin <= fin[0] && lunes_fin > ini[0]))
-                return true;
-
-            if ((martes_ini >= ini[1] && martes_ini < fin[1]) ||
-            (martes_fin <= fin[1] && martes_fin > ini[1]))
-                return true;
-
-            if ((miercoles_ini >= ini[2] && miercoles_ini < fin[2]) ||
-            (miercoles_fin <= fin[2] && miercoles_fin > ini[2]))
-                return true;
-
-            if ((jueves_ini >= ini[3] && jueves_ini < fin[3]) ||
-            (jueves_fin <= fin[3] && jueves_fin > ini[3]))
-                return true;
-
-            if ((viernes_ini >= ini[4] && viernes_ini < fin[4]) ||
-            (viernes_fin <= fin[4] && viernes_fin > ini[4]))
-                return true;
-
-            if ((sabado_ini >= ini[5] && sabado_ini < fin[5]) ||
-            (sabado_fin <= fin[5] && sabado_fin > ini[5]))
-                return true;
-
-            return false;
-        }
-
-        public bool EnDias(string dias)
-        {
-            if(dias!="111111")
-                for (int i = 0; i < 6; i++)
-                    if (dias[i] != Dias[i])
-                        return false;
-
-            return true;
-        }
-
         public override string ToString()
         {
-            return (Convert.ToInt32(cve_materia) * 100 + grupo) + "\t" + salon+"_"+ciclo;
+            return (Convert.ToInt32(cve_materia) * 100 + grupo) + "_" + Cve_espacio+"_"+ciclo;
         }
 
         public Grupo AsignacionSemestresAnteriores(string salon)
         {
+            if (otrosSemestres == null)
+                return null;
 
             ListaGrupos g = otrosSemestres.EnSalon(salon);
 
             return g.Count() != 0 ? g[0] : null;
+        }
+
+        public bool EnHora(int hora)
+        {
+            if (lunes_ini >= hora && lunes_fin > hora)
+                return true;
+
+            if ((martes_ini >= hora &&  martes_fin > hora))
+                return true;
+
+            if ((miercoles_ini >= hora && miercoles_fin > hora))
+                return true;
+
+            if ((jueves_ini >= hora && jueves_fin > hora))
+                return true;
+
+            if ((viernes_ini >= hora && viernes_fin > hora))
+                return true;
+
+            if ((sabado_ini >= hora && sabado_fin > hora))
+                return true;
+
+            return false;
         }
         #endregion
     }

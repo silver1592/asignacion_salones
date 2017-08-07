@@ -26,7 +26,7 @@ namespace OrigenDatos.Clases
         protected bool asignable;
         protected bool empalmes;
         protected ListaGrupos gruposAsignados;
-
+        protected int[,] horario;
         #endregion
 
         #region atributos <public>
@@ -50,6 +50,7 @@ namespace OrigenDatos.Clases
                 return false;
             }
         }
+
         public string Cve_espacio { get { return cve_espacio; } }
         public string Edificio { get { return cve_edificio; } }
         public List<string> Area { get { return area; } }
@@ -59,64 +60,6 @@ namespace OrigenDatos.Clases
         /// Marca con True cuando ya ahy una materia que lo ocupa
         /// Este solo es en base al horario marcado por la hora
         /// </summary>
-        public bool[] horario
-        {
-            get
-            {
-                return gruposAsignados.Dias(hora);
-            }
-        }
-        public string dias
-        {
-            get
-            {
-                string res="";
-
-                if (horario[0] == false)
-                    res += "L";
-                else
-                    res += "-";
-
-                if (horario[1] == false)
-                    res += "M";
-                else
-                    res += "-";
-
-                if (horario[2] == false)
-                    res += "m";
-                else
-                    res += "-";
-
-                if (horario[3] == false)
-                    res += "J";
-                else
-                    res += "-";
-
-                if (horario[4] == false)
-                    res += "V";
-                else
-                    res += "-";
-
-                if (horario[5] == false)
-                    res += "S";
-                else
-                    res += "-";
-
-                return res;
-            }
-        }
-        public float puntos
-        {
-            get
-            {
-                float p = 0;
-
-                for(int i = 0;i<gruposAsignados.Count();i++)
-                    p += gruposAsignados[i].SalonValido(this);
-
-                return p;
-            }
-        }
         #endregion
 
         #region Constructores
@@ -155,37 +98,22 @@ namespace OrigenDatos.Clases
 
             #region Horarios
             hora = s.hora;
-            gruposAsignados = new ListaGrupos(s.gruposAsignados);
+            horario = new int[6, 15];
+            for(int i=0;i<6;i++)
+                for(int j=0;j<15;j++)
+                    horario[i,j] = s.horario[i,j];
             #endregion
-        }
-
-        public Salon(DataRow salon, int hora, DataTable excep=null, DataTable Equipo=null, DataTable AreaEdif=null)
-        {
-            ///Tabla Horario
-            this.hora = hora;
-
-            SetValues(salon);
-
-            if (Equipo != null)
-                SetEquipo(Equipo);
-
-            if (AreaEdif != null)
-                SetAreaEdificio(AreaEdif);
-
-            if (excep != null)
-                SetExcepciones(excep);
         }
 
         public Salon(DataRow datos, int hora, Conexion c)
         {
-
             ///Tabla Horario
             this.hora = hora;
             SetValues(datos);
 
-            SetEquipo(c.Salon_equipo(cve_espacio));
-            SetAreaEdificio(c.Edificio_Area(cve_edificio));
-            SetExcepciones(c.Exepciones(cve_espacio));
+            SetEquipo(c.Salones_Salon_equipo(cve_espacio));
+            SetAreaEdificio(c.Salones_Edificio_Area(cve_edificio));
+            SetExcepciones(c.Salones_Exepciones(cve_espacio));
         }
 
         #region Inicializadores
@@ -206,6 +134,12 @@ namespace OrigenDatos.Clases
             }
             else
                 throw new Exception("Datos del salon no validos");
+
+            horario = new int[6, 15];
+
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 15; j++)
+                    horario[i, j] = 0;
         }
 
         protected void SetEquipo(DataTable Equipo)
@@ -252,6 +186,35 @@ namespace OrigenDatos.Clases
             }
         }
 
+        public void SetHorario(List<int[,]> grupos)
+        {
+            horario = new int[6, 15];
+
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 15; j++)
+                    horario[i, j] = 0;
+
+
+            foreach (int[,] g in grupos)
+            {
+                for(int d = 0;d<6;d++)
+                    for(int i = g[0,d]-7; i<g[1,d]-7;i++)
+                    {
+                        horario[d, i]++;
+                    }
+            }
+        }
+
+        //Todo: tentativo a borrar
+        public void SetHorario(int[,] Horario)
+        {
+            horario = new int[6, 15];
+
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 15; j++)
+                    horario[i, j] = Horario[i,j];
+        }
+
         #endregion
         #endregion
 
@@ -284,6 +247,58 @@ namespace OrigenDatos.Clases
         public override string ToString()
         {
             return cve_espacio;
+        }
+
+        /// <summary>
+        /// Checa si hay horario y si cabe para el grupo que se le pasa por parametro.
+        /// </summary>
+        /// <param name="grupo"></param>
+        /// <returns></returns>
+        public bool Disponible_para_grupo(Grupo grupo)
+        {
+            if (!Disponible(grupo.horario) || grupo.Cupo > Cupo)
+                return false;
+
+            return true;
+        }
+
+        public void AsignaGrupo(Grupo g)
+        {
+            for (int d = 0; d < 6; d++)
+                for (int i = g.horario_ini[d] - 7; i < g.horario_fin[d] - 7; i++)
+                    horario[d, i]++;
+        }
+
+        public bool Empalmado()
+        {
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 15; j++)
+                    if (horario[i, j] > 1)
+                        return true;
+
+            return false;
+        }
+
+        public void ElminaGrupo(Grupo g)
+        {
+            for (int d = 0; d < 6; d++)
+                for (int i = g.horario_ini[d] - 7; i < g.horario_fin[d] - 7; i++)
+                    horario[d, i]--;
+        }
+
+        /// <summary>
+        /// Checa si esta disponible en el horario dado
+        /// </summary>
+        /// <param name="horario">de un grupo [2,6]</param>
+        /// <returns>Si esta disponible</returns>
+        public bool Disponible(int[,] horario)
+        {
+            for (int d = 0; d < 6; d++)
+                for (int h = horario[0, d] - 7; h < horario[1, d] - 7; h++)
+                    if (this.horario[d, h] != 0)
+                        return false;
+
+            return true;
         }
     }
 }

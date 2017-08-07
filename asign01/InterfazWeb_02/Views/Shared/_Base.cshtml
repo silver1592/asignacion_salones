@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Asignacion de salones</title>
+    <link href="~/Styles/externos/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Styles/index.css" type="text/css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/JS/externos/jquery-ui.min.js"></script>
+    <script src="~/JS/Error.js"></script>
+    <script src="~/JS/Default.js"></script>
+
+    @RenderSection("head", true)
+</head>
+<body>
+    <div id="div_carga">
+        <img src="~/Imagenes/ajax-loader.gif" id="cargador" width="100%" />
+    </div>
+    <header class="container">
+        @{ Html.RenderPartial("_Menu", "Home");}
+    </header>
+    <main class="container">
+        @RenderSection("content", true)
+    </main>
+</body>
+</html>

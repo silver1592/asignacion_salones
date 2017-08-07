@@ -6,7 +6,7 @@ namespace Algoritmo02.Clases
     /// <summary>
     /// Clase creada para evitar chequeos repeetitivos en el algoritmo cuando se usa un random.
     /// </summary>
-    class Aleatorio
+    public class Aleatorio
     {
         private Random r;
         private List<int> mostrados;
@@ -26,7 +26,8 @@ namespace Algoritmo02.Clases
         }
 
         /// <summary>
-        /// Da un numero aleatorio que no haya dado este objeto y lo almacena en una lista para saber cuales son los que ah dado
+        /// Da un numero aleatorio que no haya dado este objeto 
+        /// y lo almacena en una lista temporal para saber cuales son los que ah dado
         /// </summary>
         /// <returns>Nuevo numero aleatorio entero</returns>
         public int Next()
@@ -51,7 +52,7 @@ namespace Algoritmo02.Clases
         }
 
         /// <summary>
-        /// Reinicia el contador y vuelve a generar numeros aleatorios esepto lo que han sido aceptados
+        /// Reinicia el contador y vuelve a generar numeros aleatorios excepto lo que han sido aceptados
         /// </summary>
         public void Reinicia()
         {

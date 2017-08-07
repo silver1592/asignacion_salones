@@ -135,18 +135,21 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Imagenes\ajax-loader.gif" />
+    <Content Include="Imagenes\background.png" />
     <Content Include="Imagenes\excel_icon.png" />
+    <Content Include="JS\Default.js" />
     <Content Include="JS\Error.js" />
     <Content Include="JS\externos\jquery.tablesorter.min.js" />
     <Content Include="JS\Grupos\Busqueda.js" />
     <Content Include="JS\Grupos\index.js" />
+    <Content Include="JS\Salones\index.js" />
     <Content Include="JS\_Ejecuta.js" />
     <Content Include="JS\_CargaArchivo.js" />
     <Content Include="JS\_Menu.js" />
-    <Content Include="JS\_SeleccionaOrigenDatos.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Properties\PublishProfiles\AsignacionSalones.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -168,21 +171,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Clases\Conexion.cs" />
-    <Compile Include="Clases\ListaGrupos.cs" />
-    <Compile Include="Clases\ListaSalones.cs" />
-    <Compile Include="Controllers\ConsultasController.cs" />
-    <Compile Include="Controllers\EjecutaController.cs" />
     <Compile Include="Controllers\GruposController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ImportacionController.cs" />
+    <Compile Include="Controllers\SalonController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Grupo.cs" />
-    <Compile Include="Models\LibroExcel.cs" />
-    <Compile Include="Models\Materia.cs" />
-    <Compile Include="Models\Profesor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -193,13 +187,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Consultas\_Grupos.cshtml" />
-    <Content Include="Views\Ejecuta\_Operaciones.cshtml" />
+    <Content Include="Views\Home\_Operaciones.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Importacion\_CargaExcel.cshtml" />
-    <Content Include="Views\Importacion\_SeleccionExcel.cshtml" />
-    <Content Include="Archivos\SIAMMAT16172-FINAL.xlsx" />
-    <Content Include="Views\Home\_Menu.cshtml" />
+    <Content Include="Views\Home\_CargaExcel.cshtml" />
+    <Content Include="Views\Home\_SeleccionExcel.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
@@ -208,6 +200,10 @@
     <Content Include="Views\Grupos\_Busqueda.cshtml" />
     <Content Include="Views\Grupos\_Grupos.cshtml" />
     <Content Include="Views\Home\_Semestres.cshtml" />
+    <Content Include="Views\Salon\_Busqueda.cshtml" />
+    <Content Include="Views\Salon\Index.cshtml" />
+    <Content Include="Views\Shared\_Base.cshtml" />
+    <Content Include="Views\Salon\_Salon.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -217,6 +213,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Archivos\" />
+    <Folder Include="Clases\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algoritmo\Algoritmo02.csproj">
