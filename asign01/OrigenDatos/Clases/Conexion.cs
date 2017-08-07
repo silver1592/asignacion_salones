@@ -471,9 +471,10 @@ namespace OrigenDatos.Clases
         /// <param name="ciclo"></param>
         /// <param name="rpe"></param>
         /// <returns></returns>
-        public DataTable Grupos_SemestresAnteriores(string cve_materia, string ciclo, string rpe)
+        public DataTable Grupos_SemestresAnteriores(string cve_materia, string ciclo, string rpe, int num_grupo, int[] hora_ini)
         {
-            string query = "select * from asignacion.ae_horario where not(ciclo = '" + ciclo + "') and rpe = '" + rpe + "' and cve_materia = '" + cve_materia + "'";
+            string query = "select * from asignacion.ae_horario where not(ciclo = '" + ciclo + "') and rpe = '" + rpe + "' and cve_materia = '" + cve_materia + "' and "+
+                "(lunes_ini = "+hora_ini[0]+ " and martes_ini = " + hora_ini[1] + " and miercoles_ini = " + hora_ini[2] + " and jueves_ini = " + hora_ini[3] + " and  viernes_ini = " + hora_ini[4] + " and  sabado_ini = " + hora_ini[5] + ");";
             DataTable dt = Querry(query);
 
             return dt;

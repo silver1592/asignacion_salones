@@ -91,7 +91,7 @@ namespace Algoritmo02.Clases
             foreach (Grupo g in otrosSemestres)
             {
                 v = new Variable(g, 0);
-                if (v.SemestrePar == SemestrePar && fCiclo -limite< v.fCiclo)
+                if (v.SemestrePar == SemestrePar && fCiclo -limite<= v.fCiclo)
                     if (sel == null || sel.fCiclo < v.fCiclo)
                         sel = v;
             }
