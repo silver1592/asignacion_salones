@@ -39,6 +39,7 @@ namespace Algoritmo02.Clases
             empalmados = new ListaVariables(grupos.NoEn(permiteEmpalmes)).AgrupaGruposEmpalmados();
 
             foreach (ListaVariables empalme in empalmados)
+            {
                 try
                 {
                     ResuelveEmpalme(empalme);
@@ -47,6 +48,8 @@ namespace Algoritmo02.Clases
                 {
                     QuitaSalon(empalme);
                 }
+                Grupos.Actualiza(empalme);
+            }
         }
 
         private void ResuelveEmpalme(ListaVariables empalme)
@@ -84,10 +87,9 @@ namespace Algoritmo02.Clases
         private void AsignacionMejorEleccion(ListaVariables empalme, Salon s)
         {
             Variable gOtrosSemestres = null, gAux = null, g =null;
-            empalme.SetSalones(salones);
 
             //Obtiene los gupos validos
-            ListaVariables validos = new ListaVariables(empalme);
+            ListaVariables validos = empalme.Validos();
             //Obtiene los grupos que estaban 
             ListaVariables otrosSemestres = new ListaVariables(validos.AsignacionOtrosSemestres(s.Cve_espacio));
             otrosSemestres.SetSalones(salones);

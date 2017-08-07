@@ -119,10 +119,20 @@ namespace Algoritmo02.Clases
                         orderby g.Puntos descending
                         select g;
 
+            List<Variable> lista = query.ToList();
+
             if (limite != 0)
                 return new ListaVariables(query.Take(limite).ToList());
             else
-                return new ListaVariables(query.ToList());
+                return new ListaVariables(lista);
+        }
+
+        public ListaVariables Validos()
+        {
+            var query = from g in this as IList<Variable>
+                        select g;
+
+            return new ListaVariables(query.ToList());
         }
 
         public ListaVariables Empalmados()
