@@ -107,14 +107,6 @@ namespace Algoritmo02.Clases
 
         #endregion
 
-        public ListaVariables Validos()
-        {
-            var query = from g in this as IList<Variable>
-                        select g;
-
-            return new ListaVariables(query.ToList());
-        }
-
         /// <summary>
         /// Obtiene los grupos con mejor puntiacion con cierto salon
         /// </summary>
@@ -136,7 +128,7 @@ namespace Algoritmo02.Clases
         public ListaVariables Empalmados()
         {
             var query = from g in this as IList<Variable>
-                        from g1 in grupos
+                        from g1 in this as IList<Variable>
                         where g.cve_full!=g1.cve_full && g.Empalme(g1)
                         select g;
 

@@ -50,6 +50,15 @@ namespace OrigenDatos.Clases
             ((IList<Salon>)salones).Insert(index, item);
         }
 
+        public ListaSalones ConEmpalme()
+        {
+            var query = from s in this
+                        where s.Empalmado()
+                        select s;
+
+            return new ListaSalones(query.ToList());
+        }
+
         public void RemoveAt(int index)
         {
             ((IList<Salon>)salones).RemoveAt(index);

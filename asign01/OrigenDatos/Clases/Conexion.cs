@@ -465,6 +465,18 @@ namespace OrigenDatos.Clases
             return datos;
         }
 
+        public ListaGrupos Grupos_EnSalon(object cve_salon, string ciclo)
+        {
+            List<Materia> materias = Materias();
+            List<Profesor> profesores = Profesores();
+
+            string query = "select * from ae_horario where ciclo ='"+ciclo+"' and salon = '"+cve_salon+"'";
+
+            DataTable datos = Querry(query);
+
+            return new ListaGrupos(Grupos_AsList(datos),profesores,materias);
+        }
+
         /// <summary>
         /// Obtiene Los grupos de semestres anteriores
         /// </summary>
