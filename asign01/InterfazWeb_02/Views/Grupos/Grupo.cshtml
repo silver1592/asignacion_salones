@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <label for="grupo_horario">Horario del Grupo</label>
                 <table class="table table-bordered" id="grupo_horario">
                     <thead>
@@ -77,11 +77,11 @@
                         <tr>
                             @for (int i = 0; i < 6; i++)
                             {
-                                <td>
+                                <td width="150">
                                     <p class="text-center">
-                                        @(((Variable)Model[0]).horario_ini[0])
+                                        @(((Variable)Model[0]).horario_ini[i])
                                         -
-                                        @(((Variable)Model[0]).horario_fin[0])
+                                        @(((Variable)Model[0]).horario_fin[i])
                                     </p>
                                 </td>
                             }

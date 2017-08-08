@@ -7,30 +7,31 @@
     
 @foreach (Salon s in Model)
 {
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <td colspan="7"><strong>@s.salon.Cve_espacio</strong></td>
-            </tr>
-            <tr>
-                <th>Hora</th>
-                <th>Lunes</th>
-                <th>Martes</th>
-                <th>Miercoles</th>
-                <th>Jueves</th>
-                <th>Viernes</th>
-                <th>Sabado</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{  ListaVariables hora, dia,ls=s.grupos;
-                string estilo;}
-            @for (int i = 7; i < 22; i++)
-            {
-                hora = ls.EnHoras(i, i + 1);
+    <div class="container-fluid">
+        <table class="table table-bordered table-hover">
+            <thead>
                 <tr>
-                    <th scope="row">@i:00-@(i + 1):00</th>
-                    @for (int d = 0; d < 6; d++)
+                    <td colspan="7"><strong>@s.Cve_espacio</strong></td>
+                </tr>
+                <tr>
+                    <th>Hora</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miercoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                    <th>Sabado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{  ListaVariables hora, dia, ls = s.grupos;
+                    string estilo;}
+                @for (int i = 7; i < 22; i++)
+                {
+                    hora = ls.EnHoras(i, i + 1);
+                    <tr>
+                        <th scope="row">@i:00-@(i + 1):00</th>
+                        @for (int d = 0; d < 6; d++)
                     {
                         dia = hora.EnDia(d);
                         if (dia.Count == 1)
@@ -50,11 +51,12 @@
                             {
                                 <a target="_blank" href="@Url.Action("Grupo","Grupos",new { cve_full = @g.cve_full })"
                                    onclick="window.open(this.href, this.target, 'top=100,left=50, width=900,height=450'); return false;">@g.cve_full</a>
-                            } 
+                            }
                         </td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
