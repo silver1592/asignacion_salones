@@ -34,7 +34,7 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Salon(string cve_salon)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            List<object[]> ls = new List<object[]>();
+            List<InterfazWeb_02.Models.Salon> ls = new List<InterfazWeb_02.Models.Salon>();
             List<ListaVariables> aux;
             ListaVariables grupos;
             switch (cve_salon) {
@@ -43,11 +43,11 @@ namespace InterfazWeb_02.Controllers
                     aux = grupos.AgrupaGruposEmpalmados();
                     foreach (ListaVariables g in aux)
                         if (g.Count != 0)
-                            ls.Add(new object[] { g[0].Cve_espacio, g });
+                            ls.Add(new InterfazWeb_02.Models.Salon(c.Salon(g[0].Cve_espacio), g));
                     break;
                 default:
                     grupos = new ListaVariables(c.Grupos(Session["ciclo"].ToString(), cve_salon));
-                    ls.Add(new object[] { cve_salon,grupos });
+                    ls.Add(new InterfazWeb_02.Models.Salon(c.Salon(cve_salon),grupos));
                 break;
             }
 

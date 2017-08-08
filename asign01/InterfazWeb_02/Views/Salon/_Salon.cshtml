@@ -1,34 +1,35 @@
 ﻿@{
     Layout = null;
 }
-@using Algoritmo02.Clases
-@model List<object[]>
+@using InterfazWeb_02.Models;
+@using Algoritmo02.Clases;
+@model List<Salon>
     
-@foreach (object[] ob in Model)
+@foreach (Salon s in Model)
 {
-    <table>
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <td colspan="7"><strong>@ob[0].ToString()</strong></td>
+                <td colspan="7"><strong>@s.salon.Cve_espacio</strong></td>
             </tr>
             <tr>
-                <td>Hora</td>
-                <td>Lunes</td>
-                <td>Martes</td>
-                <td>Miercoles</td>
-                <td>Jueves</td>
-                <td>Viernes</td>
-                <td>Sabado</td>
+                <th>Hora</th>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miercoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sabado</th>
             </tr>
         </thead>
         <tbody>
-            @{  ListaVariables hora, dia,ls=ob[1] as ListaVariables;
+            @{  ListaVariables hora, dia,ls=s.grupos;
                 string estilo;}
             @for (int i = 7; i < 22; i++)
             {
                 hora = ls.EnHoras(i, i + 1);
                 <tr>
-                    <td>@i:00-@(i + 1):00</td>
+                    <th scope="row">@i:00-@(i + 1):00</th>
                     @for (int d = 0; d < 6; d++)
                     {
                         dia = hora.EnDia(d);
