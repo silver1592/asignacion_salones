@@ -2,14 +2,14 @@
     Layout = null;
 }
 @using Algoritmo02.Clases
-@model List<ListaVariables>
+@model List<object[]>
     
-@foreach (ListaVariables ls in Model)
+@foreach (object[] ob in Model)
 {
     <table>
         <thead>
             <tr>
-                <td colspan="7"><strong>@ls[0].Cve_espacio</strong></td>
+                <td colspan="7"><strong>@ob[0].ToString()</strong></td>
             </tr>
             <tr>
                 <td>Hora</td>
@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            @{ ListaVariables hora, dia;
+            @{  ListaVariables hora, dia,ls=ob[1] as ListaVariables;
                 string estilo;}
             @for (int i = 7; i < 22; i++)
             {
