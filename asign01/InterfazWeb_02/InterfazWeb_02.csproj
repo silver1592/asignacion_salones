@@ -142,8 +142,10 @@
     <Content Include="JS\Default.js" />
     <Content Include="JS\Error.js" />
     <Content Include="JS\externos\jquery.tablesorter.min.js" />
+    <Content Include="JS\Grupos\ActualizaGrupo.js" />
     <Content Include="JS\Grupos\Busqueda.js" />
     <Content Include="JS\Grupos\index.js" />
+    <Content Include="JS\Grupos\index_grupo.js" />
     <Content Include="JS\Salones\index.js" />
     <Content Include="JS\Home\_Ejecuta.js" />
     <Content Include="JS\_Menu.js" />

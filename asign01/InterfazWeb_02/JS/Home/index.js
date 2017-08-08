@@ -70,6 +70,24 @@ $().ready(function () {
 
     $("#EjecutaOperaciones").click(Ejecuta);
 
+    $("#Exporta").click(function () {
+        var _url = $(".direccion #Exporta").text().trim();
+
+        $.ajax({
+            type: "POST",
+            url: _url,
+            contentType: "application/json; charset=utf-8",
+            success: function (resultado) {
+                $("#resConsola").prepend("<p>" + resultado + "</p>");
+            },
+            error: function (jqXHR, exception) {
+                $("#resConsola").append("<p><strong>" + exception + "-" + ErrorToString(jqXHR, exception) + "<strong></p>");
+            },
+            beforeSend: Wait,
+            complete: Continue,
+        });
+    });
+
     ActualizaOrigen();
 
     $('#div_carga').hide();
