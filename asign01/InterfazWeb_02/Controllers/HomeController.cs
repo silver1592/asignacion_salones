@@ -185,7 +185,7 @@ namespace InterfazWeb_02.Controllers
                     grupos.Actualiza(alg.GruposAsignados);
                 }
 
-                c.Grupos_Carga(grupos, hoja);
+                c.Grupos_Carga(grupos, hoja,c.Materias_AsDictionary(),c.Profesores_AsDicctionary());
 
                 res = "Asignacion de " + hora + " completada";
             }

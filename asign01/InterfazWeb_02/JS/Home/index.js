@@ -6,7 +6,7 @@ $().ready(function () {
     inicializaMenu();
 
     //Comportamiento del boton para subir archivo
-    $("#SeleccionExcel input[name='file']").change(function () {
+    $("#SeleccionExcel input[name='archivo']").change(function () {
         $(this).parent().submit();
     })
 
