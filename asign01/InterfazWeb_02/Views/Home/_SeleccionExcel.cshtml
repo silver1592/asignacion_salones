@@ -23,7 +23,10 @@
                     <button id="descarga">E</button>
                 </div>
                 <div class="col-md-1">
-                    <button id="descarga">S</button>
+                    <form method="post" action="@Url.Action("SubirExcel","Home",null, Request.Url.Scheme)" enctype="multipart/form-data">
+                        <label for="file"><img src="#" alt="Sube un archivo"/></label>
+                        <input type="file" name="file" accept=".xlsx, .xls" class="form-control oculto" />
+                    </form>
                 </div>
             </div>
 
