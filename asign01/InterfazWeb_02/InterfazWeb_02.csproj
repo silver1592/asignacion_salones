@@ -137,6 +137,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Imagenes\ajax-loader.gif" />
     <Content Include="Imagenes\background.png" />
+    <Content Include="Imagenes\upload.png" />
     <Content Include="Imagenes\excel_icon.png" />
     <Content Include="JS\Default.js" />
     <Content Include="JS\Error.js" />
@@ -145,7 +146,6 @@
     <Content Include="JS\Grupos\index.js" />
     <Content Include="JS\Salones\index.js" />
     <Content Include="JS\Home\_Ejecuta.js" />
-    <Content Include="JS\Home\_CargaArchivo.js" />
     <Content Include="JS\_Menu.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -204,6 +204,7 @@
     <Content Include="Views\Salon\Index.cshtml" />
     <Content Include="Views\Shared\_Base.cshtml" />
     <Content Include="Views\Salon\_Salon.cshtml" />
+    <Content Include="Views\Grupos\Grupo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

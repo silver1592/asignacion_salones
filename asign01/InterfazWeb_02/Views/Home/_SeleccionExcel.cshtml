@@ -17,15 +17,17 @@
                     </select>
                 </div>
                 <div class="col-md-1">
-                    <button id="descarga">D</button>
+                    <a id="descarga" class="boton">D</a>
                 </div>
                 <div class="col-md-1">
-                    <button id="descarga">E</button>
+                    <a id="descarga" class="boton">X</a>
                 </div>
                 <div class="col-md-1">
                     <form method="post" action="@Url.Action("SubirExcel","Home",null, Request.Url.Scheme)" enctype="multipart/form-data">
-                        <label for="file"><img src="#" alt="Sube un archivo"/></label>
-                        <input type="file" name="file" accept=".xlsx, .xls" class="form-control oculto" />
+                        <label for="cargaArchivo">
+                            <img src="~/Imagenes/upload.png" width="30"/>
+                        </label>
+                        <input type="file" name="archivo" id="cargaArchivo" accept=".xlsx, .xls"/>
                     </form>
                 </div>
             </div>
@@ -61,6 +63,9 @@
         </p>
         <p id="seleccionaOrigenDatos">
             @Url.Action("SetSession_OrigenDatos", "Home",null, Request.Url.Scheme)
+        </p>
+        <p id="uploadExcelToDB">
+            @Url.Action("CargaExcel_BD", "Home", null, Request.Url.Scheme)
         </p>
     </div>
 </div>

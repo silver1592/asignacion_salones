@@ -1,0 +1,9 @@
+﻿@{
+    Layout = null;
+}
+
+@model string[]
+
+@foreach(string s in Model) {
+    <option value="@s">@s</option>
+}

@@ -45,10 +45,10 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpGet]
-        public ActionResult Grupo(string cve_full)
+        public ActionResult Grupo(int cve_full)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            Grupo g = c.Grupo(cve_full, Session["ciclo"].ToString());
+            Variable g = new Variable(c.Grupo(cve_full.ToString(), Session["ciclo"].ToString()),0);
 
             return View(g);
         }

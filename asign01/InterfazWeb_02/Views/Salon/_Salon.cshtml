@@ -47,7 +47,8 @@
                         <td style="background-color:@estilo">
                             @foreach (Variable g in dia)
                             {
-                                <a target="_blank" href="@Url.Action("Grupo","Grupo",new { cve_full = @g.cve_full })">@g.cve_full</a>
+                                <a target="_blank" href="@Url.Action("Grupo","Grupos",new { cve_full = @g.cve_full })"
+                                   onclick="window.open(this.href, this.target, 'top=100,left=50, width=900,height=450'); return false;">@g.cve_full</a>
                             } 
                         </td>
                     }

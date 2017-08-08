@@ -59,6 +59,9 @@ table{
     margin-top: -25px;
 }
 
-.oculto{
-    display:none;
+.boton{
+    display: block;
+    background-color:aquamarine;
+    text-align:center;
+    padding:5px 10px;
 }
