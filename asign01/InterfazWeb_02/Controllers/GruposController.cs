@@ -48,9 +48,24 @@ namespace InterfazWeb_02.Controllers
         public ActionResult Grupo(int cve_full)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            Variable g = new Variable(c.Grupo(cve_full.ToString(), Session["ciclo"].ToString()),0);
+            try
+            {
+                Variable g = new Variable(c.Grupo(cve_full.ToString(), Session["ciclo"].ToString()), 0);
+                Profesor p = c.Profesor(g.RPE);
+                Materia m = c.Materia(g.Cve_materia);
+                Salon s=null;
 
-            return View(g);
+                if (g.Cve_espacio != "")
+                    s = c.Salon(g.Cve_espacio);
+
+                g.Salon = s;
+
+                return View(new object[] { g,p,m});
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

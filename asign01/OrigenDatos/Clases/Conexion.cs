@@ -262,6 +262,22 @@ namespace OrigenDatos.Clases
             return datos;
         }
 
+        public Salon Salon(string cve_espacio)
+        {
+            {
+                string textoCmd = "SELECT * "
+                                  + "FROM [asignacion].[ae_cat_espacio] "
+                                  + "where cve_espacio='"+cve_espacio+"'";
+
+                DataTable datos = Querry(textoCmd);
+
+                if(datos.Rows.Count!=0)
+                    return new Salon(datos.Rows[0],0,this);
+
+                return null;
+            }
+        }
+
         /// <summary>
         /// Obtiene la informacion de los salones que tienen un trato especial
         /// </summary>
@@ -564,6 +580,19 @@ namespace OrigenDatos.Clases
 
             return profesores;
         }
+
+        public Profesor Profesor(int rpe)
+        {
+            Profesor profesor;
+            DataTable dt = Querry("SELECT * FROM vae_cat_profesor where rpe="+rpe);
+
+            if (dt.Rows.Count!=0)
+                profesor = new Profesor(dt.Rows[0]);
+            else
+                profesor = new Profesor(Convert.ToInt32(rpe));
+
+            return profesor;
+        }
         #endregion
 
         #region Materias
@@ -594,6 +623,19 @@ namespace OrigenDatos.Clases
                 materias.Add(r["cve_materia"].ToString(), r["materia"].ToString());
 
             return materias;
+        }
+
+        public Materia Materia(string cve_materia)
+        {
+            Materia materia;
+            DataTable dt = Querry("SELECT * FROM vae_cat_materia where cve_materia='"+cve_materia+"'");
+
+            if (dt.Rows.Count != 0)
+                materia = new Materia(dt.Rows[0]);
+            else
+                materia = new Materia("-------", cve_materia, 0);
+
+            return materia;
         }
         #endregion
 
