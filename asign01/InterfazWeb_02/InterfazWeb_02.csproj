@@ -149,7 +149,6 @@
     <Content Include="JS\Salones\index.js" />
     <Content Include="JS\Home\_Ejecuta.js" />
     <Content Include="JS\_Menu.js" />
-    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -157,14 +156,9 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
-    <Content Include="Styles\externos\bootstrap.css" />
-    <Content Include="Styles\externos\bootstrap.min.css" />
     <Content Include="Global.asax" />
     <Content Include="JS\Home\index.js" />
-    <Content Include="JS\externos\jquery-3.2.1.min.js" />
     <Content Include="JS\externos\jquery-ui.min.js" />
-    <Content Include="JS\externos\bootstrap.js" />
-    <Content Include="JS\externos\bootstrap.min.js" />
     <Content Include="Styles\index.css" />
     <Content Include="Styles\externos\jquery-ui.min.css" />
     <Content Include="Styles\externos\jquery-ui.structure.css" />
@@ -208,6 +202,7 @@
     <Content Include="Views\Shared\_Base.cshtml" />
     <Content Include="Views\Salon\_Salon.cshtml" />
     <Content Include="Views\Grupos\Grupo.cshtml" />
+    <Content Include="Views\Grupos\ModificaGrupo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

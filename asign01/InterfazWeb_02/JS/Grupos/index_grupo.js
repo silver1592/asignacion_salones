@@ -1,5 +1,6 @@
 ﻿$().ready(function () {
     $("#salon").change(function () {
-        var cve_full= $('#cve_materia').text()*100+$("#rpe").text()
+        $(this).parent().submit();
     });
+    $("#grupo").hide();
 });

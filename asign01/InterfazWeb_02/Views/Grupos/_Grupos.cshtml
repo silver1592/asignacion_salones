@@ -3,26 +3,25 @@
 }
 @model OrigenDatos.Clases.ListaGrupos
 
-<table>
+<table class="table table-hover table-striped table-bordered">
     <thead>
         <tr>
-            <th width="5%"><span>CVE</span></th>
-            <th><span>Materia</span></th>
-            <th><span>Profesor</span></th>
-            <th width="7%" colspan="2"><span>Lunes</span></th>
-            <th width="7%" colspan="2"><span>Martes</span></th>
-            <th width="7%" colspan="2"><span>Miercoles</span></th>
-            <th width="7%" colspan="2"><span>Jueves</span></th>
-            <th width="7%" colspan="2"><span>Viernes</span></th>
-            <th width="7%" colspan="2"><span>Sabado</span></th>
-            <th width="5%"><span>Salon</span></th>
-            <th width="9%" colspan="2"><span>Operaciones</span></th>
+            <th width="5%" class="text-center"><span>CVE</span></th>
+            <th class="text-center"><span>Materia</span></th>
+            <th class="text-center"><span>Profesor</span></th>
+            <th width="4%" colspan="2" class="text-center"><span>L</span></th>
+            <th width="4%" colspan="2" class="text-center"><span>M</span></th>
+            <th width="4%" colspan="2" class="text-center"><span>Mi</span></th>
+            <th width="4%" colspan="2" class="text-center"><span>J</span></th>
+            <th width="4%" colspan="2" class="text-center"><span>V</span></th>
+            <th width="4%" colspan="2" class="text-center"><span>S</span></th>
+            <th width="10%" class="text-center"><span>Salon</span></th>
         </tr>
     </thead>
     @foreach (var g in Model)
     {   
         <tr>
-            <td>
+            <td class="text-center">
                 @(Convert.ToInt32(g.Cve_materia)*100+g.num_Grupo)
             </td>
             <td>
@@ -31,27 +30,25 @@
             <td>
                 @Model.buscaProfesor(g.RPE.ToString()).Nombre
             </td>
-            <td>@if (g.horario_ini[0] != 0) { @g.horario_ini[0]; }</td>
-            <td>@if (g.horario_fin[0] != 0) { @g.horario_fin[0]; }</td>
-            <td>@if (g.horario_ini[1] != 0) { @g.horario_ini[1]; }</td>
-            <td>@if (g.horario_fin[1] != 0) { @g.horario_fin[1]; }</td>
-            <td>@if (g.horario_ini[2] != 0) { @g.horario_ini[2]; }</td>
-            <td>@if (g.horario_fin[2] != 0) { @g.horario_fin[2]; }</td>
-            <td>@if (g.horario_ini[3] != 0) { @g.horario_ini[3]; }</td>
-            <td>@if (g.horario_fin[3] != 0) { @g.horario_fin[3]; }</td>
-            <td>@if (g.horario_ini[4] != 0) { @g.horario_ini[4]; }</td>
-            <td>@if (g.horario_fin[4] != 0) { @g.horario_fin[4]; }</td>
-            <td>@if (g.horario_ini[5] != 0) { @g.horario_ini[5]; }</td>
-            <td>@if (g.horario_fin[5] != 0) { @g.horario_fin[5]; }</td>
-            <td>
-                <input type="text" value="@g.Cve_espacio" width="50"/>
-            </td>
-            <td >
-                <!--//TODO: Botones para actualizacion y deshacer cambios-->
-                <button class="ui-button">G</button>
-            </td>
-            <td>
-                <button class="ui-button">R</button>
+            <td class="text-center">@if (g.horario_ini[0] != 0) { @g.horario_ini[0]; }</td>
+            <td class="text-center">@if (g.horario_fin[0] != 0) { @g.horario_fin[0]; }</td>
+            <td class="text-center">@if (g.horario_ini[1] != 0) { @g.horario_ini[1]; }</td>
+            <td class="text-center">@if (g.horario_fin[1] != 0) { @g.horario_fin[1]; }</td>
+            <td class="text-center">@if (g.horario_ini[2] != 0) { @g.horario_ini[2]; }</td>
+            <td class="text-center">@if (g.horario_fin[2] != 0) { @g.horario_fin[2]; }</td>
+            <td class="text-center">@if (g.horario_ini[3] != 0) { @g.horario_ini[3]; }</td>
+            <td class="text-center">@if (g.horario_fin[3] != 0) { @g.horario_fin[3]; }</td>
+            <td class="text-center">@if (g.horario_ini[4] != 0) { @g.horario_ini[4]; }</td>
+            <td class="text-center">@if (g.horario_fin[4] != 0) { @g.horario_fin[4]; }</td>
+            <td class="text-center">@if (g.horario_ini[5] != 0) { @g.horario_ini[5]; }</td>
+            <td class="text-center">@if (g.horario_fin[5] != 0){@g.horario_fin[5];}</td>
+            <td class="text-center">
+                <a target="_blank" href="@Url.Action("Grupo","Grupos",new { cve_full = @g.cve_full })"
+                   onclick="window.open(this.href, this.target, 'top=100,left=50, width=900,height=450'); return false;">
+                    @if (g.Cve_espacio != ""){
+                        @g.Cve_espacio
+                    }
+                </a>
             </td>
         </tr>
     }

@@ -29,7 +29,11 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Grupos(string ini, string fin, string dias)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaVariables list = new ListaVariables(c.Grupos_Light(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)));
+            ListaVariables list = new ListaVariables(new ListaGrupos(
+                c.Grupos_Light(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)),
+                c.Profesores(),
+                c.Materias()));
+
 
             list = list.EnDias(dias);
 
@@ -39,7 +43,7 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Grupos()
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaGrupos list = c.Grupos_Light(Session["ciclo"].ToString());
+            ListaGrupos list = new ListaGrupos(c.Grupos_Light(Session["ciclo"].ToString()),c.Profesores(),c.Materias());
 
             return PartialView(list);
         }
@@ -66,6 +70,20 @@ namespace InterfazWeb_02.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult ModificaGrupo(string grupo, string salon)
+        {
+            Conexion c = new Conexion();
+            Variable g = new Variable(c.Grupo(grupo, Session["ciclo"].ToString()),0);
+            Salon s = c.Salon(salon);
+
+            g.Salon = s;
+
+            c.Querry(g.qUpdate);
+
+            return View();
         }
     }
 }

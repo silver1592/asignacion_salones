@@ -20,7 +20,7 @@ namespace OrigenDatos.Clases
         public Materia(Materia copia)
         {
             cve = copia.cve;
-            nombre = copia.cve;
+            nombre = copia.nombre;
             area = copia.area;
         }
 
