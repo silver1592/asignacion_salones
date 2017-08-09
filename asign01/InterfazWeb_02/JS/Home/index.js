@@ -40,6 +40,26 @@ $().ready(function () {
         $("#SeleccionExcel #descarga").attr("href", urlDownloadButton);
     });
 
+    $("#EliminaExcel").click(function () {
+        //TODO:Cambiar el direccionamiento y que lea el archivo
+        /*
+        var _url = $(".direccion #elimina").text().trim();
+
+        $.ajax({
+            type: "GET",
+            url: _url,
+            contentType: "application/json; charset=utf-8",
+            success: function (resultado) {
+                $("#resConsola").prepend("<p>" + resultado + "</p>");
+            },
+            error: function (jqXHR, exception) {
+                $("#resConsola").append("<p><strong>" + exception + "-" + ErrorToString(jqXHR, exception) + "<strong></p>");
+            },
+            beforeSend: Wait,
+            complete: Continue,
+        });*/
+    });
+
     //Comportamiento del boton para cargar la base de datos
     $("#SeleccionExcel #uploadExcel").click(function () {
         var _url = $(".direccion #uploadExcelToDB").text().trim();

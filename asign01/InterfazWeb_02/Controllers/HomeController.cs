@@ -223,6 +223,30 @@ namespace InterfazWeb_02.Controllers
             return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        [HttpGet]
+        public JsonResult EliminaArchivo(string archivo)
+        {
+            bool res = false;
+            string path = Server.MapPath("~/Archivos/" + archivo);
+
+            if (Directory.Exists(path))
+            {
+                try
+                {
+                    Directory.Delete(path);
+                    res = true;
+                }
+                catch
+                {
+                    res = false;
+                }
+
+            }
+            else
+                res = true;
+
+            return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
         #endregion
     }
 }

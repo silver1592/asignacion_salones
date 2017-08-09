@@ -20,7 +20,7 @@
                     <a id="descarga" class="boton">D</a>
                 </div>
                 <div class="col-md-1">
-                    <a id="descarga" class="boton">X</a>
+                    <a id="elimina" class="boton">X</a>
                 </div>
                 <div class="col-md-1">
                     <form method="post" action="@Url.Action("SubirExcel","Home",null, Request.Url.Scheme)" enctype="multipart/form-data">
@@ -67,5 +67,6 @@
         <p id="uploadExcelToDB">
             @Url.Action("CargaExcel_BD", "Home", null, Request.Url.Scheme)
         </p>
+        <p id="EliminaExcel">@Url.Action("EliminaArchivo", "Home", null, Request.Url.Scheme)</p>
     </div>
 </div>
