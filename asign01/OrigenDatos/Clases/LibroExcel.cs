@@ -30,27 +30,28 @@ namespace OrigenDatos.Clases
             dHeaders = new Dictionary<string, string>();
             dDefault = new Dictionary<string, string>();
 
-            dHeaders.Add("cve_mat", "CVE_MAT");
-            dHeaders.Add("cve_gpo", "CVE_GPO");
-            dHeaders.Add("cve", "CLAVEMAT");
-            dHeaders.Add("cverpe", "CVERPE");
-            dHeaders.Add("nom_prof", "Profesor");
-            dHeaders.Add("tipo", "TIPO");    //*
-            dHeaders.Add("salon", "SALON");  //*
-            dHeaders.Add("lunes", "LUNES");
-            dHeaders.Add("lunesf", "LUNESF");
-            dHeaders.Add("martes", "MARTES");
-            dHeaders.Add("martesf", "MARTESF");
-            dHeaders.Add("miercoles", "MIERCOLES");
-            dHeaders.Add("miercolesf", "MIERCOLESF");
-            dHeaders.Add("jueves", "JUEVES");
-            dHeaders.Add("juevesf", "JUEVESF");
-            dHeaders.Add("viernes", "VIERNES");
-            dHeaders.Add("viernesf", "VIERNESF");
-            dHeaders.Add("sabado", "SABADO");
-            dHeaders.Add("sabadof", "SABADOF");
-            dHeaders.Add("cupo", "CUPO");
-            dHeaders.Add("ciclo", "CICLO");  //*
+            dHeaders.Add("cve_mat", "CVE_MAT");//1
+            dHeaders.Add("cve_gpo", "CVE_GPO");//2
+            dHeaders.Add("cve", "CLAVEMAT");//3
+            dHeaders.Add("cverpe", "CVERPE");//4
+            dHeaders.Add("nom_prof", "Profesor");//5
+            dHeaders.Add("tipo", "TIPO");    //6*
+            dHeaders.Add("salon", "SALON");  //7*
+            dHeaders.Add("lunes", "LUNES");//8
+            dHeaders.Add("lunesf", "LUNESF");//9
+            dHeaders.Add("martes", "MARTES");//10
+            dHeaders.Add("martesf", "MARTESF");//11
+            dHeaders.Add("miercoles", "MIERCOLES");//12
+            dHeaders.Add("miercolesf", "MIERCOLESF");//13
+            dHeaders.Add("jueves", "JUEVES");//14
+            dHeaders.Add("juevesf", "JUEVESF");//15
+            dHeaders.Add("viernes", "VIERNES");//16
+            dHeaders.Add("viernesf", "VIERNESF");//17
+            dHeaders.Add("sabado", "SABADO");//18
+            dHeaders.Add("sabadof", "SABADOF");//19
+            dHeaders.Add("cupo", "CUPO");//20
+            dHeaders.Add("inscritos", "INSCRITOS");//21
+            dHeaders.Add("ciclo", "CICLO");  //22*
 
             //Valores default
             dDefault.Add("ciclo", "");
@@ -271,9 +272,10 @@ namespace OrigenDatos.Clases
             refCell = CreaCelda(g.horario_fin[4], r, 17);
             refCell = CreaCelda(g.horario_ini[5], r, 18);
             refCell = CreaCelda(g.horario_fin[5], r, 19);
-            refCell = CreaCelda(g.Cupo, r, 20);
-            refCell = CreaCelda(g.Ciclo, r, 21);
-            refCell = CreaCelda("-"+g.observaciones, r, 22);
+            refCell = CreaCelda(g.cupo, r, 20);
+            refCell = CreaCelda(g.inscritos, r, 21);
+            refCell = CreaCelda(g.Ciclo, r, 22);
+            refCell = CreaCelda("-"+g.observaciones, r, 23);
         }
 
         private Worksheet creaHoja(SpreadsheetDocument doc, string nombre)

@@ -91,14 +91,22 @@ $().ready(function () {
     $("#EjecutaOperaciones").click(Ejecuta);
 
     $("#Exporta").click(function () {
+        var d = new Date();
+        var _excel = d.yyyymmdd() + ".xlsx"
+        var _sheet = "Exportacion_"+d.getHours().toString() + "_" + d.getMinutes().toString();
+
+        var datos = {excel: _excel,sheet:_sheet};
+        var dt = JSON.stringify(datos);
         var _url = $(".direccion #Exporta").text().trim();
 
         $.ajax({
             type: "POST",
             url: _url,
             contentType: "application/json; charset=utf-8",
+            data: dt,
+            dataType: "json",
             success: function (resultado) {
-                $("#resConsola").prepend("<p>" + resultado + "</p>");
+                $("#resConsola").prepend("<p>" + resultado + "</p>"+"<spawn>Guardado en "+excel+"->"+sheet+"</spawn>");
             },
             error: function (jqXHR, exception) {
                 $("#resConsola").append("<p><strong>" + exception + "-" + ErrorToString(jqXHR, exception) + "<strong></p>");
@@ -118,4 +126,19 @@ function initialize()
 {
     $("#optionsTabs").tabs({ collapsible: true });
     $("#tabs").tabs({ collapsible: true });
+}
+
+function GetDatosExporta() {
+
+    var d = new Date();
+
+    excel = d.yyyymmdd() + ".xlsx"
+    sheet = d.getHours().toString() + "_" + d.getMinutes().toString();
+
+    datos = {
+        excel: excel,
+        hoja: sheet,
+    }
+
+    return datos;
 }
