@@ -11,6 +11,7 @@ namespace Algoritmo02.Clases
         private ListaVariables grupos;
         private ListaSalones salones;
         private ListaSalones permiteEmpalmes;
+        private string ciclo;
 
         public ListaVariables Grupos { get { return grupos; } }
 
@@ -19,6 +20,10 @@ namespace Algoritmo02.Clases
             grupos = new ListaVariables(_grupos);
             salones = new ListaSalones(_salones);
             permiteEmpalmes = salones.PermiteEmpalmes();
+            if (Grupos.Count != 0)
+                ciclo = Grupos[0].Ciclo;
+            else
+                ciclo = "";
         }
 
         /// <summary>
@@ -34,6 +39,7 @@ namespace Algoritmo02.Clases
             empalmados = new ListaVariables(grupos.NoEn(permiteEmpalmes)).AgrupaGruposEmpalmados();
 
             foreach (ListaVariables empalme in empalmados)
+            {
                 try
                 {
                     ResuelveEmpalme(empalme);
@@ -42,6 +48,8 @@ namespace Algoritmo02.Clases
                 {
                     QuitaSalon(empalme);
                 }
+                Grupos.Actualiza(empalme);
+            }
         }
 
         private void ResuelveEmpalme(ListaVariables empalme)
@@ -79,7 +87,6 @@ namespace Algoritmo02.Clases
         private void AsignacionMejorEleccion(ListaVariables empalme, Salon s)
         {
             Variable gOtrosSemestres = null, gAux = null, g =null;
-            empalme.SetSalones(salones);
 
             //Obtiene los gupos validos
             ListaVariables validos = empalme.Validos();

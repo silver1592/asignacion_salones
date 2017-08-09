@@ -122,9 +122,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -137,32 +135,25 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Imagenes\ajax-loader.gif" />
     <Content Include="Imagenes\background.png" />
+    <Content Include="Imagenes\upload.png" />
     <Content Include="Imagenes\excel_icon.png" />
     <Content Include="JS\Default.js" />
     <Content Include="JS\Error.js" />
     <Content Include="JS\externos\jquery.tablesorter.min.js" />
+    <Content Include="JS\Grupos\ActualizaGrupo.js" />
     <Content Include="JS\Grupos\Busqueda.js" />
     <Content Include="JS\Grupos\index.js" />
+    <Content Include="JS\Grupos\index_grupo.js" />
     <Content Include="JS\Salones\index.js" />
-    <Content Include="JS\_Ejecuta.js" />
-    <Content Include="JS\_CargaArchivo.js" />
+    <Content Include="JS\Home\_Ejecuta.js" />
     <Content Include="JS\_Menu.js" />
-    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
-    <Content Include="Styles\externos\bootstrap.css" />
-    <Content Include="Styles\externos\bootstrap.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="JS\index.js" />
-    <Content Include="JS\externos\jquery-3.2.1.min.js" />
+    <Content Include="JS\Home\index.js" />
     <Content Include="JS\externos\jquery-ui.min.js" />
-    <Content Include="JS\externos\bootstrap.js" />
-    <Content Include="JS\externos\bootstrap.min.js" />
     <Content Include="Styles\index.css" />
     <Content Include="Styles\externos\jquery-ui.min.css" />
     <Content Include="Styles\externos\jquery-ui.structure.css" />
@@ -177,6 +168,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Salon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,16 +186,17 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Grupos\Index.cshtml" />
     <Content Include="Views\Grupos\_Busqueda.cshtml" />
     <Content Include="Views\Grupos\_Grupos.cshtml" />
-    <Content Include="Views\Home\_Semestres.cshtml" />
+    <Content Include="Views\Shared\_Semestres.cshtml" />
     <Content Include="Views\Salon\_Busqueda.cshtml" />
     <Content Include="Views\Salon\Index.cshtml" />
     <Content Include="Views\Shared\_Base.cshtml" />
     <Content Include="Views\Salon\_Salon.cshtml" />
+    <Content Include="Views\Grupos\Grupo.cshtml" />
+    <Content Include="Views\Grupos\ModificaGrupo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -215,7 +208,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Archivos\" />
     <Folder Include="Clases\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algoritmo\Algoritmo02.csproj">

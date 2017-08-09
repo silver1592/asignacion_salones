@@ -185,7 +185,7 @@ namespace InterfazWeb_02.Controllers
                     grupos.Actualiza(alg.GruposAsignados);
                 }
 
-                c.Grupos_Carga(grupos, hoja);
+                c.Grupos_Carga(grupos, hoja,c.Materias_AsDictionary(),c.Profesores_AsDicctionary());
 
                 res = "Asignacion de " + hora + " completada";
             }
@@ -197,6 +197,56 @@ namespace InterfazWeb_02.Controllers
             return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public JsonResult Exporta()
+        {
+            string res = "<strong>Asignacion Fallida</strong>\n";
+
+            try
+            {
+                string ciclo = Session["ciclo"].ToString();
+                string path = Server.MapPath("~/Archivos/Exportacion.xlsx");
+
+                if (Directory.Exists(path))
+                    Directory.Delete(path);
+
+                Conexion c = new Conexion(Conexion.datosConexion, path, ciclo);
+                ListaVariables grupos = new ListaVariables(c.Grupos(ciclo,bExcel:false));
+
+                c.Grupos_Carga(grupos, "exp", c.Materias_AsDictionary(), c.Profesores_AsDicctionary());
+
+                res = "Exportacion completada";
+            }
+            catch (Exception ex)
+            {
+                res += "\n" + ex.Message;
+            }
+            return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        [HttpGet]
+        public JsonResult EliminaArchivo(string archivo)
+        {
+            bool res = false;
+            string path = Server.MapPath("~/Archivos/" + archivo);
+
+            if (Directory.Exists(path))
+            {
+                try
+                {
+                    Directory.Delete(path);
+                    res = true;
+                }
+                catch
+                {
+                    res = false;
+                }
+
+            }
+            else
+                res = true;
+
+            return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
         #endregion
     }
 }

@@ -1,8 +1,8 @@
-﻿Direccion: 148.224.58.4\FINGENIERIA
+﻿Direccion: 148.224.93.146\FINGENIERIA
 puerto: 2433
 user: asignacion
 password: Asigna#2016Ing
-
+db: asignacion
 
 LinqToExcel
 Excel Data Reader

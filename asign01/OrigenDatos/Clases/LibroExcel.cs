@@ -34,6 +34,7 @@ namespace OrigenDatos.Clases
             dHeaders.Add("cve_gpo", "CVE_GPO");
             dHeaders.Add("cve", "CLAVEMAT");
             dHeaders.Add("cverpe", "CVERPE");
+            dHeaders.Add("nom_prof", "Profesor");
             dHeaders.Add("tipo", "TIPO");    //*
             dHeaders.Add("salon", "SALON");  //*
             dHeaders.Add("lunes", "LUNES");
@@ -155,7 +156,6 @@ namespace OrigenDatos.Clases
             worksheet.Save();
             doc.Close();
             doc.Dispose();
-
         }
 
         /// <summary>
@@ -241,31 +241,39 @@ namespace OrigenDatos.Clases
             refCell = CreaCelda(g.num_Grupo, r, 2);
 
             if(materia!=null)
-                refCell = CreaCelda(materia[g.Cve_materia], r, 3);
+                if(materia.ContainsKey(g.Cve_materia))
+                    refCell = CreaCelda(materia[g.Cve_materia], r, 3);
+                else
+                    refCell = CreaCelda("-----------", r, 3);
             else
                 refCell = CreaCelda(Convert.ToInt32(g.Cve_materia) * 100 + g.num_Grupo, r, 3);
-            if(profesor!=null)
-                refCell = CreaCelda(profesor[g.RPE], r, 4);
-            else
-                refCell = CreaCelda(g.RPE, r, 4);
 
-            refCell = CreaCelda(g.Tipo, r, 5);
-            refCell = CreaCelda(g.Cve_espacio, r, 6);
-            refCell = CreaCelda(g.horario_ini[0], r, 7);
-            refCell = CreaCelda(g.horario_fin[0], r, 8);
-            refCell = CreaCelda(g.horario_ini[1], r, 9);
-            refCell = CreaCelda(g.horario_fin[1], r, 10);
-            refCell = CreaCelda(g.horario_ini[2], r, 11);
-            refCell = CreaCelda(g.horario_fin[2], r, 12);
-            refCell = CreaCelda(g.horario_ini[3], r, 13);
-            refCell = CreaCelda(g.horario_fin[3], r, 14);
-            refCell = CreaCelda(g.horario_ini[4], r, 15);
-            refCell = CreaCelda(g.horario_fin[4], r, 16);
-            refCell = CreaCelda(g.horario_ini[5], r, 17);
-            refCell = CreaCelda(g.horario_fin[5], r, 18);
-            refCell = CreaCelda(g.Cupo, r, 19);
-            refCell = CreaCelda(g.Ciclo, r, 20);
-            refCell = CreaCelda("-"+g.observaciones, r, 21);
+                refCell = CreaCelda(g.RPE, r, 4);
+            if (profesor != null)
+                if (profesor.ContainsKey(g.RPE))
+                    refCell = CreaCelda(profesor[g.RPE], r, 5);
+                else
+                    refCell = CreaCelda("------------", r, 5);
+            else
+                refCell = CreaCelda(g.RPE, r, 5);
+
+            refCell = CreaCelda(g.Tipo, r, 6);
+            refCell = CreaCelda(g.Cve_espacio, r, 7);
+            refCell = CreaCelda(g.horario_ini[0], r, 8);
+            refCell = CreaCelda(g.horario_fin[0], r, 9);
+            refCell = CreaCelda(g.horario_ini[1], r, 10);
+            refCell = CreaCelda(g.horario_fin[1], r, 11);
+            refCell = CreaCelda(g.horario_ini[2], r, 12);
+            refCell = CreaCelda(g.horario_fin[2], r, 13);
+            refCell = CreaCelda(g.horario_ini[3], r, 14);
+            refCell = CreaCelda(g.horario_fin[3], r, 15);
+            refCell = CreaCelda(g.horario_ini[4], r, 16);
+            refCell = CreaCelda(g.horario_fin[4], r, 17);
+            refCell = CreaCelda(g.horario_ini[5], r, 18);
+            refCell = CreaCelda(g.horario_fin[5], r, 19);
+            refCell = CreaCelda(g.Cupo, r, 20);
+            refCell = CreaCelda(g.Ciclo, r, 21);
+            refCell = CreaCelda("-"+g.observaciones, r, 22);
         }
 
         private Worksheet creaHoja(SpreadsheetDocument doc, string nombre)

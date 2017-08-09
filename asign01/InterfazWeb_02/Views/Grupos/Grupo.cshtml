@@ -1,0 +1,101 @@
+﻿@{
+    Layout = null;
+}
+@using Algoritmo02.Clases;
+@using OrigenDatos.Clases;
+@model object[]
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Grupo</title>
+    <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/JS/Grupos/index_grupo.js"></script>
+    <script src="~/JS/Grupos/ActualizaGrupo.js"></script>
+</head>
+<body>
+    <div class="container"> 
+        <div class="row">
+            <div class="col-sm-2">
+                <p id="cve_materia">@(((Variable)Model[0]).cve_full)</p>
+            </div>
+            <div class="col-sm-10">
+                <p>@(((Materia)Model[2]).Nombre)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <p id="rpe">@(((Profesor)Model[1]).RPE)</p>
+            </div>
+            <div class="col-sm-10">
+                <p>@(((Profesor)Model[1]).Nombre)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 form-group">
+                <form method="POST" action="@Url.Action("ModificaGrupo", "Grupos", null, Request.Url.Scheme)">
+                    <label for="salon">Salon</label>
+                    <input type="text" name="salon" id="salon" class="form-control" value="@(((Variable)Model[0]).Cve_espacio)"/>
+                    <input type="text" name="grupo" id="grupo" value="@(((Variable)Model[0]).cve_full)" />
+                </form>
+            </div>
+            <div class="col-sm-3">
+                <label for="puntos" >Puntos</label>
+                <p id="puntos">@(((Variable)Model[0]).Puntos)</p>
+            </div>
+            <div class="col-sm-3 col-sm-offset-3">
+                <label for="inscritos">Inscritos</label>
+                <p id="inscritos">@(((Variable)Model[0]).Cupo)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <label for="grupo_horario">Horario del Grupo</label>
+                <table class="table table-bordered" id="grupo_horario">
+                    <thead>
+                        <tr>
+                            <th>
+                                <p class="text-center">Lunes</p>
+                            </th>
+                            <th>
+                                <p class="text-center">Martes</p>
+                            </th>
+                            <th>
+                                <p class="text-center">Miercoles</p>
+                            </th>
+                            <th>
+                                <p class="text-center">Jueves</p>
+                            </th>
+                            <th>
+                                <p class="text-center">Viernes</p>
+                            </th>
+                            <th>
+                                <p class="text-center">Sabado</p>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @for (int i = 0; i < 6; i++)
+                            {
+                                <td width="150">
+                                    <p class="text-center">
+                                        @(((Variable)Model[0]).horario_ini[i])
+                                        -
+                                        @(((Variable)Model[0]).horario_fin[i])
+                                    </p>
+                                </td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <!--Aqui va el horario del profesor-->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

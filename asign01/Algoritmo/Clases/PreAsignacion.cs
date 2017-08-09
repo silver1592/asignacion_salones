@@ -39,7 +39,7 @@ namespace Algoritmo02.Clases
         public void semestres_anteriores()
         {
             foreach (Variable g in grupos)
-                if (g.Cve_espacio == "")
+                if (g.Cve_espacio == "" && salones.busca(g.Cve_espacio)!=null)
                     g.Cve_espacio= g.salonAnioPasado();
         }
     }

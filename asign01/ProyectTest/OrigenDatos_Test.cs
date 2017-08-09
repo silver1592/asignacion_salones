@@ -51,7 +51,7 @@ namespace ProyectTest
                 ListaGrupos grupos = new ListaGrupos();
 
                 grupos.Add(g);
-                excel.EscribeGrupos(grupos, "prueba");
+                excel.EscribeGrupos(grupos, "prueba", c.Materias_AsDictionary(), c.Profesores_AsDicctionary());
             }
             catch (Exception ex)
             {

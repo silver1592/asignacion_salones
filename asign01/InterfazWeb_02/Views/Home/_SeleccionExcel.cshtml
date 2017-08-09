@@ -5,21 +5,44 @@
 <div id="SeleccionExcel">
     <div class="row">
         <div class="col-md-12">
-            <label>Archivo: </label>
-            <select id="archivos" class="form-control">
-                <option>---------</option>
-                @foreach (string exc in Model)
-                {
-                    <option>@exc</option>
-                }
-            </select>
+            <label>Archivo: </label><br />
+            <div class="row">
+                <div class="col-md-9">
+                    <select id="archivos" class="form-control">
+                        <option>---------</option>
+                        @foreach (string exc in Model)
+                        {
+                            <option>@exc</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <a id="descarga" class="boton">D</a>
+                </div>
+                <div class="col-md-1">
+                    <a id="elimina" class="boton">X</a>
+                </div>
+                <div class="col-md-1">
+                    <form method="post" action="@Url.Action("SubirExcel","Home",null, Request.Url.Scheme)" enctype="multipart/form-data">
+                        <label for="cargaArchivo">
+                            <img src="~/Imagenes/upload.png" width="30"/>
+                        </label>
+                        <input type="file" name="archivo" id="cargaArchivo" accept=".xlsx, .xls"/>
+                    </form>
+                </div>
+            </div>
 
             <br />
-            <label>Hoja: </label>
-            <select id="hojas" class="form-control"></select>
-            <br />
-            <label>*Semestre:</label>
-            <input type="text" name="semestre" class="form-control"/>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Hoja: </label>
+                    <select id="hojas" class="form-control"></select>
+                </div>
+                <div class="col-md-6">
+                    <label>*Semestre:</label>
+                    <input type="text" name="semestre" class="form-control" />
+                </div>
+            </div>
         </div>
     </div>
     <br />
@@ -41,5 +64,9 @@
         <p id="seleccionaOrigenDatos">
             @Url.Action("SetSession_OrigenDatos", "Home",null, Request.Url.Scheme)
         </p>
+        <p id="uploadExcelToDB">
+            @Url.Action("CargaExcel_BD", "Home", null, Request.Url.Scheme)
+        </p>
+        <p id="EliminaExcel">@Url.Action("EliminaArchivo", "Home", null, Request.Url.Scheme)</p>
     </div>
 </div>

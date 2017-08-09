@@ -5,20 +5,13 @@
 
 input[type="number"] 
 { 
-    width:60px;
+    width:100px;
 }
 
 h3{
     padding:10px 10px 5px 10px;
     background-color:#EAEDED;
     border-radius:3px;
-}
-
-table{
-    width:100%;
-    table-layout: fixed;
-    border-collapse: separate;
-    border-spacing:10px;
 }
 
 .separador{
@@ -57,4 +50,11 @@ table{
     position:absolute;
     top:50%;
     margin-top: -25px;
+}
+
+.boton{
+    display: block;
+    background-color:aquamarine;
+    text-align:center;
+    padding:5px 10px;
 }

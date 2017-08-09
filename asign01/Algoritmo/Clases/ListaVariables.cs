@@ -97,7 +97,7 @@ namespace Algoritmo02.Clases
         public void SetSalones(ListaSalones salones)
         {
             Salon s;
-            foreach (Variable v in this)
+            foreach (Variable v in this as IList<Variable>)
             {
                 s = salones.busca(v.Cve_espacio);
                 if (s != null)
@@ -106,14 +106,6 @@ namespace Algoritmo02.Clases
         }
 
         #endregion
-
-        public ListaVariables Validos()
-        {
-            var query = from g in this as IList<Variable>
-                        select g;
-
-            return new ListaVariables(query.ToList());
-        }
 
         /// <summary>
         /// Obtiene los grupos con mejor puntiacion con cierto salon
@@ -127,16 +119,26 @@ namespace Algoritmo02.Clases
                         orderby g.Puntos descending
                         select g;
 
+            List<Variable> lista = query.ToList();
+
             if (limite != 0)
                 return new ListaVariables(query.Take(limite).ToList());
             else
-                return new ListaVariables(query.ToList());
+                return new ListaVariables(lista);
+        }
+
+        public ListaVariables Validos()
+        {
+            var query = from g in this as IList<Variable>
+                        select g;
+
+            return new ListaVariables(query.ToList());
         }
 
         public ListaVariables Empalmados()
         {
             var query = from g in this as IList<Variable>
-                        from g1 in grupos
+                        from g1 in this as IList<Variable>
                         where g.cve_full!=g1.cve_full && g.Empalme(g1)
                         select g;
 

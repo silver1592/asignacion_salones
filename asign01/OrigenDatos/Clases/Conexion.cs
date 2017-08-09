@@ -262,6 +262,22 @@ namespace OrigenDatos.Clases
             return datos;
         }
 
+        public Salon Salon(string cve_espacio)
+        {
+            {
+                string textoCmd = "SELECT * "
+                                  + "FROM [asignacion].[ae_cat_espacio] "
+                                  + "where cve_espacio='"+cve_espacio+"'";
+
+                DataTable datos = Querry(textoCmd);
+
+                if(datos.Rows.Count!=0)
+                    return new Salon(datos.Rows[0],0,this);
+
+                return null;
+            }
+        }
+
         /// <summary>
         /// Obtiene la informacion de los salones que tienen un trato especial
         /// </summary>
@@ -465,6 +481,18 @@ namespace OrigenDatos.Clases
             return datos;
         }
 
+        public ListaGrupos Grupos_EnSalon(object cve_salon, string ciclo)
+        {
+            List<Materia> materias = Materias();
+            List<Profesor> profesores = Profesores();
+
+            string query = "select * from ae_horario where ciclo ='"+ciclo+"' and salon = '"+cve_salon+"'";
+
+            DataTable datos = Querry(query);
+
+            return new ListaGrupos(Grupos_AsList(datos),profesores,materias);
+        }
+
         /// <summary>
         /// Obtiene Los grupos de semestres anteriores
         /// </summary>
@@ -495,7 +523,7 @@ namespace OrigenDatos.Clases
         /// </summary>
         /// <param name="grupos">Lista de grupos a escribir</param>
         /// <param name="hojaExcel">Hoja en la que se va a escribir(No importa si existe)</param>
-        public void Grupos_Carga(ListaGrupos grupos, string hojaExcel = "resultado")
+        public void Grupos_Carga(ListaGrupos grupos, string hojaExcel = "resultado", IDictionary<string, string> materia = null, IDictionary<int, string> profesor = null)
         {
             foreach (Grupo g in grupos)
                 if (Grupo_Existe(g))
@@ -504,7 +532,7 @@ namespace OrigenDatos.Clases
                     Comando(g.qInsert);
 
             if (Excel != null && hojaExcel != null)
-                Excel.EscribeGrupos(grupos, hojaExcel);
+                Excel.EscribeGrupos(grupos, hojaExcel,materia,profesor);
         }
         #endregion
 
@@ -529,7 +557,7 @@ namespace OrigenDatos.Clases
             List<Profesor> profesores = new List<Profesor>();
             try
             {
-                DataTable dt = Querry("SELECT * FROM [asignacion].[vae_cat_profesor]");
+                DataTable dt = Querry("SELECT * FROM vae_cat_profesor");
 
                 foreach (DataRow r in dt.Rows)
                     profesores.Add(new Profesor(r));
@@ -545,12 +573,25 @@ namespace OrigenDatos.Clases
         public Dictionary<int, string> Profesores_AsDicctionary()
         {
             Dictionary<int, string> profesores = new Dictionary<int, string>();
-            DataTable dt = Querry("SELECT * FROM [asignacion].[vae_cat_profesor]");
+            DataTable dt = Querry("SELECT * FROM vae_cat_profesor");
 
             foreach (DataRow r in dt.Rows)
                 profesores.Add(Convert.ToInt32(r["rpe"].ToString()), r["nombre"].ToString());
 
             return profesores;
+        }
+
+        public Profesor Profesor(int rpe)
+        {
+            Profesor profesor;
+            DataTable dt = Querry("SELECT * FROM vae_cat_profesor where rpe="+rpe);
+
+            if (dt.Rows.Count!=0)
+                profesor = new Profesor(dt.Rows[0]);
+            else
+                profesor = new Profesor(Convert.ToInt32(rpe));
+
+            return profesor;
         }
         #endregion
 
@@ -560,7 +601,7 @@ namespace OrigenDatos.Clases
             List<Materia> materias = new List<Materia>();
             try
             {
-                DataTable dt = Querry("SELECT * FROM [asignacion].[vae_cat_materia]");
+                DataTable dt = Querry("SELECT * FROM vae_cat_materia");
 
                 foreach (DataRow r in dt.Rows)
                     materias.Add(new Materia(r));
@@ -576,12 +617,25 @@ namespace OrigenDatos.Clases
         public Dictionary<string, string> Materias_AsDictionary()
         {
             Dictionary<string, string> materias = new Dictionary<string, string>();
-            DataTable dt = Querry("SELECT * FROM [asignacion].[vae_cat_materia]");
+            DataTable dt = Querry("SELECT * FROM vae_cat_materia");
 
             foreach (DataRow r in dt.Rows)
                 materias.Add(r["cve_materia"].ToString(), r["materia"].ToString());
 
             return materias;
+        }
+
+        public Materia Materia(string cve_materia)
+        {
+            Materia materia;
+            DataTable dt = Querry("SELECT * FROM vae_cat_materia where cve_materia='"+cve_materia+"'");
+
+            if (dt.Rows.Count != 0)
+                materia = new Materia(dt.Rows[0]);
+            else
+                materia = new Materia("-------", cve_materia, 0);
+
+            return materia;
         }
         #endregion
 
