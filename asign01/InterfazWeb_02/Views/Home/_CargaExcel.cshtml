@@ -6,7 +6,7 @@
         <input type="file" name="file" accept=".xlsx, .xls" class="form-control" /> <br />
         <button type="submit" class="btn-block">Subir archivo</button>
 </form>
-<ul>
+<ul id="ul_archivos">
     @foreach (string s in Model)
     {
         <li><a href="@Request.Url.AbsoluteUri/Archivos/@s">@s</a></li>

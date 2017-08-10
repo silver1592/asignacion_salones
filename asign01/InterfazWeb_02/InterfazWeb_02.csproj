@@ -139,7 +139,6 @@
     <Content Include="Imagenes\excel_icon.png" />
     <Content Include="JS\Default.js" />
     <Content Include="JS\Error.js" />
-    <Content Include="JS\externos\jquery.tablesorter.min.js" />
     <Content Include="JS\Grupos\ActualizaGrupo.js" />
     <Content Include="JS\Grupos\Busqueda.js" />
     <Content Include="JS\Grupos\index.js" />
@@ -153,7 +152,6 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Global.asax" />
     <Content Include="JS\Home\index.js" />
-    <Content Include="JS\externos\jquery-ui.min.js" />
     <Content Include="Styles\index.css" />
     <Content Include="Styles\externos\jquery-ui.min.css" />
     <Content Include="Styles\externos\jquery-ui.structure.css" />

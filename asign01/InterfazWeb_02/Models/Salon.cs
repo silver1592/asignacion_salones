@@ -12,6 +12,9 @@ namespace InterfazWeb_02.Models
         private string cve_espacio;
 
         public string Cve_espacio { get { return salon != null ? salon.Cve_espacio : cve_espacio; } }
+        public string Cupo { get { return salon != null ? salon.Cupo.ToString() : "Desconocido"; } }
+        public bool Asignable { get { return salon != null ? salon.Asignable : false; } }
+        public bool Empalme { get { return salon != null ? salon.empalme : true; } }
 
         public Salon(OrigenDatos.Clases.Salon _salon, Algoritmo02.Clases.ListaVariables _grupos, string _cve_espacio)
         {

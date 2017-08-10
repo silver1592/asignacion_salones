@@ -240,6 +240,28 @@ namespace Algoritmo02.Clases
             return new ListaVariables(query.ToList(), profesores, materias);
         }
 
+        public ListaVariables EnDia(int dia,int hora)
+        {
+            string dias;
+
+            switch(dia)
+            {
+                case 0: dias = "100000";break;
+                case 1: dias = "010000"; break;
+                case 2: dias = "001000"; break;
+                case 3: dias = "000100"; break;
+                case 4: dias = "000010"; break;
+                case 5: dias = "000001"; break;
+                default: dias = "000000";break;
+            }
+
+            var query = from g in this as IList<Variable>
+                        where g.EnHora(hora,hora+1,dias)
+                        select g;
+
+            return new ListaVariables(query.ToList(), profesores, materias);
+        }
+
         public ListaVariables OrdenarPorCiclo()
         {
             var query = from g in this as IList<Variable>

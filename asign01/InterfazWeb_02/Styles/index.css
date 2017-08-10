@@ -1,21 +1,5 @@
-﻿.contenedor{
-    border:1px solid #c5c5c5;
-    padding: 10px 15px 8px 15px;
-}
-
-input[type="number"] 
-{ 
-    width:100px;
-}
-
-h3{
-    padding:10px 10px 5px 10px;
-    background-color:#EAEDED;
-    border-radius:3px;
-}
-
-.separador{
-    border-right:1px solid #c5c5c5;
+﻿a {
+    text-decoration: none;
 }
 
 .full{
@@ -25,14 +9,6 @@ h3{
 .direccion{
     display:none;
     visibility:hidden;
-}
-
-#optionsTabs{
-    border:0px;
-}
-
-.row{
-    margin-bottom:5px;
 }
 
 #div_carga{
@@ -52,9 +28,26 @@ h3{
     margin-top: -25px;
 }
 
-.boton{
+.boton/*botones de */
+{
     display: block;
     background-color:aquamarine;
     text-align:center;
     padding:5px 10px;
+}
+
+.valido
+{
+    background-color:darkseagreen;
+}
+
+.error
+{
+    background-color:crimson;
+    color:snow;
+}
+
+.vacio
+{
+
 }

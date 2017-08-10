@@ -124,21 +124,8 @@ $().ready(function () {
 
 function initialize()
 {
-    $("#optionsTabs").tabs({ collapsible: true });
-    $("#tabs").tabs({ collapsible: true });
-}
-
-function GetDatosExporta() {
-
-    var d = new Date();
-
-    excel = d.yyyymmdd() + ".xlsx"
-    sheet = d.getHours().toString() + "_" + d.getMinutes().toString();
-
-    datos = {
-        excel: excel,
-        hoja: sheet,
-    }
-
-    return datos;
+    $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
 }

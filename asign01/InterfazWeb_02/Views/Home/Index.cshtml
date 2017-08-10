@@ -4,31 +4,36 @@
 }
 
 @section content{
-<div id="optionsTabs" class="row">
-    <div class="container-fluid">
-        <ul>
-            <li><a href="#tab_1">Excel</a></li>
-            <li><a href="#ejecutaAsignacion">Ejecucion</a></li>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#tab_1" aria-controls="Excel" role="tab" data-toggle="tab">Excel</a>
+            </li>
+            <li role="presentation">
+                <a href="#tab_2" aria-controls="Ejecucion" role="tab" data-toggle="tab">Ejecucion</a>
+            </li>
         </ul>
-        <div id="tab_1" class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="container-fluid">
-                        @{ Html.RenderAction("_SeleccionExcel", "Home"); }
-                    </div>
-                </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab_1">
+                @{ Html.RenderAction("_SeleccionExcel", "Home"); }
             </div>
-        </div>
-
-        <div id="ejecutaAsignacion" class="container-fluid">
-            @{ Html.RenderAction("_Operaciones", "Home");}
+            <div role="tabpanel" class="tab-pane" id="tab_2">
+                @{ Html.RenderAction("_Operaciones", "Home");}
+            </div>
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
         <h3>Resultado</h3>
         <div id="resConsola"></div>
     </div>
 </div>
+}
+
+@section directions{
+    <p id="Ejecuta">@Url.Action("EjecutaOperaciones", "Home", null, Request.Url.Scheme)</p>
+    <p id="Exporta">@Url.Action("Exporta", "Home", null, Request.Url.Scheme)</p>
 }
