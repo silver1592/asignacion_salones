@@ -82,6 +82,7 @@ namespace InterfazWeb_02.Controllers
         [HttpPost]
         public ActionResult SubirExcel(HttpPostedFileBase file)
         {
+            //TODO:checar que funcione
             if (file != null)
             {
                 string archivo = file.FileName;

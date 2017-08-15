@@ -153,8 +153,6 @@
     <Content Include="Global.asax" />
     <Content Include="JS\Home\index.js" />
     <Content Include="Styles\index.css" />
-    <Content Include="Styles\externos\jquery-ui.min.css" />
-    <Content Include="Styles\externos\jquery-ui.structure.css" />
     <Content Include="Styles\TablaGrupos.css" />
     <Content Include="Web.config" />
   </ItemGroup>

@@ -139,7 +139,7 @@ namespace Algoritmo02.Clases
             //Checa el equipo instalado. Max = 2
             puntos += valorEquipo(s) * 2 / 10;
 
-            //TODO: Checa que haya estado en ese salon el año pasado. Extra
+            //Checa que haya estado en ese salon el año pasado. Extra
             ListaGrupos semestres = otrosSemestres.EnSalon(s.Cve_espacio);
             if (semestres.Count() != 0)
                 puntos += (new ListaVariables(semestres).OrdenarPorCiclo() as IList<Variable>)[0].fCiclo/2;

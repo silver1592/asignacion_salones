@@ -28,12 +28,10 @@
     margin-top: -25px;
 }
 
-.boton/*botones de */
+.boton
 {
     display: block;
-    background-color:aquamarine;
     text-align:center;
-    padding:5px 10px;
 }
 
 .valido
@@ -50,4 +48,8 @@
 .vacio
 {
 
+}
+
+.glyphicon {
+    font-size: 30px;
 }
