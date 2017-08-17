@@ -80,9 +80,24 @@ namespace ProyectTest
             }
         }
 
+        [TestMethod]
+        public void Conexion_Importacion_Excel_Test()
+        {
+            try
+            {
+                Conexion c = new Conexion(Conexion.datosConexion, @"exp_2016_2017_II.xlsx", "T");
+                c.Sheet = "prueba01_2016_2017_II";
+                ListaGrupos grupos = new ListaGrupos(c.Grupos("2016-2017/II"));
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
         //Prueba de lectura en excel
         [TestMethod]
-        public void Conexion_Importacion_Test()
+        public void Conexion_Importacion_Excel_DB_Test()
         {
             try
             {

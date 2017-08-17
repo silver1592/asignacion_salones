@@ -16,16 +16,20 @@
                         }
                     </select>
                 </div>
-                <div class="col-md-1">
-                    <a id="descarga" class="boton">D</a>
+                <div class="col-md-1 col-sm-4 text-center">
+                    <a href="#" id="descarga" class="boton">
+                        <span class="glyphicon glyphicon-download-alt" ></span>
+                    </a>
                 </div>
-                <div class="col-md-1">
-                    <a id="elimina" class="boton">X</a>
+                <div class="col-md-1 col-sm-4 text-center">
+                    <a id="elimina" class="boton">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 col-sm-4 text-center">
                     <form method="post" action="@Url.Action("SubirExcel","Home",null, Request.Url.Scheme)" enctype="multipart/form-data">
                         <label for="cargaArchivo">
-                            <img src="~/Imagenes/upload.png" width="30"/>
+                            <span class="glyphicon glyphicon-upload"></span>
                         </label>
                         <input type="file" name="archivo" id="cargaArchivo" accept=".xlsx, .xls"/>
                     </form>

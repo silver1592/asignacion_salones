@@ -1,61 +1,67 @@
 ﻿@{
     Layout = null;
 }
-<div class="contenedor">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>Hora de inicio</label>
-                        <input type="number" name="hora_ini" value="7" class="form-control" />
-                    </div>
+<div class="row">
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">Horario de accion</div>
+            <div class="panel-body">
+                <div class="col-md-2 col-md-offset-4">
+                    <label>Hora de inicio</label>
+                    <input type="number" name="hora_ini" value="7" class="form-control" />
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>Hora de Limite</label>
-                        <input type="number" name="hora_fin" value="22" class="form-control" />
-                    </div>
+
+                <div class="col-md-2">
+                    <label>Hora de Limite</label>
+                    <input type="number" name="hora_fin" value="22" class="form-control" />
                 </div>
             </div>
-        </div>
-        <div class="col-md-9">
-            <div class="container-fluid">
-                <div class="row">
-                    <div valign="top" class="separador col-md-4 text-center">
-                        <div class="checkbox">
-                            <label><input type="checkbox" name="emp" value="e" /><u>Empalmes</u></label>
-                        </div>
-                    </div>
-
-                    <div valign="top" class="separador col-md-4 text-center">
-                        <div class="checkbox">
-                            <label><input type="checkbox" name="pre" value="p" /><u>Preasignacion</u></label>
-                        </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox" name="pre_otros_sem" value="f" />Otros semestres</label>
-                        </div>
-                    </div>
-
-                    <div valign="top" class="col-md-4 text-center">
-                        <div class="checkbox">
-                            <label><input type="checkbox" name="asig" value="a" /><u>Algoritmo</u></label>
-                        </div>
-                        <label>Individuos&nbsp;<input type="number" name="alg_individuos" value="5" class="form-control" /></label><br />
-                        <label>Generaciones&nbsp;<input type="number" name="alg_generaciones" value="50" class="form-control" /></label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <button id="EjecutaOperaciones" class="btn-block">Ejecutar</button>
-            <button id="Exporta" class="btn-block">Exportar</button>
         </div>
     </div>
 </div>
-<div class="direccion">
-    <p id="Ejecuta">@Url.Action("EjecutaOperaciones", "Home",null, Request.Url.Scheme)</p>
-    <p id="Exporta">@Url.Action("Exporta","Home",null, Request.Url.Scheme)</p>
+<div class="row">
+    <div class="col-md-4 text-center">
+        <div class="panel panel-default">
+            <div class="panel-heading">Empalmes</div>
+            <div class="panel-body">
+                <div class="checkbox">
+                    <input type="checkbox" name="emp" value="e" id="input_emp" />
+                    <label for="input_emp">Empalmes</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 text-center">
+        <div class="panel panel-default">
+            <div class="panel-heading">Preasignacion</div>
+            <div class="panel-body">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="pre" value="p" /><u>Asignacion Preferencial</u></label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="pre_otros_sem" value="f" />Otros semestres</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 text-center">
+        <div class="panel panel-default">
+            <div class="panel-heading">Algoritmo</div>
+            <div class="panel-body">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="asig" value="a" /><u>Algoritmo</u></label>
+                </div>
+                <label>Individuos&nbsp;<input type="number" name="alg_individuos" value="100" class="form-control" /></label><br />
+                <label>Generaciones&nbsp;<input type="number" name="alg_generaciones" value="1000" class="form-control" /></label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <button id="EjecutaOperaciones" class="btn-block">Ejecutar</button>
+        <button id="Exporta" class="btn-block">Exportar</button>
+    </div>
 </div>

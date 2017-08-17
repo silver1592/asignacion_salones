@@ -33,9 +33,10 @@ namespace InterfazWeb_02.Controllers
                 c.Grupos_Light(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)),
                 c.Profesores(),
                 c.Materias()));
-
+            ListaSalones s = new ListaSalones(c, c.Salones());
 
             list = list.EnDias(dias);
+            list.SetSalones(s);
 
             return PartialView(list);
         }
@@ -43,7 +44,12 @@ namespace InterfazWeb_02.Controllers
         public ActionResult _Grupos()
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaGrupos list = new ListaGrupos(c.Grupos_Light(Session["ciclo"].ToString()),c.Profesores(),c.Materias());
+            ListaVariables list = new ListaVariables(
+                new ListaGrupos(c.Grupos_Light(Session["ciclo"].ToString()),
+                                c.Profesores(),
+                                c.Materias()));
+            ListaSalones s = new ListaSalones(c, c.Salones());
+            list.SetSalones(s);
 
             return PartialView(list);
         }

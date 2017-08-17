@@ -43,7 +43,7 @@ namespace InterfazWeb_02.Controllers
                     aux = grupos.AgrupaGruposEmpalmados();
                     foreach (ListaVariables g in aux)
                         if (g.Count != 0)
-                            ls.Add(new InterfazWeb_02.Models.Salon(c.Salon(g[0].Cve_espacio), g,cve_salon));
+                            ls.Add(new InterfazWeb_02.Models.Salon(c.Salon(g[0].Cve_espacio), g,g[0].Cve_espacio));
                     break;
                 default:
                     grupos = new ListaVariables(c.Grupos(Session["ciclo"].ToString(), cve_salon));

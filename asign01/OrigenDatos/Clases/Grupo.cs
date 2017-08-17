@@ -24,8 +24,8 @@ namespace OrigenDatos.Clases
         protected int viernes_fin;//[viernes_fin] [int] NULL,
         protected int sabado_ini;//[sabado_ini] [int] NULL,
         protected int sabado_fin;//[sabado_fin] [int] NULL,
-        protected int cupo;//[cupo] [int] NOT NULL,
-        protected int inscritos;//[inscritos] [int] NOT NULL,
+        public int cupo;//[cupo] [int] NOT NULL,
+        public int inscritos;//[inscritos] [int] NOT NULL,
         protected string cve_espacio;//[salon] [varchar](60) NULL,
         protected int rpe;//[rpe] [int] NULL,
         protected string ciclo;//[ciclo] [varchar](20) NOT NULL
@@ -203,8 +203,8 @@ namespace OrigenDatos.Clases
                     + viernes_fin + ","
                     + sabado_ini + ","
                     + sabado_fin + ","
-                    + Cupo + ","
-                    + "0,"
+                    + cupo + ","
+                    + inscritos +","
                     + "'" + Cve_espacio + "',"
                     + rpe + ","
                     + "0,"
@@ -382,6 +382,10 @@ namespace OrigenDatos.Clases
                 { sabado_fin = 0; }
 
                 cupo = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cupo"])));
+                try
+                { inscritos = Convert.ToInt32(Convert.ToString(r.Field<object>(h["inscritos"]))); }
+                catch
+                { inscritos = 0; }
                 try
                 { tipo = r.Field<string>(h["tipo"]); }
                 catch

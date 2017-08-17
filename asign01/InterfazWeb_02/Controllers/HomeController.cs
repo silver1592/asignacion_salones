@@ -80,14 +80,15 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public ActionResult SubirExcel(HttpPostedFileBase file)
+        public ActionResult SubirExcel(HttpPostedFileBase archivo)
         {
-            if (file != null)
+            //TODO:checar que funcione
+            if (archivo != null)
             {
-                string archivo = file.FileName;
-                string dir = Server.MapPath("~/Archivos/") + archivo;
+                string file = archivo.FileName;
+                string dir = Server.MapPath("~/Archivos/") + file;
 
-                file.SaveAs(dir);
+                archivo.SaveAs(dir);
             }
 
             return RedirectToAction("Index", "Home");
@@ -197,24 +198,21 @@ namespace InterfazWeb_02.Controllers
             return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public JsonResult Exporta()
+        public JsonResult Exporta(string excel, string sheet)
         {
             string res = "<strong>Asignacion Fallida</strong>\n";
 
             try
             {
                 string ciclo = Session["ciclo"].ToString();
-                string path = Server.MapPath("~/Archivos/Exportacion.xlsx");
-
-                if (Directory.Exists(path))
-                    Directory.Delete(path);
+                string path = Server.MapPath("~/Archivos/"+excel);
 
                 Conexion c = new Conexion(Conexion.datosConexion, path, ciclo);
                 ListaVariables grupos = new ListaVariables(c.Grupos(ciclo,bExcel:false));
 
-                c.Grupos_Carga(grupos, "exp", c.Materias_AsDictionary(), c.Profesores_AsDicctionary());
+                c.Grupos_Carga(grupos, sheet, c.Materias_AsDictionary(), c.Profesores_AsDicctionary());
 
-                res = "Exportacion completada";
+                res = "Exportacion completada </br><strong>Guardado en "+excel+"->"+sheet+"</strong>";
             }
             catch (Exception ex)
             {
