@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-@model OrigenDatos.Clases.ListaGrupos
+@model Algoritmo02.Clases.ListaVariables
 
 <table class="table table-hover table-striped table-bordered">
     <thead>
@@ -16,6 +16,7 @@
             <th width="4%" colspan="2" class="text-center"><span>V</span></th>
             <th width="4%" colspan="2" class="text-center"><span>S</span></th>
             <th width="10%" class="text-center"><span>Salon</span></th>
+            <th class="text-center"><span>Puntos</span></th>
         </tr>
     </thead>
     @foreach (var g in Model)
@@ -50,6 +51,7 @@
                     }
                 </a>
             </td>
+            <td>@(((Algoritmo02.Clases.Variable)g).Puntos)</td>
         </tr>
     }
 </table>

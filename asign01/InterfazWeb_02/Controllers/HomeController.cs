@@ -80,15 +80,15 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public ActionResult SubirExcel(HttpPostedFileBase file)
+        public ActionResult SubirExcel(HttpPostedFileBase archivo)
         {
             //TODO:checar que funcione
-            if (file != null)
+            if (archivo != null)
             {
-                string archivo = file.FileName;
-                string dir = Server.MapPath("~/Archivos/") + archivo;
+                string file = archivo.FileName;
+                string dir = Server.MapPath("~/Archivos/") + file;
 
-                file.SaveAs(dir);
+                archivo.SaveAs(dir);
             }
 
             return RedirectToAction("Index", "Home");
