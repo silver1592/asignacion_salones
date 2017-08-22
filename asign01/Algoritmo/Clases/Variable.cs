@@ -10,7 +10,6 @@ namespace Algoritmo02.Clases
     {
         private Salon salon;    //Salon asignado
         private int Hora;       //Hora en la que se esta asignando
-
         public float fCiclo     //Convierte el cilco a puntos para que sea facil distinguir cual es el mas actual
         {
             get
@@ -62,6 +61,18 @@ namespace Algoritmo02.Clases
                     return 0;
             }
         }
+        public int valorTotalEquipo
+        {
+            get
+            {
+                int res = 0;
+
+                foreach (Requerimiento_Valor req in requerimientos_Salon)
+                    res = req.valor;
+
+                return res;
+            }
+        }
         public bool Valido      //Checa si la asignacion es valida
         {
             get
@@ -69,21 +80,6 @@ namespace Algoritmo02.Clases
                 return EsValido(Salon);
             }
         }
-        public float puntosEquipo//Retorna los puntos que se tiene con el equipo instalado en el salon y los que necesita el grupo
-        {
-            get
-            {
-                if (salon == null) return 0;
-                float pT = this.valorTotalEquipo;
-                float pE = this.valorEquipo(salon);
-
-                if (pT == 0)
-                    return 1;
-
-                return pE / pT;
-            }
-        }
-
         public string salonAnioPasado(int limite=1)//Limite es para que chece la diferencia entre fCiclo y por ejemplo, solo cuente los de hace un año
         {
             Variable sel = null;
@@ -129,49 +125,88 @@ namespace Algoritmo02.Clases
             float puntos = 0;
             if (s == null) return 0;
 
-            //Checa el area. Max = 6
-            puntos += s.PrioridadArea(Area) * 6 / 10;
+            //Max = 6
+            puntos += PuntosArea(s) * 6 / 10;
 
-            //Checa la hora anterior. Max = 2
-            if (GHoraAnterior != null && GHoraAnterior.Cve_espacio == s.Cve_espacio)
-                puntos += 3;
+            //Max = 3
+            puntos += PuntosHoraAnterior(s);
 
-            //Checa el equipo instalado. Max = 2
-            puntos += valorEquipo(s) * 2 / 10;
+            //Max = 2
+            puntos += ValorEquipo(s) * 2 / 10;
 
-            //Checa que haya estado en ese salon el año pasado. Extra
-            ListaGrupos semestres = otrosSemestres.EnSalon(s.Cve_espacio);
-            if (semestres.Count() != 0)
-                puntos += (new ListaVariables(semestres).OrdenarPorCiclo() as IList<Variable>)[0].fCiclo/2;
+            //Extra
+            puntos += ValorSemestrePasado(s)/2;
 
             //Diferencia de cupo del grupo entre el del salon dividido entre 4 y restado a los puntos totales. Extra
-            puntos -= Math.Abs(Cupo - salon.Cupo) / 4;
+            puntos -= Math.Abs(DiferenciaCupo(s)) / 4;
 
             return puntos;
         }
 
-        public float valorEquipo(Salon salon)
+        /// <summary>
+        /// Calcula los puntos de area que proporciona el salon, si no hay salon trata de evaluar con el asignado en la variable
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public float PuntosArea(Salon salon=null)
+        {
+            Salon s = salon != null ? salon : Salon;
+            if (s != null)
+                return s.PrioridadArea(Area);
+
+            return 0;
+        }
+
+        //Checa la hora anterior
+        public float PuntosHoraAnterior(Salon salon=null)
+        {
+            Salon s = salon != null ? salon : Salon;
+            if (s != null)
+                if (GHoraAnterior != null && GHoraAnterior.Cve_espacio == s.Cve_espacio)
+                    return 3;
+
+            return 0;
+        }
+
+        //Checa que haya estado en ese salon el año pasado
+        public float ValorSemestrePasado(Salon salon =null)
+        {
+            Salon s = salon != null ? salon : Salon;
+            if (s != null)
+            {
+                ListaGrupos semestres = otrosSemestres.EnSalon(s.Cve_espacio);
+                if (semestres.Count() != 0)
+                    return (new ListaVariables(semestres).OrdenarPorCiclo() as IList<Variable>)[0].fCiclo;
+            }
+            return 0;
+        }
+
+        public float DiferenciaCupo(Salon salon=null)
+        {
+            Salon s = salon != null ? salon : Salon;
+            if (s != null)
+                return Cupo - s.Cupo;
+
+            return 0;
+        }
+
+        //Calcula el valor del equipo comparandolo con el del salon
+        public float ValorEquipo(Salon salon=null)
         {
             int res = 0;
 
-            foreach (Requerimiento_Valor req in requerimientos_Salon)
-                if (salon.Equipo.Contains(req.requerimiento))
-                    res += req.valor;
+            Salon s = salon != null ? salon : Salon;
 
-            return valorTotalEquipo!=0 ? res*10/valorTotalEquipo : res;
-        }
-
-        public int valorTotalEquipo
-        {
-            get
+            if (s != null)
             {
-                int res = 0;
-
                 foreach (Requerimiento_Valor req in requerimientos_Salon)
-                    res = req.valor;
+                    if (s.Equipo.Contains(req.requerimiento))
+                        res += req.valor;
 
-                return res;
+                return valorTotalEquipo != 0 ? res * 10 / valorTotalEquipo : res;
             }
+
+            return res;
         }
 
         /// <summary>

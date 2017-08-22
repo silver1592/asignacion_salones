@@ -41,6 +41,24 @@ namespace InterfazWeb_02.Controllers
             return PartialView(list);
         }
 
+        [HttpGet]
+        public ActionResult _Grupos(string consulta)
+        {
+            Conexion c = new Conexion(Conexion.datosConexion);
+            ListaVariables list;
+            ListaSalones s = new ListaSalones(c, c.Salones());
+
+            switch (consulta)
+            {
+                default: list  = new ListaVariables();
+                    break;
+            }
+
+            list.SetSalones(s);
+
+            return PartialView(list);
+        }
+
         public ActionResult _Grupos()
         {
             Conexion c = new Conexion(Conexion.datosConexion);
@@ -87,7 +105,7 @@ namespace InterfazWeb_02.Controllers
 
             g.Salon = s;
 
-            c.Querry(g.qUpdate);
+            c.Querry(g.qUpdate());
 
             return View();
         }
