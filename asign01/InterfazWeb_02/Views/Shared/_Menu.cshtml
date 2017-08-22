@@ -19,8 +19,10 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Sin Asignar</a></li>
-                    <li><a href="#">Asignados</a></li>
+                    <li>@Html.ActionLink("Sin Asignar","Index","Grupos",new { consulta = "sinAsignar"},null)</li>
+                    <li>@Html.ActionLink("Asignados", "Index", "Grupos", new { consulta = "asignados" },null)</li>
+                    <li role="separator" class="divider"></li>
+                    <li>@Html.ActionLink("Sobrecupo", "Index", "Grupos", new { consulta = "sobrecupo" },null)</li>
                     <li role="separator" class="divider"></li>
                     <li>@Html.ActionLink("Todos", "Index", "Grupos")</li>
                 </ul>

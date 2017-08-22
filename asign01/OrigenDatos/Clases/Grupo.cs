@@ -69,7 +69,7 @@ namespace OrigenDatos.Clases
             }
         }         //Muestra la hora mas temprana en la que inicia el grupo
         public string Area { get { return cve_materia.Substring(0, 1); } }
-        public int Cupo { get { return inscritos==0 ? cupo : inscritos; } }
+        public int Cupo { get { return inscritos == 0 ? cupo : inscritos; } }
         public string Cve_materia { get { return cve_materia; } }
         public int num_Grupo { get { return grupo; } }
         public int RPE { get { return rpe; } }
@@ -109,7 +109,7 @@ namespace OrigenDatos.Clases
         {
             get
             {
-                int[,] horario = new int[2,6];
+                int[,] horario = new int[2, 6];
 
                 for (int i = 0; i < 6; i++)
                     horario[0, i] = horario_ini[i];
@@ -173,14 +173,39 @@ namespace OrigenDatos.Clases
         /// <summary>
         /// Cadena para el query de update.
         /// </summary>
-        public string qUpdate
+        public string qUpdate(bool horario = true, bool salon = true, bool inscritos = true)
         {
-            get
+            string query = "UPDATE [asignacion].[ae_horario] set ";
+
+            if (horario || salon || inscritos)
             {
-                return "UPDATE [asignacion].[ae_horario] "
-                              + "SET[salon] = '" + Cve_espacio + "'"
-                              + " WHERE[cve_materia] = '" + cve_materia + "' and [grupo] = " + grupo.ToString() + " and [tipo] = '" + tipo + "' and [ciclo] = '" + ciclo + "';";
+                if (salon)
+                    query += "[salon] = '" + Cve_espacio + "',";
+                if (inscritos)
+                    query += "[inscritos] = " + inscritos + ",";
+                if (horario)
+                {
+                    query += "[lunes_ini] = " + horario_ini[0] + ",";
+                    query += "[lunes_fin] = " + horario_ini[0] + ",";
+                    query += "[martes_ini] = " + horario_ini[0] + ",";
+                    query += "[martes_fin] = " + horario_ini[0] + ",";
+                    query += "[miercoles_ini] = " + horario_ini[0] + ",";
+                    query += "[miercoles_fin] = " + horario_ini[0] + ",";
+                    query += "[jueves_ini] = " + horario_ini[0] + ",";
+                    query += "[jueves_fin] = " + horario_ini[0] + ",";
+                    query += "[viernes_ini] = " + horario_ini[0] + ",";
+                    query += "[viernes_ini] = " + horario_ini[0] + ",";
+                    query += "[sabado_ini] = " + horario_ini[0] + ",";
+                    query += "[sabado_fin] = " + horario_ini[0] + ",";
+                }
             }
+            else return "";
+
+            query = query.Substring(0, query.Length - 1);
+
+            query += " WHERE[cve_materia] = '" + cve_materia + "' and [grupo] = " + grupo.ToString() + " and [tipo] = '" + tipo + "' and [ciclo] = '" + ciclo + "';";
+
+            return query;
         }
 
         public string qInsert

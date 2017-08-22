@@ -45,9 +45,13 @@
                 <label for="puntos" >Puntos</label>
                 <p id="puntos">@(((Variable)Model[0]).Puntos)</p>
             </div>
-            <div class="col-sm-3 col-sm-offset-3">
+            <div class="col-sm-2 col-sm-offset-2">
                 <label for="inscritos">Inscritos</label>
                 <p id="inscritos">@(((Variable)Model[0]).Cupo)</p>
+            </div>
+            <div class="col-sm-2">
+                <label for="cupo">Cupo</label>
+                <p id="cupo">@(((Variable)Model[0]).Salon.Cupo)</p>
             </div>
         </div>
         <div class="row">
@@ -94,6 +98,33 @@
             </div>
             <div class="col-sm-6">
                 <!--Aqui va el horario del profesor-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6">
+                <!--Detalles de puntaje-->
+                <table>
+                    <tr>
+                        <td><p>Prioridad por area:</p></td>
+                        <td><p>@(((Variable)Model[0]).PuntosArea())</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Valor por equipo solicitado:</p></td>
+                        <td><p>@(((Variable)Model[0]).PuntosHoraAnterior())</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Valor por equipo solicitado:</p></td>
+                        <td><p>@(((Variable)Model[0]).ValorEquipo())</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Puntos por otros semestres:</p></td>
+                        <td><p>@(((Variable)Model[0]).ValorSemestrePasado())</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Diferencia en cupo:</p></td>
+                        <td><p>@(((Variable)Model[0]).DiferenciaCupo())</p></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

@@ -10,7 +10,6 @@ namespace InterfazWeb_02.Controllers
 {
     public class GruposController : Controller
     {
-        // GET: Grupos
         public ActionResult Index()
         {
             return View();
@@ -30,7 +29,7 @@ namespace InterfazWeb_02.Controllers
         {
             Conexion c = new Conexion(Conexion.datosConexion);
             ListaVariables list = new ListaVariables(new ListaGrupos(
-                c.Grupos_Light(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)),
+                c.IGrupos_Light(Session["ciclo"].ToString(), Convert.ToInt32(ini), Convert.ToInt32(fin)),
                 c.Profesores(),
                 c.Materias()));
             ListaSalones s = new ListaSalones(c, c.Salones());
@@ -41,14 +40,25 @@ namespace InterfazWeb_02.Controllers
             return PartialView(list);
         }
 
-        public ActionResult _Grupos()
+        [HttpGet]
+        public ActionResult _Grupos(string consulta)
         {
             Conexion c = new Conexion(Conexion.datosConexion);
-            ListaVariables list = new ListaVariables(
-                new ListaGrupos(c.Grupos_Light(Session["ciclo"].ToString()),
-                                c.Profesores(),
-                                c.Materias()));
+            ListaVariables list;
             ListaSalones s = new ListaSalones(c, c.Salones());
+
+            switch (consulta)
+            {
+                case "sinAsignar": list = new ListaVariables(c.IGrupos_sinAsignar(Session["ciclo"].ToString()));
+                    break;
+                case "asignados": list = new ListaVariables(c.IGrupos_Asignados(Session["ciclo"].ToString()));
+                    break;
+                case "sobrecupo": list = new ListaVariables(c.IGrupos_Sobrecupo(Session["ciclo"].ToString()));
+                    break;
+                default: list  = new ListaVariables(c.IGrupos_Light(Session["ciclo"].ToString()));
+                    break;
+            }
+
             list.SetSalones(s);
 
             return PartialView(list);
@@ -87,7 +97,7 @@ namespace InterfazWeb_02.Controllers
 
             g.Salon = s;
 
-            c.Querry(g.qUpdate);
+            c.Querry(g.qUpdate());
 
             return View();
         }

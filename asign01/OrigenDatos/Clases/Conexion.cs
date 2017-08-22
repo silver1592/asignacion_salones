@@ -23,13 +23,6 @@ namespace OrigenDatos.Clases
         {
             get
             {
-                /* Conexion de prueba (local)
-                string dir = @"(localdb)\asignacion;";
-                string database = "asignacion";
-                string datosConexion = "Data Source=" + dir
-                                        + "Initial Catalog=" + database + ";"
-                                        + "Integrated Security = false;";
-                */
                 string dir = @"148.224.93.146\FINGENIERIA,2433;"; //servidor de la escuela
                 string usuario = "asignacion";
                 string pass = "Asigna#2016Ing";
@@ -82,16 +75,11 @@ namespace OrigenDatos.Clases
             }
         } // Diccionario para leer la informacion de la base de datos
 
-        public Grupo Grupo(string cve_full, string semestre)
+        public void EliminaDatos(string semestre)
         {
-            string query = "select * from asignacion.ae_horario where cve_materia*100+grupo =" + cve_full + " and ciclo='" + semestre+"'";
+            string query = "DELETE FROM [asignacion].[ae_horario] WHERE ciclo ='"+semestre+"';";
 
-            DataTable dt = Querry(query);
-
-            if (dt.Rows.Count == 1)
-                return new Grupo(dt.Rows[0], DGruposBD, null, this, null);
-
-            return null;
+            Comando(query);
         }
         #endregion
 
@@ -353,6 +341,18 @@ namespace OrigenDatos.Clases
             return res;
         }
 
+        public Grupo Grupo(string cve_full, string semestre)
+        {
+            string query = "select * from asignacion.ae_horario where cve_materia*100+grupo =" + cve_full + " and ciclo='" + semestre + "'";
+
+            DataTable dt = Querry(query);
+
+            if (dt.Rows.Count == 1)
+                return new Grupo(dt.Rows[0], DGruposBD, null, this, null);
+
+            return null;
+        }
+
         /// <summary>
         /// Obtiene los grupos de la base de datos o del excel
         /// </summary>
@@ -383,7 +383,7 @@ namespace OrigenDatos.Clases
             return res;
         }
 
-        public ListaGrupos Grupos_Light(string semestre, int ini = 7, int fin = 22, bool bExcel = true)
+        public ListaGrupos IGrupos_Light(string semestre, int ini = 7, int fin = 22, bool bExcel = true)
         {
             ListaGrupos res = null;
             IList<Grupo> grupos;
@@ -393,7 +393,7 @@ namespace OrigenDatos.Clases
                 DataTable dt = Querry("SELECT * FROM  [asignacion].[Grupos_a_las] (" + ini + "," + fin + ") where ciclo = '" + semestre + "'");
 
                 grupos = Grupos_AsList(dt);
-                res = new ListaGrupos(grupos);
+                res = new ListaGrupos(grupos, Profesores(), Materias());
             }
             else
             {
@@ -401,6 +401,30 @@ namespace OrigenDatos.Clases
             }
 
             return res;
+        }
+
+        public ListaGrupos IGrupos_sinAsignar(string semestre)
+        {
+            string query = "select * from asignacion.ae_horario where salon = '' and ciclo='" + semestre + "'";
+            DataTable dt = Querry(query);
+
+            return  new ListaGrupos(Grupos_AsList(dt), Profesores(), Materias());
+        }
+
+        public ListaGrupos IGrupos_Asignados(string semestre)
+        {
+            string query = "select * from asignacion.ae_horario where not(salon = '') and ciclo='" + semestre + "'";
+            DataTable dt = Querry(query);
+
+            return new ListaGrupos(Grupos_AsList(dt), Profesores(), Materias());
+        }
+
+        public ListaGrupos IGrupos_Sobrecupo(string ciclo)
+        {
+            string query = "select h.*, s.cupo_max as 'Cupo Salon' from asignacion.ae_horario as h, asignacion.ae_cat_espacio as s where ciclo = '" + ciclo + "' and h.salon = s.cve_espacio and h.inscritos > s.cupo_max;";
+            DataTable dt = Querry(query);
+
+            return new ListaGrupos(Grupos_AsList(dt), Profesores(), Materias());
         }
 
         public ListaGrupos Grupos_EmpiezanA(string semestre, int ini, bool bExcel)
@@ -527,7 +551,7 @@ namespace OrigenDatos.Clases
         {
             foreach (Grupo g in grupos)
                 if (Grupo_Existe(g))
-                    Comando(g.qUpdate);
+                    Comando(g.qUpdate());
                 else
                     Comando(g.qInsert);
 
