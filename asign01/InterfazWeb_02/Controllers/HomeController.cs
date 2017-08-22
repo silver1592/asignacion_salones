@@ -79,6 +79,25 @@ namespace InterfazWeb_02.Controllers
             return PartialView(lista);
         }
 
+        public ActionResult _EliminaExcel(string nombre)
+        {
+            string dir = Server.MapPath("~/Archivos/") + nombre;
+            if (Directory.Exists(dir))
+            {
+
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult LimpiaBaseDatos()
+        {
+            Conexion c = new Conexion(Conexion.datosConexion);
+
+            c.EliminaDatos(Session["ciclo"].ToString());
+
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
         public ActionResult SubirExcel(HttpPostedFileBase archivo)
         {
@@ -106,7 +125,7 @@ namespace InterfazWeb_02.Controllers
             {
                 c = new Conexion(Conexion.datosConexion, excelDir, ciclo);
                 c.Sheet = sheet;
-                ListaGrupos grupos = c.Grupos_Light(ciclo);
+                ListaGrupos grupos = c.IGrupos_Light(ciclo);
 
                 c.Grupos_Carga(grupos,null);
             }
