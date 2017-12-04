@@ -54,12 +54,10 @@
         <div class="col-md-12">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <button id="uploadExcel" class="btn-block">Cargar excel en base de datos</button>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <form action="@Url.Action("LimpiaBaseDatos","Home",null, Request.Url.Scheme)" method="get">
                             <input type="submit" id="eliminaBaseDatos" class="btn-block" value="Elimina Base de datos">
                         </form>
