@@ -679,11 +679,19 @@ namespace OrigenDatos.Clases
 
         public bool Semestre_Valido(string semestre)
         {
-            DataTable dt = Querry("select count(*) from asignacion.ae_horario where ciclo = '" + semestre + "'");
-            if (Convert.ToInt32(dt.Rows[0][0].ToString()) == 0)
-                return false;
+            try
+            {
+                DataTable dt = Querry("select count(*) from asignacion.ae_horario where ciclo = '" + semestre + "'");
+                if (Convert.ToInt32(dt.Rows[0][0].ToString()) == 0)
+                    return false;
 
-            return true;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+
 
         }
         #endregion

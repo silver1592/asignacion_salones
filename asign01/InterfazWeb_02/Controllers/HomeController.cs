@@ -14,24 +14,64 @@ namespace InterfazWeb_02.Controllers
         //
         // GET: /Home/
 
+        /// <summary>
+        /// Ciclo a analizar
+        /// </summary>
+        public string Ciclo
+        {
+            get
+            {
+                return Session["ciclo"] != null ? Session["ciclo"].ToString() : "";
+            }
+            set
+            {
+                if (Session["ciclo"] == null)
+                    Session.Add("ciclo", value);
+                else
+                    Session["ciclo"] = value;
+            }
+        }
+
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Vista parcial del menu de navegacion
+        /// </summary>
+        /// <returns></returns>
         public ActionResult _Menu()
         {
             return View();
         }
 
+        /// <summary>
+        /// Vista parcial del ComboBox con los semestres listados en la base de datos
+        /// </summary>
+        /// <returns></returns>
         public ActionResult _Semestres()
         {
-            Conexion c = new Conexion(Conexion.datosConexion);
-            string[] semestres = c.Semestres();
+            string[] semestres = new string[0];
+            try
+            {
+                Conexion c = new Conexion(Conexion.datosConexion);
+                semestres = c.Semestres();
+            }
+            catch(Exception ex)
+            {
+
+            }
 
             return View(semestres);
+
         }
 
+        /// <summary>
+        /// Checa si el semestre es valido
+        /// </summary>
+        /// <param name="semestre"></param>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult ConexionValida(string semestre)
         {
@@ -42,10 +82,8 @@ namespace InterfazWeb_02.Controllers
             c = new Conexion(Conexion.datosConexion);
             if (c.Semestre_Valido(semestre))
             {
-                if (Session["ciclo"] == null)
-                    Session.Add("ciclo", semestre);
-                else
-                    Session["ciclo"] = semestre;
+                Ciclo = semestre;
+
                 res = true;
             }
 
@@ -59,7 +97,7 @@ namespace InterfazWeb_02.Controllers
             string[] pathElements;
             string fileName;
 
-            foreach (string s in Directory.GetFiles(Server.MapPath("~/Archivos/")))
+            foreach (string s in Directory.GetFiles(Server.MapPath("~/Archivos/"), "*.xls*"))
             {
                 pathElements = s.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
                 fileName = pathElements[pathElements.Length - 1];
@@ -93,7 +131,7 @@ namespace InterfazWeb_02.Controllers
         {
             Conexion c = new Conexion(Conexion.datosConexion);
 
-            c.EliminaDatos(Session["ciclo"].ToString());
+            c.EliminaDatos(Ciclo);
 
             return RedirectToAction("Index", "Home");
         }
@@ -171,12 +209,12 @@ namespace InterfazWeb_02.Controllers
 
             try
             {
-                string ciclo = Session["ciclo"].ToString();
+                string ciclo = Ciclo;
 
                 Conexion c = new Conexion(Conexion.datosConexion,Server.MapPath("~/Archivos/"+excel),ciclo);
                 ListaVariables grupos = new ListaVariables(c.Grupos_EmpiezanA(ciclo, Convert.ToInt32(hora), false));
                 ListaSalones salones = new ListaSalones(c, c.Salones(), Convert.ToInt32(hora));
-                salones.SetHorarios(c, Session["ciclo"].ToString());
+                salones.SetHorarios(c, Ciclo);
 
                 if (Convert.ToBoolean(empalmes))
                 {
@@ -219,11 +257,11 @@ namespace InterfazWeb_02.Controllers
 
         public JsonResult Exporta(string excel, string sheet)
         {
-            string res = "<strong>Asignacion Fallida</strong>\n";
+            string res = "<strong>Operacion fallida</strong>\n";
 
             try
             {
-                string ciclo = Session["ciclo"].ToString();
+                string ciclo = Ciclo;
                 string path = Server.MapPath("~/Archivos/"+excel);
 
                 Conexion c = new Conexion(Conexion.datosConexion, path, ciclo);

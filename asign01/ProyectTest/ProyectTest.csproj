@@ -71,6 +71,9 @@
       <Name>OrigenDatos</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="HORARIOS_-_MATERIAS_18-12-2017_10-35-48_V1.xlsx" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algoritmo02", "Algoritmo\Algoritmo02.csproj", "{1AEF36B2-2441-4E63-B135-7BDCAE327A7F}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfazWeb_02", "InterfazWeb_02\InterfazWeb_02.csproj", "{F37F9FFD-4E8D-4996-805D-33C2911482B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectTest", "ProyectTest\ProyectTest.csproj", "{D42AECEF-A625-4FD7-87DF-C01C57DEA0C7}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BaseDatos", "BaseDatos\BaseDatos.sqlproj", "{D42C1637-EA79-41F6-9CA4-C02337823C1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,17 @@ Global
 		{D42AECEF-A625-4FD7-87DF-C01C57DEA0C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D42AECEF-A625-4FD7-87DF-C01C57DEA0C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D42AECEF-A625-4FD7-87DF-C01C57DEA0C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D42C1637-EA79-41F6-9CA4-C02337823C1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D42C1637-EA79-41F6-9CA4-C02337823C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D42C1637-EA79-41F6-9CA4-C02337823C1B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D42C1637-EA79-41F6-9CA4-C02337823C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D42C1637-EA79-41F6-9CA4-C02337823C1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D42C1637-EA79-41F6-9CA4-C02337823C1B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DE7AB93-7815-4773-A807-5FEA803D4DE3}
 	EndGlobalSection
 EndGlobal

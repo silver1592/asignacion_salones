@@ -341,13 +341,24 @@ namespace OrigenDatos.Clases
                 }
                 catch
                 {
-                    ///Se usa este si el grupo y la materia estan juntos
-                    cve_materia = Convert.ToString(r.Field<double>(h["cve"])).Substring(0, 4);
-                    grupo = Convert.ToInt32(Convert.ToString(r.Field<double>(h["cve"])).Substring(4, 2));
+                    try
+                    {
+                        ///Se usa este si el grupo y la materia estan juntos
+                        cve_materia = r.Field<double>(h["cve"]).ToString().Substring(0, 4);
+                        grupo = Convert.ToInt32(r.Field<double>(h["cve"]).ToString().Substring(4, 2));
+                    }
+                    catch
+                    { throw new Exception("Los encabezados de grupo estan mal"); }
                 }
 
-                rpe = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cverpe"])));
-                Cve_espacio = r.Field<string>(h["salon"]);
+                try
+                {
+                    rpe = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cverpe"])));
+                    Cve_espacio = r.Field<string>(h["salon"]);
+                }
+                catch
+                { throw new Exception("Los encabezados de salon y rpe son incorrectos"); }
+
                 try
                 { lunes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunes"]))); }
                 catch
@@ -356,11 +367,11 @@ namespace OrigenDatos.Clases
                 { lunes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["lunesf"]))); }
                 catch
                 { lunes_fin = 0; }
+
                 try
                 { martes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martes"]))); }
                 catch
                 { martes_ini = 0; }
-
                 try
                 { martes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["martesf"]))); }
                 catch
@@ -370,7 +381,6 @@ namespace OrigenDatos.Clases
                 { miercoles_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercoles"]))); }
                 catch
                 { miercoles_ini = 0; }
-
                 try
                 { miercoles_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["miercolesf"]))); }
                 catch
@@ -380,7 +390,6 @@ namespace OrigenDatos.Clases
                 { jueves_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["jueves"]))); }
                 catch
                 { jueves_ini = 0; }
-
                 try
                 { jueves_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["juevesf"]))); }
                 catch
@@ -390,7 +399,6 @@ namespace OrigenDatos.Clases
                 { viernes_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernes"]))); }
                 catch
                 { viernes_ini = 0; }
-
                 try
                 { viernes_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["viernesf"]))); }
                 catch
@@ -400,13 +408,11 @@ namespace OrigenDatos.Clases
                 { sabado_ini = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabado"]))); }
                 catch
                 { sabado_ini = 0; }
-
                 try
                 { sabado_fin = Convert.ToInt32(Convert.ToString(r.Field<object>(h["sabadof"]))); }
                 catch
                 { sabado_fin = 0; }
 
-                cupo = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cupo"])));
                 try
                 { inscritos = Convert.ToInt32(Convert.ToString(r.Field<object>(h["inscritos"]))); }
                 catch
@@ -415,11 +421,15 @@ namespace OrigenDatos.Clases
                 { tipo = r.Field<string>(h["tipo"]); }
                 catch
                 { tipo = def["tipo"]; }
-
                 try
                 { ciclo = Convert.ToString(r.Field<object>(h["ciclo"])); }
                 catch
                 { ciclo = def["ciclo"]; }
+
+                try
+                { cupo = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cupo"]))); }
+                catch
+                { throw new Exception("Lo encabezados de cupo no son correctos"); }
 
             }
             catch (Exception ex)
