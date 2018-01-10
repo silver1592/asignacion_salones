@@ -182,7 +182,7 @@ namespace OrigenDatos.Clases
                 if (salon)
                     query += "[salon] = '" + Cve_espacio + "',";
                 if (inscritos)
-                    query += "[inscritos] = " + inscritos + ",";
+                    query += "[inscritos] = " + this.inscritos + ",";
                 if (horario)
                 {
                     query += "[lunes_ini] = " + horario_ini[0] + ",";
@@ -194,7 +194,7 @@ namespace OrigenDatos.Clases
                     query += "[jueves_ini] = " + horario_ini[0] + ",";
                     query += "[jueves_fin] = " + horario_ini[0] + ",";
                     query += "[viernes_ini] = " + horario_ini[0] + ",";
-                    query += "[viernes_ini] = " + horario_ini[0] + ",";
+                    query += "[viernes_fin] = " + horario_ini[0] + ",";
                     query += "[sabado_ini] = " + horario_ini[0] + ",";
                     query += "[sabado_fin] = " + horario_ini[0] + ",";
                 }
