@@ -65,7 +65,7 @@ namespace Algoritmo02.Clases
             {
                 foreach (Individuo i in poblacion)
                 {
-                    try { i.mutacion(); }
+                    try { i.Mutacion(); }
                     catch (Exception ex)
                     { throw new Exception("Error de ejecucion (AsignaSalones): " + ex); }
                 }

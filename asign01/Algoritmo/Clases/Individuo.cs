@@ -108,7 +108,6 @@ namespace Algoritmo02.Clases
 
         /// <summary>
         /// Retorna el valor obtenido para la funcion objetivo del individuo
-        /// --03/062016 si es -1 el individuo es invalido
         /// </summary>
         public float valor
         {
@@ -289,13 +288,12 @@ namespace Algoritmo02.Clases
         /// Proceso de mutacion del individuo
         /// </summary>
         /// <param name="congelado"></param>
-        public void mutacion()
+        public void Mutacion()
         {
             Aleatorio rGrupo = new Aleatorio(cromosomas.Count);
             Aleatorio rSalon;
             int iSalonSelec=0, iGrupoSelec,i;
             Variable grupo;
-            bool asignado;
 
             for (int c = 0; c < cromosomas_a_Mutar && c < cromosomas.Count; c++)
             {
@@ -306,15 +304,13 @@ namespace Algoritmo02.Clases
 
                 rSalon = new Aleatorio(salones.Count);
 
-                //loop 10 intentos
+                //loop intentos
                 for (i=0;i<intentos;i++)
                 {
                     iSalonSelec = rSalon.Next();    //selecciona un salon aleatoriamente
                     if (iSalonSelec != -1) break;   //Si ya se recorrieron todos los salones entonces lo deja como esta
 
-                    asignado = AsignaEnSalon(grupo, salones[iSalonSelec]);
-
-                    if (asignado)
+                    if (AsignaEnSalon(grupo, salones[iSalonSelec]))
                         break;
                 }
             }
@@ -341,7 +337,8 @@ namespace Algoritmo02.Clases
         private bool AsignaEnSalon(Variable grupo, Salon s)
         {
             //Checa si es apto para el grupo
-            if (grupo.CalculaPuntos(s) <= 0 || grupo.Cupo <= s.Cupo)
+            if (//grupo.CalculaPuntos(s) <= 0 || 
+                grupo.Cupo <= s.Cupo)
                 return false;
 
             if (s.Disponible(grupo.horario))
@@ -363,9 +360,9 @@ namespace Algoritmo02.Clases
                 foreach (Variable g in conEmpalme)
                     g.Salon = null;
 
-                if (s.Disponible(grupo.horario))
+                if (s.Disponible(grupo.horario))    //Checa si no hay problemas con grupos de otras horas
                 {
-                    Grupos.Actualiza(conEmpalme);
+                    Grupos.Actualiza(conEmpalme);   //actualiza los grupos en otros horarios
 
                     grupo.Salon = s;
 
