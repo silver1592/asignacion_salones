@@ -8,6 +8,23 @@ namespace Algoritmo02.Clases
 {
     public class Variable : Grupo
     {
+        /// <summary>
+        /// Limite de puntos que puede tener el area
+        /// </summary>
+        public static int MaxPuntos_Area = 6;
+        /// <summary>
+        /// Puntos adicionales cuando un grupo cae en el mismo de la hora anterior
+        /// </summary>
+        public static int MaxPuntos_HoraAnterior = 3;
+        /// <summary>
+        /// Limite de puntos para cuando se tiene el equipo
+        /// </summary>
+        public static int MaxPuntos_Equipo = 2;
+        /// <summary>
+        /// Limite de puntos para cuando cae en el mismo salon que el semestre anterior
+        /// </summary>
+        public static int MaxPuntos_SemestreAnterior = 4;
+
         private Salon salon;    //Salon asignado
         private int Hora;       //Hora en la que se esta asignando
         public float fCiclo     //Convierte el cilco a puntos para que sea facil distinguir cual es el mas actual
@@ -126,16 +143,16 @@ namespace Algoritmo02.Clases
             if (s == null) return 0;
 
             //Max = 6
-            puntos += PuntosArea(s) * 6 / 10;
+            puntos += PuntosArea(s) * MaxPuntos_Area / 10;
 
             //Max = 3
             puntos += PuntosHoraAnterior(s);
 
             //Max = 2
-            puntos += ValorEquipo(s) * 2 / 10;
+            puntos += ValorEquipo(s) * MaxPuntos_Equipo / 10;
 
-            //Extra
-            puntos += ValorSemestrePasado(s)/2;
+            //Extra (max = 4)
+            puntos += ValorSemestrePasado(s) / MaxPuntos_SemestreAnterior;
 
             //Diferencia de cupo del grupo entre el del salon dividido entre 4 y restado a los puntos totales. Extra
             puntos -= Math.Abs(DiferenciaCupo(s)) / 4;
@@ -157,18 +174,25 @@ namespace Algoritmo02.Clases
             return 0;
         }
 
-        //Checa la hora anterior
+        /// <summary>
+        /// Checa la hora anterior
+        /// </summary>
+        /// <param name="salon"></param>
+        /// <returns></returns>
         public float PuntosHoraAnterior(Salon salon=null)
         {
             Salon s = salon != null ? salon : Salon;
             if (s != null)
                 if (GHoraAnterior != null && GHoraAnterior.Cve_espacio == s.Cve_espacio)
-                    return 3;
+                    return MaxPuntos_HoraAnterior;
 
             return 0;
         }
-
-        //Checa que haya estado en ese salon el año pasado
+        /// <summary>
+        /// Checa que haya estado en ese salon el año pasado
+        /// </summary>
+        /// <param name="salon"></param>
+        /// <returns>Puntos dependiendo del semestre en el que estubo</returns>
         public float ValorSemestrePasado(Salon salon =null)
         {
             Salon s = salon != null ? salon : Salon;
@@ -181,6 +205,11 @@ namespace Algoritmo02.Clases
             return 0;
         }
 
+        /// <summary>
+        /// Obtiene la diferencia de espacio que existe entre el salon y el cupo del grupo
+        /// </summary>
+        /// <param name="salon"></param>
+        /// <returns></returns>
         public float DiferenciaCupo(Salon salon=null)
         {
             Salon s = salon != null ? salon : Salon;
@@ -190,7 +219,11 @@ namespace Algoritmo02.Clases
             return 0;
         }
 
-        //Calcula el valor del equipo comparandolo con el del salon
+        /// <summary>
+        /// Calcula el valor del equipo comparandolo con el del salon
+        /// </summary>
+        /// <param name="salon"></param>
+        /// <returns></returns>
         public float ValorEquipo(Salon salon=null)
         {
             int res = 0;
@@ -225,6 +258,11 @@ namespace Algoritmo02.Clases
             return false;
         }
 
+        /// <summary>
+        /// Checa si el grupo es valido para asignarse en ese salon
+        /// </summary>
+        /// <param name="salon"></param>
+        /// <returns></returns>
         public bool EsValido(Salon salon)
         {
             if (salon == null) return false;
@@ -275,6 +313,13 @@ namespace Algoritmo02.Clases
             return false;
         }
 
+        /// <summary>
+        /// Checa si el grupo se encuentra asignado en las horas y dias marcados
+        /// </summary>
+        /// <param name="ini">hora de inicio</param>
+        /// <param name="fin">hora de fin</param>
+        /// <param name="dias">Dias en los que se desea checar</param>
+        /// <returns></returns>
         public bool EnHora(int ini, int fin, string dias = "111111")
         {
             if (dias[0] == '1')
@@ -310,6 +355,11 @@ namespace Algoritmo02.Clases
             return false;
         }
 
+        /// <summary>
+        /// Checa si el grupo se encuentra en los dias solicitados
+        /// </summary>
+        /// <param name="dias"></param>
+        /// <returns></returns>
         public bool EnDias(string dias="111111")
         {
             for (int i = 0; i < 6; i++)
@@ -319,6 +369,11 @@ namespace Algoritmo02.Clases
             return false;
         }
 
+        /// <summary>
+        /// Checa si el grupo se encuentra en los dias solicitados
+        /// </summary>
+        /// <param name="dia"></param>
+        /// <returns></returns>
         public bool EnDia(int dia)
         {
             if (this.Dias[dia] == '1')
