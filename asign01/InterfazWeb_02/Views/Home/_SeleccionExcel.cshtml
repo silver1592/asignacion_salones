@@ -17,16 +17,16 @@
                     </select>
                 </div>
                 <div class="col-md-1 col-sm-4 text-center">
-                    <a href="#" id="descarga" class="boton">
+                    <a href="#" id="descarga" class="boton" data-toggle="Descargar archivo">
                         <span class="glyphicon glyphicon-download-alt" ></span>
                     </a>
                 </div>
-                <div class="col-md-1 col-sm-4 text-center">
+                <div class="col-md-1 col-sm-4 text-center" data-toggle="Eliminar archivo">
                     <a id="elimina" class="boton">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
                 </div>
-                <div class="col-md-1 col-sm-4 text-center">
+                <div class="col-md-1 col-sm-4 text-center" data-toggle="Subir excel">
                     <form method="post" action="@Url.Action("SubirExcel","Home",null, Request.Url.Scheme)" enctype="multipart/form-data">
                         <label for="cargaArchivo">
                             <span class="glyphicon glyphicon-upload"></span>
