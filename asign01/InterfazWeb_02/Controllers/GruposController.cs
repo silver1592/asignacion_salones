@@ -97,7 +97,7 @@ namespace InterfazWeb_02.Controllers
 
             g.Salon = s;
 
-            c.Querry(g.qUpdate());
+            c.Querry(g.qUpdate_Datos());
 
             return View();
         }
