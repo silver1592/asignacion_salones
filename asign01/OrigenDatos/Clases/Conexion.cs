@@ -361,7 +361,7 @@ namespace OrigenDatos.Clases
         /// <param name="fin"></param>
         /// <param name="bExcel"></param>
         /// <returns></returns>
-        public ListaGrupos Grupos(string semestre, int ini = 7, int fin = 22, bool bExcel = true)
+        public ListaGrupos Grupos(string semestre, int ini = 0, int fin = 24, bool bExcel = true)
         {
             ListaGrupos res = null;
             IList<Grupo> grupos;
@@ -551,7 +551,7 @@ namespace OrigenDatos.Clases
         {
             foreach (Grupo g in grupos)
                 if (Grupo_Existe(g))
-                    Comando(g.qUpdate());
+                    Comando(g.qUpdate_Salon());
                 else
                     Comando(g.qInsert);
 

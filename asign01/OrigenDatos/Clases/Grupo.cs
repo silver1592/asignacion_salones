@@ -170,10 +170,20 @@ namespace OrigenDatos.Clases
             }
         }
 
+        public string qUpdate_Salon()
+        {
+            string query = "UPDATE [asignacion].[ae_horario] set ";
+
+            query += "[salon] = '" + Cve_espacio +"'";
+            query += " WHERE[cve_materia] = '" + cve_materia + "' and [grupo] = " + grupo.ToString() + " and [tipo] = '" + tipo + "' and [ciclo] = '" + ciclo + "';";
+
+            return query;
+        }
+
         /// <summary>
         /// Cadena para el query de update.
         /// </summary>
-        public string qUpdate(bool horario = true, bool salon = true, bool inscritos = true)
+        public string qUpdate_Datos(bool horario = true, bool salon = true, bool inscritos = true)
         {
             string query = "UPDATE [asignacion].[ae_horario] set ";
 
