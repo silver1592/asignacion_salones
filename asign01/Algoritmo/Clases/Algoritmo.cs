@@ -67,7 +67,7 @@ namespace Algoritmo02.Clases
                 {
                     try { i.Mutacion(); }
                     catch (Exception ex)
-                    { throw new Exception("Error de ejecucion (AsignaSalones): " + ex); }
+                    { /*throw new Exception("Error de ejecucion (AsignaSalones): " + ex);*/ }
                 }
 
                 rescate();

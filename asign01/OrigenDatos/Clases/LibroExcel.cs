@@ -35,22 +35,22 @@ namespace OrigenDatos.Clases
             dHeaders.Add("cve", "CLAVEMAT");//3
             dHeaders.Add("cverpe", "CVERPE");//4
             dHeaders.Add("nom_prof", "Profesor");//5
-            dHeaders.Add("tipo", "TIPO");    //6*
-            dHeaders.Add("salon", "SALON");  //7*
-            dHeaders.Add("lunes", "LUNES");//8
-            dHeaders.Add("lunesf", "LUNESF");//9
-            dHeaders.Add("martes", "MARTES");//10
-            dHeaders.Add("martesf", "MARTESF");//11
-            dHeaders.Add("miercoles", "MIERCOLES");//12
-            dHeaders.Add("miercolesf", "MIERCOLESF");//13
-            dHeaders.Add("jueves", "JUEVES");//14
-            dHeaders.Add("juevesf", "JUEVESF");//15
-            dHeaders.Add("viernes", "VIERNES");//16
-            dHeaders.Add("viernesf", "VIERNESF");//17
-            dHeaders.Add("sabado", "SABADO");//18
-            dHeaders.Add("sabadof", "SABADOF");//19
-            dHeaders.Add("cupo", "CUPO");//20
-            dHeaders.Add("inscritos", "INSCRITOS");//21
+            dHeaders.Add("tipo", "Tipo");    //6*
+            dHeaders.Add("salon", "Salon");  //7*
+            dHeaders.Add("lunes", "lunes_ini");//8
+            dHeaders.Add("lunesf", "lunes_fin");//9
+            dHeaders.Add("martes", "martes_ini");//10
+            dHeaders.Add("martesf", "martes_fin");//11
+            dHeaders.Add("miercoles", "miercoles_ini");//12
+            dHeaders.Add("miercolesf", "miercoles_fin");//13
+            dHeaders.Add("jueves", "jueves_ini");//14
+            dHeaders.Add("juevesf", "jueves_fin");//15
+            dHeaders.Add("viernes", "viernes_ini");//16
+            dHeaders.Add("viernesf", "viernes_fin");//17
+            dHeaders.Add("sabado", "sabado_ini");//18
+            dHeaders.Add("sabadof", "sabado_fin");//19
+            dHeaders.Add("cupo", "Cupo");//20
+            dHeaders.Add("inscritos", "INSC");//21
             dHeaders.Add("ciclo", "CICLO");  //22*
 
             //Valores default
