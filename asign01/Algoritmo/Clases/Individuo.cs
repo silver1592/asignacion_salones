@@ -336,44 +336,48 @@ namespace Algoritmo02.Clases
         /// <returns></returns>
         private bool AsignaEnSalon(Variable grupo, Salon s)
         {
-            //Checa si es apto para el grupo
-            if (//grupo.CalculaPuntos(s) <= 0 || 
-                grupo.Cupo >= s.Cupo)
-                return false;
-
-            if (s.Disponible(grupo.horario))
+            try
             {
-                grupo.Salon = s;
-                return true;
-            }
+                //Checa si es apto para el grupo
+                if (//grupo.CalculaPuntos(s) <= 0 || 
+                    grupo.Cupo >= s.Cupo)
+                    return false;
 
-            //Obtiene los grupos que estan asignados de este salon
-            ListaVariables enSalon = new ListaVariables(Grupos.EnSalon(s.Cve_espacio));
-
-            //Obtiene los grupos con los que se crusaria
-            ListaVariables conEmpalme = enSalon.Empalmados(grupo);
-
-            //Compara el maximo puntaje de los grupos contra el que tendria estre grupo
-            if (grupo.CalculaPuntos(s) > conEmpalme.MaxPuntos())
-            {
-                //Quita la asignacon de los grupos y asigna al nuevo grupo
-                foreach (Variable g in conEmpalme)
-                    g.Salon = null;
-
-                if (s.Disponible(grupo.horario))    //Checa si no hay problemas con grupos de otras horas
+                if (s.Disponible(grupo.horario))
                 {
-                    Grupos.Actualiza(conEmpalme);   //actualiza los grupos en otros horarios
-
                     grupo.Salon = s;
-
                     return true;
                 }
-                else
+
+                //Obtiene los grupos que estan asignados de este salon
+                ListaVariables enSalon = new ListaVariables(Grupos.EnSalon(s.Cve_espacio));
+
+                //Obtiene los grupos con los que se crusaria
+                ListaVariables conEmpalme = enSalon.Empalmados(grupo);
+
+                //Compara el maximo puntaje de los grupos contra el que tendria estre grupo
+                if (grupo.CalculaPuntos(s) > conEmpalme.MaxPuntos())
                 {
+                    //Quita la asignacon de los grupos y asigna al nuevo grupo
                     foreach (Variable g in conEmpalme)
-                        g.Salon = s;
+                        g.Salon = null;
+
+                    if (s.Disponible(grupo.horario))    //Checa si no hay problemas con grupos de otras horas
+                    {
+                        Grupos.Actualiza(conEmpalme);   //actualiza los grupos en otros horarios
+
+                        grupo.Salon = s;
+
+                        return true;
+                    }
+                    else
+                    {
+                        foreach (Variable g in conEmpalme)
+                            g.Salon = s;
+                    }
                 }
             }
+            catch (Exception) { }
 
             return false;
         }
