@@ -51,7 +51,7 @@
             </div>
             <div class="col-sm-2">
                 <label for="cupo">Cupo</label>
-                <p id="cupo">@(((Variable)Model[0]).Salon.Cupo)</p>
+                <p id="cupo">@if (((Variable)Model[0]).Salon != null) {@(((Variable)Model[0]).Salon.Cupo); }</p>
             </div>
         </div>
         <div class="row">
