@@ -308,7 +308,7 @@ namespace Algoritmo02.Clases
                 for (i=0;i<intentos;i++)
                 {
                     iSalonSelec = rSalon.Next();    //selecciona un salon aleatoriamente
-                    if (iSalonSelec != -1) break;   //Si ya se recorrieron todos los salones entonces lo deja como esta
+                    if (iSalonSelec == -1) break;   //Si ya se recorrieron todos los salones entonces lo deja como esta
 
                     if (AsignaEnSalon(grupo, salones[iSalonSelec]))
                         break;
@@ -338,7 +338,7 @@ namespace Algoritmo02.Clases
         {
             //Checa si es apto para el grupo
             if (//grupo.CalculaPuntos(s) <= 0 || 
-                grupo.Cupo <= s.Cupo)
+                grupo.Cupo >= s.Cupo)
                 return false;
 
             if (s.Disponible(grupo.horario))
