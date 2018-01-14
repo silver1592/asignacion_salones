@@ -339,7 +339,7 @@ namespace Algoritmo02.Clases
             try
             {
                 //Checa si es apto para el grupo
-                if (//grupo.CalculaPuntos(s) <= 0 || 
+                if (grupo.CalculaPuntos(s) <= 0 || 
                     grupo.Cupo >= s.Cupo)
                     return false;
 
