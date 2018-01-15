@@ -244,8 +244,7 @@ namespace InterfazWeb_02.Controllers
                     {
                         operacion.Ejecuta();
                         grupos.Actualiza(operacion.Resultado);
-                        detalles += operacion.NombreOperacion + "<br>";
-                        detalles += Grupos2Table(operacion.Resultado) + "<br>";
+                        detalles += Grupos2Table(operacion.Resultado, operacion.NombreOperacion) + "<br>";
                     }
                 }
 
@@ -261,16 +260,18 @@ namespace InterfazWeb_02.Controllers
             return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        private string Grupos2Table(IList<Grupo> grupos)
+        private string Grupos2Table(IList<Grupo> grupos,string nombre)
         {
-            string res ="<table>";
+            string res = string.Format("<table class='table-bordered'><thead><td><th colspan='5'><h3>{0}</h3></th></td>",nombre) +
+                "<td><th>Materia</th><th>Profesor</th><th>horario</th><th>Salon actual</th><th>salon anterior</th></td></thead><tbody>";
+            
 
             foreach(Grupo g in grupos)
                 res += string.Format(
                     "<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>",
                     g.Cve_materia,g.RPE,g.Dias,g.Cve_espacio,g.SalonBD);
 
-            res += "</table>";
+            res += "</tbody></table>";
             return res;
         }
 
