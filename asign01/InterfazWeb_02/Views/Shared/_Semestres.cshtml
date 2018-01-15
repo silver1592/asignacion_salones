@@ -4,6 +4,14 @@
 
 @model string[]
 
-@foreach(string s in Model) {
-    <option value="@s">@s</option>
+@if (Model.Length != 0)
+{
+    foreach (string s in Model)
+    {
+        <option value="@s">@s</option>
+    }
+}
+else
+{
+    <option value="none">sin conexion</option>
 }
