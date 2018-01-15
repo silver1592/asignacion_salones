@@ -249,9 +249,7 @@ namespace InterfazWeb_02.Controllers
                             detalles += Grupos2Table(operacion.Resultado, operacion.NombreOperacion);
                         }
                         else
-                        {
                             detalles += string.Format("{0} sin grupos modificados", operacion.NombreOperacion);
-                        }
 
                         detalles += "<br>";
                     }

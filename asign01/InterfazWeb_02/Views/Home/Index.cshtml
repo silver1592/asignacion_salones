@@ -19,16 +19,17 @@
                 @{ Html.RenderAction("_SeleccionExcel", "Home"); }
             </div>
             <div role="tabpanel" class="tab-pane" id="tab_2">
-                @{ Html.RenderAction("_Operaciones", "Home");}
+                <div class="row">
+                    <div class="col-md-4">
+                        @{ Html.RenderAction("_Operaciones", "Home");}
+                    </div>
+                    <div class="col-md-8">
+                        <h3>Resultado</h3>
+                        <div id="resConsola"></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <h3>Resultado</h3>
-        <div id="resConsola"></div>
     </div>
 </div>
 }
