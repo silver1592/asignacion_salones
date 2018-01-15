@@ -47,3 +47,7 @@ C:\Users\Fer\Source\Repos\asignacion_salones\asign01\Algoritmo\obj\Debug\Algorit
 C:\Users\Fer\Source\Repos\asignacion_salones\asign01\Algoritmo\obj\Debug\Algoritmo02.csproj.CoreCompileInputs.cache
 C:\Users\Fer\Source\Repos\asignacion_salones\asign01\Algoritmo\obj\Debug\Algoritmo02.exe
 C:\Users\Fer\Source\Repos\asignacion_salones\asign01\Algoritmo\obj\Debug\Algoritmo02.pdb
+C:\Users\Fernando\Source\Repos\asignacion_salones2\asign01\Algoritmo\obj\Debug\Algoritmo02.csprojResolveAssemblyReference.cache
+C:\Users\Fernando\Source\Repos\asignacion_salones2\asign01\Algoritmo\obj\Debug\Algoritmo02.csproj.CoreCompileInputs.cache
+C:\Users\Fernando\Source\Repos\asignacion_salones2\asign01\Algoritmo\obj\Debug\Algoritmo02.exe
+C:\Users\Fernando\Source\Repos\asignacion_salones2\asign01\Algoritmo\obj\Debug\Algoritmo02.pdb

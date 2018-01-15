@@ -208,6 +208,7 @@ namespace InterfazWeb_02.Controllers
         {
             //-empalmes -preasignacion -otrosSemestres -algoritmo
             string res = "<strong>Asignacion Fallida</strong>\n";
+            string detalles = "";
 
             try
             {
@@ -243,12 +244,14 @@ namespace InterfazWeb_02.Controllers
                     {
                         operacion.Ejecuta();
                         grupos.Actualiza(operacion.Resultado);
+                        detalles += operacion.NombreOperacion + "<br>";
+                        detalles += Grupos2Table(operacion.Resultado) + "<br>";
                     }
                 }
 
                 c.Grupos_Carga(grupos, hoja,c.Materias_AsDictionary(),c.Profesores_AsDicctionary());
 
-                res = "Asignacion de " + hora + " completada";
+                res = string.Format("Asignacion de {0} completada<br>{1}",hora,detalles);
             }
             catch (Exception ex)
             {
@@ -256,6 +259,19 @@ namespace InterfazWeb_02.Controllers
             }
 
             return new JsonResult() { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        private string Grupos2Table(IList<Grupo> grupos)
+        {
+            string res ="<table>";
+
+            foreach(Grupo g in grupos)
+                res += string.Format(
+                    "<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>",
+                    g.Cve_materia,g.RPE,g.Dias,g.Cve_espacio,g.SalonBD);
+
+            res += "</table>";
+            return res;
         }
 
         public JsonResult Exporta(string excel, string sheet)

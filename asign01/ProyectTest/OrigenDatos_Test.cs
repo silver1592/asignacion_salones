@@ -189,7 +189,7 @@ namespace ProyectTest
         public void Salon_Constructores_Test()
         {
             Conexion c = new Conexion();
-            Salon s1, s2,s3;
+            Salon s1, s2;
             s1 = new Salon(c.Salones().Rows[0], 0, c);
             Assert.IsFalse(s1 == null);
             s2 = new Salon(s1);

@@ -19,7 +19,7 @@ namespace Algoritmo02.Clases
 
         public ChecaEmpalmes(ListaGrupos _grupos, IList<Salon> _salones)
         {
-            EmpalmesResueltos = new List<Grupo>()
+            EmpalmesResueltos = new List<Grupo>();
             grupos = new ListaVariables(_grupos);
             salones = new ListaSalones(_salones);
             permiteEmpalmes = salones.PermiteEmpalmes();
