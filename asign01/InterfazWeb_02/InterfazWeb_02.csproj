@@ -152,6 +152,7 @@
     <Content Include="JS\Home\_Ejecuta.js" />
     <Content Include="JS\_Menu.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Archivos\init.ini" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -215,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Archivos\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algoritmo\Algoritmo02.csproj">
