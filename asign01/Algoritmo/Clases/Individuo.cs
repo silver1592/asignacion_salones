@@ -203,7 +203,6 @@ namespace Algoritmo02.Clases
                     else
                     {
                         r.Reinicia();
-                        //throw new Exception("No se encontron salones para el grupo " + v.Grupo.Cve_materia + v.Grupo.num_Grupo.ToString());
                         break;
                     }
 
@@ -273,7 +272,6 @@ namespace Algoritmo02.Clases
                 }
                 else
                 {
-                    //throw new Exception("No se encontron salones para el grupo " + v.Grupo.Cve_materia + v.Grupo.num_Grupo.ToString());
                     Errores.Add(v);
                     r.Reinicia();
                     break;

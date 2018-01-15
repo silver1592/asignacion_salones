@@ -152,7 +152,14 @@ namespace OrigenDatos.Clases
         {
             DatosConexion = Datos;
 
-            Excel = new LibroExcel(excelDireccion, ciclo, tipo);
+            try
+            {
+                Excel = new LibroExcel(excelDireccion, ciclo, tipo);
+            }
+            catch (Exception)
+            {
+                throw new Exception(String.Format("Error al buscar el archivo {0}",excelDireccion));
+            }
         }
         #endregion
 
@@ -202,7 +209,7 @@ namespace OrigenDatos.Clases
             {
                 //Log.Add("Error al Ejecutar la consulta: \r\n\n"+textoCmd+"\n\t" + ex.Message + "\r\n\n");
                 //MessageBox.Show("Error al Ejecutar la consulta: \r\n\n" + textoCmd + "\n\t" + ex.Message);
-                throw ex;
+                throw new Exception(string.Format("Error al Ejecutar la consulta: {0} ({1})",textoCmd,ex.Message));
             }
         }
 
@@ -227,7 +234,7 @@ namespace OrigenDatos.Clases
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception(string.Format("Error al Ejecutar la consulta: {0} ({1})", textoCmd, ex.Message));
             }
 
             return datos;

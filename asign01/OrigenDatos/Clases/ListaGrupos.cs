@@ -400,7 +400,6 @@ namespace OrigenDatos.Clases
                 return new Materia(query.ToList()[0]);
             else
                 return new Materia("-----", cve_materia, 0);
-            //throw new Exception("No se encontro la materia. CVE="+cve_materia);
         }
 
         public Profesor buscaProfesor(string RPE)
@@ -414,7 +413,6 @@ namespace OrigenDatos.Clases
                 return new Profesor(query.ToList()[0]);
             else
                 return new Profesor(rpe);
-            //throw new Exception("No se encontro el RPE");
         }
 
         /// <summary>
