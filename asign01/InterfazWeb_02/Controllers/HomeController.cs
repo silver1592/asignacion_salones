@@ -246,7 +246,7 @@ namespace InterfazWeb_02.Controllers
                         if (operacion.Resultado.Count != 0)
                         {
                             grupos.Actualiza(operacion.Resultado);
-                            detalles += Grupos2Table(operacion.Resultado, operacion.NombreOperacion);
+                            detalles += Grupos2Table(operacion.Resultado.OrderBy(g=>g.Cve_espacio).ToList(), operacion.NombreOperacion);
                         }
                         else
                             detalles += string.Format("{0} sin grupos modificados", operacion.NombreOperacion);
