@@ -365,6 +365,7 @@ namespace OrigenDatos.Clases
                 {
                     rpe = Convert.ToInt32(Convert.ToString(r.Field<object>(h["cverpe"])));
                     Cve_espacio = r.Field<string>(h["salon"]);
+                    salonBD = Cve_espacio;
                 }
                 catch
                 { throw new Exception("Los encabezados de salon y rpe son incorrectos"); }
