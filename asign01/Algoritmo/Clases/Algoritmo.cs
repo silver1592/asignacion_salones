@@ -24,7 +24,7 @@ namespace Algoritmo02.Clases
         private Individuo[] mejorPoblacion;
 
         private ListaVariables errores;
-        public ListaVariables Errores { get { return errores; } }
+        public ListaVariables GruposErrores { get { return errores; } }
 
         /// <summary>
         /// Constructor de la iteracion del algoritmo

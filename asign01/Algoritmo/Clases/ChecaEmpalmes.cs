@@ -30,7 +30,7 @@ namespace Algoritmo02.Clases
         /// Busca los empalmes en el horario designado y comienza a acomodarlos
         /// </summary>
         /// <returns></returns>
-        public void ejecuta(string mensaje_plantilla = "")
+        public void ejecuta()
         {
             List<ListaVariables> empalmados = new List<ListaVariables>();
             ListaGrupos checando = new ListaGrupos();

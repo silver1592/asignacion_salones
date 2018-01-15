@@ -138,7 +138,7 @@ namespace OrigenDatos.Clases
 
         #region Basicos
 
-        public void Actualiza(ListaGrupos _grupos)
+        public void Actualiza(IList<Grupo> _grupos)
         {
             if (this == _grupos)
                 return;
