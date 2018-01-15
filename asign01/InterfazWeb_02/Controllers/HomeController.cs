@@ -204,7 +204,7 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public JsonResult EjecutaOperaciones(string hora, byte[] operaciones,string ciclo,string excel, string hoja)
+        public JsonResult EjecutaOperaciones(string hora, int[] operaciones,string ciclo,string excel, string hoja)
         {
             //-empalmes -preasignacion -otrosSemestres -algoritmo
             string res = "<strong>Asignacion Fallida</strong>\n";
@@ -219,11 +219,11 @@ namespace InterfazWeb_02.Controllers
                 int numero_Operacion = 0;
                 IOperacion operacion = null;
 
-                foreach(byte op in operaciones)
+                foreach(int op in operaciones)
                 {
                     numero_Operacion++;
 
-                    switch(op)  //Fabrica abstracta
+                    switch((byte)op)  //Fabrica abstracta
                     {
                         case (byte)EOperaciones.algoritmoGenetico:
                             operacion = new AlgoritmoGenetico(grupos, salones, Convert.ToInt32(hora), 100, 1000);

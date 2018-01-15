@@ -11,7 +11,7 @@ function Ejecuta() {
     var operaciones = GetOperaciones();
     var ciclo = selSemestre; //Variable definida en _Menu.js
 
-    EjecutaHora(hora,operaciones,ciclo,excel,hoja)
+    EjecutaHora(hora,operaciones,ciclo,excel,sheet)
 }
 
 function EjecutaHora(hora, operaciones, ciclo, excel, hoja)
@@ -80,7 +80,7 @@ function GetHora()
 
 function GetOperaciones()
 {
-    var operaciones = new Array();
+    var operaciones = [];
     if ($("[name='emp']").is(":checked"))
         operaciones.push(2);
     if ($("[name='pre']").is(":checked"))
@@ -90,5 +90,5 @@ function GetOperaciones()
     if ($("[name='asig']").is(":checked"))
         operaciones.push(1);
     
-    return datos;
+    return operaciones;
 }
