@@ -51,3 +51,13 @@ C:\Users\Fernando\Source\Repos\asignacion_salones2\asign01\Algoritmo\obj\Debug\A
 C:\Users\Fernando\Source\Repos\asignacion_salones2\asign01\Algoritmo\obj\Debug\Algoritmo02.csproj.CoreCompileInputs.cache
 C:\Users\Fernando\Source\Repos\asignacion_salones2\asign01\Algoritmo\obj\Debug\Algoritmo02.exe
 C:\Users\Fernando\Source\Repos\asignacion_salones2\asign01\Algoritmo\obj\Debug\Algoritmo02.pdb
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\Algoritmo02.exe.config
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\Algoritmo02.exe
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\Algoritmo02.pdb
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\OrigenDatos.exe
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\Excel.dll
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\OrigenDatos.pdb
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\OrigenDatos.exe.config
+C:\Users\Fernando\source\repos\asignacion_salones2\asign01\Algoritmo\bin\Debug\Excel.pdb

@@ -2,27 +2,29 @@
 var ejecuta_hora_fin = null;
 var excel = null;
 var sheet = null;
+var operaciones = null;
+var cicloEjecucion = null;
 
 function Ejecuta() {
     $("#resConsola").children().remove();
     $("#resConsola").prepend($("<p>Iniciando Ejecucion</p>"));
 
-    var hora = GetHora();
-    var operaciones = GetOperaciones();
-    var ciclo = selSemestre; //Variable definida en _Menu.js
+    ejecuta_hora_ini = GetHora();
+    operaciones = GetOperaciones();
+    cicloEjecucion = selSemestre; //Variable definida en _Menu.js
 
-    EjecutaHora(hora,operaciones,ciclo,excel,sheet)
+    EjecutaHora()
 }
 
-function EjecutaHora(_hora, _operaciones, _ciclo, _excel, _hoja)
+function EjecutaHora()
 {
     var _url = $(".direccion #Ejecuta").text().trim();
     var datos = {
-        hora: _hora,
-        operaciones: _operaciones,
-        ciclo: _ciclo,
-        excel: _excel,
-        hoja:_hoja
+        hora: ejecuta_hora_ini,
+        operaciones: operaciones,
+        ciclo: cicloEjecucion,
+        excel: excel,
+        hoja:sheet
     }
     var dt = JSON.stringify(datos);
 
@@ -36,7 +38,7 @@ function EjecutaHora(_hora, _operaciones, _ciclo, _excel, _hoja)
             $("#resConsola").prepend("<p>" + resultado + "</p>");
             ejecuta_hora_ini++;
             if (ejecuta_hora_ini < ejecuta_hora_fin) {
-                EjecutaHora();
+                EjecutaHora(ejecuta_hora_ini);
             }
             else {
                 ejecuta_hora_ini = null;
