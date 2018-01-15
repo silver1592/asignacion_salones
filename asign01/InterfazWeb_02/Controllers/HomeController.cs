@@ -243,8 +243,17 @@ namespace InterfazWeb_02.Controllers
                     if (operacion != null)
                     {
                         operacion.Ejecuta();
-                        grupos.Actualiza(operacion.Resultado);
-                        detalles += Grupos2Table(operacion.Resultado, operacion.NombreOperacion) + "<br>";
+                        if (operacion.Resultado.Count != 0)
+                        {
+                            grupos.Actualiza(operacion.Resultado);
+                            detalles += Grupos2Table(operacion.Resultado, operacion.NombreOperacion);
+                        }
+                        else
+                        {
+                            detalles += string.Format("{0} sin grupos modificados", operacion.NombreOperacion);
+                        }
+
+                        detalles += "<br>";
                     }
                 }
 
