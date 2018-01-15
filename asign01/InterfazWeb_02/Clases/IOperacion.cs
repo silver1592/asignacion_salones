@@ -11,6 +11,7 @@ namespace InterfazWeb_02.Clases
 
     interface IOperacion
     {
+        string NombreOperacion { get; }
         IList<Grupo> Resultado { get; }
         IList<Grupo> Errores { get; }
 

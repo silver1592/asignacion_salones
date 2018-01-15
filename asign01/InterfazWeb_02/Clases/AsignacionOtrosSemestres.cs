@@ -16,5 +16,7 @@ namespace InterfazWeb_02.Clases
         IList<Grupo> IOperacion.Errores => new List<Grupo>();
 
         DelEjecuta IOperacion.Ejecuta => semestres_anteriores;
+
+        string IOperacion.NombreOperacion => "Asignacion de otros semestres";
     }
 }

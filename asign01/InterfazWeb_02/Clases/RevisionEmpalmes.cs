@@ -16,5 +16,7 @@ namespace InterfazWeb_02.Clases
         public IList<Grupo> Errores => new List<Grupo>();
 
         public DelEjecuta Ejecuta => ejecuta;
+
+        string IOperacion.NombreOperacion => "Revision de empalmes";
     }
 }

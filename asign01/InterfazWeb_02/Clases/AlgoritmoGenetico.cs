@@ -16,5 +16,7 @@ namespace InterfazWeb_02.Clases
         public IList<Grupo> Resultado => GruposAsignados;
 
         public DelEjecuta Ejecuta => AsignaSalones;
+
+        public string NombreOperacion => "Algoritmo Genetico";
     }
 }

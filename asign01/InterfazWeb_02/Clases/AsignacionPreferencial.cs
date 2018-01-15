@@ -16,5 +16,7 @@ namespace InterfazWeb_02.Clases
         IList<Grupo> IOperacion.Errores => new List<Grupo>();
 
         DelEjecuta IOperacion.Ejecuta => preferencial;
+
+        string IOperacion.NombreOperacion => "Asignacion preferencial";
     }
 }
