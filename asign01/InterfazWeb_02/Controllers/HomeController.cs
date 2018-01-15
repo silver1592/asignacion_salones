@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using InterfazWeb_02.Clases;
 
 namespace InterfazWeb_02.Controllers
 {
@@ -203,44 +204,46 @@ namespace InterfazWeb_02.Controllers
         }
 
         [HttpPost]
-        public JsonResult EjecutaOperaciones(string hora, string empalmes, string preasignacion, string otrosSemestres, string algoritmo, string individuos, string generacion, string excel, string hoja)
+        public JsonResult EjecutaOperaciones(string hora, byte[] operaciones,string ciclo,string excel, string hoja)
         {
+            //-empalmes -preasignacion -otrosSemestres -algoritmo
             string res = "<strong>Asignacion Fallida</strong>\n";
 
             try
             {
-                string ciclo = Ciclo;
-
                 Conexion c = new Conexion(Conexion.datosConexion,Server.MapPath("~/Archivos/"+excel),ciclo);
                 ListaVariables grupos = new ListaVariables(c.Grupos_EmpiezanA(ciclo, Convert.ToInt32(hora), false));
                 ListaSalones salones = new ListaSalones(c, c.Salones(), Convert.ToInt32(hora));
                 salones.SetHorarios(c, Ciclo);
 
-                if (Convert.ToBoolean(empalmes))
+                int numero_Operacion = 0;
+                IOperacion operacion = null;
+
+                foreach(byte op in operaciones)
                 {
-                    ChecaEmpalmes emp = new ChecaEmpalmes(grupos, salones);
-                    emp.ejecuta();
+                    numero_Operacion++;
 
-                    grupos.Actualiza(emp.Grupos);
-                }
+                    switch(op)  //Fabrica abstracta
+                    {
+                        case (byte)EOperaciones.algoritmoGenetico:
+                            operacion = new AlgoritmoGenetico(grupos, salones, Convert.ToInt32(hora), 100, 1000);
+                        break;
+                        case (byte)EOperaciones.empalmes:
+                            operacion = new RevisionEmpalmes(grupos, salones);
+                        break;
+                        case (byte)EOperaciones.otrosSemestres:
+                            operacion = new AsignacionOtrosSemestres(grupos, salones);
+                        break;
+                        case (byte)EOperaciones.preasignacion:
+                            operacion = new AsignacionPreferencial(grupos, salones);
+                        break;
+                    }
 
-                if (Convert.ToBoolean(preasignacion) || Convert.ToBoolean(otrosSemestres))
-                {
-                    PreAsignacion pre = new PreAsignacion(grupos, salones);
-                    if (Convert.ToBoolean(preasignacion))
-                        pre.preferencial();
-                    if (Convert.ToBoolean(otrosSemestres))
-                        pre.semestres_anteriores();
-
-                    grupos.Actualiza(pre.Grupos);
-                }
-
-                if (Convert.ToBoolean(algoritmo))
-                {
-                    Algoritmo alg = new Algoritmo(grupos, salones, Convert.ToInt32(hora), 5, 50);
-                    alg.AsignaSalones();
-
-                    grupos.Actualiza(alg.GruposAsignados);
+                    if (operacion != null)
+                    {
+                        operacion.Ejecuta();
+                        grupos.Actualiza(operacion.Resultado);
+                    }
                 }
 
                 c.Grupos_Carga(grupos, hoja,c.Materias_AsDictionary(),c.Profesores_AsDicctionary());

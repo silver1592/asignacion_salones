@@ -4,17 +4,27 @@ var excel = null;
 var sheet = null;
 
 function Ejecuta() {
-    var datos = GetDatosEjecuta();
     $("#resConsola").children().remove();
     $("#resConsola").prepend($("<p>Iniciando Ejecucion</p>"));
-    EjecutaHora()
+
+    var hora = GetHora();
+    var operaciones = GetOperaciones();
+    var ciclo = selSemestre; //Variable definida en _Menu.js
+
+    EjecutaHora(hora,operaciones,ciclo,excel,hoja)
 }
 
-function EjecutaHora()
+function EjecutaHora(hora, operaciones, ciclo, excel, hoja)
 {
-    var datos = GetDatosEjecuta();
-    var dt = JSON.stringify(datos);
     var _url = $(".direccion #Ejecuta").text().trim();
+    var datos = {
+        hora: hora,
+        operaciones: operaciones,
+        ciclo: ciclo,
+        excel: excel,
+        hoja:hoja
+    }
+    var dt = JSON.stringify(datos);
 
     $.ajax({
         type: "POST",
@@ -43,13 +53,12 @@ function EjecutaHora()
     });
 }
 
-function GetDatosEjecuta()
+function GetHora()
 {
     var ini;
     var fin;
 
-    if (ejecuta_hora_ini === null)
-    {
+    if (ejecuta_hora_ini === null) {
         ini = parseInt($("[name='hora_ini']").val());
         fin = parseInt($("[name='hora_fin']").val());
         ejecuta_hora_fin = fin;
@@ -57,36 +66,29 @@ function GetDatosEjecuta()
 
         var d = new Date();
 
-        excel = d.yyyymmdd()+".xlsx"
-        sheet = d.getHours().toString()+"_"+d.getMinutes().toString();
+        excel = d.yyyymmdd() + ".xlsx"
+        sheet = d.getHours().toString() + "_" + d.getMinutes().toString();
     }
-    else
-    {
+    else {
         ini = ejecuta_hora_ini;
         fin = ejecuta_hora_fin;
     }
 
-    var bEmpalmes = $("[name='emp']").is(":checked");
+    return ini;
 
-    var bPreasignacion = $("[name='pre']").is(":checked");
-    var bOtrosSemestres = $("[name='pre_otros_sem']").is(":checked");
+}
 
-    var bAlgoritmo = $("[name='asig']").is(":checked");
-    var iIndividuos = parseInt($("[name='alg_individuos']").val());
-    var iGeneraciones = parseInt($("[name='alg_generaciones']").val());
-
-    datos = {
-        hora: ini,
-        hora_fin:fin,
-        empalmes: bEmpalmes,
-        preasignacion: bPreasignacion,
-        otrosSemestres: bOtrosSemestres,
-        algoritmo: bAlgoritmo,
-        individuo: iIndividuos,
-        generacion: iGeneraciones,
-        excel: excel,
-        hoja: sheet,
-    }
-
+function GetOperaciones()
+{
+    var operaciones = new Array();
+    if ($("[name='emp']").is(":checked"))
+        operaciones.push(2);
+    if ($("[name='pre']").is(":checked"))
+        operaciones.push(3);
+    if ($("[name='pre_otros_sem']").is(":checked"))
+        operaciones.push(4);
+    if ($("[name='asig']").is(":checked"))
+        operaciones.push(1);
+    
     return datos;
 }
