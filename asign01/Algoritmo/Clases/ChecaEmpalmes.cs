@@ -68,10 +68,9 @@ namespace Algoritmo02.Clases
                 if (s == null) return;  //Si no encuentra el salon es porque es algo como Campo o asi. Se valen los empalmes
                 aux.SetSalones(salones);
 
-                Temp = empalme.EnSalonesFijos();
+                Temp = new ListaGrupos(empalme.EnSalonesFijos().Where(g=>g.Salon_fijo==s.Cve_espacio).ToList());
 
-                if (Temp.Count() > 1) { }  //Si hay conflicto en el preferencial
-                else if (Temp.Count() == 1)//Solo uno tiene preferencia, y a ese se le va a dar
+                if (Temp.Count() != 0)//Solo uno tiene preferencia, y a ese se le va a dar
                     AsignacionPreferencial(empalme, s);
                 else    // Si no hay preferencial entonces se elegira por otro medio
                     AsignacionMejorEleccion(empalme, s);
@@ -120,11 +119,12 @@ namespace Algoritmo02.Clases
         {
             Grupo g=null;
 
+            QuitaSalon(empalmes, g);
+
             foreach (Grupo grupo in empalmes)
                 if (grupo.Salon_fijo == s.Cve_espacio)
-                    g = grupo;
+                    g.Cve_espacio = s.Cve_espacio;
 
-            QuitaSalon(empalmes, g);
         }
 
         private void QuitaSalon(ListaGrupos empalmes, Grupo excepto=null)
