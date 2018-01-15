@@ -262,8 +262,8 @@ namespace InterfazWeb_02.Controllers
 
         private string Grupos2Table(IList<Grupo> grupos,string nombre)
         {
-            string res = string.Format("<table class='table-bordered'><thead><td><th colspan='5'><h3>{0}</h3></th></td>",nombre) +
-                "<td><th>Materia</th><th>Profesor</th><th>horario</th><th>Salon actual</th><th>salon anterior</th></td></thead><tbody>";
+            string res = string.Format("<table class='table-bordered'><thead><tr><th colspan='5'><h3>{0}</h3></th></tr>",nombre) +
+                "<tr><th>Materia</th><th>Profesor</th><th>horario</th><th>Salon actual</th><th>salon anterior</th></tr></thead><tbody>";
             
 
             foreach(Grupo g in grupos)
