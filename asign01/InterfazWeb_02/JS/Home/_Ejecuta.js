@@ -14,15 +14,15 @@ function Ejecuta() {
     EjecutaHora(hora,operaciones,ciclo,excel,sheet)
 }
 
-function EjecutaHora(hora, operaciones, ciclo, excel, hoja)
+function EjecutaHora(_hora, _operaciones, _ciclo, _excel, _hoja)
 {
     var _url = $(".direccion #Ejecuta").text().trim();
     var datos = {
-        hora: hora,
-        operaciones: operaciones,
-        ciclo: ciclo,
-        excel: excel,
-        hoja:hoja
+        hora: _hora,
+        operaciones: _operaciones,
+        ciclo: _ciclo,
+        excel: _excel,
+        hoja:_hoja
     }
     var dt = JSON.stringify(datos);
 
