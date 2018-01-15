@@ -13,10 +13,13 @@ namespace Algoritmo02.Clases
         private ListaSalones permiteEmpalmes;
         private string ciclo;
 
+        public IList<Grupo> EmpalmesResueltos;
+
         public ListaVariables Grupos { get { return grupos; } }
 
         public ChecaEmpalmes(ListaGrupos _grupos, IList<Salon> _salones)
         {
+            EmpalmesResueltos = new List<Grupo>()
             grupos = new ListaVariables(_grupos);
             salones = new ListaSalones(_salones);
             permiteEmpalmes = salones.PermiteEmpalmes();
@@ -41,14 +44,12 @@ namespace Algoritmo02.Clases
             foreach (ListaVariables empalme in empalmados)
             {
                 try
-                {
-                    ResuelveEmpalme(empalme);
-                }
-                catch (Exception ex)//Se le quita el salon a todos
-                {
-                    QuitaSalon(empalme);
-                }
-                Grupos.Actualiza(empalme);
+                { ResuelveEmpalme(empalme); }
+                catch (Exception)//Se le quita el salon a todos
+                { QuitaSalon(empalme); }
+
+                foreach (Grupo g in empalme)
+                    EmpalmesResueltos.Add(g);
             }
         }
 

@@ -11,7 +11,7 @@ namespace InterfazWeb_02.Clases
     {
         public RevisionEmpalmes(ListaGrupos _grupos, IList<Salon> _salones) : base(_grupos, _salones){ }
 
-        public IList<Grupo> Resultado => Grupos;
+        public IList<Grupo> Resultado => EmpalmesResueltos;
 
         public IList<Grupo> Errores => new List<Grupo>();
 
