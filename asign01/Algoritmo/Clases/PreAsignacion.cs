@@ -11,10 +11,12 @@ namespace Algoritmo02.Clases
     {
         private ListaVariables grupos;
         private ListaSalones salones;
+        public ListaVariables GruposModificados;
         public ListaVariables Grupos { get { return grupos; } }
 
         public PreAsignacion(ListaVariables _g, ListaSalones _s)
         {
+            GruposModificados = new ListaVariables();
             grupos = _g;
             salones = _s;
         }
@@ -30,7 +32,10 @@ namespace Algoritmo02.Clases
 
             foreach (Variable g in gruposPreferencial)
                 if (g.Cve_espacio == "")
+                {
                     g.salonPreferencial();
+                    GruposModificados.Add(g);
+                }
         }
 
         /// <summary>
@@ -39,8 +44,11 @@ namespace Algoritmo02.Clases
         public void semestres_anteriores()
         {
             foreach (Variable g in grupos)
-                if (g.Cve_espacio == "" && salones.busca(g.Cve_espacio)!=null)
-                    g.Cve_espacio= g.salonAnioPasado();
+                if (g.Cve_espacio == "" && salones.busca(g.Cve_espacio) != null)
+                {
+                    g.Cve_espacio = g.salonAnioPasado();
+                    GruposModificados.Add(g);
+                }
         }
     }
 }

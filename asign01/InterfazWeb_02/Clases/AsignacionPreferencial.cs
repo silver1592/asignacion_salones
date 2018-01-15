@@ -11,7 +11,7 @@ namespace InterfazWeb_02.Clases
     {
         public AsignacionPreferencial(ListaVariables Grupos, ListaSalones Salones) : base(Grupos, Salones){ }
 
-        IList<Grupo> IOperacion.Resultado => Grupos;
+        IList<Grupo> IOperacion.Resultado => GruposModificados;
 
         IList<Grupo> IOperacion.Errores => new List<Grupo>();
 
