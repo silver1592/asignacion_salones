@@ -60,5 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Tablas.sql" />
+    <None Include="data.txt" />
+    <None Include="data2.txt" />
+    <None Include="data3.txt" />
   </ItemGroup>
 </Project>
