@@ -58,4 +58,7 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Tablas.sql" />
+  </ItemGroup>
 </Project>
