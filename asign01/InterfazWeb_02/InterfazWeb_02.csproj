@@ -171,6 +171,7 @@
     <Compile Include="Controllers\GruposController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SalonController.cs" />
+    <Compile Include="Controllers\SalonModelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SalonModel\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algoritmo\Algoritmo02.csproj">

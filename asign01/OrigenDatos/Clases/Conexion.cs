@@ -595,7 +595,7 @@ namespace OrigenDatos.Clases
 
                 return profesores;
             }
-            catch (Exception ex) //para que no truene en las pruebas
+            catch (Exception) //para que no truene en las pruebas
             {
                 return null;
             }
@@ -639,7 +639,7 @@ namespace OrigenDatos.Clases
 
                 return materias;
             }
-            catch(Exception ex) //para que no truene en las pruebas
+            catch(Exception) //para que no truene en las pruebas
             {
                 return null;
             }
@@ -694,7 +694,7 @@ namespace OrigenDatos.Clases
 
                 return true;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return false;
             }

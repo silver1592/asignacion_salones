@@ -106,7 +106,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="OrigenDatos.cd" />
-    <None Include="OrigenDatos_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
