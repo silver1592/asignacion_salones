@@ -63,5 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Tablas.sql" />
+    <None Include="Vistas.sql" />
   </ItemGroup>
 </Project>
