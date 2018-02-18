@@ -196,17 +196,17 @@ namespace OrigenDatos.Clases
                 if (horario)
                 {
                     query += "[lunes_ini] = " + horario_ini[0] + ",";
-                    query += "[lunes_fin] = " + horario_ini[0] + ",";
-                    query += "[martes_ini] = " + horario_ini[0] + ",";
-                    query += "[martes_fin] = " + horario_ini[0] + ",";
-                    query += "[miercoles_ini] = " + horario_ini[0] + ",";
-                    query += "[miercoles_fin] = " + horario_ini[0] + ",";
-                    query += "[jueves_ini] = " + horario_ini[0] + ",";
-                    query += "[jueves_fin] = " + horario_ini[0] + ",";
-                    query += "[viernes_ini] = " + horario_ini[0] + ",";
-                    query += "[viernes_fin] = " + horario_ini[0] + ",";
-                    query += "[sabado_ini] = " + horario_ini[0] + ",";
-                    query += "[sabado_fin] = " + horario_ini[0] + ",";
+                    query += "[lunes_fin] = " + horario_fin[0] + ",";
+                    query += "[martes_ini] = " + horario_ini[1] + ",";
+                    query += "[martes_fin] = " + horario_fin[1] + ",";
+                    query += "[miercoles_ini] = " + horario_ini[2] + ",";
+                    query += "[miercoles_fin] = " + horario_fin[2] + ",";
+                    query += "[jueves_ini] = " + horario_ini[3] + ",";
+                    query += "[jueves_fin] = " + horario_fin[3] + ",";
+                    query += "[viernes_ini] = " + horario_ini[4] + ",";
+                    query += "[viernes_fin] = " + horario_fin[4] + ",";
+                    query += "[sabado_ini] = " + horario_ini[5] + ",";
+                    query += "[sabado_fin] = " + horario_fin[5] + ",";
                 }
             }
             else return "";

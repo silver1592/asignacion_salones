@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("InterfazWeb_02")]
 namespace OrigenDatos.Clases
 {
     /// <summary>
@@ -31,9 +32,9 @@ namespace OrigenDatos.Clases
 
         #region atributos <public>
         public int hora;
-        public bool Asignable { get { return asignable; } }
-        public bool empalme { get { return empalmes; } }
-        public List<int> Equipo { get { return equipo_instalado; } }
+        public bool Asignable { get { return asignable; } internal set => asignable = value; }
+        public bool empalme { get { return empalmes; } internal set => empalme = value; }
+        public List<int> Equipo { get { return equipo_instalado; } internal set => equipo_instalado=value; }
         public bool plantaBaja
         {
             get
@@ -51,10 +52,10 @@ namespace OrigenDatos.Clases
             }
         }
 
-        public string Cve_espacio { get { return cve_espacio; } }
+        public string Cve_espacio { get { return cve_espacio; } internal set => cve_espacio = value; }
         public string Edificio { get { return cve_edificio; } }
         public List<string> Area { get { return area; } }
-        public int Cupo { get { return cupo_max; } }
+        public int Cupo { get { return cupo_max; } internal set => cupo_max = value; }
 
         /// <summary>
         /// Marca con True cuando ya ahy una materia que lo ocupa

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+Lusing System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -23,18 +24,7 @@ namespace OrigenDatos.Clases
         {
             get
             {
-                string dir = @"148.224.93.146\FINGENIERIA,2433;"; //servidor de la escuela
-                string usuario = "asignacion";
-                string pass = "Asigna#2016Ing";
-                string database = "asignacion";
-                //Datos de la coneccion
-                
-                string datosConexion = "Data Source=" + dir
-                                        + "Initial Catalog="+database+";"
-                                        + "Integrated Security =false;"
-                                        + "Uid = " + usuario + ";"
-                                        + "Pwd= " + pass + ";";
-                return datosConexion;
+                return Properties.Settings.Default.cadenaConexion;
             }
         } // Contiene la informacion para la conexion con la base de datos sql
 
@@ -595,7 +585,7 @@ namespace OrigenDatos.Clases
 
                 return profesores;
             }
-            catch (Exception ex) //para que no truene en las pruebas
+            catch (Exception) //para que no truene en las pruebas
             {
                 return null;
             }
@@ -639,7 +629,7 @@ namespace OrigenDatos.Clases
 
                 return materias;
             }
-            catch(Exception ex) //para que no truene en las pruebas
+            catch(Exception) //para que no truene en las pruebas
             {
                 return null;
             }
@@ -694,7 +684,7 @@ namespace OrigenDatos.Clases
 
                 return true;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return false;
             }
