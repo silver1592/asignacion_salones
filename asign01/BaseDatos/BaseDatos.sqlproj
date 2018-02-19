@@ -68,4 +68,7 @@
     <None Include="data3.txt" />
     <None Include="Vistas.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="funciones.sql" />
+  </ItemGroup>
 </Project>
