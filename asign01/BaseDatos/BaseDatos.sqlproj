@@ -65,4 +65,7 @@
     <None Include="Tablas.sql" />
     <None Include="Vistas.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="funciones.sql" />
+  </ItemGroup>
 </Project>
