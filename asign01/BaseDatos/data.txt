@@ -1,8 +1,0 @@
-0 ,DEPARTAMENTO FÍSICO MATEMÁTICO          
-1 ,MATERIAS COMÚNES                        
-2 ,CIENCIAS DE LA COMPUTACIÓN              
-3 ,CIVIL                                   
-4 ,CIENCIAS DE LA TIERRA                   
-5 ,MECÁNICA Y ELÉCTRICA                    
-6 ,METALURGIA Y MATERIALES
-7 ,AGROINDUSTRIAL
